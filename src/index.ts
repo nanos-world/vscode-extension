@@ -296,6 +296,8 @@ function generateClassAnnotations(
 		});
 
 		// Generate overloads
+		let subOverloadsSelf = "";
+		let unsubOverloadsSelf = "";
 		let subOverloads = "";
 		let unsubOverloads = "";
 		Object.entries(combinedEvents).forEach(([_, event]) => {
@@ -316,36 +318,58 @@ function generateClassAnnotations(
 				event.return, true
 			)}`;
 
-			subOverloads += `\n---@overload fun(${
-				cls.staticClass ? "" : `self: ${cls.name}, `
-			}event_name: "${
+			subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
 				event.name
 			}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
 				event
 			)}`;
-			unsubOverloads += `\n---@overload fun(${
-				cls.staticClass ? "" : `self: ${cls.name}, `
-			}event_name: "${
+
+			subOverloads += `\n---@overload fun(event_name: "${
+				event.name
+			}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+				event
+			)}`;
+
+			unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
+				event.name
+			}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
+
+			unsubOverloads += `\n---@overload fun(event_name: "${
 				event.name
 			}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 		});
 
 		events = `
 
+${!cls.staticClass ? `
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${subOverloads}
+function ${cls.name}.Subscribe(event_name, callback) end
+`: ""}
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed${cls.staticClass ? subOverloads : subOverloadsSelf}
 function ${cls.name}${
 			cls.staticClass ? "." : ":"
 		}Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${unsubOverloads}
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${cls.staticClass ? unsubOverloads : unsubOverloadsSelf}
 function ${cls.name}${
 			cls.staticClass ? "." : ":"
-		}Unsubscribe(event_name, callback) end`;
+		}Unsubscribe(event_name, callback) end
+
+${!cls.staticClass ? `
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${unsubOverloads}
+function ${cls.name}.Unsubscribe(event_name, callback) end
+`: ""}`;
 	}
 
 	let fields = "";
