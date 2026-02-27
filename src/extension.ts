@@ -43,14 +43,14 @@ export function activate(context: vscode.ExtensionContext) {
 	fs.mkdirSync(WORKING_DIRECTORY);
 
 	// Get annotations
-	axios.get("https://raw.githubusercontent.com/Derpius/nanosworld-vscode/docgen-output/annotations.lua").then(function (response) {
+	axios.get("https://raw.githubusercontent.com/nanos-world/vscode-extension/docgen-output/annotations.lua").then(function (response) {
 		// Write annotations
 		fs.writeFileSync(`${WORKING_DIRECTORY}annotations.lua`, response.data);
 
 		// Update Lua.workspace.library
 		setExternalLibrary(context.extension, WORKING_DIRECTORY, true);
 
-		console.log("Nanos World sumneko bindings loaded!");
+		console.log("nanos world sumneko bindings loaded!");
 	}).catch((exception) => console.log(`Failed to get documentation from the repository: ${exception}`));
 }
 
@@ -58,5 +58,5 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate(context: vscode.ExtensionContext) {
 	fs.rmSync(WORKING_DIRECTORY, { recursive: true, force: true });
 	setExternalLibrary(context.extension, WORKING_DIRECTORY, false);
-	console.log("Nanos World sumneko bindings unloaded");
+	console.log("nanos world sumneko bindings unloaded");
 }
