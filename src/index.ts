@@ -31,14 +31,18 @@ const octokit = getOctokit(TOKEN);
 function generateAuthorityString(authority: Authority) {
 	switch (authority) {
 		case Authority.Server:
-			return '<img src="https://github.com/Derpius/nanosworld-vscode/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`';
 		case Authority.Client:
-			return '<img src="https://github.com/Derpius/nanosworld-vscode/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`';
 		case Authority.Authority:
-			return '<img src="https://github.com/Derpius/nanosworld-vscode/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`';
+		case Authority.NetworkAuthority:
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/network-authority.png?raw=true" height="10"> `Network Authority`';
+		case Authority.BothNetAuthorityFirst:
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both-net-authority-first.png?raw=true" height="10"> `Both Sides (Network Authority First)`';
 		case Authority.Both:
 		default:
-			return '<img src="https://github.com/Derpius/nanosworld-vscode/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`';
 	}
 }
 
@@ -400,14 +404,14 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---${generateAuthorityString(cls.authority)}
 ---
 ---${generateDocstring(cls)}
----@class ${cls.name}${inheritance}${fields}${operators}${constructors}
+---@class ${cls.name}${constructors}${inheritance}${fields}${operators}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
 
 function generateEnum(name: string, values: DocEnumValue[]): string {
 	let valuesString = "";
 	values.forEach((value) => {
-		valuesString += `\n    ["${value.key}"] = ${value.value},`;
+		valuesString += `\n    ${value.key} = ${value.value},`;
 	});
 
 	return `

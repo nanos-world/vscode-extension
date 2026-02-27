@@ -3,6 +3,8 @@ export enum Authority {
 	Client = "client",
 	Authority = "authority",
 	Both = "both",
+	NetworkAuthority = "network-authority",
+	BothNetAuthorityFirst = "both-net-authority-first",
 }
 
 export interface DocDescriptive {
