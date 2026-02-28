@@ -404,7 +404,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---${generateAuthorityString(cls.authority)}
 ---
 ---${generateDocstring(cls)}
----@class ${cls.name}${constructors}${inheritance}${fields}${operators}
+---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
 
