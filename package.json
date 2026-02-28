@@ -1,10 +1,10 @@
 {
-	"name": "nanosworld",
-	"displayName": "nanos world",
-	"description": "Add nanos world support to sumneko's lua language server",
-	"version": "1.0.0",
-	"publisher": "Derpius",
-	"repository": "https://github.com/Derpius/nanosworld-vscode",
+	"name": "nanos-world",
+	"displayName": "nanos world Lua",
+	"description": "nanos world support to sumneko's Lua language server",
+	"version": "1.1.0",
+	"publisher": "go-horse-studios",
+	"repository": "https://github.com/nanos-world/vscode-extension",
 	"icon": "favicon.ico",
 	"engines": {
 		"vscode": "^1.61.0"
@@ -34,13 +34,13 @@
 		"@vscode/test-electron": "^1.6.2",
 		"eslint": "^7.32.0",
 		"glob": "^7.1.7",
-		"mocha": "^9.1.1",
+		"mocha": "^11.3.0",
 		"typescript": "^4.4.3"
 	},
 	"extensionDependencies": [
 		"sumneko.lua"
 	],
 	"dependencies": {
-		"axios": "^0.27.2"
+		"axios": "^1.13.6"
 	}
 }
