@@ -1,11 +1,11 @@
 {
-	"name": "nanosworld-docgen",
-	"displayName": "Nanos World Docgen GitHub Action",
-	"description": "Add Nanos World support to sumneko's lua language server (WORK IN PROGRESS)",
-	"version": "0.1.0",
-	"publisher": "Derpius",
-	"repository": "https://github.com/Derpius/nanosworld-vscode",
-	"icon": "https://nanos.world/img/favicon.ico",
+	"name": "nanos-world-docgen",
+	"displayName": "nanos world Docgen GitHub Action",
+	"description": "Add nanos world support to sumneko's lua language server",
+	"version": "0.2.0",
+	"publisher": "Go Horse Studios",
+	"repository": "https://github.com/nanos-world/vscode-extension",
+	"icon": "https://nanos-world.com/favicon.ico",
 	"main": "./out/extension.js",
 	"contributes": {},
 	"scripts": {
@@ -29,8 +29,8 @@
 	},
 	"dependencies": {
 		"@actions/core": "^1.9.0",
-		"@actions/github": "^5.0.3",
-		"axios": "^0.27.2",
+		"@actions/github": "^9.0.0",
+		"axios": "^1.13.6",
 		"typescript-eslint": "^0.0.1-alpha.0"
 	}
 }

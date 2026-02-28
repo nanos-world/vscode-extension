@@ -411,7 +411,7 @@ ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 function generateEnum(name: string, values: DocEnumValue[]): string {
 	let valuesString = "";
 	values.forEach((value) => {
-		valuesString += `\n    ${value.key} = ${value.value},`;
+		valuesString += `\n    ${value.key} = ${value.value},${value.description ? ` -- ${value.description}` : ""}`;
 	});
 
 	return `

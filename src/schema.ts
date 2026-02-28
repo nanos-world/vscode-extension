@@ -76,6 +76,7 @@ export interface DocClass extends DocDescriptive, DocAuthority {
 
 export interface DocEnumValue {
 	key: string;
+	description: string;
 	value: string;
 }
 
