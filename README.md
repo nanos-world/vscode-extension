@@ -1,6 +1,6 @@
-# nanos world support for sumneko's Lua language server extension
+# nanos world support for Lua language Server extension
 
-Provides stubs of nanos world's Lua API to the sumneko Lua language extension.
+Provides stubs of nanos world's Lua API to the Lua language Server extension.
 
 All stubs are generated automatically from the nanos world [API repository](https://github.com/nanos-world/api) (see `docgen` branch).
 
@@ -13,7 +13,7 @@ All stubs are generated automatically from the nanos world [API repository](http
 
 ## Requirements
 
-https://github.com/sumneko/lua-language-server
+https://github.com/LuaLS/lua-language-server
 
 
 ## Credits
