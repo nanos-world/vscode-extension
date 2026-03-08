@@ -2,286 +2,261 @@
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Base class for all Damageable entities. It provides Health and Damage related methods and events.
----@class Damageable : Entity, Actor
-Damageable = {}
+---CharacterSimple is a simpler Character implementation with basic Movement implementation. Aimed for custom NPCs or basic Pawns.
+---@class CharacterSimple : Entity, Actor, Paintable, Damageable, Pawn
+---@overload fun(location: Vector, rotation: Rotator, mesh: string|string, custom_animation_blueprint?: string, collision_type?: CollisionType, gravity_enabled?: boolean): CharacterSimple
+CharacterSimple = {}
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
 ---
----Do damage to this entity, will trigger all related events and apply modified damage based on bone. Also will apply impulse if it's a heavy explosion
----@param damage integer 
----@param bone_name? string @(Default: "")
----@param damage_type? DamageType @(Default: DamageType.Shot)
----@param from_direction? Vector @(Default: Vector(0, 0, 0))
----@param instigator? Player @The player which caused the damage (Default: nil)
----@param causer? any @The object which caused the damage (Default: nil)
----@return integer @the damage applied
-function Damageable:ApplyDamage(damage, bone_name, damage_type, from_direction, instigator, causer) end
+---Changes the Character Mesh on the fly
+---@param mesh_asset string|string 
+---@param adjust_capsule_size boolean @Auto adjust the capsule size based on the Mesh size
+function CharacterSimple:SetMesh(mesh_asset, adjust_capsule_size) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
 ---
----Gets the current health
----@return integer 
-function Damageable:GetHealth() end
+---Sets the Physics Asset for the Character
+---@param physics_asset Other 
+function CharacterSimple:SetPhysicsAsset(physics_asset) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
 ---
----Gets the Max Health
----@return integer 
-function Damageable:GetMaxHealth() end
+---Plays an Animation Montage on this character
+---@param animation_path string 
+---@param slot_name? string @(Default: "")
+---@param loop_indefinitely? boolean @(Default: false)
+---@param blend_in_time? number @(Default: 0.25)
+---@param blend_out_time? number @Pass it -1 to disable auto blend out and keep the animation running in last pose forever (Default: 0.25)
+---@param play_rate? number @(Default: 1.0)
+---@param stop_all_montages? boolean @Stops all running Montages from the same Group (Default: false)
+function CharacterSimple:PlayAnimation(animation_path, slot_name, loop_indefinitely, blend_in_time, blend_out_time, play_rate, stop_all_montages) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
 ---
----Returns if the entity is dead
----@return boolean 
-function Damageable:IsDead() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Respawns the Entity, fullying it's Health and moving it to it's Initial Location
----@param location? Vector @If not passed will use the initial location passed when the Entity spawned (Default: initial location)
----@param rotation? Rotator @(Default: Rotator(0, 0, 0))
-function Damageable:Respawn(location, rotation) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets the Health of this Entity. You can only call it on alive Entities (call Respawn first)
----@param new_health integer 
-function Damageable:SetHealth(new_health) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets the MaxHealth of this Entity
----@param max_health integer 
-function Damageable:SetMaxHealth(max_health) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Changes how much damage this entity takes on specific bones
----@param bone_name string 
----@param multiplier number 
-function Damageable:SetDamageMultiplier(bone_name, multiplier) end
+---Sets the max acceleration
+---@param acceleration integer @Default is 2048
+function CharacterSimple:SetMaxAcceleration(acceleration) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Gets the Damage Multiplier of a bone
----@param bone_name string 
----@return number @the damage multiplier of the bone
-function Damageable:GetDamageMultiplier(bone_name) end
+---Sets the Spring Arm Settings of this Character
+---@param relative_location? Vector @(Default: Vector(0, 0, 144))
+---@param target_arm_length? number @(Default: 300.0)
+---@param socket_offset? Vector @(Default: Vector(0, 0, 0))
+---@param enable_camera_lag? boolean @(Default: true)
+---@param camera_lag_speed? number @(Default: 15.0)
+---@param camera_lag_max_distance? number @(Default: 1.0)
+function CharacterSimple:SetSpringArmSettings(relative_location, target_arm_length, socket_offset, enable_camera_lag, camera_lag_speed, camera_lag_max_distance) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Sets the Rotation Settings of this Character
+---@param rotation_rate Rotator 
+---@param use_controller_desired_rotation boolean 
+---@param orient_rotation_to_movement boolean 
+function CharacterSimple:SetRotationSettings(rotation_rate, use_controller_desired_rotation, orient_rotation_to_movement) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Sets the Speed Settings of this Character
+---@param max_walk_speed? integer @(Default: 600)
+---@param max_walk_speed_crouched? integer @(Default: 300)
+---@param max_fly_speed? integer @(Default: 600)
+function CharacterSimple:SetSpeedSettings(max_walk_speed, max_walk_speed_crouched, max_fly_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Sets the Pawn Settings of this Character
+---@param use_controller_rotation_pitch boolean 
+---@param use_controller_rotation_yaw boolean 
+---@param use_controller_rotation_roll boolean 
+function CharacterSimple:SetPawnSettings(use_controller_rotation_pitch, use_controller_rotation_yaw, use_controller_rotation_roll) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Sets the amount of movement control allowed when it is in air
+---@param air_control? number @When falling, amount of lateral movement control available to the character. 0 = no control, 1 = full control at max speed of MaxWalkSpeed (Default: 0.2)
+---@param boost_multiplier? number @When falling, multiplier applied to air_control when lateral velocity is less than boost_velocity_threshold. Setting this to zero will disable air control boosting. Final result is clamped at 1 (Default: 512)
+---@param boost_velocity_threshold? number @When falling, if lateral velocity magnitude is less than this value, air_control is multiplied by boost_multiplier. Setting this to zero will disable air control boosting (Default: 25)
+function CharacterSimple:SetAirControl(air_control, boost_multiplier, boost_velocity_threshold) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Sets the Animation Blueprint of this Character
+---@param custom_animation_blueprint string 
+function CharacterSimple:SetAnimationBlueprint(custom_animation_blueprint) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Calls an Animation Blueprint Event or Function<br/>Returns all Function return values on <strong>Client Side</strong>
+---@param event_name string @Event or Function name
+---@param ...? any @Sequence of arguments to pass to the event (Default: nil)
+---@return any... @the function return values
+function CharacterSimple:CallAnimationBlueprintEvent(event_name, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Assigns and Binds an Animation Blueprint Event Dispatcher
+---@param dispatcher_name string @Event Dispatcher name
+---@param callback function @Callback function to call
+---@return function @the callback itself
+function CharacterSimple:BindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Unbinds an Animation Blueprint Event Dispatcher
+---@param dispatcher_name string @Event Dispatcher name
+---@param callback? function @Optional callback to unbind (Default: nil)
+function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
 
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
----@overload fun(event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
----@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
----@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
-function Damageable.Subscribe(event_name, callback) end
+---@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
+---@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
+---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify begins
+---@overload fun(event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify ends
+---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
+---@overload fun(event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
+---@overload fun(event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
+---@overload fun(event_name: "Land", callback: fun()): fun() @Called upon landing when falling
+---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
+function CharacterSimple.Subscribe(event_name, callback) end
 
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
----@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
----@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
----@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
----@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
----@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
-function Damageable:Subscribe(event_name, callback) end
+---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
+---@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
+---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
+---@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
+---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(self: CharacterSimple, event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify begins
+---@overload fun(self: CharacterSimple, event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify ends
+---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
+---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
+---@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
+---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()): fun() @Called upon landing when falling
+---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
+function CharacterSimple:Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
----@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
----@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
----@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
----@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
-function Damageable:Unsubscribe(event_name, callback) end
+---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
+---@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
+---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
+---@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
+---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(self: CharacterSimple, event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify begins
+---@overload fun(self: CharacterSimple, event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify ends
+---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
+---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()) @Called when Character crouches
+---@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
+---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()) @Called upon landing when falling
+---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
+function CharacterSimple:Unsubscribe(event_name, callback) end
 
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
----@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
----@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
-function Damageable.Unsubscribe(event_name, callback) end
+---@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
+---@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
+---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify begins
+---@overload fun(event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify ends
+---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
+---@overload fun(event_name: "StartCrouch", callback: fun()) @Called when Character crouches
+---@overload fun(event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
+---@overload fun(event_name: "Land", callback: fun()) @Called upon landing when falling
+---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
+function CharacterSimple.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Charactes can hold it with hands with pre-defined handling modes.
----@class Melee : Entity, Actor, Paintable, Pickable
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean): Melee
-Melee = {}
+---The Database entity provides programmers a way to access SQL databases easily through scripting.
+---@class Database
+---@overload fun(database_engine: DatabaseEngine, connection_string: string, pool_size?: integer): Database
+Database = {}
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Sets an Animation when attacking<br/><br/>You can add more than one animation, which will be selected randomly when attacking
----@param asset_path string @The Animation used when attacking
----@param play_rate? number @The Animation Play Rate (Default: 1.0)
----@param slot_Type? AnimationSlotType @Whether to play it on upper body or full body (Default: AnimationSlotType.UpperBody)
-function Melee:AddAnimationCharacterUse(asset_path, play_rate, slot_Type) end
+---Closes the Database
+function Database:Close() end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Clears the Character Attack Animation list
-function Melee:ClearAnimationsCharacterUse() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Sound when hitting something<br/><br/>Note: Surfaces <b>Water</b> and <b>Flesh</b> already have default sounds and must be explicitly set to override
----@param surface_type SurfaceType @The surface to apply the sound. Use <code>SurfaceType.Default</code> to be the default to all hits
----@param asset_path string @The Sound used when attacking
----@param volume number 
----@param pitch number 
-function Melee:SetImpactSound(surface_type, asset_path, volume, pitch) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Sound when attacking
----@param asset_path string @The Sound used when attacking
-function Melee:SetSoundUse(asset_path) end
+---Execute a query asynchronously
+---@param query string @Query to execute
+---@param callback? function @Callback (Default: nil)
+---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
+function Database:ExecuteAsync(query, callback, ...) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Sets the Base Damage
----@param damage? integer @The Base Damage value (Default: "")
-function Melee:SetBaseDamage(damage) end
+---Execute a query synchronously
+---@param query string @Query to execute
+---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
+---@return integer @affected rows
+---@return string @error (if any)
+function Database:Execute(query, ...) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Sets the times when to start applying damage and when to end. During this time the collision of the melee will be enabled and the damage will be applied if it hits something
----@param damage_start_time number @The initial time to start applying damage
----@param damage_duration_time number @The duration time to stop applying damage
-function Melee:SetDamageSettings(damage_start_time, damage_duration_time) end
+---Execute a select query asynchronously
+---@param query string @Query to execute
+---@param callback? function @Callback (Default: nil)
+---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
+function Database:SelectAsync(query, callback, ...) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Sets the cooldown between attacking
----@param cooldown number 
-function Melee:SetCooldown(cooldown) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Animations when Character uses it
----@return string[] 
-function Melee:GetAnimationsCharacterUse() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Sound when Character uses it
----@return string 
-function Melee:GetSoundUse() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Base Damage
----@return integer 
-function Melee:GetBaseDamage() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Cooldown between usages
----@return number 
-function Melee:GetCooldown() end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "Spawn", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)): fun(self: Melee, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
----@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
----@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
----@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
----@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
-function Melee.Subscribe(event_name, callback) end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(self: Melee, event_name: "Spawn", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is spawned/created
----@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
----@overload fun(self: Melee, event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)): fun(self: Melee, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
----@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
----@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
----@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
----@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
-function Melee:Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(self: Melee, event_name: "Spawn", callback: fun(self: Melee)) @Triggered when an Entity is spawned/created
----@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
----@overload fun(self: Melee, event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
----@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
----@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
----@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
----@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
-function Melee:Unsubscribe(event_name, callback) end
-
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Spawn", callback: fun(self: Melee)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
----@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
----@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
----@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
----@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
-function Melee.Unsubscribe(event_name, callback) end
-
+---Selects a query synchronously
+---@param query string @Query to execute
+---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
+---@return table[] @rows fetched
+---@return string @error (if any)
+function Database:Select(query, ...) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
@@ -969,115 +944,6 @@ function Blueprint:SetBlueprintPropertyValue(property_name, value) end
 ---@return any @the value
 function Blueprint:GetBlueprintPropertyValue(property_name) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----The Database entity provides programmers a way to access SQL databases easily through scripting.
----@class Database
----@overload fun(database_engine: DatabaseEngine, connection_string: string, pool_size?: integer): Database
-Database = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Closes the Database
-function Database:Close() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Execute a query asynchronously
----@param query string @Query to execute
----@param callback? function @Callback (Default: nil)
----@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
-function Database:ExecuteAsync(query, callback, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Execute a query synchronously
----@param query string @Query to execute
----@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
----@return integer @affected rows
----@return string @error (if any)
-function Database:Execute(query, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Execute a select query asynchronously
----@param query string @Query to execute
----@param callback? function @Callback (Default: nil)
----@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
-function Database:SelectAsync(query, callback, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Selects a query synchronously
----@param query string @Query to execute
----@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
----@return table[] @rows fetched
----@return string @error (if any)
-function Database:Select(query, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----An Instanced Static Mesh entity allows spawning a mesh that can have multiple instances efficiently rendered.
----@class InstancedStaticMesh : Entity, Actor, Paintable
----@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, instances?: { Location: Vector, Rotation: Rotator, Scale: Vector }): InstancedStaticMesh
-InstancedStaticMesh = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Asset path mesh used
----@return string 
-function InstancedStaticMesh:GetMesh() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Add an instance to this component
----@param relative_location Vector 
----@param relative_rotation? Rotator @(Default: Rotator(0, 0, 0))
----@param scale? Vector @(Default: Vector(1, 1, 1))
----@return integer @the index of the added instance
-function InstancedStaticMesh:AddInstance(relative_location, relative_rotation, scale) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Add multiple instances to this component. It is way efficient calling this once than AddInstance multiple times
----@param instances { Location: Vector, Rotation: Rotator, Scale: Vector } @Array with the instances
-function InstancedStaticMesh:AddInstances(instances) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Removes the instance at the given index. This will move the last element to the provided index, reducing the count by 1
----@param index integer 
-function InstancedStaticMesh:RemoveInstance(index) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Changes the transform of an existing instance. You can pass all other parameters as nil to modify only a single property
----@param index integer 
----@param relative_location? Vector @(Default: (current location))
----@param relative_rotation? Rotator @(Default: (current rotation))
----@param scale? Vector @(Default: (current scale))
-function InstancedStaticMesh:SetInstanceTransform(index, relative_location, relative_rotation, scale) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the current transform of the instance at the given index
----@param index integer 
----@return Vector 
----@return Rotator 
----@return Vector 
-function InstancedStaticMesh:GetInstanceTransform(index) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the number of instances currently stored
----@return integer 
-function InstancedStaticMesh:GetInstanceCount() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Removes all instances.
-function InstancedStaticMesh:ClearInstances() end
-
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
 ---A tool to transform objects at runtime.
@@ -1184,6 +1050,69 @@ function Gizmo:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has it's transform updated
 function Gizmo.Unsubscribe(event_name, callback) end
 
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---An Instanced Static Mesh entity allows spawning a mesh that can have multiple instances efficiently rendered.
+---@class InstancedStaticMesh : Entity, Actor, Paintable
+---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, instances?: { Location: Vector, Rotation: Rotator, Scale: Vector }): InstancedStaticMesh
+InstancedStaticMesh = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Asset path mesh used
+---@return string 
+function InstancedStaticMesh:GetMesh() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Add an instance to this component
+---@param relative_location Vector 
+---@param relative_rotation? Rotator @(Default: Rotator(0, 0, 0))
+---@param scale? Vector @(Default: Vector(1, 1, 1))
+---@return integer @the index of the added instance
+function InstancedStaticMesh:AddInstance(relative_location, relative_rotation, scale) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Add multiple instances to this component. It is way efficient calling this once than AddInstance multiple times
+---@param instances { Location: Vector, Rotation: Rotator, Scale: Vector } @Array with the instances
+function InstancedStaticMesh:AddInstances(instances) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Removes the instance at the given index. This will move the last element to the provided index, reducing the count by 1
+---@param index integer 
+function InstancedStaticMesh:RemoveInstance(index) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Changes the transform of an existing instance. You can pass all other parameters as nil to modify only a single property
+---@param index integer 
+---@param relative_location? Vector @(Default: (current location))
+---@param relative_rotation? Rotator @(Default: (current rotation))
+---@param scale? Vector @(Default: (current scale))
+function InstancedStaticMesh:SetInstanceTransform(index, relative_location, relative_rotation, scale) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the current transform of the instance at the given index
+---@param index integer 
+---@return Vector 
+---@return Rotator 
+---@return Vector 
+function InstancedStaticMesh:GetInstanceTransform(index) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the number of instances currently stored
+---@return integer 
+function InstancedStaticMesh:GetInstanceCount() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
+---
+---Removes all instances.
+function InstancedStaticMesh:ClearInstances() end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
@@ -1388,69 +1317,6 @@ function Text3D:SetTextSettings(kerning, line_spacing, word_spacing, horizontal_
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----A Text Render class is useful for spawning Texts in 3D world.
----@class TextRender : Entity, Actor
----@overload fun(location: Vector, rotation: Rotator, text: string, word_size?: number, color?: Color, horizontal_alignment?: TextRenderHorizontalAlignment, vertical_alignment?: TextRenderVerticalAlignment, rendering_type?: TextRenderRenderingType, font_asset?: string, cast_shadow?: boolean): TextRender
-TextRender = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the current Text
----@return string @The current Text
-function TextRender:GetText() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the current Text Color
----@return Color @The current Text Color
-function TextRender:GetTextColor() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the current Word Size
----@return number @The current Word Size
-function TextRender:GetWordSize() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Font. The font must be pre-cooked as a offline cached, distance field font.<br/><br/>Example working fonts:<br/>- <code>nanos-world::Font_LondrinaSolid_DistanceField</code><br/>- <code>nanos-world::Font_BoldPixels_DistanceField</code><br/>- <code>nanos-world::Font_Roboto_DistanceField</code>
----@param font_asset string 
-function TextRender:SetFont(font_asset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Text alignment
----@param horizontal_alignment TextRenderHorizontalAlignment 
----@param vertical_alignment TextRenderVerticalAlignment 
-function TextRender:SetAlignment(horizontal_alignment, vertical_alignment) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the horizontal and vertical spacing adjust values
----@param horizontal_spacing number 
----@param vertical_spacing number 
-function TextRender:SetSpacingAdjust(horizontal_spacing, vertical_spacing) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Text
----@param text string 
-function TextRender:SetText(text) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Text Color
----@param text_color Color 
-function TextRender:SetTextColor(text_color) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Word Size
----@param word_size number 
-function TextRender:SetWordSize(word_size) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
 ---A Trigger class is a utility class to trigger events when any Entity enters an Area.
 ---@class Trigger : Entity, Actor
 ---@overload fun(location: Vector, rotation: Rotator, extent: Vector|number, trigger_type?: TriggerType, is_visible?: boolean, color?: Color, overlap_only_classes?: string[]): Trigger
@@ -1531,6 +1397,263 @@ function Trigger:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "BeginOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something overlaps this Trigger
 ---@overload fun(event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something leaves this Trigger
 function Trigger.Unsubscribe(event_name, callback) end
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A Text Render class is useful for spawning Texts in 3D world.
+---@class TextRender : Entity, Actor
+---@overload fun(location: Vector, rotation: Rotator, text: string, word_size?: number, color?: Color, horizontal_alignment?: TextRenderHorizontalAlignment, vertical_alignment?: TextRenderVerticalAlignment, rendering_type?: TextRenderRenderingType, font_asset?: string, cast_shadow?: boolean): TextRender
+TextRender = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the current Text
+---@return string @The current Text
+function TextRender:GetText() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the current Text Color
+---@return Color @The current Text Color
+function TextRender:GetTextColor() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the current Word Size
+---@return number @The current Word Size
+function TextRender:GetWordSize() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the Font. The font must be pre-cooked as a offline cached, distance field font.<br/><br/>Example working fonts:<br/>- <code>nanos-world::Font_LondrinaSolid_DistanceField</code><br/>- <code>nanos-world::Font_BoldPixels_DistanceField</code><br/>- <code>nanos-world::Font_Roboto_DistanceField</code>
+---@param font_asset string 
+function TextRender:SetFont(font_asset) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the Text alignment
+---@param horizontal_alignment TextRenderHorizontalAlignment 
+---@param vertical_alignment TextRenderVerticalAlignment 
+function TextRender:SetAlignment(horizontal_alignment, vertical_alignment) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the horizontal and vertical spacing adjust values
+---@param horizontal_spacing number 
+---@param vertical_spacing number 
+function TextRender:SetSpacingAdjust(horizontal_spacing, vertical_spacing) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the Text
+---@param text string 
+function TextRender:SetText(text) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the Text Color
+---@param text_color Color 
+function TextRender:SetTextColor(text_color) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the Word Size
+---@param word_size number 
+function TextRender:SetWordSize(word_size) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Floating point Quaternion that can represent a rotation about an axis in 3-D space
+---@class Quat
+---@field X number @The quaternion's X-component
+---@field Y number @The quaternion's Y-component
+---@field Z number @The quaternion's Z-component
+---@field W number @The quaternion's W-component
+---@operator add(Quat|number): Quat
+---@operator sub(Quat|number): Quat
+---@operator mul(Quat|number): Quat
+---@overload fun(X?: number, Y?: number, Z?: number, W?: number): Quat
+Quat = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---In place normalize this Quaternion
+function Quat:Normalize() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the Rotator representation of this Quaternion
+---@return Rotator @Rotator representation of this Quaternion
+function Quat:Rotator() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the inverse of this Quaternion
+---@return Quat @Inverse of this Quaternion
+function Quat:Inverse() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Rotates a vector by this Quaternion
+---@param vector Vector @Vector to rotate
+---@return Vector @Rotated vector
+function Quat:RotateVector(vector) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Unrotates a vector by this Quaternion
+---@param vector Vector @Vector to unrotate
+---@return Vector @Unrotated vector
+function Quat:UnrotateVector(vector) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the forward direction vector from this Quaternion
+---@return Vector @Forward vector
+function Quat:GetForwardVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the right direction vector from this Quaternion
+---@return Vector @Right vector
+function Quat:GetRightVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the up direction vector from this Quaternion
+---@return Vector @Up vector
+function Quat:GetUpVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Base class for all Damageable entities. It provides Health and Damage related methods and events.
+---@class Damageable : Entity, Actor
+Damageable = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Do damage to this entity, will trigger all related events and apply modified damage based on bone. Also will apply impulse if it's a heavy explosion
+---@param damage integer 
+---@param bone_name? string @(Default: "")
+---@param damage_type? DamageType @(Default: DamageType.Shot)
+---@param from_direction? Vector @(Default: Vector(0, 0, 0))
+---@param instigator? Player @The player which caused the damage (Default: nil)
+---@param causer? any @The object which caused the damage (Default: nil)
+---@return integer @the damage applied
+function Damageable:ApplyDamage(damage, bone_name, damage_type, from_direction, instigator, causer) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the current health
+---@return integer 
+function Damageable:GetHealth() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Max Health
+---@return integer 
+function Damageable:GetMaxHealth() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns if the entity is dead
+---@return boolean 
+function Damageable:IsDead() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Respawns the Entity, fullying it's Health and moving it to it's Initial Location
+---@param location? Vector @If not passed will use the initial location passed when the Entity spawned (Default: initial location)
+---@param rotation? Rotator @(Default: Rotator(0, 0, 0))
+function Damageable:Respawn(location, rotation) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets the Health of this Entity. You can only call it on alive Entities (call Respawn first)
+---@param new_health integer 
+function Damageable:SetHealth(new_health) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets the MaxHealth of this Entity
+---@param max_health integer 
+function Damageable:SetMaxHealth(max_health) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Changes how much damage this entity takes on specific bones
+---@param bone_name string 
+---@param multiplier number 
+function Damageable:SetDamageMultiplier(bone_name, multiplier) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Damage Multiplier of a bone
+---@param bone_name string 
+---@return number @the damage multiplier of the bone
+function Damageable:GetDamageMultiplier(bone_name) end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
+---@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+function Damageable.Subscribe(event_name, callback) end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
+---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
+---@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
+---@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
+---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+function Damageable:Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
+---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
+---@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
+---@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
+---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+function Damageable:Unsubscribe(event_name, callback) end
+
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
+---@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+function Damageable.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
@@ -1687,136 +1810,156 @@ function Grenade:Unsubscribe(event_name, callback) end
 function Grenade.Unsubscribe(event_name, callback) end
 
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Scene Capture is an Actor which captures a fully dynamic image of the scene into a Texture. It captures the scene from its view frustum, stores that view as an image, which is then used within a Material.
----@class SceneCapture : Entity, Actor
----@overload fun(location?: Vector, rotation?: Rotator, width?: integer, height?: integer, render_rate?: number, view_distance?: number, fov_angle?: number, enable_distance_optimization?: boolean): SceneCapture
-SceneCapture = {}
+---A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Charactes can hold it with hands with pre-defined handling modes.
+---@class Melee : Entity, Actor, Paintable, Pickable
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean): Melee
+Melee = {}
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Adds an Actor to the Render Only list<br/><br/>Note: adding one actor to this will make the SceneCapture only to render those Actors.
----@param actor Actor 
-function SceneCapture:AddRenderActor(actor) end
+---Sets an Animation when attacking<br/><br/>You can add more than one animation, which will be selected randomly when attacking
+---@param asset_path string @The Animation used when attacking
+---@param play_rate? number @The Animation Play Rate (Default: 1.0)
+---@param slot_Type? AnimationSlotType @Whether to play it on upper body or full body (Default: AnimationSlotType.UpperBody)
+function Melee:AddAnimationCharacterUse(asset_path, play_rate, slot_Type) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Removes an Actor from the Render Only list
----@param actor Actor 
-function SceneCapture:RemoveRenderActor(actor) end
+---Clears the Character Attack Animation list
+function Melee:ClearAnimationsCharacterUse() end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Clears the Render Only list
-function SceneCapture:ClearRenderActors() end
+---Sets the Sound when hitting something<br/><br/>Note: Surfaces <b>Water</b> and <b>Flesh</b> already have default sounds and must be explicitly set to override
+---@param surface_type SurfaceType @The surface to apply the sound. Use <code>SurfaceType.Default</code> to be the default to all hits
+---@param asset_path string @The Sound used when attacking
+---@param volume number 
+---@param pitch number 
+function Melee:SetImpactSound(surface_type, asset_path, volume, pitch) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Stops or Restore Capturing
----@param freeze boolean 
-function SceneCapture:SetFreeze(freeze) end
+---Sets the Sound when attacking
+---@param asset_path string @The Sound used when attacking
+function Melee:SetSoundUse(asset_path) end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Takes a snapshot of the SceneCapture and returns a Base64 of it
----@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
+---Sets the Base Damage
+---@param damage? integer @The Base Damage value (Default: "")
+function Melee:SetBaseDamage(damage) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets the times when to start applying damage and when to end. During this time the collision of the melee will be enabled and the damage will be applied if it hits something
+---@param damage_start_time number @The initial time to start applying damage
+---@param damage_duration_time number @The duration time to stop applying damage
+function Melee:SetDamageSettings(damage_start_time, damage_duration_time) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the cooldown between attacking
+---@param cooldown number 
+function Melee:SetCooldown(cooldown) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Animations when Character uses it
+---@return string[] 
+function Melee:GetAnimationsCharacterUse() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Sound when Character uses it
 ---@return string 
-function SceneCapture:EncodeToBase64(image_format) end
+function Melee:GetSoundUse() end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Takes a snapshot of the SceneCapture and returns a Base64 of it (asynchronously)
----@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
----@param callback function @Callback
-function SceneCapture:EncodeToBase64Async(image_format, callback) end
+---Gets the Base Damage
+---@return integer 
+function Melee:GetBaseDamage() end
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Sets the FOV
----@param angle number 
-function SceneCapture:SetFOVAngle(angle) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Enables/Disables rendering features from being captured<br/>A complete list of available flags can be found in the <a href='https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/FEngineShowFlags/'>Official Unreal Documentation</a>
----@param flag string 
----@param enable boolean 
-function SceneCapture:SetShowFlag(flag, enable) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Change the output Texture size<br>Note: too high texture will make the capture slower and will affect game performance
----@param width integer 
----@param height integer 
-function SceneCapture:Resize(width, height) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set how frequent is the capture<br>Note: Set to 0 to capture every frame, or -1 to disable auto-capturing
----@param render_rate number 
-function SceneCapture:SetRenderRate(render_rate) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Enables or not the rendering frequency optimization if the entities with this Material are too far
----@param enabled boolean 
-function SceneCapture:SetDistanceOptimizationEnabled(enabled) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Captures the scene. If deferred is true, performs deferred capture and records the frame; otherwise captures immediately and triggers Capture event
----@param deferred? boolean @If true, performs deferred capture (will capture and trigger Capture event later) (Default: false)
-function SceneCapture:CaptureScene(deferred) end
+---Gets the Cooldown between usages
+---@return number 
+function Melee:GetCooldown() end
 
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
----@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "Spawn", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)): fun(self: Melee, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
-function SceneCapture.Subscribe(event_name, callback) end
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
+---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
+---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
+---@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+---@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
+function Melee.Subscribe(event_name, callback) end
 
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
----@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
----@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
----@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
-function SceneCapture:Subscribe(event_name, callback) end
+---@overload fun(self: Melee, event_name: "Spawn", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is spawned/created
+---@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
+---@overload fun(self: Melee, event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)): fun(self: Melee, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
+---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
+---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
+---@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+---@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
+function Melee:Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
----@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
----@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
-function SceneCapture:Unsubscribe(event_name, callback) end
+---@overload fun(self: Melee, event_name: "Spawn", callback: fun(self: Melee)) @Triggered when an Entity is spawned/created
+---@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
+---@overload fun(self: Melee, event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
+---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
+---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
+---@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+---@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
+function Melee:Unsubscribe(event_name, callback) end
 
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "Spawn", callback: fun(self: Melee)) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Melee, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
-function SceneCapture.Unsubscribe(event_name, callback) end
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
+---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
+---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
+---@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+---@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
+function Melee.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
@@ -1957,6 +2100,138 @@ function Prop:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor)) @When Prop takes Damage
 ---@overload fun(event_name: "UnGrab", callback: fun(self: Prop, character: Character)) @Triggered when this Prop is ungrabbed
 function Prop.Unsubscribe(event_name, callback) end
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Scene Capture is an Actor which captures a fully dynamic image of the scene into a Texture. It captures the scene from its view frustum, stores that view as an image, which is then used within a Material.
+---@class SceneCapture : Entity, Actor
+---@overload fun(location?: Vector, rotation?: Rotator, width?: integer, height?: integer, render_rate?: number, view_distance?: number, fov_angle?: number, enable_distance_optimization?: boolean): SceneCapture
+SceneCapture = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Adds an Actor to the Render Only list<br/><br/>Note: adding one actor to this will make the SceneCapture only to render those Actors.
+---@param actor Actor 
+function SceneCapture:AddRenderActor(actor) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Removes an Actor from the Render Only list
+---@param actor Actor 
+function SceneCapture:RemoveRenderActor(actor) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Clears the Render Only list
+function SceneCapture:ClearRenderActors() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Stops or Restore Capturing
+---@param freeze boolean 
+function SceneCapture:SetFreeze(freeze) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Takes a snapshot of the SceneCapture and returns a Base64 of it
+---@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
+---@return string 
+function SceneCapture:EncodeToBase64(image_format) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Takes a snapshot of the SceneCapture and returns a Base64 of it (asynchronously)
+---@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
+---@param callback function @Callback
+function SceneCapture:EncodeToBase64Async(image_format, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the FOV
+---@param angle number 
+function SceneCapture:SetFOVAngle(angle) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Enables/Disables rendering features from being captured<br/>A complete list of available flags can be found in the <a href='https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/FEngineShowFlags/'>Official Unreal Documentation</a>
+---@param flag string 
+---@param enable boolean 
+function SceneCapture:SetShowFlag(flag, enable) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Change the output Texture size<br>Note: too high texture will make the capture slower and will affect game performance
+---@param width integer 
+---@param height integer 
+function SceneCapture:Resize(width, height) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set how frequent is the capture<br>Note: Set to 0 to capture every frame, or -1 to disable auto-capturing
+---@param render_rate number 
+function SceneCapture:SetRenderRate(render_rate) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Enables or not the rendering frequency optimization if the entities with this Material are too far
+---@param enabled boolean 
+function SceneCapture:SetDistanceOptimizationEnabled(enabled) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Captures the scene. If deferred is true, performs deferred capture and records the frame; otherwise captures immediately and triggers Capture event
+---@param deferred? boolean @If true, performs deferred capture (will capture and trigger Capture event later) (Default: false)
+function SceneCapture:CaptureScene(deferred) end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
+function SceneCapture.Subscribe(event_name, callback) end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
+---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
+---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
+function SceneCapture:Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
+---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
+---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
+function SceneCapture:Unsubscribe(event_name, callback) end
+
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
+function SceneCapture.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
@@ -2214,218 +2489,6 @@ function Paintable:GetMaterialScalarParameter(parameter_name, index, attachable_
 ---Overrides this Actor's Physical Material with a new one
 ---@param physical_material_path string @The Physical Material to override
 function Paintable:SetPhysicalMaterial(physical_material_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----CharacterSimple is a simpler Character implementation with basic Movement implementation. Aimed for custom NPCs or basic Pawns.
----@class CharacterSimple : Entity, Actor, Paintable, Damageable, Pawn
----@overload fun(location: Vector, rotation: Rotator, mesh: string|string, custom_animation_blueprint?: string, collision_type?: CollisionType, gravity_enabled?: boolean): CharacterSimple
-CharacterSimple = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Changes the Character Mesh on the fly
----@param mesh_asset string|string 
----@param adjust_capsule_size boolean @Auto adjust the capsule size based on the Mesh size
-function CharacterSimple:SetMesh(mesh_asset, adjust_capsule_size) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the Physics Asset for the Character
----@param physics_asset Other 
-function CharacterSimple:SetPhysicsAsset(physics_asset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Plays an Animation Montage on this character
----@param animation_path string 
----@param slot_name? string @(Default: "")
----@param loop_indefinitely? boolean @(Default: false)
----@param blend_in_time? number @(Default: 0.25)
----@param blend_out_time? number @Pass it -1 to disable auto blend out and keep the animation running in last pose forever (Default: 0.25)
----@param play_rate? number @(Default: 1.0)
----@param stop_all_montages? boolean @Stops all running Montages from the same Group (Default: false)
-function CharacterSimple:PlayAnimation(animation_path, slot_name, loop_indefinitely, blend_in_time, blend_out_time, play_rate, stop_all_montages) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the max acceleration
----@param acceleration integer @Default is 2048
-function CharacterSimple:SetMaxAcceleration(acceleration) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the Spring Arm Settings of this Character
----@param relative_location? Vector @(Default: Vector(0, 0, 144))
----@param target_arm_length? number @(Default: 300.0)
----@param socket_offset? Vector @(Default: Vector(0, 0, 0))
----@param enable_camera_lag? boolean @(Default: true)
----@param camera_lag_speed? number @(Default: 15.0)
----@param camera_lag_max_distance? number @(Default: 1.0)
-function CharacterSimple:SetSpringArmSettings(relative_location, target_arm_length, socket_offset, enable_camera_lag, camera_lag_speed, camera_lag_max_distance) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the Rotation Settings of this Character
----@param rotation_rate Rotator 
----@param use_controller_desired_rotation boolean 
----@param orient_rotation_to_movement boolean 
-function CharacterSimple:SetRotationSettings(rotation_rate, use_controller_desired_rotation, orient_rotation_to_movement) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the Speed Settings of this Character
----@param max_walk_speed? integer @(Default: 600)
----@param max_walk_speed_crouched? integer @(Default: 300)
----@param max_fly_speed? integer @(Default: 600)
-function CharacterSimple:SetSpeedSettings(max_walk_speed, max_walk_speed_crouched, max_fly_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the Pawn Settings of this Character
----@param use_controller_rotation_pitch boolean 
----@param use_controller_rotation_yaw boolean 
----@param use_controller_rotation_roll boolean 
-function CharacterSimple:SetPawnSettings(use_controller_rotation_pitch, use_controller_rotation_yaw, use_controller_rotation_roll) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the amount of movement control allowed when it is in air
----@param air_control? number @When falling, amount of lateral movement control available to the character. 0 = no control, 1 = full control at max speed of MaxWalkSpeed (Default: 0.2)
----@param boost_multiplier? number @When falling, multiplier applied to air_control when lateral velocity is less than boost_velocity_threshold. Setting this to zero will disable air control boosting. Final result is clamped at 1 (Default: 512)
----@param boost_velocity_threshold? number @When falling, if lateral velocity magnitude is less than this value, air_control is multiplied by boost_multiplier. Setting this to zero will disable air control boosting (Default: 25)
-function CharacterSimple:SetAirControl(air_control, boost_multiplier, boost_velocity_threshold) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`
----
----Sets the Animation Blueprint of this Character
----@param custom_animation_blueprint string 
-function CharacterSimple:SetAnimationBlueprint(custom_animation_blueprint) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Calls an Animation Blueprint Event or Function<br/>Returns all Function return values on <strong>Client Side</strong>
----@param event_name string @Event or Function name
----@param ...? any @Sequence of arguments to pass to the event (Default: nil)
----@return any... @the function return values
-function CharacterSimple:CallAnimationBlueprintEvent(event_name, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Assigns and Binds an Animation Blueprint Event Dispatcher
----@param dispatcher_name string @Event Dispatcher name
----@param callback function @Callback function to call
----@return function @the callback itself
-function CharacterSimple:BindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Unbinds an Animation Blueprint Event Dispatcher
----@param dispatcher_name string @Event Dispatcher name
----@param callback? function @Optional callback to unbind (Default: nil)
-function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
----@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
----@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
----@overload fun(event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify begins
----@overload fun(event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify ends
----@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
----@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
----@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
----@overload fun(event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
----@overload fun(event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
----@overload fun(event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
----@overload fun(event_name: "Land", callback: fun()): fun() @Called upon landing when falling
----@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
-function CharacterSimple.Subscribe(event_name, callback) end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
----@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
----@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
----@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
----@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
----@overload fun(self: CharacterSimple, event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify begins
----@overload fun(self: CharacterSimple, event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)): fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number) @When an Animation Montage Notify ends
----@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
----@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
----@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
----@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
----@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
----@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
----@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()): fun() @Called upon landing when falling
----@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
-function CharacterSimple:Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
----@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
----@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
----@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
----@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
----@overload fun(self: CharacterSimple, event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify begins
----@overload fun(self: CharacterSimple, event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify ends
----@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
----@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
----@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
----@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
----@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()) @Called when Character crouches
----@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
----@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()) @Called upon landing when falling
----@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
-function CharacterSimple:Unsubscribe(event_name, callback) end
-
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
----@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
----@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
----@overload fun(event_name: "AnimationBeginNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify begins
----@overload fun(event_name: "AnimationEndNotify", callback: fun(self: CharacterSimple, notify_name: string, animation_name: string, trigger_begin_time: number, trigger_end_time: number)) @When an Animation Montage Notify ends
----@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
----@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
----@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
----@overload fun(event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
----@overload fun(event_name: "StartCrouch", callback: fun()) @Called when Character crouches
----@overload fun(event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
----@overload fun(event_name: "Land", callback: fun()) @Called upon landing when falling
----@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
-function CharacterSimple.Unsubscribe(event_name, callback) end
-
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
@@ -3375,6 +3438,201 @@ function Entity.Unsubscribe(event_name, callback) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
+---<b>Pickables</b> are special Actors which can be <b>grabbed</b>, <b>held</b> and <b>used</b> by Characters.
+---@class Pickable : Entity, Actor, Paintable
+Pickable = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
+---@param id string @Used further for removing or applying material settings on it
+---@param skeletal_mesh_path string @Path to SkeletalMesh asset to attach
+---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
+---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
+function Pickable:AddSkeletalMeshAttached(id, skeletal_mesh_path, use_parent_bounds, use_base_leader_pose_component, attachable_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Spawns and attaches a StaticMesh to this Pickable in a Socket with a relative location and rotation. Uses a custom ID to be used for removing/customizing it afterwards
+---@param id string @Unique ID to assign to the StaticMesh
+---@param static_mesh_path string @Path to StaticMesh asset to attach
+---@param socket? string @Bone socket to attach to (Default: "")
+---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
+---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
+---@param attachable_id? string @Optionally attaches this to another attached static mesh (instead of attaching to the root component) (Default: "")
+function Pickable:AddStaticMeshAttached(id, static_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, attachable_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets all Static Meshes attached to this entity
+---@return string[] @the key as the Attached ID, and the value as the Asset Path
+function Pickable:GetAllStaticMeshAttached() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets all Skeletal Meshes attached to this entity
+---@return string[] @the key as the Attached ID, and the value as the Asset Path
+function Pickable:GetAllSkeletalMeshAttached() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Removes, if it exists, a SkeletalMesh from this Pickable given its custom ID
+---@param id string @Unique ID of the SkeletalMesh to remove
+function Pickable:RemoveSkeletalMeshAttached(id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets a Static Mesh Attached location and rotation
+---@param id string @Unique ID of the StaticMesh set with AddStaticMeshAttached
+---@param relative_location Vector @New relative location
+---@param relative_rotation Rotator @New relative rotation
+function Pickable:SetStaticMeshAttachedTransform(id, relative_location, relative_rotation) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Removes, if it exists, a StaticMesh from this Pickable given its custom ID
+---@param id string @Unique ID of the StaticMesh to remove
+function Pickable:RemoveStaticMeshAttached(id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Removes all StaticMeshes attached
+function Pickable:RemoveAllStaticMeshesAttached() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Removes all SkeletalMeshes attached
+function Pickable:RemoveAllSkeletalMeshesAttached() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Pulls the usage of this Pickable (will start firing if this is a weapon)
+---@param release_use_after? number @Time in seconds to automatically release the usage (-1 will not release, 0 will release one tick after) (Default: -1)
+function Pickable:PullUse(release_use_after) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Releases the usage of this Pickable (will stop firing if this is a weapon)
+function Pickable:ReleaseUse() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets the Attachment Settings for this Pickable (how it attaches to the Character when Picking up)
+---@param relative_location Vector @Location relative to the Socket
+---@param relative_rotation? Rotator @Rotation relative to the Socket (Default: Rotator(0, 0, 0))
+---@param socket? string @Character Socket to attach to when picked up (Default: hand_r_socket)
+function Pickable:SetAttachmentSettings(relative_location, relative_rotation, socket) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets the crosshair material for this Pickable
+---@param material_asset string @Asset path to the crosshair material
+function Pickable:SetCrosshairMaterial(material_asset) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets if this Pickable can be picked up from ground by the player
+---@param is_pickable boolean 
+function Pickable:SetPickable(is_pickable) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sets if this Pickable can be used by the player when held
+---@param can_use boolean 
+function Pickable:SetCanUse(can_use) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the name of the asset this Pickable uses
+---@return string 
+function Pickable:GetMesh() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Character, if it exists, that's holding this Pickable
+---@return Character? 
+function Pickable:GetHandler() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Handling Mode of this Pickable
+---@return HandlingMode 
+function Pickable:GetHandlingMode() end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "Spawn", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)): fun(self: Pickable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
+---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
+---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
+---@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+function Pickable.Subscribe(event_name, callback) end
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(self: Pickable, event_name: "Spawn", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is spawned/created
+---@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
+---@overload fun(self: Pickable, event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)): fun(self: Pickable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
+---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
+---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
+---@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+function Pickable:Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(self: Pickable, event_name: "Spawn", callback: fun(self: Pickable)) @Triggered when an Entity is spawned/created
+---@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
+---@overload fun(self: Pickable, event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
+---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
+---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
+---@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+function Pickable:Unsubscribe(event_name, callback) end
+
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "Spawn", callback: fun(self: Pickable)) @Triggered when an Entity is spawned/created
+---@overload fun(event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
+---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
+---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
+---@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
+---@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
+function Pickable.Unsubscribe(event_name, callback) end
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
 ---Base class for all Vehicle entities.
 ---@class Vehicle : Entity, Actor, Paintable, Damageable
 Vehicle = {}
@@ -3581,201 +3839,6 @@ function Vehicle:Unsubscribe(event_name, callback) end
 function Vehicle.Unsubscribe(event_name, callback) end
 
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----<b>Pickables</b> are special Actors which can be <b>grabbed</b>, <b>held</b> and <b>used</b> by Characters.
----@class Pickable : Entity, Actor, Paintable
-Pickable = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
----@param id string @Used further for removing or applying material settings on it
----@param skeletal_mesh_path string @Path to SkeletalMesh asset to attach
----@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
----@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
----@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
-function Pickable:AddSkeletalMeshAttached(id, skeletal_mesh_path, use_parent_bounds, use_base_leader_pose_component, attachable_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Spawns and attaches a StaticMesh to this Pickable in a Socket with a relative location and rotation. Uses a custom ID to be used for removing/customizing it afterwards
----@param id string @Unique ID to assign to the StaticMesh
----@param static_mesh_path string @Path to StaticMesh asset to attach
----@param socket? string @Bone socket to attach to (Default: "")
----@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
----@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
----@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
----@param attachable_id? string @Optionally attaches this to another attached static mesh (instead of attaching to the root component) (Default: "")
-function Pickable:AddStaticMeshAttached(id, static_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, attachable_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets all Static Meshes attached to this entity
----@return string[] @the key as the Attached ID, and the value as the Asset Path
-function Pickable:GetAllStaticMeshAttached() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets all Skeletal Meshes attached to this entity
----@return string[] @the key as the Attached ID, and the value as the Asset Path
-function Pickable:GetAllSkeletalMeshAttached() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Removes, if it exists, a SkeletalMesh from this Pickable given its custom ID
----@param id string @Unique ID of the SkeletalMesh to remove
-function Pickable:RemoveSkeletalMeshAttached(id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets a Static Mesh Attached location and rotation
----@param id string @Unique ID of the StaticMesh set with AddStaticMeshAttached
----@param relative_location Vector @New relative location
----@param relative_rotation Rotator @New relative rotation
-function Pickable:SetStaticMeshAttachedTransform(id, relative_location, relative_rotation) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Removes, if it exists, a StaticMesh from this Pickable given its custom ID
----@param id string @Unique ID of the StaticMesh to remove
-function Pickable:RemoveStaticMeshAttached(id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Removes all StaticMeshes attached
-function Pickable:RemoveAllStaticMeshesAttached() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Removes all SkeletalMeshes attached
-function Pickable:RemoveAllSkeletalMeshesAttached() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Pulls the usage of this Pickable (will start firing if this is a weapon)
----@param release_use_after? number @Time in seconds to automatically release the usage (-1 will not release, 0 will release one tick after) (Default: -1)
-function Pickable:PullUse(release_use_after) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Releases the usage of this Pickable (will stop firing if this is a weapon)
-function Pickable:ReleaseUse() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets the Attachment Settings for this Pickable (how it attaches to the Character when Picking up)
----@param relative_location Vector @Location relative to the Socket
----@param relative_rotation? Rotator @Rotation relative to the Socket (Default: Rotator(0, 0, 0))
----@param socket? string @Character Socket to attach to when picked up (Default: hand_r_socket)
-function Pickable:SetAttachmentSettings(relative_location, relative_rotation, socket) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets the crosshair material for this Pickable
----@param material_asset string @Asset path to the crosshair material
-function Pickable:SetCrosshairMaterial(material_asset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets if this Pickable can be picked up from ground by the player
----@param is_pickable boolean 
-function Pickable:SetPickable(is_pickable) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sets if this Pickable can be used by the player when held
----@param can_use boolean 
-function Pickable:SetCanUse(can_use) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the name of the asset this Pickable uses
----@return string 
-function Pickable:GetMesh() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Character, if it exists, that's holding this Pickable
----@return Character? 
-function Pickable:GetHandler() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Handling Mode of this Pickable
----@return HandlingMode 
-function Pickable:GetHandlingMode() end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "Spawn", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)): fun(self: Pickable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
----@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
----@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
----@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
-function Pickable.Subscribe(event_name, callback) end
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(self: Pickable, event_name: "Spawn", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is spawned/created
----@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
----@overload fun(self: Pickable, event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)): fun(self: Pickable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
----@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
----@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
----@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
-function Pickable:Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(self: Pickable, event_name: "Spawn", callback: fun(self: Pickable)) @Triggered when an Entity is spawned/created
----@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
----@overload fun(self: Pickable, event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
----@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
----@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
----@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
-function Pickable:Unsubscribe(event_name, callback) end
-
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Spawn", callback: fun(self: Pickable)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "ValueChange", callback: fun(self: Pickable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
----@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
----@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
----@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
----@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
----@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
-function Pickable.Unsubscribe(event_name, callback) end
-
-
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
 ---A Cable represents a Physics Constraint which joins two Actors with a rope-like visual representation between them.
@@ -3931,121 +3994,6 @@ function Cable:GetAttachedStartTo() end
 ---Gets the Actor attached to End
 ---@return Actor? 
 function Cable:GetAttachedEndTo() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Configure, send and intercept chat messages.
----@class Chat
-Chat = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Adds a chat message which will display local only
----@param message string 
-function Chat.AddMessage(message) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sends a chat message to a Player only
----@param player Player @The player to receive the message
----@param message string @The message
-function Chat.SendMessage(player, message) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Configures the Chat visuals and position
----@param screen_location? Vector2D @(Default: Vector2D(-25, 0))
----@param size? Vector2D @(Default: Vector2D(600, 250))
----@param anchors_min? Vector2D @(Default: Vector2D(1, 0.5))
----@param anchors_max? Vector2D @(Default: Vector2D(1, 0.5))
----@param alignment? Vector2D @(Default: Vector2D(1, 0.5))
----@param justify? boolean @(Default: true)
----@param show_scrollbar? boolean @(Default: true)
-function Chat.SetConfiguration(screen_location, size, anchors_min, anchors_max, alignment, justify, show_scrollbar) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets if the Chat is visible or not
----@param is_visible boolean 
-function Chat.SetVisibility(is_visible) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Clears all messages
-function Chat.Clear() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Sends a chat message to all Players
----@param message string @The message to send to all Players
-function Chat.BroadcastMessage(message) end
-
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "PlayerSubmit", callback: fun(message: string, player: Player): boolean?): fun(message: string, player: Player): boolean? @Called when a player submits a message in the chat
----@overload fun(event_name: "ChatEntry", callback: fun(message: string, player?: Player)): fun(message: string, player?: Player) @Called when a new Chat Message is received, this is also triggered when new messages are sent programatically<br/><br/>This is useful for creating your own Chat interface while still use the built-in system
----@overload fun(event_name: "Open", callback: fun()): fun() @When player opens the Chat
----@overload fun(event_name: "Close", callback: fun()): fun() @When player closes the Chat
-function Chat.Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "PlayerSubmit", callback: fun(message: string, player: Player): boolean?) @Called when a player submits a message in the chat
----@overload fun(event_name: "ChatEntry", callback: fun(message: string, player?: Player)) @Called when a new Chat Message is received, this is also triggered when new messages are sent programatically<br/><br/>This is useful for creating your own Chat interface while still use the built-in system
----@overload fun(event_name: "Open", callback: fun()) @When player opens the Chat
----@overload fun(event_name: "Close", callback: fun()) @When player closes the Chat
-function Chat.Unsubscribe(event_name, callback) end
-
-
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----HTTP Requests Interface.
----@class HTTP
-HTTP = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Makes an asynchronous HTTP Request.<br/><br/>The request will be made asynchronously and returned safetly in the same thread in the callback provided when it's done.<br/><br/><b>Note:</b> If a request is still running when unloading packages, the server will freeze until it's finished, then the package will unload.
----@param uri string @The main URI (the base address)
----@param endpoint? string @The endpoint (Default: "")
----@param method? HTTPMethod @The HTTP Method to be used (Default: HTTPMethod.GET)
----@param data? string @Payload (Default: "")
----@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
----@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
----@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
----@param callback? function @The result (Default: nil)
-function HTTP.RequestAsync(uri, endpoint, method, data, content_type, compress, headers, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Makes a synchronous HTTP Request.<br/><br/>The request will be made synchronously and will freeze the server until it's done.
----@param uri string @The main URI (the base address)
----@param endpoint? string @The endpoint (Default: "")
----@param method? HTTPMethod @The HTTP Method to be used (Default: HTTPMethod.GET)
----@param data? string @Payload (Default: "")
----@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
----@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
----@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
----@return { Status: integer, Data: string } 
-function HTTP.Request(uri, endpoint, method, data, content_type, compress, headers) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the global Connection Timeout in seconds
----@param connection_timeout integer @The timeout in seconds
-function HTTP.SetConnectionTimeout(connection_timeout) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets the global Read and Write Timeout in seconds
----@param read_write_timeout integer @The timeout in seconds
-function HTTP.SetReadWriteTimeout(read_write_timeout) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
@@ -5359,71 +5307,6 @@ function Actor:Unsubscribe(event_name, callback) end
 function Actor.Unsubscribe(event_name, callback) end
 
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Work with Unreal level in runtime.
----@class Level
-Level = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Loads a Level in runtime
----@param level_name string 
----@param should_block_on_load? boolean @If this should be a blocking operation - the game will freeze (Default: false)
----@param make_visible_after_load? boolean @If this should be visible automatically after loaded (Default: true)
-function Level.LoadStreamLevel(level_name, should_block_on_load, make_visible_after_load) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Unloads a Level in runtime
----@param level_name string 
----@param should_block_on_unload? boolean @If this should be a blocking operation - the game will freeze (Default: false)
-function Level.UnloadStreamLevel(level_name, should_block_on_unload) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets a Stream Level visibility
----@param level_name string 
----@param visibility boolean @If this level should be visible
-function Level.SetStreamLevelVisibility(level_name, visibility) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets a list of all Stream Levels
----@return { name: string, path: string, is_loaded: boolean, is_visible: boolean, is_temp: boolean }[] 
-function Level.GetStreamLevels() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Calls a Level Blueprint custom event (which can be added when creating levels through Unreal Engine)
----@param event_name string @Event or Function name
----@param ...? any @Sequence of arguments to pass to the event (Default: nil)
----@return any... @the function return values
-function Level.CallLevelBlueprintEvent(event_name, ...) end
-
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is loaded
----@overload fun(event_name: "StreamLevelUnload", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is unloaded
----@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is shown
----@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is hidden
-function Level.Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)) @Called when a Stream Level is loaded
----@overload fun(event_name: "StreamLevelUnload", callback: fun(level_name: string)) @Called when a Stream Level is unloaded
----@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)) @Called when a Stream Level is shown
----@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)) @Called when a Stream Level is hidden
-function Level.Unsubscribe(event_name, callback) end
-
-
-
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
 ---Characters represents Actors which can be possessed, can move and interact with world. They are the default Skeletal Mesh Character built for nanos world.
@@ -6133,130 +6016,6 @@ function Character.Unsubscribe(event_name, callback) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
----Interaction with Post Process effects.
----@class PostProcess
-PostProcess = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Bloom Settings
----@param intensity? number @(Default: 0.675)
----@param threshold? number @(Default: -1)
-function PostProcess.SetBloom(intensity, threshold) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Chromatic Aberration Settings
----@param intensity? number @(Default: 0)
----@param start_offset? number @(Default: 0)
-function PostProcess.SetChromaticAberration(intensity, start_offset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Image Effect Settings
----@param vignette_intensity? number @(Default: 0.6)
----@param film_grain_intensity? number @(Default: 0)
-function PostProcess.SetImageEffects(vignette_intensity, film_grain_intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Exposure Settings
----@param exposure_compensation? number @(Default: 1)
----@param min_ev100? number @(Default: -10)
----@param max_ev100? number @(Default: 20)
----@param low_percent? number @(Default: 10)
----@param high_percent? number @(Default: 90)
-function PostProcess.SetExposure(exposure_compensation, min_ev100, max_ev100, low_percent, high_percent) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Film Settings
----@param slope? number @(Default: 0.8)
----@param toe? number @(Default: 0.55)
----@param shoulder? number @(Default: 0.26)
----@param black_clip? number @(Default: 0)
----@param white_clip? number @(Default: 0.3)
-function PostProcess.SetFilm(slope, toe, shoulder, black_clip, white_clip) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Saturation Colors. Use Alpha for overall Saturation intensity
----@param color Color 
-function PostProcess.SetGlobalSaturation(color) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Global Gain
----@param gain Color 
-function PostProcess.SetGlobalGain(gain) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Global Gamma
----@param gamma Color 
-function PostProcess.SetGlobalGamma(gamma) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Global Contrast
----@param contrast Color 
-function PostProcess.SetGlobalContrast(contrast) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Global Offset
----@param offset Color 
-function PostProcess.SetGlobalOffset(offset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Set Post Process Lookup Table (LUT) Texture
----@param texture_path string 
-function PostProcess.SetLookupTable(texture_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets a Post Process Material
----@param material_path string @The Material Asset to set as Post Process
-function PostProcess.SetMaterial(material_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Removes the current Post Process Material
-function PostProcess.RemoveMaterial() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Creates a reachable path into navigable space.
----@class Navigation
-Navigation = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Finds random, reachable point in navigable space restricted to radius around origin (only if map has a NavMesh)
----@param origin Vector 
----@param radius number 
----@return Vector @The random point
-function Navigation.GetRandomReachablePointInRadius(origin, radius) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Finds random, point in navigable space restricted to Radius around Origin. Resulting location is not tested for reachability from the Origin (only if map has a NavMesh)
----@param origin Vector 
----@param radius number 
----@return Vector @The random point
-function Navigation.GetRandomPointInNavigableRadius(origin, radius) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Finds a Path given Start and End location (only if map has a NavMesh)
----@param start_location Vector 
----@param end_location Vector 
----@return { IsValid: boolean, IsPartial: boolean, Length: number, Cost: number, PathPoints: Vector[] } 
-function Navigation.FindPathToLocation(start_location, end_location) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
 ---Static Class present on Client side.
 ---@class Client
 Client = {}
@@ -6429,115 +6188,74 @@ function Client.Unsubscribe(event_name, callback) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Retrieve Assets Data from Asset Packs.
----@class Assets
-Assets = {}
+---Configure, send and intercept chat messages.
+---@class Chat
+Chat = {}
 
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
----Gets a list containing information about all loaded Asset Packs
----@return { Name: string, Path: string, Author: string, Version: string }[] 
-function Assets.GetAssetPacks() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the file path of an asset
----@param asset string @The asset reference in the format <code>asset-pack::AssetKey</code>
----@param asset_type AssetType @The Asset Type
----@return string @The file path defined in the Assets.toml
-function Assets.GetAssetPath(asset, asset_type) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Animation Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetAnimations(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Blueprints Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetBlueprints(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Map Asset Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetMaps(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Materials Asset Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetMaterials(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Particle Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetParticles(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Sound Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetSounds(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Skeletal Mesh Asset Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetSkeletalMeshes(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Static Mesh Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetStaticMeshes(asset_pack_path) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list containing all Other Assets Keys from an AssetPack
----@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
-function Assets.GetOthers(asset_pack_path) end
+---Adds a chat message which will display local only
+---@param message string 
+function Chat.AddMessage(message) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
 ---
----Manually adds an Asset to be loaded during the Player's loading screen
----@param asset_path string @The Asset Key
----@param asset_type AssetType @The Asset Type
-function Assets.Precache(asset_path, asset_type) end
+---Sends a chat message to a Player only
+---@param player Player @The player to receive the message
+---@param message string @The message
+function Chat.SendMessage(player, message) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
----Initialize and set Discord activity.
----@class Discord
-Discord = {}
+---Configures the Chat visuals and position
+---@param screen_location? Vector2D @(Default: Vector2D(-25, 0))
+---@param size? Vector2D @(Default: Vector2D(600, 250))
+---@param anchors_min? Vector2D @(Default: Vector2D(1, 0.5))
+---@param anchors_max? Vector2D @(Default: Vector2D(1, 0.5))
+---@param alignment? Vector2D @(Default: Vector2D(1, 0.5))
+---@param justify? boolean @(Default: true)
+---@param show_scrollbar? boolean @(Default: true)
+function Chat.SetConfiguration(screen_location, size, anchors_min, anchors_max, alignment, justify, show_scrollbar) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
----Initializes the Discord Integration with your custom client_id
----@param client_id integer 
-function Discord.Initialize(client_id) end
+---Sets if the Chat is visible or not
+---@param is_visible boolean 
+function Chat.SetVisibility(is_visible) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
----Communicates with Discord and sets a custom user status
----@param state string 
----@param details string 
----@param large_image string 
----@param large_text string 
----@param reset_time? boolean @Whether or not to reset current activity elapsed time (Default: false)
-function Discord.SetActivity(state, details, large_image, large_text, reset_time) end
+---Clears all messages
+function Chat.Clear() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Sends a chat message to all Players
+---@param message string @The message to send to all Players
+function Chat.BroadcastMessage(message) end
+
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "PlayerSubmit", callback: fun(message: string, player: Player): boolean?): fun(message: string, player: Player): boolean? @Called when a player submits a message in the chat
+---@overload fun(event_name: "ChatEntry", callback: fun(message: string, player?: Player)): fun(message: string, player?: Player) @Called when a new Chat Message is received, this is also triggered when new messages are sent programatically<br/><br/>This is useful for creating your own Chat interface while still use the built-in system
+---@overload fun(event_name: "Open", callback: fun()): fun() @When player opens the Chat
+---@overload fun(event_name: "Close", callback: fun()): fun() @When player closes the Chat
+function Chat.Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "PlayerSubmit", callback: fun(message: string, player: Player): boolean?) @Called when a player submits a message in the chat
+---@overload fun(event_name: "ChatEntry", callback: fun(message: string, player?: Player)) @Called when a new Chat Message is received, this is also triggered when new messages are sent programatically<br/><br/>This is useful for creating your own Chat interface while still use the built-in system
+---@overload fun(event_name: "Open", callback: fun()) @When player opens the Chat
+---@overload fun(event_name: "Close", callback: fun()) @When player closes the Chat
+function Chat.Unsubscribe(event_name, callback) end
+
+
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
@@ -6643,52 +6361,208 @@ function Debug.DrawString(location, text, color, life_time, draw_shadow, font_sc
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Exposes access to registering Console Commands and Logging messages.
----@class Console
-Console = {}
+---Retrieve Assets Data from Asset Packs.
+---@class Assets
+Assets = {}
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Logs and formats a message in the console, with formatted arguments
----@param message string @Message to print
----@param ...? any @Other arguments to format with the message using string.format (Default: nil)
-function Console.Log(message, ...) end
+---Gets a list containing information about all loaded Asset Packs
+---@return { Name: string, Path: string, Author: string, Version: string }[] 
+function Assets.GetAssetPacks() end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Logs an orange warning in the console with stack information, with formatted arguments
----@param message string @Message to print
----@param ...? any @Other arguments to format with the message using string.format (Default: nil)
-function Console.Warn(message, ...) end
+---Gets the file path of an asset
+---@param asset string @The asset reference in the format <code>asset-pack::AssetKey</code>
+---@param asset_type AssetType @The Asset Type
+---@return string @The file path defined in the Assets.toml
+function Assets.GetAssetPath(asset, asset_type) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Logs a red error in the console with stack information, with formatted arguments
----@param message string @Message to print
----@param ...? any @Other arguments to format with the message using string.format (Default: nil)
-function Console.Error(message, ...) end
+---Gets a list containing all Animation Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetAnimations(asset_pack_path) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Registers a new Console Command
----@param command string @The command
----@param callback function @The callback to be called when the command is inputted
----@param description? string @The command description to display in the console (Default: "")
----@param parameters? string[] @The list of supported parameters to display in the console (Default: {})
-function Console.RegisterCommand(command, callback, description, parameters) end
+---Gets a list containing all Blueprints Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetBlueprints(asset_pack_path) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Runs a Console Command programmatically (only scripting-registered commands can be triggered)
----@param command string @The command
-function Console.RunCommand(command) end
+---Gets a list containing all Map Asset Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetMaps(asset_pack_path) end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
 ---
----Logs a debug message in the console, with formatted arguments. Outputted only when the current log level is Debug or Verbose
----@param message string @Message to print
----@param ...? any @Other arguments to format with the message using string.format (Default: nil)
-function Console.Debug(message, ...) end
+---Gets a list containing all Materials Asset Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetMaterials(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list containing all Particle Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetParticles(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list containing all Sound Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetSounds(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list containing all Skeletal Mesh Asset Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetSkeletalMeshes(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list containing all Static Mesh Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetStaticMeshes(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list containing all Other Assets Keys from an AssetPack
+---@param asset_pack_path string @The Asset Pack path to get the assets
+---@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+function Assets.GetOthers(asset_pack_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Manually adds an Asset to be loaded during the Player's loading screen
+---@param asset_path string @The Asset Key
+---@param asset_type AssetType @The Asset Type
+function Assets.Precache(asset_path, asset_type) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Creates a reachable path into navigable space.
+---@class Navigation
+Navigation = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Finds random, reachable point in navigable space restricted to radius around origin (only if map has a NavMesh)
+---@param origin Vector 
+---@param radius number 
+---@return Vector @The random point
+function Navigation.GetRandomReachablePointInRadius(origin, radius) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Finds random, point in navigable space restricted to Radius around Origin. Resulting location is not tested for reachability from the Origin (only if map has a NavMesh)
+---@param origin Vector 
+---@param radius number 
+---@return Vector @The random point
+function Navigation.GetRandomPointInNavigableRadius(origin, radius) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Finds a Path given Start and End location (only if map has a NavMesh)
+---@param start_location Vector 
+---@param end_location Vector 
+---@return { IsValid: boolean, IsPartial: boolean, Length: number, Cost: number, PathPoints: Vector[] } 
+function Navigation.FindPathToLocation(start_location, end_location) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Class which represents the current Package
+---@class Package
+Package = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Makes any variable available in the global scope
+---@param variable_name string @Name of the variable to export
+---@param value any @Value to be set in the global scope
+function Package.Export(variable_name, value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Includes new .lua files<br/><br/>We currently support 5 searchers, which are looked in the following order:<br/><ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol>
+---@param script_file string @Path to the script file to require
+---@param force_load? boolean @Whether to force loading this file even if it was already loaded (Default: false)
+---@return any @Any return values from the included file
+function Package.Require(script_file, force_load) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets a Persistent Value which will be saved to disk. Note the actual flush to disk is deferred and may not occur immediately
+---@param key string @Key to index data into. It can be separated by '.' to set a child element.
+---@param value any @Value to set at the key
+function Package.SetPersistentData(key, value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list of all files in this package, optionally with filters
+---@param path_filter? string @Path filter (Default: "")
+---@return string[] @List of directories
+function Package.GetDirectories(path_filter) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets a list of all files in this package, optionally with filters
+---@param path_filter? string|table @Path filter (Default: "")
+---@param extension_filter? string @Example: <code>.lua</code> (Default: "")
+---@return string[] @List of files
+function Package.GetFiles(path_filter, extension_filter) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the package name/path
+---@return string @The package name/path
+function Package.GetName() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the package title
+---@return string @The package title
+function Package.GetTitle() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the package version
+---@return string @The package version
+function Package.GetVersion() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the package compatibility version
+---@return string @The package compatibility version
+function Package.GetCompatibilityVersion() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Persistent Value from the disk
+---@param key? string @The key to get the data (Default: "")
+---@return table @Persistent values from disk
+function Package.GetPersistentData(key) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Flushes the Persistent Data pending changes to disk immediately
+function Package.FlushPersistentData() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns whether this package is currently unloading
+---@return boolean 
+function Package.IsUnloading() end
 
 
 
@@ -6696,22 +6570,142 @@ function Console.Debug(message, ...) end
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
----@overload fun(event_name: "PlayerSubmit", callback: fun(text: string)): fun(text: string) @Called when a console command is submitted
----@overload fun(event_name: "LogEntry", callback: fun(text: string, type: LogType)): fun(text: string, type: LogType) @Called when a log is received
----@overload fun(event_name: "Open", callback: fun()): fun() @When player opens the Console
----@overload fun(event_name: "Close", callback: fun()): fun() @When player closes the Console
-function Console.Subscribe(event_name, callback) end
+---@overload fun(event_name: "Load", callback: fun()): fun() @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
+---@overload fun(event_name: "Unload", callback: fun()): fun() @Called when this package is unloaded
+function Package.Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "PlayerSubmit", callback: fun(text: string)) @Called when a console command is submitted
----@overload fun(event_name: "LogEntry", callback: fun(text: string, type: LogType)) @Called when a log is received
----@overload fun(event_name: "Open", callback: fun()) @When player opens the Console
----@overload fun(event_name: "Close", callback: fun()) @When player closes the Console
-function Console.Unsubscribe(event_name, callback) end
+---@overload fun(event_name: "Load", callback: fun()) @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
+---@overload fun(event_name: "Unload", callback: fun()) @Called when this package is unloaded
+function Package.Unsubscribe(event_name, callback) end
 
 
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Work with Unreal level in runtime.
+---@class Level
+Level = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Loads a Level in runtime
+---@param level_name string 
+---@param should_block_on_load? boolean @If this should be a blocking operation - the game will freeze (Default: false)
+---@param make_visible_after_load? boolean @If this should be visible automatically after loaded (Default: true)
+function Level.LoadStreamLevel(level_name, should_block_on_load, make_visible_after_load) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Unloads a Level in runtime
+---@param level_name string 
+---@param should_block_on_unload? boolean @If this should be a blocking operation - the game will freeze (Default: false)
+function Level.UnloadStreamLevel(level_name, should_block_on_unload) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets a Stream Level visibility
+---@param level_name string 
+---@param visibility boolean @If this level should be visible
+function Level.SetStreamLevelVisibility(level_name, visibility) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets a list of all Stream Levels
+---@return { name: string, path: string, is_loaded: boolean, is_visible: boolean, is_temp: boolean }[] 
+function Level.GetStreamLevels() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Calls a Level Blueprint custom event (which can be added when creating levels through Unreal Engine)
+---@param event_name string @Event or Function name
+---@param ...? any @Sequence of arguments to pass to the event (Default: nil)
+---@return any... @the function return values
+function Level.CallLevelBlueprintEvent(event_name, ...) end
+
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is loaded
+---@overload fun(event_name: "StreamLevelUnload", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is unloaded
+---@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is shown
+---@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is hidden
+function Level.Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)) @Called when a Stream Level is loaded
+---@overload fun(event_name: "StreamLevelUnload", callback: fun(level_name: string)) @Called when a Stream Level is unloaded
+---@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)) @Called when a Stream Level is shown
+---@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)) @Called when a Stream Level is hidden
+function Level.Unsubscribe(event_name, callback) end
+
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Initialize and set Discord activity.
+---@class Discord
+Discord = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Initializes the Discord Integration with your custom client_id
+---@param client_id integer 
+function Discord.Initialize(client_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Communicates with Discord and sets a custom user status
+---@param state string 
+---@param details string 
+---@param large_image string 
+---@param large_text string 
+---@param reset_time? boolean @Whether or not to reset current activity elapsed time (Default: false)
+function Discord.SetActivity(state, details, large_image, large_text, reset_time) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A Matrix is an array of numbers this can be used for geometric and positional calculations. This is mainly used internally.
+---@class Matrix
+---@overload fun(rotation: Rotator, origin: Vector): Matrix
+Matrix = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Transform the vector with the matrix
+---@param vector Vector @The vector who will be transformed
+---@return Vector @The new vector
+function Matrix:TransformVector(vector) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a new matrix transposed (<a href="https://en.wikipedia.org/wiki/Transpose">Wikipedia</a>)
+---@return Matrix @The matrix transpoosed
+function Matrix:GetTransposed() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Interact with Steam APIs.
+---@class Steam
+Steam = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets Steam Rich Presence text
+---@param text string 
+function Steam.SetRichPresence(text) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Triggers a Steam screenshot
+function Steam.TriggerScreenshot() end
 
 ---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
 ---
@@ -6870,6 +6864,1257 @@ function Input.Subscribe(event_name, callback) end
 ---@overload fun(event_name: "MouseMove", callback: fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number)) @Called when the mouse moves
 ---@overload fun(event_name: "MouseScroll", callback: fun(mouse_x: number, mouse_y: number, delta: number)) @Called when the mouse scrolls
 function Input.Unsubscribe(event_name, callback) end
+
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Execute code at specified time intervals.
+---@class Timer
+Timer = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Executes a function, after waiting a specified number of milliseconds
+---@param callback function @The callback that will be executed
+---@param milliseconds? integer @The time in milliseconds to wait before executing the function (Default: 0)
+---@param ...? any @Additional parameters to pass to the function (Default: nil)
+---@return integer @the timeout_id
+function Timer.SetTimeout(callback, milliseconds, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Same as SetTimeout(), but repeats the execution of the function continuously
+---@param callback function @The callback that will be executed.<br/>Return false to stop it from being called.
+---@param milliseconds? integer @The time in milliseconds the timer should delay in between executions of the specified function (Default: 0)
+---@param ...? any @Additional parameters to pass to the function (Default: nil)
+---@return integer @the interval_id
+function Timer.SetInterval(callback, milliseconds, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Stops the execution of the function specified in SetTimeout()
+---@param timeout_id integer @The ID value returned by SetTimeout() is used as the parameter for this method
+function Timer.ClearTimeout(timeout_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Stops the execution of the function specified in SetInterval()
+---@param interval_id integer @The ID value returned by SetInterval() is used as the parameter for this method
+function Timer.ClearInterval(interval_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Binds a Timer to any Actor. The timer will be automatically cleared when the Actor is destroyed
+---@param timer_id integer @The Timer ID
+---@param actor Actor @Actor to be bound
+function Timer.Bind(timer_id, actor) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Checks if a Timer is currently active or waiting to be triggered
+---@param timer_id integer @The Timer ID
+---@return boolean 
+function Timer.IsValid(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the time elapsed since the last tick
+---@param timer_id integer @The Timer ID
+---@return integer 
+function Timer.GetElapsedTime(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the time remaining to the next tick
+---@param timer_id integer @The Timer ID
+---@return integer 
+function Timer.GetRemainingTime(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Pauses the Timer
+---@param timer_id integer @The Timer ID
+function Timer.Pause(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Resumes the Timer
+---@param timer_id integer @The Timer ID
+function Timer.Resume(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Resets a Timer to restart from beginning
+---@param timer_id integer @The Timer ID
+function Timer.ResetElapsedTime(timer_id) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---HTTP Requests Interface.
+---@class HTTP
+HTTP = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Makes an asynchronous HTTP Request.<br/><br/>The request will be made asynchronously and returned safetly in the same thread in the callback provided when it's done.<br/><br/><b>Note:</b> If a request is still running when unloading packages, the server will freeze until it's finished, then the package will unload.
+---@param uri string @The main URI (the base address)
+---@param endpoint? string @The endpoint (Default: "")
+---@param method? HTTPMethod @The HTTP Method to be used (Default: HTTPMethod.GET)
+---@param data? string @Payload (Default: "")
+---@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
+---@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
+---@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
+---@param callback? function @The result (Default: nil)
+function HTTP.RequestAsync(uri, endpoint, method, data, content_type, compress, headers, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Makes a synchronous HTTP Request.<br/><br/>The request will be made synchronously and will freeze the server until it's done.
+---@param uri string @The main URI (the base address)
+---@param endpoint? string @The endpoint (Default: "")
+---@param method? HTTPMethod @The HTTP Method to be used (Default: HTTPMethod.GET)
+---@param data? string @Payload (Default: "")
+---@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
+---@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
+---@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
+---@return { Status: integer, Data: string } 
+function HTTP.Request(uri, endpoint, method, data, content_type, compress, headers) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the global Connection Timeout in seconds
+---@param connection_timeout integer @The timeout in seconds
+function HTTP.SetConnectionTimeout(connection_timeout) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Sets the global Read and Write Timeout in seconds
+---@param read_write_timeout integer @The timeout in seconds
+function HTTP.SetReadWriteTimeout(read_write_timeout) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Interaction with Post Process effects.
+---@class PostProcess
+PostProcess = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Bloom Settings
+---@param intensity? number @(Default: 0.675)
+---@param threshold? number @(Default: -1)
+function PostProcess.SetBloom(intensity, threshold) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Chromatic Aberration Settings
+---@param intensity? number @(Default: 0)
+---@param start_offset? number @(Default: 0)
+function PostProcess.SetChromaticAberration(intensity, start_offset) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Image Effect Settings
+---@param vignette_intensity? number @(Default: 0.6)
+---@param film_grain_intensity? number @(Default: 0)
+function PostProcess.SetImageEffects(vignette_intensity, film_grain_intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Exposure Settings
+---@param exposure_compensation? number @(Default: 1)
+---@param min_ev100? number @(Default: -10)
+---@param max_ev100? number @(Default: 20)
+---@param low_percent? number @(Default: 10)
+---@param high_percent? number @(Default: 90)
+function PostProcess.SetExposure(exposure_compensation, min_ev100, max_ev100, low_percent, high_percent) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Film Settings
+---@param slope? number @(Default: 0.8)
+---@param toe? number @(Default: 0.55)
+---@param shoulder? number @(Default: 0.26)
+---@param black_clip? number @(Default: 0)
+---@param white_clip? number @(Default: 0.3)
+function PostProcess.SetFilm(slope, toe, shoulder, black_clip, white_clip) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Saturation Colors. Use Alpha for overall Saturation intensity
+---@param color Color 
+function PostProcess.SetGlobalSaturation(color) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Global Gain
+---@param gain Color 
+function PostProcess.SetGlobalGain(gain) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Global Gamma
+---@param gamma Color 
+function PostProcess.SetGlobalGamma(gamma) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Global Contrast
+---@param contrast Color 
+function PostProcess.SetGlobalContrast(contrast) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Global Offset
+---@param offset Color 
+function PostProcess.SetGlobalOffset(offset) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Set Post Process Lookup Table (LUT) Texture
+---@param texture_path string 
+function PostProcess.SetLookupTable(texture_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets a Post Process Material
+---@param material_path string @The Material Asset to set as Post Process
+function PostProcess.SetMaterial(material_path) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Removes the current Post Process Material
+function PostProcess.RemoveMaterial() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Subscribe for user-defined Events.
+---@class Events
+Events = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Calls an Event which will be triggered in all Local Packages
+---@param event_name string @The Event Name to trigger the event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.Call(event_name, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Calls an Event if on Client which will be triggered in all Server Packages
+---@param event_name string @The Event Name to trigger the event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.CallRemote(event_name, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Calls an Event if on Server which will be triggered in all Client's Packages of a specific Player
+---@param event_name string @The Event Name to trigger the event
+---@param player Player @The remote player to send this event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.CallRemote(event_name, player, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Calls an Event on Server which will be triggered in all Client's Packages of all Players
+---@param event_name string @The Event Name to trigger the event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.BroadcastRemote(event_name, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
+---
+---Calls an Event on Server which will be triggered in all Client's Packages of all Players in that dimension
+---@param dimension integer @The Dimension to send this event
+---@param event_name string @The Event Name to trigger the event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.BroadcastRemoteDimension(dimension, event_name, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Subscribes for an user-created event which will be triggered for only local called events
+---@param event_name string @The Event Name to subscribe
+---@param callback function @The callback function to execute
+---@return function @the subscribed callback itself
+function Events.Subscribe(event_name, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Subscribes for an user-created event which will be triggered for only remote called events
+---@param event_name string @The Event Name to subscribe
+---@param callback function @The callback function to execute
+---@return function @the subscribed callback itself
+function Events.SubscribeRemote(event_name, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Unsubscribes from all subscribed events in this Package with that event name, optionally passing the function to unsubscribe only that callback
+---@param event_name string @The Event Name to unsubscribe
+---@param callback? function @The callback function to unsubscribe (Default: nil)
+function Events.Unsubscribe(event_name, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Unsubscribes from all subscribed remote events in this Package with that event name, optionally passing the function to unsubscribe only that callback
+---@param event_name string @The Event Name to unsubscribe
+---@param callback? function @The callback function to unsubscribe (Default: nil)
+function Events.UnsubscribeRemote(event_name, callback) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A Vector2D composed of components (X, Y) with floating point precision. Used mainly for HUD and Drawing on screen.
+---@class Vector2D
+---@field X number @X Coordinate
+---@field Y number @Y Coordinate
+---@operator add(Vector2D|number): Vector2D
+---@operator sub(Vector2D|number): Vector2D
+---@operator mul(Vector2D|number): Vector2D
+---@operator div(Vector2D|number): Vector2D
+---@overload fun(X?: number, Y?: number): Vector2D
+Vector2D = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A Vector composed of components (X, Y, Z) with floating point precision. Used mainly for entity position.
+---@class Vector
+---@field X number @X Coordinate
+---@field Y number @Y Coordinate
+---@field Z number @Z Coordinate
+---@operator add(Vector|number): Vector
+---@operator sub(Vector|number): Vector
+---@operator mul(Vector|number): Vector
+---@operator div(Vector|number): Vector
+---@operator pow(Vector|number): Vector
+---@overload fun(X?: number, Y?: number, Z?: number): Vector
+Vector = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Check if the vector is equal to another vector, within specified error limits
+---@param other Vector @The vector to compare to
+---@param tolerance? number @The error limits (Default: 0.000001)
+---@return boolean @Are the vectors equal or not
+function Vector:Equals(other, tolerance) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the distance of 2 vectors
+---@param other Vector @The vector to get the distance to
+---@return number @The distance betweem the vectors
+function Vector:Distance(other) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Return the squared distance of 2 vectors
+---@param other Vector @The vector to get the squared distance to
+---@return number @The squared distance betweem the vectors
+function Vector:DistanceSquared(other) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the normalized version of vector without checking for zero length
+---@return Vector @The unsafe normal
+function Vector:GetUnsafeNormal() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a normalized copy of the vector, checking it is safe to do so based on the length
+---@return Vector @The safe normal
+function Vector:GetSafeNormal() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Efficiently checks whether vector is near to another vector within a specified radius
+---@param other Vector @The vector to compare to
+---@param radius number @The radius to check
+---@return boolean @If the vector is near to the other vector
+function Vector:IsNear(other, radius) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Checks whether vector is near to zero within a specified tolerance
+---@param tolerance? number @The error limits (Default: 0.000001)
+---@return boolean @If the bool is near to zero
+function Vector:IsNearlyZero(tolerance) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Checks whether all components of the vector are exactly zero
+---@return boolean @If all components of the vector are exactly zero
+function Vector:IsZero() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Normalize this vector in-place if it is larger than a given tolerance. Leaves it unchanged if not
+---@return boolean @If the vector has been modified
+function Vector:Normalize() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the length (magnitude) of this vector
+---@return number @The lenght of the vector
+function Vector:Size() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the squared length of this vector
+---@return number @The squared length of the vector
+function Vector:SizeSquared() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Return the Rotator orientation corresponding to the direction in which the vector points
+---@return Rotator @The orientation of the vector
+function Vector:ToOrientationRotator() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Return the Quaternion orientation corresponding to the direction in which the vector points
+---@return Quat @The orientation of the vector
+function Vector:ToOrientationQuat() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the dot product between this vector and another vector
+---@param other Vector @The vector to dot with
+---@return number @the dot product
+function Vector:Dot(other) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the cross product between this vector and another vector
+---@param other Vector @The vector to cross with
+---@return Vector @the cross product vector
+function Vector:Cross(other) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A table containing useful and aux functions.
+---@class NanosUtils
+NanosUtils = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns if an entity is valid
+---@param entity any @Entity to verify
+---@return boolean @if the entity is valid
+function NanosUtils.IsEntityValid(entity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Benchmarks a function performance, outputs in the console the elapsed time
+---@param name string @Benchmark name to output
+---@param amount number @Amount of times to loop
+---@param func function @The function to call
+---@param ... any @The arguments of the function to call
+---@return number @the elapsed time in milliseconds
+function NanosUtils.Benchmark(name, amount, func, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---TOML library.
+---@class TOML
+TOML = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a string representing value encoded in TOML
+---@param value table @the table that will become TOML
+---@return string @the table in TOML
+function TOML.Dump(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a value representing the decoded TOML string
+---@param value string @the TOML that will become a table
+---@return any @the TOML in table
+function TOML.Parse(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Interact with built-in Sky & Weather system.
+---@class Sky
+Sky = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Replaces all Sky/Sun actors with the Ultra Dynamic Sky Actor, to be able to use the functions from this page. Internally this calls <code>Sky.DestroyAllSky()</code> automatically
+---@param spawn_weather? boolean @Whether or not to spawn the Weather Actor (to be able to use Weather related methods) (Default: false)
+---@param find_existing? boolean @Whether or not to try to find existing Sky & Weather Actors spawned in the map, using their references instead (Default: true)
+---@return boolean @true if an existing Ultra Dynamic Sky Actor was found in the map and its reference was used, false if a new one was spawned
+function Sky.Spawn(spawn_weather, find_existing) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Destroys all Directional Lights, Sky Lights, Exponential Height Fogs, Volumetric Clouds, Sky Atmosphere, Ultra Dynamic Sky Actors and all Actors with the <code>Sun</code> Actor Tag from the Level
+function Sky.DestroyAllSky() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Reconstruct the Ultra Dynamic Sky Actor, forces most of the changes to be applied
+function Sky.Reconstruct() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Texture<br /><br />Set it to empty to restore the default. After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
+---@param texture string 
+function Sky.SetMoonTexture(texture) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Texture Rotation
+---@param rotation number 
+function Sky.SetMoonTextureRotation(rotation) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Vertical Offset
+---@param offset number 
+function Sky.SetMoonVerticalOffset(offset) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Scale
+---@param scale number 
+function Sky.SetMoonScale(scale) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Angle
+---@param yaw number 
+---@param pitch number 
+function Sky.SetMoonAngle(yaw, pitch) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Phase
+---@param phase number @Ranges from 0-30
+function Sky.SetMoonPhase(phase) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Glow Intensity
+---@param glow_intensity number 
+function Sky.SetMoonGlowIntensity(glow_intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Moon Light Intensity
+---@param intensity number 
+function Sky.SetMoonLightIntensity(intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Sun Angle
+---@param yaw number 
+---@param pitch number 
+function Sky.SetSunAngle(yaw, pitch) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Sun Scale
+---@param radius number 
+function Sky.SetSunScale(radius) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Sun Light Intensity
+---@param intensity number 
+function Sky.SetSunLightIntensity(intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Sky Mode<br /><br />After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
+---@param sky_mode SkyMode 
+function Sky.SetSkyMode(sky_mode) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Volumetric Cloud Color<br /><br />This is only applied if <code>SetSkyMode(SkyMode.VolumetricClouds)</code> is set
+---@param color Color 
+function Sky.SetVolumetricCloudColor(color) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---The amount of coverage for the cloud layer, from a clear sky to overcast
+---@param cloud_coverage number 
+function Sky.SetCloudCoverage(cloud_coverage) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---The fogginess of the scene. The impact this has on fog density is scaled from the Fog Density category
+---@param fog_percentage number 
+function Sky.SetFog(fog_percentage) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---A simple contrast boost for the sky material. Cannot affect volumetric clouds
+---@param contrast number 
+function Sky.SetContrast(contrast) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---The overall brightness of the shader
+---@param intensity number 
+function Sky.SetOverallIntensity(intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Can be used to scale the brightness of the sky and lighting, at night
+---@param brightness number 
+function Sky.SetNightBrightness(brightness) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets whether or not to animate the time of day
+---@param animate boolean @Whether or not to animate the time of day
+---@param day_length? number @The time (in minutes) from sunrise to sunset (Default: 30.0)
+---@param night_length? number @The time (in minutes) from sunset to sunrise (Default: 15.0)
+function Sky.SetAnimateTimeOfDay(animate, day_length, night_length) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the current time
+---@param hours integer 
+---@param minutes integer 
+function Sky.SetTimeOfDay(hours, minutes) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets the current time
+---@return integer 
+---@return integer 
+---@return integer 
+function Sky.GetTimeOfDay() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Returns if the Ultra Dynamic Sky was spawned
+---@param including_weather boolean @if to check for Weather Actor too
+---@return boolean 
+function Sky.IsSpawned(including_weather) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets the current weather
+---@return WeatherType 
+function Sky.GetWeather() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Changes the Weather
+---@param weather WeatherType @weather to change
+---@param transition_time number @fade time to completely change to new weather
+function Sky.ChangeWeather(weather, transition_time) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---JSON library.
+---@class JSON
+JSON = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a string representing value encoded in JSON
+---@param value table @the table that will become JSON
+---@return string @the table in JSON
+function JSON.stringify(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a value representing the decoded JSON string
+---@param value string @the JSON that will become a table
+---@return any @the json in table
+function JSON.parse(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Work with screen properties and effects.
+---@class Viewport
+Viewport = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Transforms a 3D world-space vector into 2D screen coordinates
+---@param world_position Vector @World 3D position
+---@return Vector2D 
+function Viewport.ProjectWorldToScreen(world_position) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Transforms a 2D screen coordinates into 3D world-space location
+---@param screen_position Vector2D @Screen position
+---@return { Position: Vector, Direction: Vector } 
+function Viewport.DeprojectScreenToWorld(screen_position) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Loads and sets a hardware cursor in the game from a PNG image<br/>Note: due an engine limitation modifying an already set cursor image will not change the cursor until the game is restarted
+---@param cursor_shape CursorType 
+---@param cursor_path string @a PNG image relative to Assets/
+---@param hotspot? Vector2D @(Default: Vector(0, 0))
+function Viewport.SetHardwareCursor(cursor_shape, cursor_path, hotspot) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets the size of viewport
+---@return Vector2D @The size of viewport
+function Viewport.GetViewportSize() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets the scale of viewport
+---@return number @The scale of viewport
+function Viewport.GetViewportScale() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the mouse position
+---@param new_position Vector2D 
+function Viewport.SetMousePosition(new_position) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Gets the current mouse screen location
+---@return Vector2D @The current mouse screen location
+function Viewport.GetMousePosition() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Enables/Disables the Crosshair
+---@param is_enabled boolean 
+function Viewport.SetCrosshairEnabled(is_enabled) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Enables/Disables the Interaction ToolTip
+---@param is_enabled boolean 
+function Viewport.SetInteractionToolTipEnabled(is_enabled) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Enables/Disables the Blood Screen effect
+---@param is_enabled boolean 
+function Viewport.SetBloodScreenEnabled(is_enabled) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---If you want the Blood Screen to do not be overridden, disable it with <code>Client.SetBloodScreenEnabled(false)</code> before
+---@param intensity number @From 0.0 to 1.0
+function Viewport.SetBloodScreenIntensity(intensity) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Sets the Branding Bar settings (the bar with 'nanos world - closed alpha ver...')
+---@param horizontal_alignment WidgetHorizontalAlignment @Left, Center and Right supported
+---@param vertical_alignment WidgetVerticalAlignment @Bottom and Top supported
+---@param is_lean? boolean @Whether to show less information (Default: false)
+function Viewport.SetBrandingBarSettings(horizontal_alignment, vertical_alignment, is_lean) end
+
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "Resize", callback: fun(new_size: Vector2D)): fun(new_size: Vector2D) @Called when the screen is resized
+function Viewport.Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "Resize", callback: fun(new_size: Vector2D)) @Called when the screen is resized
+function Viewport.Unsubscribe(event_name, callback) end
+
+
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A container for rotation information (Pitch, Yaw, Roll). All rotation values are stored in degrees.
+---@class Rotator
+---@field Pitch number @Rotation around the right axis (around Y axis), Looking up and down (0=Straight Ahead, +Up, -Down)
+---@field Yaw number @Rotation around the up axis (around Z axis), Running in circles 0=East, +North, -South.
+---@field Roll number @Rotation around the forward axis (around X axis), Tilting your head, 0=Straight, +Clockwise, -CCW.
+---@operator add(Rotator|number): Rotator
+---@operator sub(Rotator|number): Rotator
+---@operator mul(Rotator|number): Rotator
+---@overload fun(pitch?: number, yaw?: number, roll?: number): Rotator
+Rotator = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Generates a random rotation, with optional random roll
+---@param roll? boolean @Whether to use a random roll in the rotator, otherwise uses 0 for roll (Default: false)
+---@param min? number @Minimum value (Default: -180)
+---@param max? number @Maximum value (Default: 180)
+---@return Rotator @the random rotation
+function Rotator.Random(roll, min, max) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the forward (X) unit direction vector from this component, in world space.
+---@return Vector @the forward direction
+function Rotator:GetForwardVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the right (Y) unit direction vector from this component, in world space.
+---@return Vector @the right direction
+function Rotator:GetRightVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get the up (Z) unit direction vector from this component, in world space.
+---@return Vector @the up direction
+function Rotator:GetUpVector() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Rotate a vector rotated by this rotator.
+---@param vector Vector @the vector to rotate by the Rotator
+---@return Vector @the rotated vector
+function Rotator:RotateVector(vector) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---In-place normalize, removes all winding and creates the âshortest routeâ rotation.
+function Rotator:Normalize() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the vector rotated by the inverse of this rotator.
+---@param vector Vector @The vector to rotate by the inverse of the Rotator
+---@return Vector @the unrotated vector
+function Rotator:UnrotateVector(vector) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Get Rotation as a quaternion.
+---@return Quat @the rotation as a quaternion
+function Rotator:Quaternion() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a new Rotator normalized.
+---@return Rotator @the normalized Rotator
+function Rotator:GetNormalized() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Checks whether rotator is near to zero within a specified tolerance
+---@param tolerance? number @Tolerance to check (Default: 0.000001)
+---@return boolean @whether the rotator is nearly zero
+function Rotator:IsNearlyZero(tolerance) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Checks whether all components of the rotator are exactly zero
+---@return boolean @whether the rotator is exactly zero
+function Rotator:IsZero() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A table containing useful and aux table functions.
+---@class NanosTable
+NanosTable = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Dumps a table into a readable text
+---@param table table @Table to dump
+---@return string @the table as readable text
+function NanosTable.Dump(table) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Performs a shallow copy of a table
+---@param table table @The table to shallow copy
+---@return table @the copied table
+function NanosTable.ShallowCopy(table) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a ray against the world and get collided objects information.
+---@class Trace
+Trace = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a ray against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
+---@param start_location Vector @Start location of the ray
+---@param end_location Vector @End location of the ray
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+function Trace.LineSingle(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a ray against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
+---@param start_location Vector @Start location of the ray
+---@param end_location Vector @End location of the ray
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+function Trace.LineMulti(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a sphere against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
+---@param start_location Vector @Start location of the sphere
+---@param end_location Vector @End location of the sphere
+---@param radius number @Radius of the sphere
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+function Trace.SphereSingle(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a sphere against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
+---@param start_location Vector @Start location of the sphere
+---@param end_location Vector @End location of the sphere
+---@param radius number @Radius of the sphere
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+function Trace.SphereMulti(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a box against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
+---@param start_location Vector @Start location of the box
+---@param end_location Vector @End location of the box
+---@param half_size Vector @Distance from the center of box along each axis
+---@param orientation Rotator @Orientation of the box
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+function Trace.BoxSingle(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a box against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
+---@param start_location Vector @Start location of the box
+---@param end_location Vector @End location of the box
+---@param half_size Vector @Distance from the center of box along each axis
+---@param orientation Rotator @Orientation of the box
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+function Trace.BoxMulti(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a capsule against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
+---@param start_location Vector @Start location of the capsule
+---@param end_location Vector @End location of the capsule
+---@param radius number @Radius of the capsule to sweep
+---@param half_height number @Distance from center of capsule to tip of hemisphere endcap.
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+function Trace.CapsuleSingle(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
+---
+---Trace a capsule against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
+---@param start_location Vector @Start location of the capsule
+---@param end_location Vector @End location of the capsule
+---@param radius number @Radius of the capsule to sweep
+---@param half_height number @Distance from center of capsule to tip of hemisphere endcap.
+---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
+---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
+---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+function Trace.CapsuleMulti(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A table containing useful and aux Math functions.
+---@class NanosMath
+NanosMath = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Rounds a number
+---@param value number @The number to be rounded
+---@return number @the rounded number
+function NanosMath.Round(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Clamps a number
+---@param value number @The number to be clamped
+---@param min number @The min value
+---@param max number @The max value
+---@return number @the number clamped
+function NanosMath.Clamp(value, min, max) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Clamps an angle to the range of [0, 360]
+---@param value number @The number to be clamped
+---@return number @the number clamped
+function NanosMath.ClampAxis(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Clamps an angle to the range of [-180, 180]
+---@param value number @The number to be clamped
+---@return number @the number clamped
+function NanosMath.NormalizeAxis(value) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Calculates the location and rotation relative to an actor
+---@param location Vector @The location of the new system
+---@param rotation Rotator @The rotation of the new system
+---@param actor Actor @The actor to be translated to the new system
+---@return Vector @the location relative to the actor
+---@return Rotator @the rotation relative to the actor
+function NanosMath.RelativeTo(location, rotation, actor) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Takes a local position and rotation relative to an actor, applies the actor's location, rotation, and scale to compute world-space location and rotation.
+---@param local_location Vector @The local location to convert
+---@param local_rotation Rotator @The local rotation to convert
+---@param actor Actor @The actor whose transform defines the local space
+---@return Vector @the location in world coordinates
+---@return Rotator @the rotation in world coordinates
+function NanosMath.LocalToWorld(local_location, local_rotation, actor) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a random float value
+---@param min number @Minimum value
+---@param max number @Maximum value
+---@return number @the random value
+function NanosMath.RandomFloat(min, max) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Interpolate number from Current to Target
+---@param current number 
+---@param target number 
+---@param delta_time number 
+---@param interp_speed number 
+---@return number 
+function NanosMath.FInterpTo(current, target, delta_time, interp_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Interpolate Rotator from Current to Target
+---@param current Rotator 
+---@param target Rotator 
+---@param delta_time number 
+---@param interp_speed number 
+---@return Rotator 
+function NanosMath.RInterpTo(current, target, delta_time, interp_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Interpolate Rotator from Current to Target with a constant step
+---@param current Rotator 
+---@param target Rotator 
+---@param delta_time number 
+---@param interp_speed number 
+---@return Rotator 
+function NanosMath.RInterpConstantTo(current, target, delta_time, interp_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Interpolate Vector from Current to Target
+---@param current Vector 
+---@param target Vector 
+---@param delta_time number 
+---@param interp_speed number 
+---@return Vector 
+function NanosMath.VInterpTo(current, target, delta_time, interp_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Interpolate Vector from Current to Target with a constant step
+---@param current Vector 
+---@param target Vector 
+---@param delta_time number 
+---@param interp_speed number 
+---@return Vector 
+function NanosMath.VInterpConstantTo(current, target, delta_time, interp_speed) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---A color composed of components (R, G, B, A) with floating point precision.
+---@class Color
+---@field R number @Red color percentage (0-1)
+---@field G number @Green color percentage (0-1)
+---@field B number @Blue color percentage (0-1)
+---@field A number @Alpha transparency percentage (0-1)
+---@operator add(Color|number): Color
+---@operator sub(Color|number): Color
+---@operator mul(Color|number): Color
+---@operator div(Color|number): Color
+---@overload fun(R?: number, G?: number, B?: number, A?: number): Color
+Color = {}
+Color.WHITE = Color(1, 1, 1)
+Color.BLACK = Color(0, 0, 0)
+Color.TRANSPARENT = Color(0, 0, 0, 0)
+Color.RED = Color(1, 0, 0)
+Color.GREEN = Color(0, 1, 0)
+Color.BLUE = Color(0, 0, 1)
+Color.YELLOW = Color(1, 1, 0)
+Color.CYAN = Color(0, 1, 1)
+Color.MAGENTA = Color(1, 0, 1)
+Color.ORANGE = Color(1, 0.5, 0)
+Color.CHARTREUSE = Color(0.5, 1, 1)
+Color.AQUAMARINE = Color(0, 1, 0.5)
+Color.AZURE = Color(0, 0.5, 1)
+Color.VIOLET = Color(0.5, 0, 1)
+Color.ROSE = Color(1, 0, 0.5)
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a random color from Color Palette
+---@param includes_black? boolean @Includes blacks in the scope (Default: true)
+---@return Color @Random color from Color Palette
+function Color.RandomPalette(includes_black) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a random color from all color scope
+---@return Color @Random color from all color scope
+function Color.Random() end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns the color from 0-255 range values
+---@param r? number @Red (Default: 0)
+---@param g? number @Green (Default: 0)
+---@param b? number @Blue (Default: 0)
+---@param a? number @Alpha (Default: 0)
+---@return Color @Final Color
+function Color.FromRGBA(r, g, b, a) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a color from the CYMK format
+---@param c? number @Cyan (Default: 0)
+---@param y? number @Yellow (Default: 0)
+---@param m? number @Magenta (Default: 0)
+---@param k? number @Black (Default: 0)
+---@param a? number @Alpha (Default: 0)
+---@return Color @Final Color
+function Color.FromCYMK(c, y, m, k, a) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a color from the HSL format
+---@param h? number @Hue (Default: 0)
+---@param s? number @Saturation (Default: 0)
+---@param l? number @Lightness (Default: 0)
+---@return Color @Final Color
+function Color.FromHSL(h, s, l) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a color from the HSV format
+---@param h? number @Hue (Default: 0)
+---@param s? number @Saturation (Default: 0)
+---@param v? number @Value (Default: 0)
+---@return Color @Final Color
+function Color.FromHSV(h, s, v) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Returns a color from the Hexadecimal format
+---@param hex string @Hexadecimal
+---@return Color @Final Color
+function Color.FromHEX(hex) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Gets the Hexadecimal representation of this Color
+---@param appends_transparency? boolean @Appends transparency part (Default: true)
+---@return string @Hexadecimal representation of this Color
+function Color:ToHex(appends_transparency) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Exposes access to registering Console Commands and Logging messages.
+---@class Console
+Console = {}
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Logs and formats a message in the console, with formatted arguments
+---@param message string @Message to print
+---@param ...? any @Other arguments to format with the message using string.format (Default: nil)
+function Console.Log(message, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Logs an orange warning in the console with stack information, with formatted arguments
+---@param message string @Message to print
+---@param ...? any @Other arguments to format with the message using string.format (Default: nil)
+function Console.Warn(message, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Logs a red error in the console with stack information, with formatted arguments
+---@param message string @Message to print
+---@param ...? any @Other arguments to format with the message using string.format (Default: nil)
+function Console.Error(message, ...) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Registers a new Console Command
+---@param command string @The command
+---@param callback function @The callback to be called when the command is inputted
+---@param description? string @The command description to display in the console (Default: "")
+---@param parameters? string[] @The list of supported parameters to display in the console (Default: {})
+function Console.RegisterCommand(command, callback, description, parameters) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Runs a Console Command programmatically (only scripting-registered commands can be triggered)
+---@param command string @The command
+function Console.RunCommand(command) end
+
+---<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
+---
+---Logs a debug message in the console, with formatted arguments. Outputted only when the current log level is Debug or Verbose
+---@param message string @Message to print
+---@param ...? any @Other arguments to format with the message using string.format (Default: nil)
+function Console.Debug(message, ...) end
+
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "PlayerSubmit", callback: fun(text: string)): fun(text: string) @Called when a console command is submitted
+---@overload fun(event_name: "LogEntry", callback: fun(text: string, type: LogType)): fun(text: string, type: LogType) @Called when a log is received
+---@overload fun(event_name: "Open", callback: fun()): fun() @When player opens the Console
+---@overload fun(event_name: "Close", callback: fun()): fun() @When player closes the Console
+function Console.Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "PlayerSubmit", callback: fun(text: string)) @Called when a console command is submitted
+---@overload fun(event_name: "LogEntry", callback: fun(text: string, type: LogType)) @Called when a log is received
+---@overload fun(event_name: "Open", callback: fun()) @When player opens the Console
+---@overload fun(event_name: "Close", callback: fun()) @When player closes the Console
+function Console.Unsubscribe(event_name, callback) end
 
 
 
@@ -7143,1251 +8388,6 @@ function Server.Subscribe(event_name, callback) end
 function Server.Unsubscribe(event_name, callback) end
 
 
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Class which represents the current Package
----@class Package
-Package = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Makes any variable available in the global scope
----@param variable_name string @Name of the variable to export
----@param value any @Value to be set in the global scope
-function Package.Export(variable_name, value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Includes new .lua files<br/><br/>We currently support 5 searchers, which are looked in the following order:<br/><ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol>
----@param script_file string @Path to the script file to require
----@param force_load? boolean @Whether to force loading this file even if it was already loaded (Default: false)
----@return any @Any return values from the included file
-function Package.Require(script_file, force_load) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Sets a Persistent Value which will be saved to disk. Note the actual flush to disk is deferred and may not occur immediately
----@param key string @Key to index data into. It can be separated by '.' to set a child element.
----@param value any @Value to set at the key
-function Package.SetPersistentData(key, value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list of all files in this package, optionally with filters
----@param path_filter? string @Path filter (Default: "")
----@return string[] @List of directories
-function Package.GetDirectories(path_filter) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets a list of all files in this package, optionally with filters
----@param path_filter? string|table @Path filter (Default: "")
----@param extension_filter? string @Example: <code>.lua</code> (Default: "")
----@return string[] @List of files
-function Package.GetFiles(path_filter, extension_filter) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the package name/path
----@return string @The package name/path
-function Package.GetName() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the package title
----@return string @The package title
-function Package.GetTitle() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the package version
----@return string @The package version
-function Package.GetVersion() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the package compatibility version
----@return string @The package compatibility version
-function Package.GetCompatibilityVersion() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Persistent Value from the disk
----@param key? string @The key to get the data (Default: "")
----@return table @Persistent values from disk
-function Package.GetPersistentData(key) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Flushes the Persistent Data pending changes to disk immediately
-function Package.FlushPersistentData() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns whether this package is currently unloading
----@return boolean 
-function Package.IsUnloading() end
-
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "Load", callback: fun()): fun() @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
----@overload fun(event_name: "Unload", callback: fun()): fun() @Called when this package is unloaded
-function Package.Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Load", callback: fun()) @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
----@overload fun(event_name: "Unload", callback: fun()) @Called when this package is unloaded
-function Package.Unsubscribe(event_name, callback) end
-
-
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Interact with Steam APIs.
----@class Steam
-Steam = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets Steam Rich Presence text
----@param text string 
-function Steam.SetRichPresence(text) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Triggers a Steam screenshot
-function Steam.TriggerScreenshot() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Subscribe for user-defined Events.
----@class Events
-Events = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Calls an Event which will be triggered in all Local Packages
----@param event_name string @The Event Name to trigger the event
----@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.Call(event_name, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Calls an Event if on Client which will be triggered in all Server Packages
----@param event_name string @The Event Name to trigger the event
----@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.CallRemote(event_name, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Calls an Event if on Server which will be triggered in all Client's Packages of a specific Player
----@param event_name string @The Event Name to trigger the event
----@param player Player @The remote player to send this event
----@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.CallRemote(event_name, player, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Calls an Event on Server which will be triggered in all Client's Packages of all Players
----@param event_name string @The Event Name to trigger the event
----@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.BroadcastRemote(event_name, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`
----
----Calls an Event on Server which will be triggered in all Client's Packages of all Players in that dimension
----@param dimension integer @The Dimension to send this event
----@param event_name string @The Event Name to trigger the event
----@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.BroadcastRemoteDimension(dimension, event_name, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Subscribes for an user-created event which will be triggered for only local called events
----@param event_name string @The Event Name to subscribe
----@param callback function @The callback function to execute
----@return function @the subscribed callback itself
-function Events.Subscribe(event_name, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Subscribes for an user-created event which will be triggered for only remote called events
----@param event_name string @The Event Name to subscribe
----@param callback function @The callback function to execute
----@return function @the subscribed callback itself
-function Events.SubscribeRemote(event_name, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Unsubscribes from all subscribed events in this Package with that event name, optionally passing the function to unsubscribe only that callback
----@param event_name string @The Event Name to unsubscribe
----@param callback? function @The callback function to unsubscribe (Default: nil)
-function Events.Unsubscribe(event_name, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Unsubscribes from all subscribed remote events in this Package with that event name, optionally passing the function to unsubscribe only that callback
----@param event_name string @The Event Name to unsubscribe
----@param callback? function @The callback function to unsubscribe (Default: nil)
-function Events.UnsubscribeRemote(event_name, callback) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Execute code at specified time intervals.
----@class Timer
-Timer = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Executes a function, after waiting a specified number of milliseconds
----@param callback function @The callback that will be executed
----@param milliseconds? integer @The time in milliseconds to wait before executing the function (Default: 0)
----@param ...? any @Additional parameters to pass to the function (Default: nil)
----@return integer @the timeout_id
-function Timer.SetTimeout(callback, milliseconds, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Same as SetTimeout(), but repeats the execution of the function continuously
----@param callback function @The callback that will be executed.<br/>Return false to stop it from being called.
----@param milliseconds? integer @The time in milliseconds the timer should delay in between executions of the specified function (Default: 0)
----@param ...? any @Additional parameters to pass to the function (Default: nil)
----@return integer @the interval_id
-function Timer.SetInterval(callback, milliseconds, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Stops the execution of the function specified in SetTimeout()
----@param timeout_id integer @The ID value returned by SetTimeout() is used as the parameter for this method
-function Timer.ClearTimeout(timeout_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Stops the execution of the function specified in SetInterval()
----@param interval_id integer @The ID value returned by SetInterval() is used as the parameter for this method
-function Timer.ClearInterval(interval_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Binds a Timer to any Actor. The timer will be automatically cleared when the Actor is destroyed
----@param timer_id integer @The Timer ID
----@param actor Actor @Actor to be bound
-function Timer.Bind(timer_id, actor) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Checks if a Timer is currently active or waiting to be triggered
----@param timer_id integer @The Timer ID
----@return boolean 
-function Timer.IsValid(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the time elapsed since the last tick
----@param timer_id integer @The Timer ID
----@return integer 
-function Timer.GetElapsedTime(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the time remaining to the next tick
----@param timer_id integer @The Timer ID
----@return integer 
-function Timer.GetRemainingTime(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Pauses the Timer
----@param timer_id integer @The Timer ID
-function Timer.Pause(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Resumes the Timer
----@param timer_id integer @The Timer ID
-function Timer.Resume(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Resets a Timer to restart from beginning
----@param timer_id integer @The Timer ID
-function Timer.ResetElapsedTime(timer_id) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A color composed of components (R, G, B, A) with floating point precision.
----@class Color
----@field R number @Red color percentage (0-1)
----@field G number @Green color percentage (0-1)
----@field B number @Blue color percentage (0-1)
----@field A number @Alpha transparency percentage (0-1)
----@operator add(Color|number): Color
----@operator sub(Color|number): Color
----@operator mul(Color|number): Color
----@operator div(Color|number): Color
----@overload fun(R?: number, G?: number, B?: number, A?: number): Color
-Color = {}
-Color.WHITE = Color(1, 1, 1)
-Color.BLACK = Color(0, 0, 0)
-Color.TRANSPARENT = Color(0, 0, 0, 0)
-Color.RED = Color(1, 0, 0)
-Color.GREEN = Color(0, 1, 0)
-Color.BLUE = Color(0, 0, 1)
-Color.YELLOW = Color(1, 1, 0)
-Color.CYAN = Color(0, 1, 1)
-Color.MAGENTA = Color(1, 0, 1)
-Color.ORANGE = Color(1, 0.5, 0)
-Color.CHARTREUSE = Color(0.5, 1, 1)
-Color.AQUAMARINE = Color(0, 1, 0.5)
-Color.AZURE = Color(0, 0.5, 1)
-Color.VIOLET = Color(0.5, 0, 1)
-Color.ROSE = Color(1, 0, 0.5)
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a random color from Color Palette
----@param includes_black? boolean @Includes blacks in the scope (Default: true)
----@return Color @Random color from Color Palette
-function Color.RandomPalette(includes_black) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a random color from all color scope
----@return Color @Random color from all color scope
-function Color.Random() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the color from 0-255 range values
----@param r? number @Red (Default: 0)
----@param g? number @Green (Default: 0)
----@param b? number @Blue (Default: 0)
----@param a? number @Alpha (Default: 0)
----@return Color @Final Color
-function Color.FromRGBA(r, g, b, a) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a color from the CYMK format
----@param c? number @Cyan (Default: 0)
----@param y? number @Yellow (Default: 0)
----@param m? number @Magenta (Default: 0)
----@param k? number @Black (Default: 0)
----@param a? number @Alpha (Default: 0)
----@return Color @Final Color
-function Color.FromCYMK(c, y, m, k, a) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a color from the HSL format
----@param h? number @Hue (Default: 0)
----@param s? number @Saturation (Default: 0)
----@param l? number @Lightness (Default: 0)
----@return Color @Final Color
-function Color.FromHSL(h, s, l) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a color from the HSV format
----@param h? number @Hue (Default: 0)
----@param s? number @Saturation (Default: 0)
----@param v? number @Value (Default: 0)
----@return Color @Final Color
-function Color.FromHSV(h, s, v) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a color from the Hexadecimal format
----@param hex string @Hexadecimal
----@return Color @Final Color
-function Color.FromHEX(hex) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Gets the Hexadecimal representation of this Color
----@param appends_transparency? boolean @Appends transparency part (Default: true)
----@return string @Hexadecimal representation of this Color
-function Color:ToHex(appends_transparency) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A Matrix is an array of numbers this can be used for geometric and positional calculations. This is mainly used internally.
----@class Matrix
----@overload fun(rotation: Rotator, origin: Vector): Matrix
-Matrix = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Transform the vector with the matrix
----@param vector Vector @The vector who will be transformed
----@return Vector @The new vector
-function Matrix:TransformVector(vector) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a new matrix transposed (<a href="https://en.wikipedia.org/wiki/Transpose">Wikipedia</a>)
----@return Matrix @The matrix transpoosed
-function Matrix:GetTransposed() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Work with screen properties and effects.
----@class Viewport
-Viewport = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Transforms a 3D world-space vector into 2D screen coordinates
----@param world_position Vector @World 3D position
----@return Vector2D 
-function Viewport.ProjectWorldToScreen(world_position) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Transforms a 2D screen coordinates into 3D world-space location
----@param screen_position Vector2D @Screen position
----@return { Position: Vector, Direction: Vector } 
-function Viewport.DeprojectScreenToWorld(screen_position) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Loads and sets a hardware cursor in the game from a PNG image<br/>Note: due an engine limitation modifying an already set cursor image will not change the cursor until the game is restarted
----@param cursor_shape CursorType 
----@param cursor_path string @a PNG image relative to Assets/
----@param hotspot? Vector2D @(Default: Vector(0, 0))
-function Viewport.SetHardwareCursor(cursor_shape, cursor_path, hotspot) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets the size of viewport
----@return Vector2D @The size of viewport
-function Viewport.GetViewportSize() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets the scale of viewport
----@return number @The scale of viewport
-function Viewport.GetViewportScale() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the mouse position
----@param new_position Vector2D 
-function Viewport.SetMousePosition(new_position) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets the current mouse screen location
----@return Vector2D @The current mouse screen location
-function Viewport.GetMousePosition() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Enables/Disables the Crosshair
----@param is_enabled boolean 
-function Viewport.SetCrosshairEnabled(is_enabled) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Enables/Disables the Interaction ToolTip
----@param is_enabled boolean 
-function Viewport.SetInteractionToolTipEnabled(is_enabled) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Enables/Disables the Blood Screen effect
----@param is_enabled boolean 
-function Viewport.SetBloodScreenEnabled(is_enabled) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----If you want the Blood Screen to do not be overridden, disable it with <code>Client.SetBloodScreenEnabled(false)</code> before
----@param intensity number @From 0.0 to 1.0
-function Viewport.SetBloodScreenIntensity(intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Branding Bar settings (the bar with 'nanos world - closed alpha ver...')
----@param horizontal_alignment WidgetHorizontalAlignment @Left, Center and Right supported
----@param vertical_alignment WidgetVerticalAlignment @Bottom and Top supported
----@param is_lean? boolean @Whether to show less information (Default: false)
-function Viewport.SetBrandingBarSettings(horizontal_alignment, vertical_alignment, is_lean) end
-
-
-
----Subscribe to an event
----@param event_name string @Name of the event to subscribe to
----@param callback function @Function to call when the event is triggered
----@return function @The callback function passed
----@overload fun(event_name: "Resize", callback: fun(new_size: Vector2D)): fun(new_size: Vector2D) @Called when the screen is resized
-function Viewport.Subscribe(event_name, callback) end
-
----Unsubscribe from an event
----@param event_name string @Name of the event to unsubscribe from
----@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
----@overload fun(event_name: "Resize", callback: fun(new_size: Vector2D)) @Called when the screen is resized
-function Viewport.Unsubscribe(event_name, callback) end
-
-
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A Vector2D composed of components (X, Y) with floating point precision. Used mainly for HUD and Drawing on screen.
----@class Vector2D
----@field X number @X Coordinate
----@field Y number @Y Coordinate
----@operator add(Vector2D|number): Vector2D
----@operator sub(Vector2D|number): Vector2D
----@operator mul(Vector2D|number): Vector2D
----@operator div(Vector2D|number): Vector2D
----@overload fun(X?: number, Y?: number): Vector2D
-Vector2D = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a ray against the world and get collided objects information.
----@class Trace
-Trace = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a ray against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
----@param start_location Vector @Start location of the ray
----@param end_location Vector @End location of the ray
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
-function Trace.LineSingle(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a ray against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
----@param start_location Vector @Start location of the ray
----@param end_location Vector @End location of the ray
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
-function Trace.LineMulti(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a sphere against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
----@param start_location Vector @Start location of the sphere
----@param end_location Vector @End location of the sphere
----@param radius number @Radius of the sphere
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
-function Trace.SphereSingle(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a sphere against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
----@param start_location Vector @Start location of the sphere
----@param end_location Vector @End location of the sphere
----@param radius number @Radius of the sphere
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
-function Trace.SphereMulti(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a box against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
----@param start_location Vector @Start location of the box
----@param end_location Vector @End location of the box
----@param half_size Vector @Distance from the center of box along each axis
----@param orientation Rotator @Orientation of the box
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
-function Trace.BoxSingle(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a box against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
----@param start_location Vector @Start location of the box
----@param end_location Vector @End location of the box
----@param half_size Vector @Distance from the center of box along each axis
----@param orientation Rotator @Orientation of the box
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
-function Trace.BoxMulti(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a capsule against the world and returns a table with the first blocking hit information<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.
----@param start_location Vector @Start location of the capsule
----@param end_location Vector @End location of the capsule
----@param radius number @Radius of the capsule to sweep
----@param half_height number @Distance from center of capsule to tip of hemisphere endcap.
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
-function Trace.CapsuleSingle(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Trace a capsule against the world using object types and return overlapping hits and then first blocking hit<br/><br/>Note: The Trace will collide with the ObjectType (in the Collision Settings), even if the channel is ignored below.<br/><br/>Results are sorted, so a blocking hit (if found) will be the last element of the array<br/><br/>Only the single closest blocking result will be generated, no tests will be done after that
----@param start_location Vector @Start location of the capsule
----@param end_location Vector @End location of the capsule
----@param radius number @Radius of the capsule to sweep
----@param half_height number @Distance from center of capsule to tip of hemisphere endcap.
----@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
----@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
----@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
-function Trace.CapsuleMulti(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Floating point Quaternion that can represent a rotation about an axis in 3-D space
----@class Quat
----@field X number @The quaternion's X-component
----@field Y number @The quaternion's Y-component
----@field Z number @The quaternion's Z-component
----@field W number @The quaternion's W-component
----@operator add(Quat|number): Quat
----@operator sub(Quat|number): Quat
----@operator mul(Quat|number): Quat
----@overload fun(X?: number, Y?: number, Z?: number, W?: number): Quat
-Quat = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----In place normalize this Quaternion
-function Quat:Normalize() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the Rotator representation of this Quaternion
----@return Rotator @Rotator representation of this Quaternion
-function Quat:Rotator() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the inverse of this Quaternion
----@return Quat @Inverse of this Quaternion
-function Quat:Inverse() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Rotates a vector by this Quaternion
----@param vector Vector @Vector to rotate
----@return Vector @Rotated vector
-function Quat:RotateVector(vector) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Unrotates a vector by this Quaternion
----@param vector Vector @Vector to unrotate
----@return Vector @Unrotated vector
-function Quat:UnrotateVector(vector) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the forward direction vector from this Quaternion
----@return Vector @Forward vector
-function Quat:GetForwardVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the right direction vector from this Quaternion
----@return Vector @Right vector
-function Quat:GetRightVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the up direction vector from this Quaternion
----@return Vector @Up vector
-function Quat:GetUpVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----TOML library.
----@class TOML
-TOML = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a string representing value encoded in TOML
----@param value table @the table that will become TOML
----@return string @the table in TOML
-function TOML.Dump(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a value representing the decoded TOML string
----@param value string @the TOML that will become a table
----@return any @the TOML in table
-function TOML.Parse(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A Vector composed of components (X, Y, Z) with floating point precision. Used mainly for entity position.
----@class Vector
----@field X number @X Coordinate
----@field Y number @Y Coordinate
----@field Z number @Z Coordinate
----@operator add(Vector|number): Vector
----@operator sub(Vector|number): Vector
----@operator mul(Vector|number): Vector
----@operator div(Vector|number): Vector
----@operator pow(Vector|number): Vector
----@overload fun(X?: number, Y?: number, Z?: number): Vector
-Vector = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Check if the vector is equal to another vector, within specified error limits
----@param other Vector @The vector to compare to
----@param tolerance? number @The error limits (Default: 0.000001)
----@return boolean @Are the vectors equal or not
-function Vector:Equals(other, tolerance) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the distance of 2 vectors
----@param other Vector @The vector to get the distance to
----@return number @The distance betweem the vectors
-function Vector:Distance(other) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Return the squared distance of 2 vectors
----@param other Vector @The vector to get the squared distance to
----@return number @The squared distance betweem the vectors
-function Vector:DistanceSquared(other) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the normalized version of vector without checking for zero length
----@return Vector @The unsafe normal
-function Vector:GetUnsafeNormal() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a normalized copy of the vector, checking it is safe to do so based on the length
----@return Vector @The safe normal
-function Vector:GetSafeNormal() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Efficiently checks whether vector is near to another vector within a specified radius
----@param other Vector @The vector to compare to
----@param radius number @The radius to check
----@return boolean @If the vector is near to the other vector
-function Vector:IsNear(other, radius) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Checks whether vector is near to zero within a specified tolerance
----@param tolerance? number @The error limits (Default: 0.000001)
----@return boolean @If the bool is near to zero
-function Vector:IsNearlyZero(tolerance) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Checks whether all components of the vector are exactly zero
----@return boolean @If all components of the vector are exactly zero
-function Vector:IsZero() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Normalize this vector in-place if it is larger than a given tolerance. Leaves it unchanged if not
----@return boolean @If the vector has been modified
-function Vector:Normalize() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the length (magnitude) of this vector
----@return number @The lenght of the vector
-function Vector:Size() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the squared length of this vector
----@return number @The squared length of the vector
-function Vector:SizeSquared() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Return the Rotator orientation corresponding to the direction in which the vector points
----@return Rotator @The orientation of the vector
-function Vector:ToOrientationRotator() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Return the Quaternion orientation corresponding to the direction in which the vector points
----@return Quat @The orientation of the vector
-function Vector:ToOrientationQuat() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the dot product between this vector and another vector
----@param other Vector @The vector to dot with
----@return number @the dot product
-function Vector:Dot(other) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the cross product between this vector and another vector
----@param other Vector @The vector to cross with
----@return Vector @the cross product vector
-function Vector:Cross(other) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A table containing useful and aux table functions.
----@class NanosTable
-NanosTable = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Dumps a table into a readable text
----@param table table @Table to dump
----@return string @the table as readable text
-function NanosTable.Dump(table) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Performs a shallow copy of a table
----@param table table @The table to shallow copy
----@return table @the copied table
-function NanosTable.ShallowCopy(table) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A table containing useful and aux functions.
----@class NanosUtils
-NanosUtils = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns if an entity is valid
----@param entity any @Entity to verify
----@return boolean @if the entity is valid
-function NanosUtils.IsEntityValid(entity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Benchmarks a function performance, outputs in the console the elapsed time
----@param name string @Benchmark name to output
----@param amount number @Amount of times to loop
----@param func function @The function to call
----@param ... any @The arguments of the function to call
----@return number @the elapsed time in milliseconds
-function NanosUtils.Benchmark(name, amount, func, ...) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A container for rotation information (Pitch, Yaw, Roll). All rotation values are stored in degrees.
----@class Rotator
----@field Pitch number @Rotation around the right axis (around Y axis), Looking up and down (0=Straight Ahead, +Up, -Down)
----@field Yaw number @Rotation around the up axis (around Z axis), Running in circles 0=East, +North, -South.
----@field Roll number @Rotation around the forward axis (around X axis), Tilting your head, 0=Straight, +Clockwise, -CCW.
----@operator add(Rotator|number): Rotator
----@operator sub(Rotator|number): Rotator
----@operator mul(Rotator|number): Rotator
----@overload fun(pitch?: number, yaw?: number, roll?: number): Rotator
-Rotator = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Generates a random rotation, with optional random roll
----@param roll? boolean @Whether to use a random roll in the rotator, otherwise uses 0 for roll (Default: false)
----@param min? number @Minimum value (Default: -180)
----@param max? number @Maximum value (Default: 180)
----@return Rotator @the random rotation
-function Rotator.Random(roll, min, max) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the forward (X) unit direction vector from this component, in world space.
----@return Vector @the forward direction
-function Rotator:GetForwardVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the right (Y) unit direction vector from this component, in world space.
----@return Vector @the right direction
-function Rotator:GetRightVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get the up (Z) unit direction vector from this component, in world space.
----@return Vector @the up direction
-function Rotator:GetUpVector() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Rotate a vector rotated by this rotator.
----@param vector Vector @the vector to rotate by the Rotator
----@return Vector @the rotated vector
-function Rotator:RotateVector(vector) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----In-place normalize, removes all winding and creates the âshortest routeâ rotation.
-function Rotator:Normalize() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns the vector rotated by the inverse of this rotator.
----@param vector Vector @The vector to rotate by the inverse of the Rotator
----@return Vector @the unrotated vector
-function Rotator:UnrotateVector(vector) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Get Rotation as a quaternion.
----@return Quat @the rotation as a quaternion
-function Rotator:Quaternion() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a new Rotator normalized.
----@return Rotator @the normalized Rotator
-function Rotator:GetNormalized() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Checks whether rotator is near to zero within a specified tolerance
----@param tolerance? number @Tolerance to check (Default: 0.000001)
----@return boolean @whether the rotator is nearly zero
-function Rotator:IsNearlyZero(tolerance) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Checks whether all components of the rotator are exactly zero
----@return boolean @whether the rotator is exactly zero
-function Rotator:IsZero() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----A table containing useful and aux Math functions.
----@class NanosMath
-NanosMath = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Rounds a number
----@param value number @The number to be rounded
----@return number @the rounded number
-function NanosMath.Round(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Clamps a number
----@param value number @The number to be clamped
----@param min number @The min value
----@param max number @The max value
----@return number @the number clamped
-function NanosMath.Clamp(value, min, max) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Clamps an angle to the range of [0, 360]
----@param value number @The number to be clamped
----@return number @the number clamped
-function NanosMath.ClampAxis(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Clamps an angle to the range of [-180, 180]
----@param value number @The number to be clamped
----@return number @the number clamped
-function NanosMath.NormalizeAxis(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Calculates the location and rotation relative to an actor
----@param location Vector @The location of the new system
----@param rotation Rotator @The rotation of the new system
----@param actor Actor @The actor to be translated to the new system
----@return Vector @the location relative to the actor
----@return Rotator @the rotation relative to the actor
-function NanosMath.RelativeTo(location, rotation, actor) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Takes a local position and rotation relative to an actor, applies the actor's location, rotation, and scale to compute world-space location and rotation.
----@param local_location Vector @The local location to convert
----@param local_rotation Rotator @The local rotation to convert
----@param actor Actor @The actor whose transform defines the local space
----@return Vector @the location in world coordinates
----@return Rotator @the rotation in world coordinates
-function NanosMath.LocalToWorld(local_location, local_rotation, actor) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a random float value
----@param min number @Minimum value
----@param max number @Maximum value
----@return number @the random value
-function NanosMath.RandomFloat(min, max) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Interpolate number from Current to Target
----@param current number 
----@param target number 
----@param delta_time number 
----@param interp_speed number 
----@return number 
-function NanosMath.FInterpTo(current, target, delta_time, interp_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Interpolate Rotator from Current to Target
----@param current Rotator 
----@param target Rotator 
----@param delta_time number 
----@param interp_speed number 
----@return Rotator 
-function NanosMath.RInterpTo(current, target, delta_time, interp_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Interpolate Rotator from Current to Target with a constant step
----@param current Rotator 
----@param target Rotator 
----@param delta_time number 
----@param interp_speed number 
----@return Rotator 
-function NanosMath.RInterpConstantTo(current, target, delta_time, interp_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Interpolate Vector from Current to Target
----@param current Vector 
----@param target Vector 
----@param delta_time number 
----@param interp_speed number 
----@return Vector 
-function NanosMath.VInterpTo(current, target, delta_time, interp_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Interpolate Vector from Current to Target with a constant step
----@param current Vector 
----@param target Vector 
----@param delta_time number 
----@param interp_speed number 
----@return Vector 
-function NanosMath.VInterpConstantTo(current, target, delta_time, interp_speed) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----JSON library.
----@class JSON
-JSON = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a string representing value encoded in JSON
----@param value table @the table that will become JSON
----@return string @the table in JSON
-function JSON.stringify(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`
----
----Returns a value representing the decoded JSON string
----@param value string @the JSON that will become a table
----@return any @the json in table
-function JSON.parse(value) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Interact with built-in Sky & Weather system.
----@class Sky
-Sky = {}
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Replaces all Sky/Sun actors with the Ultra Dynamic Sky Actor, to be able to use the functions from this page. Internally this calls <code>Sky.DestroyAllSky()</code> automatically
----@param spawn_weather? boolean @Whether or not to spawn the Weather Actor (to be able to use Weather related methods) (Default: false)
----@param find_existing? boolean @Whether or not to try to find existing Sky & Weather Actors spawned in the map, using their references instead (Default: true)
----@return boolean @true if an existing Ultra Dynamic Sky Actor was found in the map and its reference was used, false if a new one was spawned
-function Sky.Spawn(spawn_weather, find_existing) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Destroys all Directional Lights, Sky Lights, Exponential Height Fogs, Volumetric Clouds, Sky Atmosphere, Ultra Dynamic Sky Actors and all Actors with the <code>Sun</code> Actor Tag from the Level
-function Sky.DestroyAllSky() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Reconstruct the Ultra Dynamic Sky Actor, forces most of the changes to be applied
-function Sky.Reconstruct() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Texture<br /><br />Set it to empty to restore the default. After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
----@param texture string 
-function Sky.SetMoonTexture(texture) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Texture Rotation
----@param rotation number 
-function Sky.SetMoonTextureRotation(rotation) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Vertical Offset
----@param offset number 
-function Sky.SetMoonVerticalOffset(offset) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Scale
----@param scale number 
-function Sky.SetMoonScale(scale) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Angle
----@param yaw number 
----@param pitch number 
-function Sky.SetMoonAngle(yaw, pitch) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Phase
----@param phase number @Ranges from 0-30
-function Sky.SetMoonPhase(phase) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Glow Intensity
----@param glow_intensity number 
-function Sky.SetMoonGlowIntensity(glow_intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Moon Light Intensity
----@param intensity number 
-function Sky.SetMoonLightIntensity(intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Sun Angle
----@param yaw number 
----@param pitch number 
-function Sky.SetSunAngle(yaw, pitch) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Sun Scale
----@param radius number 
-function Sky.SetSunScale(radius) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Sun Light Intensity
----@param intensity number 
-function Sky.SetSunLightIntensity(intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Sky Mode<br /><br />After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
----@param sky_mode SkyMode 
-function Sky.SetSkyMode(sky_mode) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the Volumetric Cloud Color<br /><br />This is only applied if <code>SetSkyMode(SkyMode.VolumetricClouds)</code> is set
----@param color Color 
-function Sky.SetVolumetricCloudColor(color) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----The amount of coverage for the cloud layer, from a clear sky to overcast
----@param cloud_coverage number 
-function Sky.SetCloudCoverage(cloud_coverage) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----The fogginess of the scene. The impact this has on fog density is scaled from the Fog Density category
----@param fog_percentage number 
-function Sky.SetFog(fog_percentage) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----A simple contrast boost for the sky material. Cannot affect volumetric clouds
----@param contrast number 
-function Sky.SetContrast(contrast) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----The overall brightness of the shader
----@param intensity number 
-function Sky.SetOverallIntensity(intensity) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Can be used to scale the brightness of the sky and lighting, at night
----@param brightness number 
-function Sky.SetNightBrightness(brightness) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets whether or not to animate the time of day
----@param animate boolean @Whether or not to animate the time of day
----@param day_length? number @The time (in minutes) from sunrise to sunset (Default: 30.0)
----@param night_length? number @The time (in minutes) from sunset to sunrise (Default: 15.0)
-function Sky.SetAnimateTimeOfDay(animate, day_length, night_length) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Sets the current time
----@param hours integer 
----@param minutes integer 
-function Sky.SetTimeOfDay(hours, minutes) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets the current time
----@return integer 
----@return integer 
----@return integer 
-function Sky.GetTimeOfDay() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Returns if the Ultra Dynamic Sky was spawned
----@param including_weather boolean @if to check for Weather Actor too
----@return boolean 
-function Sky.IsSpawned(including_weather) end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Gets the current weather
----@return WeatherType 
-function Sky.GetWeather() end
-
----<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`
----
----Changes the Weather
----@param weather WeatherType @weather to change
----@param transition_time number @fade time to completely change to new weather
-function Sky.ChangeWeather(weather, transition_time) end
 
 ---@enum AimMode
 AimMode = {
