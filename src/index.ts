@@ -436,7 +436,7 @@ function generateEnum(name: string, values: DocEnumValue[]): string {
 
 	return `
 
----${generateDocsLink(name, "enums")}
+---${generateDocsLink(name, "glossary/enums")}
 ---@enum ${name}
 ${name} = {${valuesString.slice(0, -1)}
 }`;
