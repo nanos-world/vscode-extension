@@ -262,11 +262,9 @@ function generateFunction(
 	return `
 
 ---${generateAuthorityString(fun.authority)}
----
----${generateDocstring(fun)}
----
 ---${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
-${params.string}${generateReturns(fun.return)}
+---
+---${generateDocstring(fun)}${params.string}${generateReturns(fun.return)}
 function ${accessor}${fun.name}(${params.names}) end`;
 }
 
