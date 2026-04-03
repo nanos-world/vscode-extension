@@ -1,13 +1,69 @@
-out
-dist
-node_modules
-.vscode-test/
-*.vsix
-EmmyLua/
-workflow-run.bat
+# Dependencies
+node_modules/
 
+# Build output
+out/
+dist/
+build/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# VSCode extension package
+*.vsix
+
+# VSCode test
+.vscode-test/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
 *.env
 *.env.*
 !.env.template
+!.env.example
 
-docs
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE/Editor
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Generated docs (project specific)
+docs/
+EmmyLua/
+
+# Local development
+workflow-run.bat
+
+# Visual Studio / JetBrains
+.vs/
+.vscode/
+.idea/
