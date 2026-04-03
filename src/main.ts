@@ -70,7 +70,7 @@ function generateAuthorityString(authority: Authority) {
 	}
 }
 
-const OPERATORS: { [key: string]: string } = {
+const OPERATORS = {
 	__unm: "unm",
 	__bnot: "bnot",
 	__len: "len",
@@ -450,7 +450,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.filter((op) => op.operator in OPERATORS)
 			.forEach((op) => {
-				operators += `\n---@operator ${OPERATORS[op.operator]
+				operators += `\n---@operator ${OPERATORS[op.operator as keyof typeof OPERATORS]
 					}(${generateType({ type: op.rhs }).toString()}): ${generateType(
 						{ type: op.return },
 					).toString()}`;
