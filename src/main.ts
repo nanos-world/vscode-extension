@@ -42,7 +42,7 @@ function generateDocsLink(
 		url = `${baseUrl}/${type}/${name.toLowerCase()}`;
 	}
 
-	return `<a href="${url}">📖 Documentation</a>`;
+	return `📖 <a href="${url}">Documentation</a>`;
 }
 
 function generateAuthorityString(authority: Authority) {
