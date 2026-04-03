@@ -613,6 +613,7 @@ async function buildDocs() {
 	Object.entries(docs.enums)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
 		.forEach(([name, { enums: values }]) => {
+			if (!values || values.length === 0) return;
 			const sortedValues = [...values].sort((a, b) =>
 				a.key.localeCompare(b.key),
 			);
