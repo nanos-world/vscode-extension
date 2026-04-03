@@ -72,11 +72,17 @@ function generateDocsLink(
 	if (isEnum) {
 		url += `glossary/enums#${name.toLowerCase()}`;
 	}
-	else if (parent) {
-		const functionType = isStatic ? "static-function" : "function";
-		url += `${type}/${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
-	} else {
-		url += `${type}/${name.toLowerCase()}`;
+	else {
+		url += `${type}/`;
+		if (parent) {
+			const functionType = isStatic ? "static-function" : "function";
+			if (!isStatic && jsonFileName.startsWith("Classes/Base")) {
+				url += "base-classes/";
+			}
+			url += `${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
+		} else {
+			url += `${name.toLowerCase()}`;
+		}
 	}
 
 	return `<a href="${url}">docs</a>`;
