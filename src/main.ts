@@ -285,6 +285,7 @@ function generateParams(
 	params.forEach(function (param) {
 		param.name = param.name ?? "missing_name";
 		if (param.name.endsWith("...")) param.name = "...";
+		param.name = param.name.replaceAll("/", "_"); // bug-fix until Syed gives us more definite answer...
 
 		const type = generateType(param);
 		ret.string += `\n---@param ${param.name}${type.optional ? "?" : ""
