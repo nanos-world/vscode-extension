@@ -26,20 +26,26 @@ const REPO_BRANCH = getInput("repository-branch");
 
 const octokit = getOctokit(TOKEN);
 
+const DOCS_BASE_URL = "https://docs.nanos-world.com/docs/scripting-reference/";
 function generateDocsLink(
 	name: string,
 	type: string,
-	parent?: string,
-	isStatic?: boolean,
+	opts?: Partial<{
+		parent: string,
+		isEnum: boolean,
+		isStatic: boolean,
+	}>
 ): string {
-	const baseUrl = "https://docs.nanos-world.com/docs/scripting-reference";
-	let url: string;
-
-	if (parent) {
+	let url = DOCS_BASE_URL;
+	const { parent, isEnum, isStatic } = opts ?? {};
+	if (isEnum) {
+		url += `glossary/enums#${name.toLowerCase()}`;
+	}
+	else if (parent) {
 		const functionType = isStatic ? "static-function" : "function";
-		url = `${baseUrl}/${type}/${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
+		url += `${type}/${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
 	} else {
-		url = `${baseUrl}/${type}/${name.toLowerCase()}`;
+		url += `${type}/${name.toLowerCase()}`;
 	}
 
 	return `📖 <a href="${url}">Documentation</a>`;
@@ -101,9 +107,8 @@ function generateInlineDocstring(descriptive: DocDescriptive): string {
 function generateParamDocstring(param: DocParameter): string {
 	let docstring = generateInlineDocstring(param);
 	if (param.default !== undefined)
-		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${
-			param.default.length === 0 ? '""' : param.default
-		})`;
+		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default
+			})`;
 	return docstring;
 }
 
@@ -188,9 +193,8 @@ function generateReturns(rets?: DocReturn[]): string {
 	return rets
 		.map((ret) => {
 			const type = generateType(ret);
-			return `\n---@return ${
-				type.toString() + (type.optional ? "?" : "")
-			} ${generateInlineDocstring(ret)}`;
+			return `\n---@return ${type.toString() + (type.optional ? "?" : "")
+				} ${generateInlineDocstring(ret)}`;
 		})
 		.join("");
 }
@@ -227,9 +231,8 @@ function generateParams(params?: DocParameter[]): {
 		if (param.name.endsWith("...")) param.name = "...";
 
 		const type = generateType(param);
-		ret.string += `\n---@param ${param.name}${
-			type.optional ? "?" : ""
-		} ${type.toString()} ${generateParamDocstring(param)}`;
+		ret.string += `\n---@param ${param.name}${type.optional ? "?" : ""
+			} ${type.toString()} ${generateParamDocstring(param)}`;
 		ret.names += param.name + ", ";
 	});
 
@@ -242,9 +245,8 @@ function generateInlineParams(params: DocParameter[]): string {
 		.map((param) => {
 			param.name = param.name ?? "missing_name";
 			const type = generateType(param);
-			return `${param.name}${
-				type.optional ? "?" : ""
-			}: ${type.toString()}`;
+			return `${param.name}${type.optional ? "?" : ""
+				}: ${type.toString()}`;
 		})
 		.join(", ");
 }
@@ -262,7 +264,8 @@ function generateFunction(
 ---${generateAuthorityString(fun.authority)}
 ---
 ---${generateDocstring(fun)}
----${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", className, isStatic)}
+---
+---${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
 ${params.string}${generateReturns(fun.return)}
 function ${accessor}${fun.name}(${params.names}) end`;
 }
@@ -308,7 +311,7 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}.`,
 					true,
-					(cls as any).struct,
+					cls.struct
 				);
 			});
 	}
@@ -330,7 +333,7 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}:`,
 					false,
-					(cls as any).struct,
+					cls.struct
 				);
 			});
 	}
@@ -361,11 +364,10 @@ function generateClassAnnotations(
 					callbackSig = event.arguments
 						.map((param, idx) => {
 							const type = generateType(param);
-							return `${param.name}${type.optional ? "?" : ""}: ${
-								idx !== 0 || param.name !== "self"
-									? type.toString()
-									: cls.name
-							}`;
+							return `${param.name}${type.optional ? "?" : ""}: ${idx !== 0 || param.name !== "self"
+								? type.toString()
+								: cls.name
+								}`;
 						})
 						.join(", ");
 				}
@@ -374,66 +376,58 @@ function generateClassAnnotations(
 					true,
 				)}`;
 
-				subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
-					event.name
-				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-					event,
-				)}`;
+				subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
+					}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+						event,
+					)}`;
 
-				subOverloads += `\n---@overload fun(event_name: "${
-					event.name
-				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-					event,
-				)}`;
+				subOverloads += `\n---@overload fun(event_name: "${event.name
+					}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+						event,
+					)}`;
 
-				unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
-					event.name
-				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
+				unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
+					}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 
-				unsubOverloads += `\n---@overload fun(event_name: "${
-					event.name
-				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
+				unsubOverloads += `\n---@overload fun(event_name: "${event.name
+					}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 			});
 
 		events = `
 
-${
-	!cls.staticClass
-		? `
+${!cls.staticClass
+				? `
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${subOverloads}
 function ${cls.name}.Subscribe(event_name, callback) end
 `
-		: ""
-}
+				: ""
+			}
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${cls.staticClass ? subOverloads : subOverloadsSelf}
-function ${cls.name}${
-			cls.staticClass ? "." : ":"
-		}Subscribe(event_name, callback) end
+function ${cls.name}${cls.staticClass ? "." : ":"
+			}Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${cls.staticClass ? unsubOverloads : unsubOverloadsSelf}
-function ${cls.name}${
-			cls.staticClass ? "." : ":"
-		}Unsubscribe(event_name, callback) end
+function ${cls.name}${cls.staticClass ? "." : ":"
+			}Unsubscribe(event_name, callback) end
 
-${
-	!cls.staticClass
-		? `
+${!cls.staticClass
+				? `
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${unsubOverloads}
 function ${cls.name}.Unsubscribe(event_name, callback) end
 `
-		: ""
-}`;
+				: ""
+			}`;
 	}
 
 	let fields = "";
@@ -457,11 +451,10 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.filter((op) => op.operator in OPERATORS)
 			.forEach((op) => {
-				operators += `\n---@operator ${
-					OPERATORS[op.operator]
-				}(${generateType({ type: op.rhs }).toString()}): ${generateType(
-					{ type: op.return },
-				).toString()}`;
+				operators += `\n---@operator ${OPERATORS[op.operator]
+					}(${generateType({ type: op.rhs }).toString()}): ${generateType(
+						{ type: op.return },
+					).toString()}`;
 			});
 	}
 
@@ -470,7 +463,8 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---${generateAuthorityString(cls.authority)}
 ---
 ---${generateDocstring(cls)}
----${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : (cls as any).struct ? "structs" : "classes")}
+---
+---${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
@@ -483,7 +477,7 @@ function generateEnum(name: string, values: DocEnumValue[]): string {
 
 	return `
 
----${generateDocsLink(name, "glossary/enums")}
+---${generateDocsLink(name, "glossary/enums", { isEnum: true })}
 ---@enum ${name}
 ${name} = {${valuesString.slice(0, -1)}
 }`;
@@ -576,7 +570,12 @@ async function buildDocs() {
 			output += generateEnum(name, sortedValues);
 		});
 
-	await fs.promises.mkdir("./docs");
+	try {
+		await fs.promises.mkdir("./docs");
+	}
+	catch {
+		// it is fine if it exists already
+	}
 	await fs.promises.writeFile("./docs/annotations.lua", output);
 }
 

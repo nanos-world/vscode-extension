@@ -71,6 +71,7 @@ export interface DocClass extends DocDescriptive, DocAuthority {
 	static_properties?: DocStaticProperty[];
 	operators?: DocOperator[];
 	staticClass: boolean;
+	struct?: boolean;
 }
 
 export interface DocEnumValue {
