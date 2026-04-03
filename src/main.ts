@@ -26,10 +26,10 @@ const REPO_OWNER = getInput("repository-owner");
 const REPO_NAME = getInput("repository-name");
 const REPO_BRANCH = getInput("repository-branch");
 
-// Set global dispatcher with 30 second connect timeout
+// Set global dispatcher with 60 second connect timeout
 setGlobalDispatcher(new Agent({
 	connect: {
-		timeout: 60000, // 60 seconds connect timeout
+		timeout: 60000,
 	},
 }));
 
