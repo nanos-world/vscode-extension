@@ -2,6 +2,7 @@ import { getInput } from "@actions/core";
 import { getOctokit } from "@actions/github";
 
 import * as fs from "fs";
+import { Agent, setGlobalDispatcher } from "undici";
 
 import type {
 	Authority,
@@ -25,11 +26,14 @@ const REPO_OWNER = getInput("repository-owner");
 const REPO_NAME = getInput("repository-name");
 const REPO_BRANCH = getInput("repository-branch");
 
-const octokit = getOctokit(TOKEN, {
-	request: {
-		timeout: 30000, // 30 seconds
+// Set global dispatcher with 30 second connect timeout
+setGlobalDispatcher(new Agent({
+	connect: {
+		timeout: 60000, // 60 seconds connect timeout
 	},
-});
+}));
+
+const octokit = getOctokit(TOKEN);
 
 // Path category constants for class types
 const PATH_CATEGORIES = {
