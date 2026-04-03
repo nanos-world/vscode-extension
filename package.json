@@ -10,11 +10,11 @@
 	"type": "commonjs",
 	"contributes": {},
 	"scripts": {
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile": "npx tsc -p ./",
+		"watch": "npx tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"start": "local-action run . src/main.ts ./.env.local"
+		"lint": "npx eslint src --ext ts",
+		"start": "npx local-action run . src/main.ts ./.env.local"
 	},
 	"devDependencies": {
 		"@github/local-action": "^7.0.1",
