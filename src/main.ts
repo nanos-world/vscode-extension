@@ -317,8 +317,6 @@ function generateFunction(
 ---${generateAuthorityString(fun.authority)}
 ---${generateDocsLink(jsonFileName, fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
 ---
----(DEBUG) jsonFileName: ${jsonFileName}
----
 ---${generateDocstring(fun, jsonFileName)}${params.string}${generateReturns(fun.return, jsonFileName)}
 function ${accessor}${fun.name}(${params.names}) end`;
 }
