@@ -1,0 +1,4 @@
+{
+	"discord.enabled": true,
+	"Lua.runtime.version": "Lua 5.4"
+}

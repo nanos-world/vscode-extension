@@ -65,4 +65,4 @@ workflow-run.bat
 
 # Visual Studio
 .vs/
-.vscode/
+!.vscode/settings.json
