@@ -54,18 +54,18 @@ function generateDocsLink(
 function generateAuthorityString(authority: Authority) {
 	switch (authority) {
 		case "server":
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="21"> `Server Side`';
 		case "client":
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="21"> `Client Side`';
 		case "authority":
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="21"> `Authority Side`';
 		case "network-authority":
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/network-authority.png?raw=true" height="10"> `Network Authority`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/network-authority.png?raw=true" height="21"> `Network Authority`';
 		case "both-net-authority-first":
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both-net-authority-first.png?raw=true" height="10"> `Both Sides (Network Authority First)`';
-		case "both":
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both-net-authority-first.png?raw=true" height="21"> `Both Sides (Network Authority First)`';
+		//case "both":
 		default:
-			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`';
+			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="21"> `Client/Server Side`';
 	}
 }
 
