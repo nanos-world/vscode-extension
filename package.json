@@ -14,9 +14,10 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"start": "ts-node --esm ./src/index.ts"
+		"start": "local-action run ./action.yml ./src/index.ts ./.env.local"
 	},
 	"devDependencies": {
+		"@github/local-action": "^7.0.1",
 		"@types/glob": "^9.0.0",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "^25.5.0",
