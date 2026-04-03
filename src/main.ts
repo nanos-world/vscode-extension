@@ -459,10 +459,9 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 	return `
 
 ---${generateAuthorityString(cls.authority)}
+---${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
 ---
 ---${generateDocstring(cls)}
----
----${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
@@ -520,7 +519,11 @@ async function buildDocs() {
 					},
 				);
 
-				const file: any = response.data;
+				if (Array.isArray(response.data) || response.data.type !== "file") {
+					return;
+				}
+
+				const file = response.data;
 				if (file.content === undefined) {
 					return;
 				}
