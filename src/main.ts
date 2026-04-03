@@ -107,20 +107,20 @@ function generateInlineDocstring(descriptive: DocDescriptive): string {
 
 function generateParamDocstring(param: DocParameter): string {
 	let docstring = generateInlineDocstring(param);
-	if (param.default !== undefined)
-		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default
-			})`;
+	if (param.default !== undefined) {
+		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default})`;
+	}
 	return docstring;
 }
 
-interface Type {
+interface LuaType {
 	name: string;
 	array: boolean;
 }
 
 class ComplexType {
 	public optional: boolean = false;
-	public typenames: Type[] = [];
+	public typenames: LuaType[] = [];
 
 	private mapTypename(name: string) {
 		if (name.endsWith("Path")) {
@@ -160,7 +160,7 @@ function generateType(typed: DocTyped): ComplexType {
 
 	if (typed.table_properties === undefined) {
 		typeString.split("|").forEach((typename) => {
-			let type: Type = {
+			let type: LuaType = {
 				name: typename,
 				array: false,
 			};
