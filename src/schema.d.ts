@@ -1,11 +1,10 @@
-export enum Authority {
-	Server = "server",
-	Client = "client",
-	Authority = "authority",
-	Both = "both",
-	NetworkAuthority = "network-authority",
-	BothNetAuthorityFirst = "both-net-authority-first",
-}
+export type Authority =
+	| "server"
+	| "client"
+	| "authority"
+	| "both"
+	| "network-authority"
+	| "both-net-authority-first";
 
 export interface DocDescriptive {
 	description?: string;
@@ -19,7 +18,10 @@ export interface DocAuthority {
 export interface DocTyped {
 	type: string;
 	default?: string;
-	table_properties?: { name: string; type: string }[];
+	table_properties?: {
+		name: string;
+		type: string;
+	}[];
 }
 
 export interface DocParameter extends DocDescriptive, DocTyped {
@@ -72,6 +74,8 @@ export interface DocClass extends DocDescriptive, DocAuthority {
 	static_properties?: DocStaticProperty[];
 	operators?: DocOperator[];
 	staticClass: boolean;
+	struct?: boolean;
+	jsonFileName?: string;
 }
 
 export interface DocEnumValue {
@@ -85,6 +89,6 @@ export interface DocEnum extends DocDescriptive {
 }
 
 export interface Docs {
-	classes: { [key: string]: DocClass };
-	enums: { [key: string]: DocEnum };
+	classes: Record<string, DocClass>;
+	enums: Record<string, DocEnum>;
 }
