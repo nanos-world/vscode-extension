@@ -7,6 +7,7 @@ import type {
 	Authority,
 	Docs,
 	DocClass,
+	DocEnum,
 	DocFunction,
 	DocParameter,
 	DocReturn,
@@ -55,18 +56,18 @@ const RAW_ASSETS_BASE_URL = "https://raw.github.com/nanos-world/vscode-extension
 function generateAuthorityString(authority: Authority) {
 	switch (authority) {
 		case "server":
-			return `<img src="${RAW_ASSETS_BASE_URL}server-only.png" height="21"> \`Server Side\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}server-only.png" height="21"> <b>[Server Side]</b>`;
 		case "client":
-			return `<img src="${RAW_ASSETS_BASE_URL}client-only.png" height="21"> \`Client Side\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}client-only.png" height="21"> <b>[Client Side]</b>`;
 		case "authority":
-			return `<img src="${RAW_ASSETS_BASE_URL}authority-only.png" height="21"> \`Authority Side\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}authority-only.png" height="21"> <b>[Authority Side]</b>`;
 		case "network-authority":
-			return `<img src="${RAW_ASSETS_BASE_URL}network-authority.png" height="21"> \`Network Authority\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}network-authority.png" height="21"> <b>[Network Authority]</b>`;
 		case "both-net-authority-first":
-			return `<img src="${RAW_ASSETS_BASE_URL}both-net-authority-first.png" height="21"> \`Both Sides (Network Authority First)\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}both-net-authority-first.png" height="21"> <b>[Both Sides (Network Authority First)]</b>`;
 		//case "both":
 		default:
-			return `<img src="${RAW_ASSETS_BASE_URL}both.png" height="21"> \`Client/Server Side\``;
+			return `<img src="${RAW_ASSETS_BASE_URL}both.png" height="21"> <b>[Client/Server Side]</b>`;
 	}
 }
 
@@ -253,6 +254,7 @@ function generateInlineParams(params: DocParameter[]): string {
 }
 
 function generateFunction(
+	jsonFileName: string,
 	fun: DocFunction,
 	className: string,
 	accessor: string = "",
@@ -264,6 +266,8 @@ function generateFunction(
 
 ---${generateAuthorityString(fun.authority)}
 ---${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
+---
+---(DEBUG) jsonFileName: ${jsonFileName}
 ---
 ---${generateDocstring(fun)}${params.string}${generateReturns(fun.return)}
 function ${accessor}${fun.name}(${params.names}) end`;
@@ -278,7 +282,8 @@ function generateConstructor(
 }
 
 function generateClassAnnotations(
-	classes: { [key: string]: DocClass },
+	jsonFileName: string,
+	classes: Record<string, DocClass>,
 	cls: DocClass,
 ): string {
 	let inheritance = "";
@@ -306,6 +311,7 @@ function generateClassAnnotations(
 				}
 
 				staticFunctions += generateFunction(
+					jsonFileName,
 					fun,
 					cls.name,
 					`${cls.name}.`,
@@ -320,14 +326,14 @@ function generateClassAnnotations(
 		[...cls.functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
-				if (
-					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
+				if ((fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
 					cls.name !== "Events"
 				) {
 					return;
 				}
 
 				functions += generateFunction(
+					jsonFileName,
 					fun,
 					cls.name,
 					`${cls.name}:`,
@@ -339,7 +345,7 @@ function generateClassAnnotations(
 
 	let events = "";
 	if (cls.events !== undefined) {
-		let combinedEvents: { [key: string]: DocEvent } = {};
+		let combinedEvents: Record<string, DocEvent> = {};
 		if (cls.inheritance !== undefined) {
 			cls.inheritance.forEach((clsName) => {
 				classes[clsName].events?.forEach((inheritedEvent) => {
@@ -492,7 +498,7 @@ async function buildDocs() {
 		},
 	);
 
-	let docs: Docs = {
+	const docs: Docs = {
 		classes: {},
 		enums: {},
 	};
@@ -520,7 +526,7 @@ async function buildDocs() {
 					},
 				);
 
-				if (Array.isArray(response.data) || response.data.type !== "file") {
+				if (!response || !response.data || Array.isArray(response.data) || response.data.type !== "file") {
 					return;
 				}
 
@@ -534,7 +540,7 @@ async function buildDocs() {
 				);
 
 				if (entry.path === "Enums.json") {
-					docs.enums = fileContents;
+					docs.enums = fileContents as Record<string, DocEnum>;
 					return;
 				}
 
@@ -548,6 +554,7 @@ async function buildDocs() {
 						entry.path.startsWith("StaticClasses") ||
 						entry.path.startsWith("UtilityClasses");
 					fileContents.struct = entry.path.startsWith("Structs");
+					fileContents.jsonFileName = entry.path;
 					docs.classes[fileContents.name] = fileContents;
 					return;
 				}
@@ -559,8 +566,8 @@ async function buildDocs() {
 
 	Object.entries(docs.classes)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
-		.forEach(([_, cls]) => {
-			output += generateClassAnnotations(docs.classes, cls);
+		.forEach(([name, cls]) => {
+			output += generateClassAnnotations(cls.jsonFileName ?? name, docs.classes, cls);
 		});
 
 	Object.entries(docs.enums)

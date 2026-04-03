@@ -18,7 +18,10 @@ export interface DocAuthority {
 export interface DocTyped {
 	type: string;
 	default?: string;
-	table_properties?: { name: string; type: string }[];
+	table_properties?: {
+		name: string;
+		type: string;
+	}[];
 }
 
 export interface DocParameter extends DocDescriptive, DocTyped {
@@ -34,7 +37,7 @@ export interface DocStaticProperty extends DocDescriptive, DocTyped {
 	value: string;
 }
 
-export interface DocReturn extends DocDescriptive, DocTyped {}
+export interface DocReturn extends DocDescriptive, DocTyped { }
 
 export interface DocFunction extends DocDescriptive, DocAuthority {
 	name: string;
@@ -72,6 +75,7 @@ export interface DocClass extends DocDescriptive, DocAuthority {
 	operators?: DocOperator[];
 	staticClass: boolean;
 	struct?: boolean;
+	jsonFileName?: string;
 }
 
 export interface DocEnumValue {
@@ -85,6 +89,6 @@ export interface DocEnum extends DocDescriptive {
 }
 
 export interface Docs {
-	classes: { [key: string]: DocClass };
-	enums: { [key: string]: DocEnum };
+	classes: Record<string, DocClass>;
+	enums: Record<string, DocEnum>;
 }
