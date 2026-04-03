@@ -514,7 +514,6 @@ ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
 
 function generateEnum(
-	jsonFileName: string,
 	name: string,
 	values: DocEnumValue[]
 ): string {
@@ -525,7 +524,7 @@ function generateEnum(
 
 	return `
 
----${generateDocsLink(jsonFileName, name, "glossary/enums", { isEnum: true })}
+---${generateDocsLink(ENUMS_FILE, name, "glossary/enums", { isEnum: true })}
 ---@enum ${name}
 ${name} = {${valuesString.slice(0, -1)}
 }`;
@@ -613,12 +612,11 @@ async function buildDocs() {
 
 	Object.entries(docs.enums)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
-		.forEach(([name, enu]) => {
-			const values = enu.enums ?? [];
+		.forEach(([name, { enums: values }]) => {
 			const sortedValues = [...values].sort((a, b) =>
 				a.key.localeCompare(b.key),
 			);
-			output += generateEnum(enu.jsonFileName ?? name, name, sortedValues);
+			output += generateEnum(name, sortedValues);
 		});
 
 	try {

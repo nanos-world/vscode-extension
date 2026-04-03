@@ -86,7 +86,6 @@ export interface DocEnumValue {
 
 export interface DocEnum extends DocDescriptive {
 	enums: DocEnumValue[];
-	jsonFileName?: string;
 }
 
 export interface Docs {
