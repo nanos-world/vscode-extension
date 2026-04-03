@@ -3,7 +3,7 @@ import { getOctokit } from "@actions/github";
 
 import * as fs from "fs";
 
-import {
+import type {
 	Authority,
 	Docs,
 	DocClass,
@@ -13,11 +13,9 @@ import {
 	DocEvent,
 	DocEnumValue,
 	DocDescriptive,
-	DocProperty,
-	DocStaticProperty,
 	DocTyped,
 	DocConstructor,
-} from "./schema";
+} from "./schema.d.ts";
 
 console.log("Building documentation...");
 
@@ -49,17 +47,17 @@ function generateDocsLink(
 
 function generateAuthorityString(authority: Authority) {
 	switch (authority) {
-		case Authority.Server:
+		case "server":
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/server-only.png?raw=true" height="10"> `Server Side`';
-		case Authority.Client:
+		case "client":
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/client-only.png?raw=true" height="10"> `Client Side`';
-		case Authority.Authority:
+		case "authority":
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/authority-only.png?raw=true" height="10"> `Authority Side`';
-		case Authority.NetworkAuthority:
+		case "network-authority":
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/network-authority.png?raw=true" height="10"> `Network Authority`';
-		case Authority.BothNetAuthorityFirst:
+		case "both-net-authority-first":
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both-net-authority-first.png?raw=true" height="10"> `Both Sides (Network Authority First)`';
-		case Authority.Both:
+		case "both":
 		default:
 			return '<img src="https://github.com/nanos-world/vscode-extension/blob/master/assets/both.png?raw=true" height="10"> `Client/Server Side`';
 	}

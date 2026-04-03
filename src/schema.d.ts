@@ -1,11 +1,10 @@
-export enum Authority {
-	Server = "server",
-	Client = "client",
-	Authority = "authority",
-	Both = "both",
-	NetworkAuthority = "network-authority",
-	BothNetAuthorityFirst = "both-net-authority-first",
-}
+export type Authority =
+	| "server"
+	| "client"
+	| "authority"
+	| "both"
+	| "network-authority"
+	| "both-net-authority-first";
 
 export interface DocDescriptive {
 	description?: string;
