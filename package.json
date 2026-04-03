@@ -9,11 +9,11 @@
 	"main": "./out/extension.js",
 	"contributes": {},
 	"scripts": {
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile": "npx tsc -p ./",
+		"watch": "npx tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"start": "ts-node ./src/index.ts"
+		"lint": "npx eslint src --ext ts",
+		"start": "npx ts-node ./src/index.ts"
 	},
 	"devDependencies": {
 		"@types/glob": "^9.0.0",
@@ -23,14 +23,15 @@
 		"@typescript-eslint/parser": "^8.58.0",
 		"eslint": "^10.1.0",
 		"glob": "^13.0.6",
-		"mocha": "^11.7.5",
+		"mocha": "^11.3.0",
 		"npm-check-updates": "^20.0.0",
+		"prettier": "^3.8.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^6.0.2"
 	},
 	"dependencies": {
 		"@actions/core": "^1.10.1",
-		"@actions/github": "^5.1.1",
+		"@actions/github": "^9.0.0",
 		"axios": "^1.14.0",
 		"typescript-eslint": "^8.58.0"
 	}

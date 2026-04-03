@@ -28,17 +28,22 @@ const REPO_BRANCH = getInput("repository-branch");
 
 const octokit = getOctokit(TOKEN);
 
-function generateDocsLink(name: string, type: string, parent?: string, isStatic?: boolean): string {
+function generateDocsLink(
+	name: string,
+	type: string,
+	parent?: string,
+	isStatic?: boolean,
+): string {
 	const baseUrl = "https://docs.nanos-world.com/docs/scripting-reference";
 	let url: string;
-	
+
 	if (parent) {
 		const functionType = isStatic ? "static-function" : "function";
 		url = `${baseUrl}/${type}/${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
 	} else {
 		url = `${baseUrl}/${type}/${name.toLowerCase()}`;
 	}
-	
+
 	return `[📖 Documentation](${url})`;
 }
 
@@ -98,8 +103,9 @@ function generateInlineDocstring(descriptive: DocDescriptive): string {
 function generateParamDocstring(param: DocParameter): string {
 	let docstring = generateInlineDocstring(param);
 	if (param.default !== undefined)
-		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default
-			})`;
+		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${
+			param.default.length === 0 ? '""' : param.default
+		})`;
 	return docstring;
 }
 
@@ -169,7 +175,7 @@ function generateType(typed: DocTyped): ComplexType {
 					(prop) =>
 						`${prop.name}: ${generateType({
 							type: prop.type,
-						}).toString()}`
+						}).toString()}`,
 				)
 				.join(", ")} }`,
 			array: typeString.endsWith("[]"),
@@ -184,21 +190,28 @@ function generateReturns(rets?: DocReturn[]): string {
 	return rets
 		.map((ret) => {
 			const type = generateType(ret);
-			return `\n---@return ${type.toString() + (type.optional ? "?" : "")
-				} ${generateInlineDocstring(ret)}`;
+			return `\n---@return ${
+				type.toString() + (type.optional ? "?" : "")
+			} ${generateInlineDocstring(ret)}`;
 		})
 		.join("");
 }
 
 // This can be refactored out once the overload rework on the language server is done
-function generateInlineReturns(rets?: DocReturn[], areAllOptional?: boolean): string {
+function generateInlineReturns(
+	rets?: DocReturn[],
+	areAllOptional?: boolean,
+): string {
 	if (rets === undefined) return "";
 	return (
 		": " +
 		rets
 			.map((ret) => {
 				const type = generateType(ret);
-				return type.toString() + (areAllOptional || type.optional ? "?" : "");
+				return (
+					type.toString() +
+					(areAllOptional || type.optional ? "?" : "")
+				);
 			})
 			.join(", ")
 	);
@@ -216,8 +229,9 @@ function generateParams(params?: DocParameter[]): {
 		if (param.name.endsWith("...")) param.name = "...";
 
 		const type = generateType(param);
-		ret.string += `\n---@param ${param.name}${type.optional ? "?" : ""
-			} ${type.toString()} ${generateParamDocstring(param)}`;
+		ret.string += `\n---@param ${param.name}${
+			type.optional ? "?" : ""
+		} ${type.toString()} ${generateParamDocstring(param)}`;
 		ret.names += param.name + ", ";
 	});
 
@@ -230,27 +244,34 @@ function generateInlineParams(params: DocParameter[]): string {
 		.map((param) => {
 			param.name = param.name ?? "missing_name";
 			const type = generateType(param);
-			return `${param.name}${type.optional ? "?" : ""
-				}: ${type.toString()}`;
+			return `${param.name}${
+				type.optional ? "?" : ""
+			}: ${type.toString()}`;
 		})
 		.join(", ");
 }
 
-function generateFunction(fun: DocFunction, className: string, accessor: string = "", isStatic: boolean = false, isStruct: boolean = false): string {
+function generateFunction(
+	fun: DocFunction,
+	className: string,
+	accessor: string = "",
+	isStatic: boolean = false,
+	isStruct: boolean = false,
+): string {
 	const params = generateParams(fun.parameters);
 	return `
 
 ---${generateAuthorityString(fun.authority)}
 ---
 ---${generateDocstring(fun)}
----${generateDocsLink(fun.name, isStatic ? "static-classes" : (isStruct ? "structs" : "classes"), className, isStatic)}
+---${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", className, isStatic)}
 ${params.string}${generateReturns(fun.return)}
 function ${accessor}${fun.name}(${params.names}) end`;
 }
 
 function generateConstructor(
 	constructor: DocConstructor,
-	className: string
+	className: string,
 ): string {
 	const params = generateInlineParams(constructor.parameters);
 	return `\n---@overload fun(${params}): ${className}`;
@@ -258,7 +279,7 @@ function generateConstructor(
 
 function generateClassAnnotations(
 	classes: { [key: string]: DocClass },
-	cls: DocClass
+	cls: DocClass,
 ): string {
 	let inheritance = "";
 	if (cls.inheritance !== undefined) {
@@ -269,7 +290,7 @@ function generateClassAnnotations(
 		cls.constructors?.reduce(
 			(prev, constructor) =>
 				prev + generateConstructor(constructor, cls.name),
-			""
+			"",
 		) ?? "";
 
 	let staticFunctions = "";
@@ -278,13 +299,19 @@ function generateClassAnnotations(
 		[...cls.static_functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
-			if (
-				(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
-				cls.name !== "Events"
-			)
-				return;
-			staticFunctions += generateFunction(fun, cls.name, `${cls.name}.`, true, (cls as any).struct);
-		});
+				if (
+					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
+					cls.name !== "Events"
+				)
+					return;
+				staticFunctions += generateFunction(
+					fun,
+					cls.name,
+					`${cls.name}.`,
+					true,
+					(cls as any).struct,
+				);
+			});
 	}
 
 	let functions = "";
@@ -293,13 +320,19 @@ function generateClassAnnotations(
 		[...cls.functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
-			if (
-				(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
-				cls.name !== "Events"
-			)
-				return;
-functions += generateFunction(fun, cls.name, `${cls.name}:`, false, (cls as any).struct);
-		});
+				if (
+					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
+					cls.name !== "Events"
+				)
+					return;
+				functions += generateFunction(
+					fun,
+					cls.name,
+					`${cls.name}:`,
+					false,
+					(cls as any).struct,
+				);
+			});
 	}
 
 	let events = "";
@@ -326,68 +359,84 @@ functions += generateFunction(fun, cls.name, `${cls.name}:`, false, (cls as any)
 		Object.entries(combinedEvents)
 			.sort(([aName], [bName]) => aName.localeCompare(bName))
 			.forEach(([_, event]) => {
-			let callbackSig = "";
-			if (event.arguments !== undefined) {
-				callbackSig = event.arguments
-					.map((param, idx) => {
-						const type = generateType(param);
-						return `${param.name}${type.optional ? "?" : ""}: ${idx !== 0 || param.name !== "self"
-							? type.toString()
-							: cls.name
+				let callbackSig = "";
+				if (event.arguments !== undefined) {
+					callbackSig = event.arguments
+						.map((param, idx) => {
+							const type = generateType(param);
+							return `${param.name}${type.optional ? "?" : ""}: ${
+								idx !== 0 || param.name !== "self"
+									? type.toString()
+									: cls.name
 							}`;
-					})
-					.join(", ");
-			}
-			callbackSig = `fun(${callbackSig})${generateInlineReturns(
-				event.return, true
-			)}`;
-
-			subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
-				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-					event
+						})
+						.join(", ");
+				}
+				callbackSig = `fun(${callbackSig})${generateInlineReturns(
+					event.return,
+					true,
 				)}`;
 
-			subOverloads += `\n---@overload fun(event_name: "${event.name
+				subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
+					event.name
 				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-					event
+					event,
 				)}`;
 
-			unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
+				subOverloads += `\n---@overload fun(event_name: "${
+					event.name
+				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+					event,
+				)}`;
+
+				unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
+					event.name
 				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 
-			unsubOverloads += `\n---@overload fun(event_name: "${event.name
+				unsubOverloads += `\n---@overload fun(event_name: "${
+					event.name
 				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
-		});
+			});
 
 		events = `
 
-${!cls.staticClass ? `
+${
+	!cls.staticClass
+		? `
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${subOverloads}
 function ${cls.name}.Subscribe(event_name, callback) end
-`: ""}
+`
+		: ""
+}
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${cls.staticClass ? subOverloads : subOverloadsSelf}
-function ${cls.name}${cls.staticClass ? "." : ":"
-			}Subscribe(event_name, callback) end
+function ${cls.name}${
+			cls.staticClass ? "." : ":"
+		}Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${cls.staticClass ? unsubOverloads : unsubOverloadsSelf}
-function ${cls.name}${cls.staticClass ? "." : ":"
-			}Unsubscribe(event_name, callback) end
+function ${cls.name}${
+			cls.staticClass ? "." : ":"
+		}Unsubscribe(event_name, callback) end
 
-${!cls.staticClass ? `
+${
+	!cls.staticClass
+		? `
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${unsubOverloads}
 function ${cls.name}.Unsubscribe(event_name, callback) end
-`: ""}`;
+`
+		: ""
+}`;
 	}
 
 	let fields = "";
@@ -396,13 +445,15 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 		[...cls.properties]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((prop) => {
-			fields += `\n---@field ${prop.name} ${generateType(
-				prop
-			).toString()} ${generateInlineDocstring(prop)}`;
-		});
+				fields += `\n---@field ${prop.name} ${generateType(
+					prop,
+				).toString()} ${generateInlineDocstring(prop)}`;
+			});
 	}
 
-	const staticFields = cls.static_properties?.length ? `\n${cls.static_properties.map(field => `${cls.name}.${field.name} = ${field.value}`).join("\n")}` : "";
+	const staticFields = cls.static_properties?.length
+		? `\n${cls.static_properties.map((field) => `${cls.name}.${field.name} = ${field.value}`).join("\n")}`
+		: "";
 
 	let operators = "";
 	if (cls.operators !== undefined) {
@@ -410,12 +461,13 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 		[...cls.operators]
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.forEach((op) => {
-			if (op.operator in OPERATORS)
-				operators += `\n---@operator ${OPERATORS[op.operator]
+				if (op.operator in OPERATORS)
+					operators += `\n---@operator ${
+						OPERATORS[op.operator]
 					}(${generateType({ type: op.rhs }).toString()}): ${generateType(
-						{ type: op.return }
+						{ type: op.return },
 					).toString()}`;
-		});
+			});
 	}
 
 	return `
@@ -423,7 +475,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---${generateAuthorityString(cls.authority)}
 ---
 ---${generateDocstring(cls)}
----${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : ((cls as any).struct ? "structs" : "classes"))}
+---${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : (cls as any).struct ? "structs" : "classes")}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
@@ -452,12 +504,14 @@ interface GitTreeEntry {
 }
 
 async function buildDocs() {
-	const response = await octokit.request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
-		owner: REPO_OWNER,
-		repo: REPO_NAME,
-		tree_sha: REPO_BRANCH,
-		recursive: "1",
-	}
+	const response = await octokit.request(
+		"GET /repos/{owner}/{repo}/git/trees/{tree_sha}",
+		{
+			owner: REPO_OWNER,
+			repo: REPO_NAME,
+			tree_sha: REPO_BRANCH,
+			recursive: "1",
+		},
 	);
 
 	let docs: Docs = {
@@ -483,7 +537,7 @@ async function buildDocs() {
 						repo: REPO_NAME,
 						path: entry.path,
 						ref: REPO_BRANCH,
-					}
+					},
 				);
 
 				// Process file
@@ -491,7 +545,7 @@ async function buildDocs() {
 				if (file.content === undefined) return;
 
 				const fileContents = JSON.parse(
-					atob(file.content.replaceAll("\n", ""))
+					atob(file.content.replaceAll("\n", "")),
 				);
 
 				// Write annotations
@@ -513,7 +567,7 @@ async function buildDocs() {
 					docs.classes[fileContents.name] = fileContents;
 					return;
 				}
-			})()
+			})(),
 		);
 	await Promise.all(promises);
 
@@ -531,7 +585,9 @@ async function buildDocs() {
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
 		.forEach(([name, { enums: values }]) => {
 			// Sort enum values by key
-			const sortedValues = [...values].sort((a, b) => a.key.localeCompare(b.key));
+			const sortedValues = [...values].sort((a, b) =>
+				a.key.localeCompare(b.key),
+			);
 			output += generateEnum(name, sortedValues);
 		});
 
