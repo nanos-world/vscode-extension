@@ -9,3 +9,5 @@ workflow-run.bat
 *.env
 *.env.*
 !.env.template
+
+docs
