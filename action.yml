@@ -1,5 +1,5 @@
 name: Nanos World EmmyLua Docgen
-author: Derpius
+author: Go Horse Studios
 description: GitHub action to build EmmyLua annotations from the Nanos World JSON documentation
 
 inputs:
@@ -17,5 +17,5 @@ inputs:
     required: true
 
 runs:
-  using: "node16"
+  using: "node24"
   main: "out/index.js"
