@@ -580,4 +580,7 @@ async function buildDocs() {
 	await fs.promises.writeFile("./docs/annotations.lua", output);
 }
 
-buildDocs().then(() => console.log("Build finished"));
+export async function run(): Promise<void> {
+	await buildDocs();
+	console.log("Build finished");
+}
