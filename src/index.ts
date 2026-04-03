@@ -301,8 +301,10 @@ function generateClassAnnotations(
 				if (
 					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
 					cls.name !== "Events"
-				)
+				) {
 					return;
+				}
+
 				staticFunctions += generateFunction(
 					fun,
 					cls.name,
@@ -321,8 +323,10 @@ function generateClassAnnotations(
 				if (
 					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
 					cls.name !== "Events"
-				)
+				) {
 					return;
+				}
+
 				functions += generateFunction(
 					fun,
 					cls.name,
@@ -453,13 +457,13 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 	if (cls.operators !== undefined) {
 		[...cls.operators]
 			.sort((a, b) => a.operator.localeCompare(b.operator))
+			.filter((op) => op.operator in OPERATORS)
 			.forEach((op) => {
-				if (op.operator in OPERATORS)
-					operators += `\n---@operator ${
-						OPERATORS[op.operator]
-					}(${generateType({ type: op.rhs }).toString()}): ${generateType(
-						{ type: op.return },
-					).toString()}`;
+				operators += `\n---@operator ${
+					OPERATORS[op.operator]
+				}(${generateType({ type: op.rhs }).toString()}): ${generateType(
+					{ type: op.return },
+				).toString()}`;
 			});
 	}
 
@@ -509,8 +513,10 @@ async function buildDocs() {
 		})
 		.map((entry) =>
 			(async () => {
-				if (entry.path === undefined || entry.path.startsWith("_"))
+				if (entry.path === undefined || entry.path.startsWith("_")) {
 					return;
+				}
+
 				console.log(`Processing ${entry.path}...`);
 
 				const response = await octokit.request(
@@ -525,7 +531,9 @@ async function buildDocs() {
 				);
 
 				const file: any = response.data;
-				if (file.content === undefined) return;
+				if (file.content === undefined) {
+					return;
+				}
 
 				const fileContents = JSON.parse(
 					atob(file.content.replaceAll("\n", "")),
