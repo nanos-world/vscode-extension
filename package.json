@@ -10,12 +10,12 @@
 	"type": "commonjs",
 	"contributes": {},
 	"scripts": {
-		"compile": "npx tsc -p ./",
-		"watch": "npx tsc -watch -p ./",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "npx eslint src --ext ts",
-		"pretty": "npx prettier . --write",
-		"start": "npx rimraf ./docs && npx local-action run . src/main.ts ./.env.local"
+		"lint": "eslint src --ext ts",
+		"pretty": "prettier . --write",
+		"start": "rimraf ./docs && local-action run . src/main.ts ./.env.local"
 	},
 	"devDependencies": {
 		"@github/local-action": "^7.0.1",
