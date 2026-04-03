@@ -27,8 +27,34 @@ const REPO_BRANCH = getInput("repository-branch");
 
 const octokit = getOctokit(TOKEN);
 
+// Path category constants for class types
+const PATH_CATEGORIES = {
+	CLASSES: "Classes",
+	STATIC_CLASSES: "StaticClasses",
+	STRUCTS: "Structs",
+	UTILITY_CLASSES: "UtilityClasses",
+} as const;
+
+const ENUMS_FILE = "Enums.json";
+
+type PathCategory = typeof PATH_CATEGORIES[keyof typeof PATH_CATEGORIES];
+
+/**
+ * Determines the category of a JSON file path for classification purposes.
+ * @returns The category name, or null if not a class-like file
+ */
+function getPathCategory(path: string): PathCategory | null {
+	for (const category of Object.values(PATH_CATEGORIES)) {
+		if (path.startsWith(category)) {
+			return category;
+		}
+	}
+	return null;
+}
+
 const DOCS_BASE_URL = "https://docs.nanos-world.com/docs/scripting-reference/";
 function generateDocsLink(
+	jsonFileName: string,
 	name: string,
 	type: string,
 	opts?: Partial<{
@@ -91,7 +117,10 @@ const OPERATORS = {
 	__call: "call",
 };
 
-function generateDocstring(obj: DocDescriptive): string {
+function generateDocstring(
+	obj: DocDescriptive,
+	jsonFileName?: string
+): string {
 	return (
 		obj.description_long === undefined
 			? obj.description === undefined
@@ -101,13 +130,19 @@ function generateDocstring(obj: DocDescriptive): string {
 	).replaceAll("\n", "<br>");
 }
 
-function generateInlineDocstring(descriptive: DocDescriptive): string {
-	let docstring = generateDocstring(descriptive);
+function generateInlineDocstring(
+	descriptive: DocDescriptive,
+	jsonFileName?: string
+): string {
+	let docstring = generateDocstring(descriptive, jsonFileName);
 	return docstring.length > 0 ? `@${docstring}` : "";
 }
 
-function generateParamDocstring(param: DocParameter): string {
-	let docstring = generateInlineDocstring(param);
+function generateParamDocstring(
+	param: DocParameter,
+	jsonFileName?: string
+): string {
+	let docstring = generateInlineDocstring(param, jsonFileName);
 	if (param.default !== undefined) {
 		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default})`;
 	}
@@ -190,13 +225,15 @@ function generateType(typed: DocTyped): ComplexType {
 	return complexType;
 }
 
-function generateReturns(rets?: DocReturn[]): string {
+function generateReturns(
+	rets?: DocReturn[],
+	jsonFileName?: string
+): string {
 	if (rets === undefined) return "";
 	return rets
 		.map((ret) => {
 			const type = generateType(ret);
-			return `\n---@return ${type.toString() + (type.optional ? "?" : "")
-				} ${generateInlineDocstring(ret)}`;
+			return `\n---@return ${type.toString() + (type.optional ? "?" : "")} ${generateInlineDocstring(ret, jsonFileName)}`;
 		})
 		.join("");
 }
@@ -221,7 +258,10 @@ function generateInlineReturns(
 	);
 }
 
-function generateParams(params?: DocParameter[]): {
+function generateParams(
+	params?: DocParameter[],
+	jsonFileName?: string
+): {
 	string: string;
 	names: string;
 } {
@@ -234,7 +274,7 @@ function generateParams(params?: DocParameter[]): {
 
 		const type = generateType(param);
 		ret.string += `\n---@param ${param.name}${type.optional ? "?" : ""
-			} ${type.toString()} ${generateParamDocstring(param)}`;
+			} ${type.toString()} ${generateParamDocstring(param, jsonFileName)}`;
 		ret.names += param.name + ", ";
 	});
 
@@ -265,11 +305,11 @@ function generateFunction(
 	return `
 
 ---${generateAuthorityString(fun.authority)}
----${generateDocsLink(fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
+---${generateDocsLink(jsonFileName, fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
 ---
 ---(DEBUG) jsonFileName: ${jsonFileName}
 ---
----${generateDocstring(fun)}${params.string}${generateReturns(fun.return)}
+---${generateDocstring(fun, jsonFileName)}${params.string}${generateReturns(fun.return, jsonFileName)}
 function ${accessor}${fun.name}(${params.names}) end`;
 }
 
@@ -466,14 +506,18 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 	return `
 
 ---${generateAuthorityString(cls.authority)}
----${generateDocsLink(cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
+---${generateDocsLink(jsonFileName, cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
 ---
----${generateDocstring(cls)}
+---${generateDocstring(cls, jsonFileName)}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
 
-function generateEnum(name: string, values: DocEnumValue[]): string {
+function generateEnum(
+	jsonFileName: string,
+	name: string,
+	values: DocEnumValue[]
+): string {
 	let valuesString = "";
 	values.forEach((value) => {
 		valuesString += `\n    ${value.key} = ${value.value},${value.description ? ` -- ${value.description}` : ""}`;
@@ -481,7 +525,7 @@ function generateEnum(name: string, values: DocEnumValue[]): string {
 
 	return `
 
----${generateDocsLink(name, "glossary/enums", { isEnum: true })}
+---${generateDocsLink(jsonFileName, name, "glossary/enums", { isEnum: true })}
 ---@enum ${name}
 ${name} = {${valuesString.slice(0, -1)}
 }`;
@@ -535,28 +579,25 @@ async function buildDocs() {
 					return;
 				}
 
-				const fileContents = JSON.parse(
-					atob(file.content.replaceAll("\n", "")),
-				);
+				// Use Buffer for base64 decoding (Node.js native approach)
+				const jsonContent = Buffer.from(file.content, "base64").toString("utf-8");
+				const fileContents = JSON.parse(jsonContent) as DocClass;
+				fileContents.jsonFileName = entry.path;
 
-				if (entry.path === "Enums.json") {
-					docs.enums = fileContents as Record<string, DocEnum>;
+				// Handle Enums file
+				if (entry.path === ENUMS_FILE) {
+					docs.enums = fileContents as unknown as Record<string, DocEnum>;
 					return;
 				}
 
-				if (
-					entry.path.startsWith("Classes") ||
-					entry.path.startsWith("StaticClasses") ||
-					entry.path.startsWith("Structs") ||
-					entry.path.startsWith("UtilityClasses")
-				) {
+				// Handle class-like files using extracted category logic
+				const category = getPathCategory(entry.path);
+				if (category !== null) {
 					fileContents.staticClass =
-						entry.path.startsWith("StaticClasses") ||
-						entry.path.startsWith("UtilityClasses");
-					fileContents.struct = entry.path.startsWith("Structs");
-					fileContents.jsonFileName = entry.path;
+						category === PATH_CATEGORIES.STATIC_CLASSES ||
+						category === PATH_CATEGORIES.UTILITY_CLASSES;
+					fileContents.struct = category === PATH_CATEGORIES.STRUCTS;
 					docs.classes[fileContents.name] = fileContents;
-					return;
 				}
 			})(),
 		);
@@ -572,11 +613,12 @@ async function buildDocs() {
 
 	Object.entries(docs.enums)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
-		.forEach(([name, { enums: values }]) => {
+		.forEach(([name, enu]) => {
+			const values = enu.enums ?? [];
 			const sortedValues = [...values].sort((a, b) =>
 				a.key.localeCompare(b.key),
 			);
-			output += generateEnum(name, sortedValues);
+			output += generateEnum(enu.jsonFileName ?? name, name, sortedValues);
 		});
 
 	try {
