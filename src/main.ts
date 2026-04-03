@@ -27,11 +27,13 @@ const REPO_NAME = getInput("repository-name");
 const REPO_BRANCH = getInput("repository-branch");
 
 // Set global dispatcher with 60 second connect timeout
-setGlobalDispatcher(new Agent({
-	connect: {
-		timeout: 60000,
-	},
-}));
+setGlobalDispatcher(
+	new Agent({
+		connect: {
+			timeout: 60000,
+		},
+	}),
+);
 
 const octokit = getOctokit(TOKEN);
 
@@ -45,7 +47,7 @@ const PATH_CATEGORIES = {
 
 const ENUMS_FILE = "Enums.json";
 
-type PathCategory = typeof PATH_CATEGORIES[keyof typeof PATH_CATEGORIES];
+type PathCategory = (typeof PATH_CATEGORIES)[keyof typeof PATH_CATEGORIES];
 
 /**
  * Determines the category of a JSON file path for classification purposes.
@@ -66,17 +68,16 @@ function generateDocsLink(
 	name: string,
 	type: string,
 	opts?: Partial<{
-		parent: string,
-		isEnum: boolean,
-		isStatic: boolean,
-	}>
+		parent: string;
+		isEnum: boolean;
+		isStatic: boolean;
+	}>,
 ): string {
 	let url = DOCS_BASE_URL;
 	const { parent, isEnum, isStatic } = opts ?? {};
 	if (isEnum) {
 		url += `glossary/enums#${name.toLowerCase()}`;
-	}
-	else {
+	} else {
 		url += `${type}/`;
 		if (parent) {
 			const functionType = isStatic ? "static-function" : "function";
@@ -92,7 +93,8 @@ function generateDocsLink(
 	return `<a href="${url}">docs</a>`;
 }
 
-const RAW_ASSETS_BASE_URL = "https://raw.github.com/nanos-world/vscode-extension/master/assets/";
+const RAW_ASSETS_BASE_URL =
+	"https://raw.github.com/nanos-world/vscode-extension/master/assets/";
 function generateAuthorityString(authority: Authority) {
 	switch (authority) {
 		case "server":
@@ -131,10 +133,7 @@ const OPERATORS = {
 	__call: "call",
 };
 
-function generateDocstring(
-	obj: DocDescriptive,
-	jsonFileName?: string
-): string {
+function generateDocstring(obj: DocDescriptive, jsonFileName?: string): string {
 	return (
 		obj.description_long === undefined
 			? obj.description === undefined
@@ -146,7 +145,7 @@ function generateDocstring(
 
 function generateInlineDocstring(
 	descriptive: DocDescriptive,
-	jsonFileName?: string
+	jsonFileName?: string,
 ): string {
 	let docstring = generateDocstring(descriptive, jsonFileName);
 	return docstring.length > 0 ? `@${docstring}` : "";
@@ -154,7 +153,7 @@ function generateInlineDocstring(
 
 function generateParamDocstring(
 	param: DocParameter,
-	jsonFileName?: string
+	jsonFileName?: string,
 ): string {
 	let docstring = generateInlineDocstring(param, jsonFileName);
 	if (param.default !== undefined) {
@@ -239,10 +238,7 @@ function generateType(typed: DocTyped): ComplexType {
 	return complexType;
 }
 
-function generateReturns(
-	rets?: DocReturn[],
-	jsonFileName?: string
-): string {
+function generateReturns(rets?: DocReturn[], jsonFileName?: string): string {
 	if (rets === undefined) return "";
 	return rets
 		.map((ret) => {
@@ -274,7 +270,7 @@ function generateInlineReturns(
 
 function generateParams(
 	params?: DocParameter[],
-	jsonFileName?: string
+	jsonFileName?: string,
 ): {
 	string: string;
 	names: string;
@@ -288,8 +284,9 @@ function generateParams(
 		param.name = param.name.replaceAll("/", "_"); // bug-fix until Syed gives us more definite answer...
 
 		const type = generateType(param);
-		ret.string += `\n---@param ${param.name}${type.optional ? "?" : ""
-			} ${type.toString()} ${generateParamDocstring(param, jsonFileName)}`;
+		ret.string += `\n---@param ${param.name}${
+			type.optional ? "?" : ""
+		} ${type.toString()} ${generateParamDocstring(param, jsonFileName)}`;
 		ret.names += param.name + ", ";
 	});
 
@@ -302,8 +299,9 @@ function generateInlineParams(params: DocParameter[]): string {
 		.map((param) => {
 			param.name = param.name ?? "missing_name";
 			const type = generateType(param);
-			return `${param.name}${type.optional ? "?" : ""
-				}: ${type.toString()}`;
+			return `${param.name}${
+				type.optional ? "?" : ""
+			}: ${type.toString()}`;
 		})
 		.join(", ");
 }
@@ -369,7 +367,7 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}.`,
 					true,
-					cls.struct
+					cls.struct,
 				);
 			});
 	}
@@ -379,7 +377,8 @@ function generateClassAnnotations(
 		[...cls.functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
-				if ((fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
+				if (
+					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
 					cls.name !== "Events"
 				) {
 					return;
@@ -391,7 +390,7 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}:`,
 					false,
-					cls.struct
+					cls.struct,
 				);
 			});
 	}
@@ -422,10 +421,11 @@ function generateClassAnnotations(
 					callbackSig = event.arguments
 						.map((param, idx) => {
 							const type = generateType(param);
-							return `${param.name}${type.optional ? "?" : ""}: ${idx !== 0 || param.name !== "self"
-								? type.toString()
-								: cls.name
-								}`;
+							return `${param.name}${type.optional ? "?" : ""}: ${
+								idx !== 0 || param.name !== "self"
+									? type.toString()
+									: cls.name
+							}`;
 						})
 						.join(", ");
 				}
@@ -434,58 +434,66 @@ function generateClassAnnotations(
 					true,
 				)}`;
 
-				subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
-					}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-						event,
-					)}`;
+				subOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
+					event.name
+				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+					event,
+				)}`;
 
-				subOverloads += `\n---@overload fun(event_name: "${event.name
-					}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
-						event,
-					)}`;
+				subOverloads += `\n---@overload fun(event_name: "${
+					event.name
+				}", callback: ${callbackSig}): ${callbackSig} ${generateInlineDocstring(
+					event,
+				)}`;
 
-				unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${event.name
-					}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
+				unsubOverloadsSelf += `\n---@overload fun(self: ${cls.name}, event_name: "${
+					event.name
+				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 
-				unsubOverloads += `\n---@overload fun(event_name: "${event.name
-					}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
+				unsubOverloads += `\n---@overload fun(event_name: "${
+					event.name
+				}", callback: ${callbackSig}) ${generateInlineDocstring(event)}`;
 			});
 
 		events = `
 
-${!cls.staticClass
-				? `
+${
+	!cls.staticClass
+		? `
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${subOverloads}
 function ${cls.name}.Subscribe(event_name, callback) end
 `
-				: ""
-			}
+		: ""
+}
 
 ---Subscribe to an event
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed${cls.staticClass ? subOverloads : subOverloadsSelf}
-function ${cls.name}${cls.staticClass ? "." : ":"
-			}Subscribe(event_name, callback) end
+function ${cls.name}${
+			cls.staticClass ? "." : ":"
+		}Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${cls.staticClass ? unsubOverloads : unsubOverloadsSelf}
-function ${cls.name}${cls.staticClass ? "." : ":"
-			}Unsubscribe(event_name, callback) end
+function ${cls.name}${
+			cls.staticClass ? "." : ":"
+		}Unsubscribe(event_name, callback) end
 
-${!cls.staticClass
-				? `
+${
+	!cls.staticClass
+		? `
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)${unsubOverloads}
 function ${cls.name}.Unsubscribe(event_name, callback) end
 `
-				: ""
-			}`;
+		: ""
+}`;
 	}
 
 	let fields = "";
@@ -509,10 +517,11 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.filter((op) => op.operator in OPERATORS)
 			.forEach((op) => {
-				operators += `\n---@operator ${OPERATORS[op.operator as keyof typeof OPERATORS]
-					}(${generateType({ type: op.rhs }).toString()}): ${generateType(
-						{ type: op.return },
-					).toString()}`;
+				operators += `\n---@operator ${
+					OPERATORS[op.operator as keyof typeof OPERATORS]
+				}(${generateType({ type: op.rhs }).toString()}): ${generateType(
+					{ type: op.return },
+				).toString()}`;
 			});
 	}
 
@@ -526,10 +535,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
 }
 
-function generateEnum(
-	name: string,
-	values: DocEnumValue[]
-): string {
+function generateEnum(name: string, values: DocEnumValue[]): string {
 	let valuesString = "";
 	values.forEach((value) => {
 		valuesString += `\n    ${value.key} = ${value.value},${value.description ? ` -- ${value.description}` : ""}`;
@@ -582,7 +588,12 @@ async function buildDocs() {
 					},
 				);
 
-				if (!response || !response.data || Array.isArray(response.data) || response.data.type !== "file") {
+				if (
+					!response ||
+					!response.data ||
+					Array.isArray(response.data) ||
+					response.data.type !== "file"
+				) {
 					return;
 				}
 
@@ -592,13 +603,19 @@ async function buildDocs() {
 				}
 
 				// Use Buffer for base64 decoding (Node.js native approach)
-				const jsonContent = Buffer.from(file.content, "base64").toString("utf-8");
+				const jsonContent = Buffer.from(
+					file.content,
+					"base64",
+				).toString("utf-8");
 				const fileContents = JSON.parse(jsonContent) as DocClass;
 				fileContents.jsonFileName = entry.path;
 
 				// Handle Enums file
 				if (entry.path === ENUMS_FILE) {
-					docs.enums = fileContents as unknown as Record<string, DocEnum>;
+					docs.enums = fileContents as unknown as Record<
+						string,
+						DocEnum
+					>;
 					return;
 				}
 
@@ -620,7 +637,11 @@ async function buildDocs() {
 	Object.entries(docs.classes)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
 		.forEach(([name, cls]) => {
-			output += generateClassAnnotations(cls.jsonFileName ?? name, docs.classes, cls);
+			output += generateClassAnnotations(
+				cls.jsonFileName ?? name,
+				docs.classes,
+				cls,
+			);
 		});
 
 	Object.entries(docs.enums)
@@ -635,8 +656,7 @@ async function buildDocs() {
 
 	try {
 		await fs.promises.mkdir("./docs");
-	}
-	catch {
+	} catch {
 		// it is fine if it exists already
 	}
 	await fs.promises.writeFile("./docs/annotations.lua", output);
