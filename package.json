@@ -7,14 +7,14 @@
 	"repository": "https://github.com/nanos-world/vscode-extension",
 	"icon": "https://nanos-world.com/favicon.ico",
 	"main": "./out/extension.js",
-	"type": "module",
+	"type": "commonjs",
 	"contributes": {},
 	"scripts": {
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"start": "local-action run ./action.yml ./src/index.ts ./.env.local"
+		"start": "local-action run . src/main.ts ./.env.local"
 	},
 	"devDependencies": {
 		"@github/local-action": "^7.0.1",
