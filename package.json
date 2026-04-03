@@ -32,7 +32,10 @@
 	"dependencies": {
 		"@actions/core": "^1.10.1",
 		"@actions/github": "^9.0.0",
-		"axios": "^1.14.0",
+		"axios": "1.14.0",
 		"typescript-eslint": "^8.58.0"
+	},
+	"overrides": {
+		"axios": "1.14.0"
 	}
 }
