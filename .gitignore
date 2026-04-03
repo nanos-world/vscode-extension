@@ -63,7 +63,6 @@ EmmyLua/
 # Local development
 workflow-run.bat
 
-# Visual Studio / JetBrains
+# Visual Studio
 .vs/
 .vscode/
-.idea/
