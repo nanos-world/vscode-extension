@@ -5,3 +5,7 @@ node_modules
 *.vsix
 EmmyLua/
 workflow-run.bat
+
+*.env
+*.env.*
+!.env.template
