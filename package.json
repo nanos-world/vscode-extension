@@ -9,11 +9,11 @@
 	"main": "./out/extension.js",
 	"contributes": {},
 	"scripts": {
-		"compile": "npx tsc -p ./",
-		"watch": "npx tsc -watch -p ./",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "npx eslint src --ext ts",
-		"start": "npx ts-node ./src/index.ts"
+		"lint": "eslint src --ext ts",
+		"start": "ts-node ./src/index.ts"
 	},
 	"devDependencies": {
 		"@types/glob": "^9.0.0",

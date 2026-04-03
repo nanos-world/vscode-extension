@@ -295,7 +295,6 @@ function generateClassAnnotations(
 
 	let staticFunctions = "";
 	if (cls.static_functions !== undefined) {
-		// Sort static functions alphabetically
 		[...cls.static_functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
@@ -316,7 +315,6 @@ function generateClassAnnotations(
 
 	let functions = "";
 	if (cls.functions !== undefined) {
-		// Sort member functions alphabetically
 		[...cls.functions]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((fun) => {
@@ -337,7 +335,6 @@ function generateClassAnnotations(
 
 	let events = "";
 	if (cls.events !== undefined) {
-		// Handle inheritance
 		let combinedEvents: { [key: string]: DocEvent } = {};
 		if (cls.inheritance !== undefined) {
 			cls.inheritance.forEach((clsName) => {
@@ -350,12 +347,10 @@ function generateClassAnnotations(
 			combinedEvents[event.name] = event;
 		});
 
-		// Generate overloads
 		let subOverloadsSelf = "";
 		let unsubOverloadsSelf = "";
 		let subOverloads = "";
 		let unsubOverloads = "";
-		// Sort events alphabetically
 		Object.entries(combinedEvents)
 			.sort(([aName], [bName]) => aName.localeCompare(bName))
 			.forEach(([_, event]) => {
@@ -441,7 +436,6 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 
 	let fields = "";
 	if (cls.properties !== undefined) {
-		// Sort properties alphabetically
 		[...cls.properties]
 			.sort((a, b) => a.name.localeCompare(b.name))
 			.forEach((prop) => {
@@ -457,7 +451,6 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 
 	let operators = "";
 	if (cls.operators !== undefined) {
-		// Sort operators alphabetically
 		[...cls.operators]
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.forEach((op) => {
@@ -494,15 +487,6 @@ ${name} = {${valuesString.slice(0, -1)}
 }`;
 }
 
-interface GitTreeEntry {
-	path?: string;
-	mode?: string;
-	type: string;
-	sha?: string;
-	size?: number;
-	url?: string;
-}
-
 async function buildDocs() {
 	const response = await octokit.request(
 		"GET /repos/{owner}/{repo}/git/trees/{tree_sha}",
@@ -519,7 +503,7 @@ async function buildDocs() {
 		enums: {},
 	};
 
-	const promises = (response.data.tree as GitTreeEntry[])
+	const promises = response.data.tree
 		.filter(function (entry) {
 			return entry.type === "blob" && entry.path?.endsWith(".json");
 		})
@@ -540,7 +524,6 @@ async function buildDocs() {
 					},
 				);
 
-				// Process file
 				const file: any = response.data;
 				if (file.content === undefined) return;
 
@@ -548,7 +531,6 @@ async function buildDocs() {
 					atob(file.content.replaceAll("\n", "")),
 				);
 
-				// Write annotations
 				if (entry.path === "Enums.json") {
 					docs.enums = fileContents;
 					return;
@@ -573,18 +555,15 @@ async function buildDocs() {
 
 	let output = "---@meta";
 
-	// Sort classes alphabetically
 	Object.entries(docs.classes)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
 		.forEach(([_, cls]) => {
 			output += generateClassAnnotations(docs.classes, cls);
 		});
 
-	// Sort enums alphabetically
 	Object.entries(docs.enums)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
 		.forEach(([name, { enums: values }]) => {
-			// Sort enum values by key
 			const sortedValues = [...values].sort((a, b) =>
 				a.key.localeCompare(b.key),
 			);
