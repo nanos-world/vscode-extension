@@ -7,8 +7,9 @@ Right now this runs only when this branch is pushed to, however the final versio
 
 You can run the action locally using https://github.com/github/local-action:
 
-1. Copy `.env.template` to `.env.local`
-2. Set `INPUT_GITHUB-TOKEN` to a personal access token with access to the following endpoints:
+1. `npm install`
+2. Copy `.env.template` to `.env.local`
+3. Set `INPUT_GITHUB-TOKEN` to a personal access token with access to the following endpoints:
     - `GET /repos/{owner}/{repo}/git/trees/{tree_sha}`
     - `GET /repos/{owner}/{repo}/contents/{path}`
-3. `npm run start`
+4. `npm run start`
