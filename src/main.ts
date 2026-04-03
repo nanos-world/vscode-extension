@@ -25,7 +25,11 @@ const REPO_OWNER = getInput("repository-owner");
 const REPO_NAME = getInput("repository-name");
 const REPO_BRANCH = getInput("repository-branch");
 
-const octokit = getOctokit(TOKEN);
+const octokit = getOctokit(TOKEN, {
+	request: {
+		timeout: 30000, // 30 seconds
+	},
+});
 
 // Path category constants for class types
 const PATH_CATEGORIES = {
