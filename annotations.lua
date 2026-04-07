@@ -3062,6 +3062,15 @@ function Events.CallRemote(event_name, ...) end
 ---@param ...? any @Arguments to pass to the event (Default: nil)
 function Events.CallRemote(event_name, player, ...) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-callremoteplayers">docs</a>
+---
+---Calls an Event if on Server which will be triggered in all Client's Packages of all specified Player. This is more efficient than calling CallRemote multiple times for each player
+---@param event_name string @The Event Name to trigger the event
+---@param players Player[] @The remote players to send this event
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.CallRemotePlayers(event_name, players, ...) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-subscribe">docs</a>
 ---
@@ -6401,6 +6410,13 @@ function Server.GetAllValuesKeys() end
 function Server.GetCompressionLevel() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getconnectioncount">docs</a>
+---
+---Returns the number of connected players (including players in the process of connecting)
+---@return integer 
+function Server.GetConnectionCount() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getcustomsettings">docs</a>
 ---
 ---Returns the Server Custom Settings passed as parameter or New Game screen
@@ -6682,6 +6698,7 @@ function Server.UnloadPackage(package_folder_name) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ChangeMap", callback: fun(old_map: string, new_map: string)): fun(old_map: string, new_map: string) @Called when the map changes. This is always called just before Restart event
 ---@overload fun(event_name: "PlayerConnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string)): fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string) @Called when a player is attempting to connect to the server<br/><br/>Use Server.KickByAccountID() or Server.BanByAccountID() to kick or ban the player from inside this event.
+---@overload fun(event_name: "PlayerDisconnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string)): fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string) @Called when a player is disconnecting from the server
 ---@overload fun(event_name: "Restart", callback: fun()): fun() @Server has been restarted
 ---@overload fun(event_name: "Start", callback: fun()): fun() @Server has been started
 ---@overload fun(event_name: "Stop", callback: fun()): fun() @Server has been stopped
@@ -6693,6 +6710,7 @@ function Server.Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ChangeMap", callback: fun(old_map: string, new_map: string)) @Called when the map changes. This is always called just before Restart event
 ---@overload fun(event_name: "PlayerConnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string)) @Called when a player is attempting to connect to the server<br/><br/>Use Server.KickByAccountID() or Server.BanByAccountID() to kick or ban the player from inside this event.
+---@overload fun(event_name: "PlayerDisconnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string)) @Called when a player is disconnecting from the server
 ---@overload fun(event_name: "Restart", callback: fun()) @Server has been restarted
 ---@overload fun(event_name: "Start", callback: fun()) @Server has been started
 ---@overload fun(event_name: "Stop", callback: fun()) @Server has been stopped
