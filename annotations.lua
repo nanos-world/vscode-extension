@@ -4528,7 +4528,7 @@ function Package.IsUnloading() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-require">docs</a>
 ---
----Includes new .lua files<br/><br/>We currently support 5 searchers, which are looked in the following order:<br/><ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol>
+---Includes new .lua files<br/><br/>We currently support 5 searchers, which are looked in the following order:<ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol><p>Note: Clients will only download and have access to <code>Client/</code> and <code>Shared/</code> folders.</p>
 ---@param script_file string @Path to the script file to require
 ---@param force_load? boolean @Whether to force loading this file even if it was already loaded (Default: false)
 ---@return any @Any return values from the included file
