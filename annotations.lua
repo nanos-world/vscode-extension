@@ -2761,6 +2761,30 @@ function Debug.DrawString(location, text, color, life_time, draw_shadow, font_sc
 ---@overload fun(location: Vector, rotation: Rotator, material_asset: string, size?: Vector, lifespan?: number, fade_screen_size?: number): Decal
 Decal = {}
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setfadein">docs</a>
+---
+---Starts fading in this Decal after a delay.
+---@param start_delay number @Seconds to wait before starting the fade-in
+---@param duration number @Duration of the fade-in in seconds
+function Decal:SetFadeIn(start_delay, duration) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setfadeout">docs</a>
+---
+---Starts fading out this Decal after a delay.
+---@param start_delay number @Seconds to wait before starting the fade-out
+---@param duration number @Duration of the fade-out in seconds
+---@param destroy_after_fade_out? boolean @Whether to destroy the Decal after fade-out finishes (Default: true)
+function Decal:SetFadeOut(start_delay, duration, destroy_after_fade_out) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setsize">docs</a>
+---
+---Sets the size of this Decal.
+---@param size Vector @New size of the Decal
+function Decal:SetSize(size) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/discord">docs</a>
 ---
