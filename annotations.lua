@@ -9906,6 +9906,7 @@ SoundLoopMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#soundtype">docs</a>
 ---@enum SoundType
 SoundType = {
+    Ambient = 3,
     Music = 1,
     SFX = 0,
     UI = 2
