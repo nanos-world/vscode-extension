@@ -5652,7 +5652,7 @@ function Player:SetVOIPGlobalAllChannelsSetting(setting) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipglobalchannelsetting">docs</a>
 ---
 ---Sets the VOIP setting for a specific global channel
----@param channel integer @0-31
+---@param channel integer @0-63
 ---@param setting VOIPSetting 
 function Player:SetVOIPGlobalChannelSetting(channel, setting) end
 
