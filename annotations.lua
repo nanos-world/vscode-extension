@@ -2112,6 +2112,13 @@ function Client.GetEntityByID(entity_id) end
 function Client.GetFrameTime() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getlanguage">docs</a>
+---
+---Gets the current language of the Client
+---@return string @the language code
+function Client.GetLanguage() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getlocalplayer">docs</a>
 ---
 ---Gets the local Player
@@ -2143,7 +2150,7 @@ function Client.GetNearClipPlane() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getpackages">docs</a>
 ---
 ---Returns a list of Packages running
----@param package_type_filter? PackageType @Which Package type to return. Leave it default (-1) to return all types. (Default: -1)
+---@param package_type_filter? PackageType @Which Package type to return. Leave it default to return all types. (Default: PackageType.All)
 ---@return { title: string, name: string, type: PackageType, version: string, author: string }[] @a list of Packages data
 function Client.GetPackages(package_type_filter) end
 
@@ -2249,6 +2256,7 @@ function Client.ShowNotification(text, notification_type, add_to_notification_li
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
+---@overload fun(event_name: "LanguageChange", callback: fun(language: string)): fun(language: string) @Called when the Client language changes
 ---@overload fun(event_name: "SpawnLocalPlayer", callback: fun(local_player: Player)): fun(local_player: Player) @Called when the local player spawns (just after the game has loaded)
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)): fun(delta_time: number) @Called Every Frame. Do not abuse
 ---@overload fun(event_name: "WindowFocusChange", callback: fun(is_focused: boolean)): fun(is_focused: boolean) @Called when the game is focused/unfocused
@@ -2257,6 +2265,7 @@ function Client.Subscribe(event_name, callback) end
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "LanguageChange", callback: fun(language: string)) @Called when the Client language changes
 ---@overload fun(event_name: "SpawnLocalPlayer", callback: fun(local_player: Player)) @Called when the local player spawns (just after the game has loaded)
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)) @Called Every Frame. Do not abuse
 ---@overload fun(event_name: "WindowFocusChange", callback: fun(is_focused: boolean)) @Called when the game is focused/unfocused
@@ -6537,7 +6546,7 @@ function Server.GetName() end
 ---
 ---Returns a list of Packages running, optionally returns all Packages installed in the server
 ---@param only_loaded? boolean @Set to true the function return only loaded and running packages. Caution: setting to false will retrieve Packages list from disk, which is a slow operation! (Default: true)
----@param package_type_filter? PackageType @Which Package type to return. Leave it default (-1) to return all types. (Default: -1)
+---@param package_type_filter? PackageType @Which Package type to return. Leave it default to return all types. (Default: PackageType.All)
 ---@return { title: string, name: string, type: PackageType, version: string, author: string }[] @a list of Packages data
 function Server.GetPackages(only_loaded, package_type_filter) end
 
@@ -9878,10 +9887,12 @@ NotificationType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#packagetype">docs</a>
 ---@enum PackageType
 PackageType = {
-    GameMode = 1,
-    LoadingScreen = 2,
-    Map = 4,
-    Script = 0
+    All = -1,
+    CModule = 32,
+    GameMode = 2,
+    LoadingScreen = 4,
+    Map = 16,
+    Script = 1
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#skymode">docs</a>
