@@ -2236,8 +2236,8 @@ function Client.SetSettingGammaOverride(override, new_gamma) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setvalue">docs</a>
 ---
 ---Sets a global value in the Client, which can be accessed from anywhere (client side)<br/><br/>Please refer to <a href="/docs/core-concepts/scripting/entity-values">Entity Values</a> for more information
----@param key string 
----@param value any 
+---@param key string @Key
+---@param value any @Value
 function Client.SetValue(key, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2259,6 +2259,7 @@ function Client.ShowNotification(text, notification_type, add_to_notification_li
 ---@overload fun(event_name: "LanguageChange", callback: fun(language: string)): fun(language: string) @Called when the Client language changes
 ---@overload fun(event_name: "SpawnLocalPlayer", callback: fun(local_player: Player)): fun(local_player: Player) @Called when the local player spawns (just after the game has loaded)
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)): fun(delta_time: number) @Called Every Frame. Do not abuse
+---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)): fun(key: string, value: any) @Triggered when a Value is changed with <code>Client.SetValue()</code> or <code>Server.SetValue()</code> (for synced values)
 ---@overload fun(event_name: "WindowFocusChange", callback: fun(is_focused: boolean)): fun(is_focused: boolean) @Called when the game is focused/unfocused
 function Client.Subscribe(event_name, callback) end
 
@@ -2268,6 +2269,7 @@ function Client.Subscribe(event_name, callback) end
 ---@overload fun(event_name: "LanguageChange", callback: fun(language: string)) @Called when the Client language changes
 ---@overload fun(event_name: "SpawnLocalPlayer", callback: fun(local_player: Player)) @Called when the local player spawns (just after the game has loaded)
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)) @Called Every Frame. Do not abuse
+---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)) @Triggered when a Value is changed with <code>Client.SetValue()</code> or <code>Server.SetValue()</code> (for synced values)
 ---@overload fun(event_name: "WindowFocusChange", callback: fun(is_focused: boolean)) @Called when the game is focused/unfocused
 function Client.Unsubscribe(event_name, callback) end
 
@@ -6705,7 +6707,7 @@ function Server.SetPassword(password, persist_to_config_file) end
 ---Sets a global value in the Server, which can be accessed from anywhere (server side)
 ---@param key string @Key
 ---@param value any @Value
----@param sync_on_client? boolean @If enabled will sync this value through all clients, accessible through Client.GetValue() static class. (Default: false)
+---@param sync_on_client? boolean @If enabled will sync this value through all clients, accessible through <code>Client.GetValue()</code> static class (Default: false)
 function Server.SetValue(key, value, sync_on_client) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -6742,6 +6744,7 @@ function Server.UnloadPackage(package_folder_name) end
 ---@overload fun(event_name: "Start", callback: fun()): fun() @Server has been started
 ---@overload fun(event_name: "Stop", callback: fun()): fun() @Server has been stopped
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)): fun(delta_time: number) @Triggered every 33ms by default<br/><br/>Caution: Only small operations should be performed here, otherwise this can lead to server lag and delays
+---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)): fun(key: string, value: any) @Triggered when a Value is changed with <code>Server.SetValue()</code>
 function Server.Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
@@ -6754,6 +6757,7 @@ function Server.Subscribe(event_name, callback) end
 ---@overload fun(event_name: "Start", callback: fun()) @Server has been started
 ---@overload fun(event_name: "Stop", callback: fun()) @Server has been stopped
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)) @Triggered every 33ms by default<br/><br/>Caution: Only small operations should be performed here, otherwise this can lead to server lag and delays
+---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)) @Triggered when a Value is changed with <code>Server.SetValue()</code>
 function Server.Unsubscribe(event_name, callback) end
 
 
