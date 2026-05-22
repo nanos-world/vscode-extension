@@ -1813,6 +1813,14 @@ function CharacterSimple:SetAirControl(air_control, boost_multiplier, boost_velo
 ---@param custom_animation_blueprint string 
 function CharacterSimple:SetAnimationBlueprint(custom_animation_blueprint) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setanimationblueprintpropertyvalue">docs</a>
+---
+---Sets an Animation Blueprint Property/Variable value directly
+---@param property_name string 
+---@param value any 
+function CharacterSimple:SetAnimationBlueprintPropertyValue(property_name, value) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setmaxacceleration">docs</a>
 ---
@@ -2081,6 +2089,17 @@ function Client.CopyToClipboard(text) end
 ---
 ---Disconnects from the server
 function Client.Disconnect() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getactorsinradius">docs</a>
+---
+---Returns the actors within the specified radius
+---@param location Vector @The center location of the search
+---@param radius number @The search radius
+---@param only_classes? string[] @Only actors of these classes will be returned (pass empty for all classes) (Default: [])
+---@param dimension? integer @The dimension to search in (pass 0 for all dimensions) (Default: 0)
+---@return Actor[] @The actors found in radius
+function Client.GetActorsInRadius(location, radius, only_classes, dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getallvalueskeys">docs</a>
@@ -2899,8 +2918,19 @@ function Entity.SubscribeRemote(event_name, callback) end
 ---
 ---Calls a custom remote event directly on this entity to all Players
 ---@param event_name string @The Event Name to trigger the event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Entity:BroadcastRemoteEvent(event_name, ...) end
+function Entity:BroadcastRemoteEvent(event_name, reliability, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-broadcastremoteinradiusevent">docs</a>
+---
+---Calls a custom remote event directly on this entity to all Players in a radius
+---@param event_name string @The Event Name to trigger the event
+---@param radius number @The radius to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Entity:BroadcastRemoteInRadiusEvent(event_name, radius, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-callremoteevent">docs</a>
@@ -2908,16 +2938,28 @@ function Entity:BroadcastRemoteEvent(event_name, ...) end
 ---Calls a custom remote event directly on this entity to a specific Player
 ---@param event_name string @The Event Name to trigger the event
 ---@param player Player @The remote player to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Entity:CallRemoteEvent(event_name, player, ...) end
+function Entity:CallRemoteEvent(event_name, player, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-callremoteevent">docs</a>
 ---
 ---Calls a custom remote event directly on this entity
 ---@param event_name string @The Event Name to trigger the event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Entity:CallRemoteEvent(event_name, ...) end
+function Entity:CallRemoteEvent(event_name, reliability, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-callremoteplayersevent">docs</a>
+---
+---Calls a custom remote event directly on this entity to a list of Players
+---@param event_name string @The Event Name to trigger the event
+---@param players Player[] @The remote players to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Entity:CallRemotePlayersEvent(event_name, players, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-destroy">docs</a>
@@ -3060,24 +3102,49 @@ Events = {}
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-broadcastremote">docs</a>
 ---
----Calls an Event on Server which will be triggered in all Client's Packages of all Players
+---Broadcasts a remote custom Event from the Server to ALL currently connected Players (Server ➔ Clients)<br/>Must be caught using <code>Events.SubscribeRemote()</code> on the Clients
 ---@param event_name string @The Event Name to trigger the event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.BroadcastRemote(event_name, ...) end
+function Events.BroadcastRemote(event_name, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-broadcastremotedimension">docs</a>
 ---
----Calls an Event on Server which will be triggered in all Client's Packages of all Players in that dimension
----@param dimension integer @The Dimension to send this event
+---Broadcasts a remote custom Event from the Server to all Players currently residing in the specified Dimension (Server ➔ Clients)<br/>Must be caught using <code>Events.SubscribeRemote()</code> on the Clients
 ---@param event_name string @The Event Name to trigger the event
+---@param dimension integer @The Dimension to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.BroadcastRemoteDimension(dimension, event_name, ...) end
+function Events.BroadcastRemoteDimension(event_name, dimension, reliability, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-broadcastremoteinradius">docs</a>
+---
+---Broadcasts a remote custom Event from the Server to all Players within a specific location radius (Server ➔ Clients)<br/>Must be caught using <code>Events.SubscribeRemote()</code> on the Clients
+---@param event_name string @The Event Name to trigger the event
+---@param location Vector @The location used to calculate the event radius
+---@param radius number @The radius to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.BroadcastRemoteInRadius(event_name, location, radius, reliability, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-broadcastremoteinradiusdimension">docs</a>
+---
+---Broadcasts a remote custom Event from the Server to all Players within a specific location radius AND residing in a specific Dimension (Server ➔ Clients)<br/>Must be caught using <code>Events.SubscribeRemote()</code> on the Clients
+---@param event_name string @The Event Name to trigger the event
+---@param location Vector @The location used to calculate the event radius
+---@param radius number @The radius to send this event
+---@param dimension integer @The Dimension to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
+---@param ...? any @Arguments to pass to the event (Default: nil)
+function Events.BroadcastRemoteInRadiusDimension(event_name, location, radius, dimension, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-call">docs</a>
 ---
----Calls an Event which will be triggered in all Local Packages
+---Triggers a local custom Event across all Packages on the same side (Client ➔ Client OR Server ➔ Server)<br/>Must be caught using <code>Events.Subscribe()</code>
 ---@param event_name string @The Event Name to trigger the event
 ---@param ...? any @Arguments to pass to the event (Default: nil)
 function Events.Call(event_name, ...) end
@@ -3085,33 +3152,36 @@ function Events.Call(event_name, ...) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-callremote">docs</a>
 ---
----Calls an Event if on Client which will be triggered in all Server Packages
+---Triggers a remote custom Event from the Client to the Server (Client ➔ Server)<br/>The receiving Server will implicitly receive the sender 'Player' as the very first argument before your custom args<br/>Must be caught using <code>Events.SubscribeRemote()</code>
 ---@param event_name string @The Event Name to trigger the event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.CallRemote(event_name, ...) end
+function Events.CallRemote(event_name, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-callremote">docs</a>
 ---
----Calls an Event if on Server which will be triggered in all Client's Packages of a specific Player
+---Triggers a remote custom Event from the Server to the Client (Server ➔ Client)<br/>Must be caught using <code>Events.SubscribeRemote()</code>
 ---@param event_name string @The Event Name to trigger the event
 ---@param player Player @The remote player to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.CallRemote(event_name, player, ...) end
+function Events.CallRemote(event_name, player, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-callremoteplayers">docs</a>
 ---
----Calls an Event if on Server which will be triggered in all Client's Packages of all specified Player. This is more efficient than calling CallRemote multiple times for each player
+---Triggers a remote custom Event from the Server to an array of specific Players (Server ➔ Clients)<br/>More network-efficient than looping CallRemote<br/>Must be caught using <code>Events.SubscribeRemote()</code> on the Clients
 ---@param event_name string @The Event Name to trigger the event
 ---@param players Player[] @The remote players to send this event
+---@param reliability? Reliability @The network reliability rule (Default: Reliability.Reliable)
 ---@param ...? any @Arguments to pass to the event (Default: nil)
-function Events.CallRemotePlayers(event_name, players, ...) end
+function Events.CallRemotePlayers(event_name, players, reliability, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-subscribe">docs</a>
 ---
----Subscribes for an user-created event which will be triggered for only local called events
+---Listens for a local custom Event triggered by <code>Events.Call()</code> on the same side
 ---@param event_name string @The Event Name to subscribe
 ---@param callback function @The callback function to execute
 ---@return function @the subscribed callback itself
@@ -3120,7 +3190,7 @@ function Events.Subscribe(event_name, callback) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-subscriberemote">docs</a>
 ---
----Subscribes for an user-created event which will be triggered for only remote called events
+---Listens for a network custom Event<br/>If on the Server, it catches <code>Events.CallRemote()</code> from Clients (receiving the sender 'Player' as the first argument)<br/>If on the Client, it catches Server broadcasts and remote calls
 ---@param event_name string @The Event Name to subscribe
 ---@param callback function @The callback function to execute
 ---@return function @the subscribed callback itself
@@ -3129,7 +3199,7 @@ function Events.SubscribeRemote(event_name, callback) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-unsubscribe">docs</a>
 ---
----Unsubscribes from all subscribed events in this Package with that event name, optionally passing the function to unsubscribe only that callback
+---Removes a local event listener previously registered with <code>Events.Subscribe()</code>. If no specific callback function is passed, it removes ALL local listeners for that event name in the current Package
 ---@param event_name string @The Event Name to unsubscribe
 ---@param callback? function @The callback function to unsubscribe (Default: nil)
 function Events.Unsubscribe(event_name, callback) end
@@ -3137,7 +3207,7 @@ function Events.Unsubscribe(event_name, callback) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/events#static-function-unsubscriberemote">docs</a>
 ---
----Unsubscribes from all subscribed remote events in this Package with that event name, optionally passing the function to unsubscribe only that callback
+---Removes a network event listener previously registered with <code>Events.SubscribeRemote()</code>. If no specific callback function is passed, it removes ALL remote listeners for that event name in the current Package
 ---@param event_name string @The Event Name to unsubscribe
 ---@param callback? function @The callback function to unsubscribe (Default: nil)
 function Events.UnsubscribeRemote(event_name, callback) end
@@ -6433,6 +6503,17 @@ function Server.BanByAccountID(player_account_id, reason) end
 function Server.ChangeMap(map_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getactorsinradius">docs</a>
+---
+---Returns the actors within the specified radius
+---@param location Vector @The center location of the search
+---@param radius number @The search radius
+---@param only_classes? string[] @Only actors of these classes will be returned (pass empty for all classes) (Default: [])
+---@param dimension? integer @The dimension to search in (pass 0 for all dimensions) (Default: 0)
+---@return Actor[] @The actors found in radius
+function Server.GetActorsInRadius(location, radius, only_classes, dimension) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getallvalueskeys">docs</a>
 ---
 ---Gets a list of all values keys
@@ -6553,6 +6634,16 @@ function Server.GetName() end
 ---@param package_type_filter? PackageType @Which Package type to return. Leave it default to return all types. (Default: PackageType.All)
 ---@return { title: string, name: string, type: PackageType, version: string, author: string }[] @a list of Packages data
 function Server.GetPackages(only_loaded, package_type_filter) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getplayersinradius">docs</a>
+---
+---Returns the players within the specified radius
+---@param location Vector @The center location of the search
+---@param radius number @The search radius
+---@param dimension? integer @The dimension to search in (Default: 0)
+---@return Player[] @The players found in radius
+function Server.GetPlayersInRadius(location, radius, dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getport">docs</a>
@@ -9893,6 +9984,13 @@ PackageType = {
     LoadingScreen = 4,
     Map = 16,
     Script = 1
+}
+
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#reliability">docs</a>
+---@enum Reliability
+Reliability = {
+    Reliable = 1, -- Send the message reliably, this is guaranteed to be sent and received in order, but is more expensive to use than unreliable. Use it when you want to make sure the event is received by the other side
+    Unreliable = 0, -- Send the message unreliably, the message may be lost (with no retransmission) or received in a different order than it was sent, but is cheaper and faster to use than reliable. Use it for sending events that are transient and non critical for gamepla
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#skymode">docs</a>
