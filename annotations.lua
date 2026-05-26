@@ -2097,9 +2097,8 @@ function Client.Disconnect() end
 ---@param location Vector @The center location of the search
 ---@param radius number @The search radius
 ---@param only_classes? string[] @Only actors of these classes will be returned (pass empty for all classes) (Default: [])
----@param dimension? integer @The dimension to search in (pass 0 for all dimensions) (Default: 0)
 ---@return Actor[] @The actors found in radius
-function Client.GetActorsInRadius(location, radius, only_classes, dimension) end
+function Client.GetActorsInRadius(location, radius, only_classes) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getallvalueskeys">docs</a>
