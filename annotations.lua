@@ -4632,13 +4632,21 @@ function Package.GetVersion() end
 function Package.IsUnloading() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-loadfile">docs</a>
+---
+---Compiles a .lua file and returns a function to run it. To be used for loading files in a sandboxed environment.<br/><br/>Supports the same searchers as <a href="#static-function-require">Package.Require</a>.
+---@param file_path string @Path to the script file to compile
+---@return function @the compiled function to run the script, allowing you to pass a environment env table for the script
+function Package.LoadFile(file_path) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-require">docs</a>
 ---
----Includes new .lua files<br/><br/>We currently support 5 searchers, which are looked in the following order:<ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol><p>Note: Clients will only download and have access to <code>Client/</code> and <code>Shared/</code> folders.</p>
----@param script_file string @Path to the script file to require
+---Loads a .lua file. Note that this method caches the result, so further calls return the cached value.<br/><br/>We currently support 5 searchers, which are looked in the following order:<ol><li>Relative to <code>current-file-path/</code></li><li>Relative to <code>current-package/Client/</code> or <code>current-package/Server/</code> (depending on your side)</li><li>Relative to <code>current-package/Shared/</code></li><li>Relative to <code>current-package/</code></li><li>Relative to <code>Packages/</code></li></ol><p>Note: Clients will only download and have access to <code>Client/</code> and <code>Shared/</code> folders.</p>
+---@param file_path string @Path to the script file to load
 ---@param force_load? boolean @Whether to force loading this file even if it was already loaded (Default: false)
----@return any @Any return values from the included file
-function Package.Require(script_file, force_load) end
+---@return any @any return values from the included file
+function Package.Require(file_path, force_load) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-setpersistentdata">docs</a>
