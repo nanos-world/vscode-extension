@@ -5558,7 +5558,7 @@ function Player:GetCameraRotation() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getcontrolledcharacter">docs</a>
 ---
 ---
----@return Character? 
+---@return Pawn? 
 function Player:GetControlledCharacter() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5641,7 +5641,7 @@ function Player:Kick(reason) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-possess">docs</a>
 ---
----Makes a Player to possess and control a Pawn
+---Makes a Player to possess and control a Pawn (Character)
 ---@param new_pawn Pawn 
 ---@param blend_time? number @(Default: 0)
 ---@param exp? number @(Default: 0)
@@ -5844,10 +5844,10 @@ function Player:UnPossess() end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes it's dimension
----@overload fun(event_name: "Possess", callback: fun(self: Player, character: Character)): fun(self: Player, character: Character) @Trigerred when Player starts controlling a Character
+---@overload fun(event_name: "Possess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(event_name: "Ready", callback: fun(self: Player)): fun(self: Player) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(event_name: "Spawn", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "UnPossess", callback: fun(self: Player, character: Character)): fun(self: Player, character: Character) @A Character was released from the Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @A Pawn (Character) was unpossessed from the Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Player, key: string, value: any)): fun(self: Player, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "VOIP", callback: fun(self: Player, is_talking: boolean): boolean?): fun(self: Player, is_talking: boolean): boolean? @When a Player starts/ends using VOIP
 ---@overload fun(event_name: "VOIPGlobalChannelSettingChange", callback: fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting)): fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting) @Triggered when a global VOIP channel setting changes for this player
@@ -5862,10 +5862,10 @@ function Player.Subscribe(event_name, callback) end
 ---@overload fun(self: Player, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Player, event_name: "Destroy", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is destroyed
 ---@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes it's dimension
----@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, character: Character)): fun(self: Player, character: Character) @Trigerred when Player starts controlling a Character
+---@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(self: Player, event_name: "Ready", callback: fun(self: Player)): fun(self: Player) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(self: Player, event_name: "Spawn", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is spawned/created
----@overload fun(self: Player, event_name: "UnPossess", callback: fun(self: Player, character: Character)): fun(self: Player, character: Character) @A Character was released from the Player
+---@overload fun(self: Player, event_name: "UnPossess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @A Pawn (Character) was unpossessed from the Player
 ---@overload fun(self: Player, event_name: "ValueChange", callback: fun(self: Player, key: string, value: any)): fun(self: Player, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(self: Player, event_name: "VOIP", callback: fun(self: Player, is_talking: boolean): boolean?): fun(self: Player, is_talking: boolean): boolean? @When a Player starts/ends using VOIP
 ---@overload fun(self: Player, event_name: "VOIPGlobalChannelSettingChange", callback: fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting)): fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting) @Triggered when a global VOIP channel setting changes for this player
@@ -5878,10 +5878,10 @@ function Player:Subscribe(event_name, callback) end
 ---@overload fun(self: Player, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Player, event_name: "Destroy", callback: fun(self: Player)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes it's dimension
----@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, character: Character)) @Trigerred when Player starts controlling a Character
+---@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, pawn: Pawn)) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(self: Player, event_name: "Ready", callback: fun(self: Player)) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(self: Player, event_name: "Spawn", callback: fun(self: Player)) @Triggered when an Entity is spawned/created
----@overload fun(self: Player, event_name: "UnPossess", callback: fun(self: Player, character: Character)) @A Character was released from the Player
+---@overload fun(self: Player, event_name: "UnPossess", callback: fun(self: Player, pawn: Pawn)) @A Pawn (Character) was unpossessed from the Player
 ---@overload fun(self: Player, event_name: "ValueChange", callback: fun(self: Player, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(self: Player, event_name: "VOIP", callback: fun(self: Player, is_talking: boolean): boolean?) @When a Player starts/ends using VOIP
 ---@overload fun(self: Player, event_name: "VOIPGlobalChannelSettingChange", callback: fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting)) @Triggered when a global VOIP channel setting changes for this player
@@ -5895,10 +5895,10 @@ function Player:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Player)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes it's dimension
----@overload fun(event_name: "Possess", callback: fun(self: Player, character: Character)) @Trigerred when Player starts controlling a Character
+---@overload fun(event_name: "Possess", callback: fun(self: Player, pawn: Pawn)) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(event_name: "Ready", callback: fun(self: Player)) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(event_name: "Spawn", callback: fun(self: Player)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "UnPossess", callback: fun(self: Player, character: Character)) @A Character was released from the Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Player, pawn: Pawn)) @A Pawn (Character) was unpossessed from the Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Player, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "VOIP", callback: fun(self: Player, is_talking: boolean): boolean?) @When a Player starts/ends using VOIP
 ---@overload fun(event_name: "VOIPGlobalChannelSettingChange", callback: fun(self: Player, channel: integer, old_setting: VOIPSetting, new_setting: VOIPSetting)) @Triggered when a global VOIP channel setting changes for this player
