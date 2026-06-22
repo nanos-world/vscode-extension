@@ -3761,6 +3761,13 @@ function Input.Bind(binding_name, input_event, callback) end
 function Input.GetGameKeyBindings() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getkeyboardlayout">docs</a>
+---
+---Gets the keyboard layout of the user
+---@return KeyboardLayout 
+function Input.GetKeyboardLayout() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getkeycode">docs</a>
 ---
 ---Gets the key code of a key
@@ -4639,6 +4646,13 @@ function Package.IsUnloading() end
 ---@return function @the compiled function to run the script, allowing you to pass a environment env table for the script
 function Package.LoadFile(file_path) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-reloadclientfile">docs</a>
+---
+---Reloads a file from <code>Client/</code> or <code>Shared/</code> folder and sends the updated version to clients, triggering the <a href="#event-filereload">FileReload</a> event on them<br/><br/>The reloaded file will be re-cached and downloaded normally by new connecting clients<br/><br/>Note that this method does use the main network lane, so it is not recommended to be used frequently or with large files in production environments as it may cause network congestion and lag spikes. It is mostly intended for development purposes to allow faster iteration on client files without needing to reload the whole package
+---@param file_path string @The file path relative to the package root
+function Package.ReloadClientFile(file_path) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-require">docs</a>
 ---
@@ -4662,6 +4676,7 @@ function Package.SetPersistentData(key, value) end
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
+---@overload fun(event_name: "FileReload", callback: fun(file_path: string)): fun(file_path: string) @Called when a file is directly reloaded from the server using <a href="#static-function-reloadclientfile">Package.ReloadClientFile()</a><br/><br/>You can use the path to reload the file in runtime with <a href="#static-function-require">Package.Require(path, true)</a>
 ---@overload fun(event_name: "Load", callback: fun()): fun() @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
 ---@overload fun(event_name: "Unload", callback: fun()): fun() @Called when this package is unloaded
 function Package.Subscribe(event_name, callback) end
@@ -4669,6 +4684,7 @@ function Package.Subscribe(event_name, callback) end
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "FileReload", callback: fun(file_path: string)) @Called when a file is directly reloaded from the server using <a href="#static-function-reloadclientfile">Package.ReloadClientFile()</a><br/><br/>You can use the path to reload the file in runtime with <a href="#static-function-require">Package.Require(path, true)</a>
 ---@overload fun(event_name: "Load", callback: fun()) @Called when this package is loaded<br/><br/>This event is triggered differently depending on the situation:<br/><ul><li>When the <b>server starts</b> or you run <code>package reload all</code> the event triggers only after ALL packages are loaded.</li><li>In all other cases (<code>package load/reload</code> or <code>Package.Load/Reload</code>) the event is triggered immediately after the package is loaded/reloaded.</li></ul>
 ---@overload fun(event_name: "Unload", callback: fun()) @Called when this package is unloaded
 function Package.Unsubscribe(event_name, callback) end
@@ -8999,6 +9015,7 @@ function Weapon:SetWallbangSettings(max_distance, damage_multiplier) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)): fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)): fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer) @When the Ammo Clip is changed, by reloading or manually setting through scripting
+---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
@@ -9021,6 +9038,7 @@ function Weapon.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Weapon, event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)): fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(self: Weapon, event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)): fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer) @When the Ammo Clip is changed, by reloading or manually setting through scripting
+---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
 ---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
@@ -9041,6 +9059,7 @@ function Weapon:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Weapon, event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(self: Weapon, event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)) @When the Ammo Clip is changed, by reloading or manually setting through scripting
+---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
@@ -9062,6 +9081,7 @@ function Weapon:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)) @When the Ammo Clip is changed, by reloading or manually setting through scripting
+---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
@@ -9844,6 +9864,15 @@ ImageFormat = {
 InputEvent = {
     Pressed = 0,
     Released = 1
+}
+
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#keyboardlayout">docs</a>
+---@enum KeyboardLayout
+KeyboardLayout = {
+    AZERTY = 2,
+    QWERTY = 1,
+    QWERTZ = 3,
+    Unknown = 0
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#keymodifier">docs</a>
