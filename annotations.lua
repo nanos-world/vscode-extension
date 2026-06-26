@@ -1833,8 +1833,7 @@ function CharacterSimple:SetMaxAcceleration(acceleration) end
 ---
 ---Changes the Character Mesh on the fly
 ---@param mesh_asset string|string 
----@param adjust_capsule_size boolean @Auto adjust the capsule size based on the Mesh size
-function CharacterSimple:SetMesh(mesh_asset, adjust_capsule_size) end
+function CharacterSimple:SetMesh(mesh_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setpawnsettings">docs</a>
@@ -4939,10 +4938,14 @@ Pawn = {}
 ---Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
 ---@param id string @Used further for removing or applying material settings on it
 ---@param skeletal_mesh_path string @Path to SkeletalMesh asset to attach
+---@param socket? string @Bone socket to attach to. Pass empty string to attach to the root component (i.e. Capsule). Pass 'root' to attach to the root bone of the main skeletal mesh component (Default: "")
+---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
 ---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
-function Pawn:AddSkeletalMeshAttached(id, skeletal_mesh_path, use_parent_bounds, use_base_leader_pose_component, attachable_id) end
+function Pawn:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-addstaticmeshattached">docs</a>
@@ -4986,7 +4989,7 @@ function Pawn:GetAllStaticMeshAttached() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcapsulesize">docs</a>
 ---
 ---Gets the Capsule Size
----@return { Radius: integer, HalfHeight: integer } 
+---@return { Radius: integer, HalfHeight: integer, CrouchedHalfHeight: integer } 
 function Pawn:GetCapsuleSize() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5124,9 +5127,10 @@ function Pawn:SetCanJump(can_jump) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcapsulesize">docs</a>
 ---
 ---Sets this Character's Capsule size (will affect Camera location and Character's collision)
----@param radius integer @Default is 42
----@param half_height integer @Default is 96
-function Pawn:SetCapsuleSize(radius, half_height) end
+---@param radius? integer @Pass 0 to auto calculate the radius based on the mesh bounds (Default: 0)
+---@param half_height? integer @Pass 0 to auto calculate the half height based on the mesh bounds (Default: 0)
+---@param crouched_half_height? integer @Pass 0 to auto calculate the crouched half height based on the mesh bounds (Default: 0)
+function Pawn:SetCapsuleSize(radius, half_height, crouched_half_height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcontrolrotation">docs</a>
@@ -5162,6 +5166,15 @@ function Pawn:SetHitReactionEnabled(is_enabled) end
 ---Sets the velocity of the jump
 ---@param jump_z_velocity integer @Default is 450
 function Pawn:SetJumpZVelocity(jump_z_velocity) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setmeshsettings">docs</a>
+---
+---Configures the mesh attachment settings and visibility
+---@param relative_location? Vector @(Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @(Default: Rotator(0, -90, 0))
+---@param is_visible? bool @Whether the mesh is visible (useful for using retargeters using child meshes) (Default: true)
+function Pawn:SetMeshSettings(relative_location, relative_rotation, is_visible) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setragdollondeathenabled">docs</a>
@@ -5295,10 +5308,14 @@ Pickable = {}
 ---Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
 ---@param id string @Used further for removing or applying material settings on it
 ---@param skeletal_mesh_path string @Path to SkeletalMesh asset to attach
+---@param socket? string @Bone socket to attach to (Default: "")
+---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
 ---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
-function Pickable:AddSkeletalMeshAttached(id, skeletal_mesh_path, use_parent_bounds, use_base_leader_pose_component, attachable_id) end
+function Pickable:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-addstaticmeshattached">docs</a>
@@ -7894,10 +7911,14 @@ Vehicle = {}
 ---Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
 ---@param id string @Used further for removing or applying material settings on it
 ---@param skeletal_mesh_path string @Path to SkeletalMesh asset to attach
+---@param socket? string @Bone socket to attach to (Default: "")
+---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
 ---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
-function Vehicle:AddSkeletalMeshAttached(id, skeletal_mesh_path, use_parent_bounds, use_base_leader_pose_component, attachable_id) end
+function Vehicle:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-addstaticmeshattached">docs</a>
@@ -9015,7 +9036,7 @@ function Weapon:SetWallbangSettings(max_distance, damage_multiplier) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)): fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)): fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer) @When the Ammo Clip is changed, by reloading or manually setting through scripting
----@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
+---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
@@ -9038,7 +9059,7 @@ function Weapon.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Weapon, event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)): fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(self: Weapon, event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)): fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer) @When the Ammo Clip is changed, by reloading or manually setting through scripting
----@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
+---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
 ---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
@@ -9059,7 +9080,7 @@ function Weapon:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Weapon, event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(self: Weapon, event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)) @When the Ammo Clip is changed, by reloading or manually setting through scripting
----@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
+---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
@@ -9081,7 +9102,7 @@ function Weapon:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "AmmoBagChange", callback: fun(self: Weapon, old_ammo_bag: integer, new_ammo_bag: integer)) @When the Ammo Bag is changed, by reloading or manually setting through scripting
 ---@overload fun(event_name: "AmmoClipChange", callback: fun(self: Weapon, old_ammo_clip: integer, new_ammo_clip: integer)) @When the Ammo Clip is changed, by reloading or manually setting through scripting
----@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, location: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
+---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
