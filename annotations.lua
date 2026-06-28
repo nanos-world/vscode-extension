@@ -9265,7 +9265,7 @@ function WebUI:SendMouseWheelEvent(mouse_x, mouse_y, delta_x, delta_y) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-setfocus">docs</a>
 ---
----Enables the focus on this browser (i.e. can receive Keyboard input and will trigger input events<br/>Note: Only one browser can have focus per time.
+---Enables the focus on this browser (i.e. can receive Keyboard input and will trigger input events)<br/>Note: Only one browser can have focus per time.
 function WebUI:SetFocus() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
