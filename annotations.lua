@@ -1617,7 +1617,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "Spawn", callback: fun(self: Character)): fun(self: Character) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StanceModeChange", callback: fun(self: Character, old_state: StanceMode, new_state: StanceMode)): fun(self: Character, old_state: StanceMode, new_state: StanceMode) @Called when StanceMode changes
 ---@overload fun(event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)): fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode) @Called when Swimming Mode changes
----@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -1662,7 +1662,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "Spawn", callback: fun(self: Character)): fun(self: Character) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Character, event_name: "StanceModeChange", callback: fun(self: Character, old_state: StanceMode, new_state: StanceMode)): fun(self: Character, old_state: StanceMode, new_state: StanceMode) @Called when StanceMode changes
 ---@overload fun(self: Character, event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)): fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode) @Called when Swimming Mode changes
----@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
 ---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -1705,7 +1705,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "Spawn", callback: fun(self: Character)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Character, event_name: "StanceModeChange", callback: fun(self: Character, old_state: StanceMode, new_state: StanceMode)) @Called when StanceMode changes
 ---@overload fun(self: Character, event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)) @Called when Swimming Mode changes
----@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
 ---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -1749,7 +1749,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Spawn", callback: fun(self: Character)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StanceModeChange", callback: fun(self: Character, old_state: StanceMode, new_state: StanceMode)) @Called when StanceMode changes
 ---@overload fun(event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)) @Called when Swimming Mode changes
----@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -1910,7 +1910,7 @@ function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
----@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple.Subscribe(event_name, callback) end
@@ -1936,7 +1936,7 @@ function CharacterSimple.Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
 ---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()): fun() @Called when Character crouches
----@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple:Subscribe(event_name, callback) end
@@ -1960,7 +1960,7 @@ function CharacterSimple:Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun()) @Called when Character crouches
----@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple:Unsubscribe(event_name, callback) end
@@ -1985,7 +1985,7 @@ function CharacterSimple:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StartCrouch", callback: fun()) @Called when Character crouches
----@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple.Unsubscribe(event_name, callback) end
@@ -2563,7 +2563,7 @@ function Damageable:SetMaxHealth(max_health) end
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Damageable.Subscribe(event_name, callback) end
 
@@ -2579,7 +2579,7 @@ function Damageable.Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
----@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)): fun(self: Damageable, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Damageable:Subscribe(event_name, callback) end
 
@@ -2593,7 +2593,7 @@ function Damageable:Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
----@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: Damageable, event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Damageable:Unsubscribe(event_name, callback) end
 
@@ -2608,7 +2608,7 @@ function Damageable:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Damageable, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Damageable.Unsubscribe(event_name, callback) end
 
@@ -5229,7 +5229,7 @@ function Pawn:UnHideBone(bone_name) end
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)): fun(self: Pawn, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn.Subscribe(event_name, callback) end
@@ -5250,7 +5250,7 @@ function Pawn.Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
----@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Entity takes damage
+---@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(self: Pawn, event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)): fun(self: Pawn, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn:Subscribe(event_name, callback) end
@@ -5269,7 +5269,7 @@ function Pawn:Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
----@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(self: Pawn, event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn:Unsubscribe(event_name, callback) end
@@ -5289,7 +5289,7 @@ function Pawn:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn.Unsubscribe(event_name, callback) end
@@ -8062,7 +8062,7 @@ function Vehicle:SetStaticMeshAttachedTransform(id, relative_location, relative_
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Vehicle takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Vehicle, key: string, value: any)): fun(self: Vehicle, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Vehicle.Subscribe(event_name, callback) end
 
@@ -8083,7 +8083,7 @@ function Vehicle.Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
----@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Vehicle takes damage
+---@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: Vehicle, event_name: "ValueChange", callback: fun(self: Vehicle, key: string, value: any)): fun(self: Vehicle, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Vehicle:Subscribe(event_name, callback) end
 
@@ -8102,7 +8102,7 @@ function Vehicle:Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
----@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Vehicle takes damage
+---@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: Vehicle, event_name: "ValueChange", callback: fun(self: Vehicle, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Vehicle:Unsubscribe(event_name, callback) end
 
@@ -8122,7 +8122,7 @@ function Vehicle:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Vehicle takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Vehicle, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Vehicle.Unsubscribe(event_name, callback) end
 
@@ -8352,7 +8352,7 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Vehicle takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)): fun(self: VehicleWheeled, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled.Subscribe(event_name, callback) end
 
@@ -8374,7 +8374,7 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
----@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean? @Triggered when this Vehicle takes damage
+---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: VehicleWheeled, event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)): fun(self: VehicleWheeled, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled:Subscribe(event_name, callback) end
 
@@ -8394,7 +8394,7 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
----@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Vehicle takes damage
+---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: VehicleWheeled, event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled:Unsubscribe(event_name, callback) end
 
@@ -8415,7 +8415,7 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): boolean?) @Triggered when this Vehicle takes damage
+---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled.Unsubscribe(event_name, callback) end
 
