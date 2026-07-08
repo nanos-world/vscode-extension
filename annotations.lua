@@ -254,6 +254,13 @@ function Actor:SetCollision(collision_type) end
 ---@param dimension integer 
 function Actor:SetDimension(dimension) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setdistanceoptimizationmultiplier">docs</a>
+---
+---Sets this Actor's distance optimization multiplier.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
+---@param multiplier number 
+function Actor:SetDistanceOptimizationMultiplier(multiplier) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setforce">docs</a>
 ---
@@ -3711,7 +3718,7 @@ function HTTP.Request(uri, endpoint, method, data, content_type, compress, heade
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/http#static-function-requestasync">docs</a>
 ---
----Makes an asynchronous HTTP Request.<br/><br/>The request will be made asynchronously and returned safetly in the same thread in the callback provided when it's done.<br/><br/><b>Note:</b> If a request is still running when unloading packages, the server will freeze until it's finished, then the package will unload.
+---Makes an asynchronous HTTP Request.<br/><br/>The request will be made asynchronously and returned safely in the same thread in the callback provided when it's done.<br/><br/><b>Note:</b> If a request is still running when unloading packages, the server will freeze until it's finished, then the package will unload.
 ---@param uri string @The main URI (the base address)
 ---@param endpoint? string @The endpoint (Default: "")
 ---@param method? HTTPMethod @The HTTP Method to be used (Default: HTTPMethod.GET)
@@ -3725,14 +3732,14 @@ function HTTP.RequestAsync(uri, endpoint, method, data, content_type, compress, 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/http#static-function-setconnectiontimeout">docs</a>
 ---
----Sets the global Connection Timeout in seconds
+---Sets the HTTP requests global Connection Timeout in seconds
 ---@param connection_timeout integer @The timeout in seconds
 function HTTP.SetConnectionTimeout(connection_timeout) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/http#static-function-setreadwritetimeout">docs</a>
 ---
----Sets the global Read and Write Timeout in seconds
+---Sets the HTTP requests global Read and Write Timeout in seconds
 ---@param read_write_timeout integer @The timeout in seconds
 function HTTP.SetReadWriteTimeout(read_write_timeout) end
 
@@ -4071,6 +4078,8 @@ function Level.UnloadStreamLevel(level_name, should_block_on_unload) end
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
+---@overload fun(event_name: "StreamLevelBeginPause", callback: fun()): fun() @Called when streaming pause begins
+---@overload fun(event_name: "StreamLevelEndPause", callback: fun()): fun() @Called when streaming pause ends
 ---@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is hidden
 ---@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is loaded
 ---@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)): fun(level_name: string) @Called when a Stream Level is shown
@@ -4080,6 +4089,8 @@ function Level.Subscribe(event_name, callback) end
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "StreamLevelBeginPause", callback: fun()) @Called when streaming pause begins
+---@overload fun(event_name: "StreamLevelEndPause", callback: fun()) @Called when streaming pause ends
 ---@overload fun(event_name: "StreamLevelHide", callback: fun(level_name: string)) @Called when a Stream Level is hidden
 ---@overload fun(event_name: "StreamLevelLoad", callback: fun(level_name: string)) @Called when a Stream Level is loaded
 ---@overload fun(event_name: "StreamLevelShow", callback: fun(level_name: string)) @Called when a Stream Level is shown
@@ -5520,6 +5531,14 @@ function Pickable.Unsubscribe(event_name, callback) end
 ---@class Player : Entity
 Player = {}
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/player#static-function-getbysteamid">docs</a>
+---
+---Retrieves a player by their Steam ID
+---@param steam_id string 
+---@return Player? 
+function Player.GetBySteamID(steam_id) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-attachcamerato">docs</a>
 ---
@@ -5747,6 +5766,13 @@ function Player:SetCameraSpeedSettings(max_speed, acceleration, deceleration, tu
 ---Sets this Player's dimension
 ---@param dimension integer 
 function Player:SetDimension(dimension) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setdistanceoptimizationmultiplier">docs</a>
+---
+---Sets this Player's distance optimization multiplier.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
+---@param multiplier number 
+function Player:SetDistanceOptimizationMultiplier(multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setmanualcamerafade">docs</a>
@@ -7518,6 +7544,14 @@ function Timer.Resume(timer_id) end
 ---@param ...? any @Additional parameters to pass to the function (Default: nil)
 ---@return integer @the interval_id
 function Timer.SetInterval(callback, milliseconds, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/timer#static-function-setremainingtime">docs</a>
+---
+---Sets the time remaining to the next tick
+---@param timer_id integer @The Timer ID
+---@param time integer @The time remaining in milliseconds
+function Timer.SetRemainingTime(timer_id, time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/timer#static-function-settimeout">docs</a>
