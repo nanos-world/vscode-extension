@@ -385,7 +385,7 @@ function Actor:WasRecentlyRendered() end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)): fun(self: Actor, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor.Subscribe(event_name, callback) end
@@ -397,7 +397,7 @@ function Actor.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Actor, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Actor, event_name: "Destroy", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is destroyed
----@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Actor, event_name: "Spawn", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Actor, event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)): fun(self: Actor, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor:Subscribe(event_name, callback) end
@@ -407,7 +407,7 @@ function Actor:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Actor, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Actor, event_name: "Destroy", callback: fun(self: Actor)) @Triggered when an Entity is destroyed
----@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Actor, event_name: "Spawn", callback: fun(self: Actor)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Actor, event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor:Unsubscribe(event_name, callback) end
@@ -418,7 +418,7 @@ function Actor:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Actor)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Actor)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor.Unsubscribe(event_name, callback) end
@@ -436,7 +436,7 @@ Assets = {}
 ---
 ---Gets a list containing all Animation Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetAnimations(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -460,7 +460,7 @@ function Assets.GetAssetPath(asset, asset_type) end
 ---
 ---Gets a list containing all Blueprints Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetBlueprints(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -468,7 +468,7 @@ function Assets.GetBlueprints(asset_pack_path) end
 ---
 ---Gets a list containing all Map Asset Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetMaps(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -476,7 +476,7 @@ function Assets.GetMaps(asset_pack_path) end
 ---
 ---Gets a list containing all Materials Asset Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetMaterials(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -484,7 +484,7 @@ function Assets.GetMaterials(asset_pack_path) end
 ---
 ---Gets a list containing all Other Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetOthers(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -492,7 +492,7 @@ function Assets.GetOthers(asset_pack_path) end
 ---
 ---Gets a list containing all Particle Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetParticles(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -500,7 +500,7 @@ function Assets.GetParticles(asset_pack_path) end
 ---
 ---Gets a list containing all Skeletal Mesh Asset Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetSkeletalMeshes(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -508,7 +508,7 @@ function Assets.GetSkeletalMeshes(asset_pack_path) end
 ---
 ---Gets a list containing all Sound Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetSounds(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -516,7 +516,7 @@ function Assets.GetSounds(asset_pack_path) end
 ---
 ---Gets a list containing all Static Mesh Assets Keys from an AssetPack
 ---@param asset_pack_path string @The Asset Pack path to get the assets
----@return { key: string, ...: any }[] @array of tables containing all assets and it's metadata
+---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetStaticMeshes(asset_pack_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1435,7 +1435,7 @@ function Character:SetHighFallingTime(time) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setimpactdamagetaken">docs</a>
 ---
----Set the Impact Damage taken when being roamed by things.<br/><br/>Setting to 0 will make the Character to do not take damage or enter ragdoll mode
+---Set the Impact Damage taken when being run over by things.<br/><br/>Setting to 0 will make the Character to do not take damage or enter ragdoll mode
 ---@param impact_damage integer @Default is 10
 function Character:SetImpactDamageTaken(impact_damage) end
 
@@ -1601,18 +1601,18 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Character)): fun(self: Character) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)): fun(self: Character, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)): fun(self: Character, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Character, object: Pickable, triggered_by_player: boolean)): fun(self: Character, object: Pickable, triggered_by_player: boolean) @When Character drops the currently picked up Pickable
 ---@overload fun(event_name: "EnterVehicle", callback: fun(self: Character, vehicle: Vehicle, seat_index: integer)): fun(self: Character, vehicle: Vehicle, seat_index: integer) @When Character enters a vehicle
 ---@overload fun(event_name: "FallingModeChange", callback: fun(self: Character, old_state: FallingMode, new_state: FallingMode)): fun(self: Character, old_state: FallingMode, new_state: FallingMode) @Called when FallingMode changes
 ---@overload fun(event_name: "Fire", callback: fun(self: Character, weapon: Weapon)): fun(self: Character, weapon: Weapon) @When Character fires a Weapon
 ---@overload fun(event_name: "GaitModeChange", callback: fun(self: Character, old_state: GaitMode, new_state: GaitMode)): fun(self: Character, old_state: GaitMode, new_state: GaitMode) @Called when GaitMode changes
 ---@overload fun(event_name: "GrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character grabs up a Prop
----@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)): fun(self: Character, is_highlighted: boolean, object: Prop|Pickable) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
----@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
 ---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1628,7 +1628,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes it's View Mode
+---@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes its View Mode
 ---@overload fun(event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)): fun(self: Character, old_state: AimMode, new_state: AimMode) @Called when Weapon Aim Mode changes
 function Character.Subscribe(event_name, callback) end
 
@@ -1646,18 +1646,18 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Character, event_name: "Death", callback: fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Character, event_name: "Destroy", callback: fun(self: Character)): fun(self: Character) @Triggered when an Entity is destroyed
----@overload fun(self: Character, event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)): fun(self: Character, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Character, event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)): fun(self: Character, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Character, event_name: "Drop", callback: fun(self: Character, object: Pickable, triggered_by_player: boolean)): fun(self: Character, object: Pickable, triggered_by_player: boolean) @When Character drops the currently picked up Pickable
 ---@overload fun(self: Character, event_name: "EnterVehicle", callback: fun(self: Character, vehicle: Vehicle, seat_index: integer)): fun(self: Character, vehicle: Vehicle, seat_index: integer) @When Character enters a vehicle
 ---@overload fun(self: Character, event_name: "FallingModeChange", callback: fun(self: Character, old_state: FallingMode, new_state: FallingMode)): fun(self: Character, old_state: FallingMode, new_state: FallingMode) @Called when FallingMode changes
 ---@overload fun(self: Character, event_name: "Fire", callback: fun(self: Character, weapon: Weapon)): fun(self: Character, weapon: Weapon) @When Character fires a Weapon
 ---@overload fun(self: Character, event_name: "GaitModeChange", callback: fun(self: Character, old_state: GaitMode, new_state: GaitMode)): fun(self: Character, old_state: GaitMode, new_state: GaitMode) @Called when GaitMode changes
 ---@overload fun(self: Character, event_name: "GrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character grabs up a Prop
----@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Character, event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)): fun(self: Character, is_highlighted: boolean, object: Prop|Pickable) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
----@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
 ---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1673,7 +1673,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
 ---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes it's View Mode
+---@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes its View Mode
 ---@overload fun(self: Character, event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)): fun(self: Character, old_state: AimMode, new_state: AimMode) @Called when Weapon Aim Mode changes
 function Character:Subscribe(event_name, callback) end
 
@@ -1689,18 +1689,18 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Character, event_name: "Death", callback: fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Character, event_name: "Destroy", callback: fun(self: Character)) @Triggered when an Entity is destroyed
----@overload fun(self: Character, event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Character, event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Character, event_name: "Drop", callback: fun(self: Character, object: Pickable, triggered_by_player: boolean)) @When Character drops the currently picked up Pickable
 ---@overload fun(self: Character, event_name: "EnterVehicle", callback: fun(self: Character, vehicle: Vehicle, seat_index: integer)) @When Character enters a vehicle
 ---@overload fun(self: Character, event_name: "FallingModeChange", callback: fun(self: Character, old_state: FallingMode, new_state: FallingMode)) @Called when FallingMode changes
 ---@overload fun(self: Character, event_name: "Fire", callback: fun(self: Character, weapon: Weapon)) @When Character fires a Weapon
 ---@overload fun(self: Character, event_name: "GaitModeChange", callback: fun(self: Character, old_state: GaitMode, new_state: GaitMode)) @Called when GaitMode changes
 ---@overload fun(self: Character, event_name: "GrabProp", callback: fun(self: Character, prop: Prop)) @When Character grabs up a Prop
----@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Character, event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
----@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
 ---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1716,7 +1716,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
 ---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes it's View Mode
+---@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes its View Mode
 ---@overload fun(self: Character, event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)) @Called when Weapon Aim Mode changes
 function Character:Unsubscribe(event_name, callback) end
 
@@ -1733,18 +1733,18 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Character, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Character)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Character, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Character, object: Pickable, triggered_by_player: boolean)) @When Character drops the currently picked up Pickable
 ---@overload fun(event_name: "EnterVehicle", callback: fun(self: Character, vehicle: Vehicle, seat_index: integer)) @When Character enters a vehicle
 ---@overload fun(event_name: "FallingModeChange", callback: fun(self: Character, old_state: FallingMode, new_state: FallingMode)) @Called when FallingMode changes
 ---@overload fun(event_name: "Fire", callback: fun(self: Character, weapon: Weapon)) @When Character fires a Weapon
 ---@overload fun(event_name: "GaitModeChange", callback: fun(self: Character, old_state: GaitMode, new_state: GaitMode)) @Called when GaitMode changes
 ---@overload fun(event_name: "GrabProp", callback: fun(self: Character, prop: Prop)) @When Character grabs up a Prop
----@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
----@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
 ---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1760,7 +1760,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
 ---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
----@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes it's View Mode
+---@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes its View Mode
 ---@overload fun(event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)) @Called when Weapon Aim Mode changes
 function Character.Unsubscribe(event_name, callback) end
 
@@ -1906,12 +1906,12 @@ function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
----@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
 ---@overload fun(event_name: "Land", callback: fun()): fun() @Called upon landing when falling
----@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
 ---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
@@ -1932,12 +1932,12 @@ function CharacterSimple.Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is destroyed
----@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)): fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()): fun() @Called when Character stops crouching
----@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)): fun(self: CharacterSimple, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()): fun() @Event fired when the character has just started jumping
 ---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()): fun() @Called upon landing when falling
----@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
 ---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
@@ -1956,12 +1956,12 @@ function CharacterSimple:Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: CharacterSimple, event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: CharacterSimple, event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
----@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: CharacterSimple, event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: CharacterSimple, event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
----@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: CharacterSimple, event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: CharacterSimple, event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
 ---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()) @Called upon landing when falling
----@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
 ---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
@@ -1981,12 +1981,12 @@ function CharacterSimple:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: CharacterSimple, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: CharacterSimple)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: CharacterSimple, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndCrouch", callback: fun()) @Called when Character stops crouching
----@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "HealthChange", callback: fun(self: CharacterSimple, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Jump", callback: fun()) @Event fired when the character has just started jumping
 ---@overload fun(event_name: "Land", callback: fun()) @Called upon landing when falling
----@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
 ---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
@@ -2096,7 +2096,7 @@ function Client.CopyToClipboard(text) end
 ---Disconnects from the server
 function Client.Disconnect() end
 
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getactorsinradius">docs</a>
 ---
 ---Returns the actors within the specified radius
@@ -2531,7 +2531,7 @@ function Damageable:IsDead() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-respawn">docs</a>
 ---
----Respawns the Entity, fullying it's Health and moving it to it's Initial Location
+---Respawns the Entity, filling its Health and moving it to its Initial Location
 ---@param location? Vector @If not passed will use the initial location passed when the Entity spawned (Default: initial location)
 ---@param rotation? Rotator @(Default: Rotator(0, 0, 0))
 function Damageable:Respawn(location, rotation) end
@@ -2566,8 +2566,8 @@ function Damageable:SetMaxHealth(max_health) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -2582,8 +2582,8 @@ function Damageable.Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
----@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -2596,8 +2596,8 @@ function Damageable:Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Damageable, event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
----@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -2611,8 +2611,8 @@ function Damageable:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Damageable, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -3011,8 +3011,8 @@ function Entity:GetValue(key, fallback) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-hasauthority">docs</a>
 ---
----Gets if this Entity was spawned by the client side
----@return boolean @false if it was spawned by the Server or true if it was spawned by the client
+---Gets if the local context has authority over this Entity (true if spawned by the client, false if spawned by the server)
+---@return boolean @true if spawned by the client, false if spawned by the server
 function Entity:HasAuthority() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3485,9 +3485,9 @@ function Gizmo:SetTransformMode(transform_mode, combine_translate_rotate) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has it's transform updated
+---@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has its transform updated
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)): fun(self: Gizmo, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Gizmo.Subscribe(event_name, callback) end
 
@@ -3498,9 +3498,9 @@ function Gizmo.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Gizmo, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Gizmo, event_name: "Destroy", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is destroyed
----@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Gizmo, event_name: "Spawn", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is spawned/created
----@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has it's transform updated
+---@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has its transform updated
 ---@overload fun(self: Gizmo, event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)): fun(self: Gizmo, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Gizmo:Subscribe(event_name, callback) end
 
@@ -3509,9 +3509,9 @@ function Gizmo:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Gizmo, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Gizmo, event_name: "Destroy", callback: fun(self: Gizmo)) @Triggered when an Entity is destroyed
----@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Gizmo, event_name: "Spawn", callback: fun(self: Gizmo)) @Triggered when an Entity is spawned/created
----@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has it's transform updated
+---@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has its transform updated
 ---@overload fun(self: Gizmo, event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Gizmo:Unsubscribe(event_name, callback) end
 
@@ -3521,9 +3521,9 @@ function Gizmo:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Gizmo)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Gizmo)) @Triggered when an Entity is spawned/created
----@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has it's transform updated
+---@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has its transform updated
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Gizmo.Unsubscribe(event_name, callback) end
 
@@ -3623,7 +3623,7 @@ function Grenade:SetTimeToExplode(time) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)): fun(self: Grenade, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)): fun(self: Grenade, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Grenade, character: Character, was_triggered_by_player: boolean)): fun(self: Grenade, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Explode", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when the grenade has exploded
 ---@overload fun(event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
@@ -3643,7 +3643,7 @@ function Grenade.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Grenade, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Grenade, event_name: "Destroy", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when an Entity is destroyed
----@overload fun(self: Grenade, event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)): fun(self: Grenade, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Grenade, event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)): fun(self: Grenade, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Grenade, event_name: "Drop", callback: fun(self: Grenade, character: Character, was_triggered_by_player: boolean)): fun(self: Grenade, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Grenade, event_name: "Explode", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when the grenade has exploded
 ---@overload fun(self: Grenade, event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
@@ -3661,7 +3661,7 @@ function Grenade:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Grenade, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Grenade, event_name: "Destroy", callback: fun(self: Grenade)) @Triggered when an Entity is destroyed
----@overload fun(self: Grenade, event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Grenade, event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Grenade, event_name: "Drop", callback: fun(self: Grenade, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Grenade, event_name: "Explode", callback: fun(self: Grenade)) @Triggered when the grenade has exploded
 ---@overload fun(self: Grenade, event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
@@ -3680,7 +3680,7 @@ function Grenade:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Grenade)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Grenade, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Grenade, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Explode", callback: fun(self: Grenade)) @Triggered when the grenade has exploded
 ---@overload fun(event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
@@ -4196,7 +4196,7 @@ function Matrix:TransformVector(vector) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee">docs</a>
 ---
----A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Charactes can hold it with hands with pre-defined handling modes.
+---A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Characters can hold it with hands with pre-defined handling modes.
 ---@class Melee : Entity, Actor, Paintable, Pickable
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean, defer_spawn?: boolean): Melee
 Melee = {}
@@ -4291,7 +4291,7 @@ function Melee:SetSoundUse(asset_path) end
 ---@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -4310,7 +4310,7 @@ function Melee.Subscribe(event_name, callback) end
 ---@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)): fun(self: Melee, handler: Character) @Triggered when the Character effectively attacks with this Melee
 ---@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)): fun(self: Melee) @Triggered when an Entity is destroyed
----@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)): fun(self: Melee, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -4327,7 +4327,7 @@ function Melee:Subscribe(event_name, callback) end
 ---@overload fun(self: Melee, event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
 ---@overload fun(self: Melee, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Melee, event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
----@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Melee, event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -4345,7 +4345,7 @@ function Melee:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Attack", callback: fun(self: Melee, handler: Character)) @Triggered when the Character effectively attacks with this Melee
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Melee)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Melee, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -4953,7 +4953,7 @@ Pawn = {}
 ---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
 ---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
----@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying its animation (Default: true)
 ---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
 function Pawn:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
@@ -5096,7 +5096,7 @@ function Pawn:RemoveSkeletalMeshAttached(id) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-removestaticmeshattached">docs</a>
 ---
----Removes, if it exists, a StaticMesh from this enitity given its custom ID
+---Removes, if it exists, a StaticMesh from this entity given its custom ID
 ---@param id string @Unique ID of the StaticMesh to remove
 function Pawn:RemoveStaticMeshAttached(id) end
 
@@ -5234,9 +5234,9 @@ function Pawn:UnHideBone(bone_name) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
@@ -5255,9 +5255,9 @@ function Pawn.Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Pawn, event_name: "Death", callback: fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Pawn, event_name: "Destroy", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is destroyed
----@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
@@ -5274,9 +5274,9 @@ function Pawn:Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Pawn, event_name: "Death", callback: fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Pawn, event_name: "Destroy", callback: fun(self: Pawn)) @Triggered when an Entity is destroyed
----@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
@@ -5294,9 +5294,9 @@ function Pawn:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Pawn, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Pawn)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches it's destination, or when it fails
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
@@ -5323,7 +5323,7 @@ Pickable = {}
 ---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
 ---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
----@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying its animation (Default: true)
 ---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
 function Pickable:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
@@ -5461,7 +5461,7 @@ function Pickable:SetStaticMeshAttachedTransform(id, relative_location, relative
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -5479,7 +5479,7 @@ function Pickable.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)): fun(self: Pickable) @Triggered when an Entity is destroyed
----@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)): fun(self: Pickable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -5495,7 +5495,7 @@ function Pickable:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Pickable, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Pickable, event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
----@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Pickable, event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -5512,7 +5512,7 @@ function Pickable:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Pickable)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Pickable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
@@ -5902,7 +5902,7 @@ function Player:UnPossess() end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes its dimension
 ---@overload fun(event_name: "Possess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(event_name: "Ready", callback: fun(self: Player)): fun(self: Player) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(event_name: "Spawn", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is spawned/created
@@ -5920,7 +5920,7 @@ function Player.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Player, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Player, event_name: "Destroy", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is destroyed
----@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes it's dimension
+---@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)): fun(self: Player, old_dimension: integer, new_dimension: integer) @Triggered when a Player changes its dimension
 ---@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, pawn: Pawn)): fun(self: Player, pawn: Pawn) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(self: Player, event_name: "Ready", callback: fun(self: Player)): fun(self: Player) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(self: Player, event_name: "Spawn", callback: fun(self: Player)): fun(self: Player) @Triggered when an Entity is spawned/created
@@ -5936,7 +5936,7 @@ function Player:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Player, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Player, event_name: "Destroy", callback: fun(self: Player)) @Triggered when an Entity is destroyed
----@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes it's dimension
+---@overload fun(self: Player, event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes its dimension
 ---@overload fun(self: Player, event_name: "Possess", callback: fun(self: Player, pawn: Pawn)) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(self: Player, event_name: "Ready", callback: fun(self: Player)) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(self: Player, event_name: "Spawn", callback: fun(self: Player)) @Triggered when an Entity is spawned/created
@@ -5953,7 +5953,7 @@ function Player:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Player)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Player, old_dimension: integer, new_dimension: integer)) @Triggered when a Player changes its dimension
 ---@overload fun(event_name: "Possess", callback: fun(self: Player, pawn: Pawn)) @Triggered when Player starts controlling a Pawn (Character)
 ---@overload fun(event_name: "Ready", callback: fun(self: Player)) @Triggered when Player is ready (the client fully joined, loaded the map and all entities and is ready to play)
 ---@overload fun(event_name: "Spawn", callback: fun(self: Player)) @Triggered when an Entity is spawned/created
@@ -6155,8 +6155,8 @@ function Prop:SetMesh(asset) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setphysicsdamping">docs</a>
 ---
 ---Sets the Physics damping of this Prop
----@param linear_damping number 
----@param angular_damping number 
+---@param linear_damping number @Linear damping value
+---@param angular_damping number @Angular damping value
 function Prop:SetPhysicsDamping(linear_damping, angular_damping) end
 
 
@@ -6166,7 +6166,7 @@ function Prop:SetPhysicsDamping(linear_damping, angular_damping) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Prop)): fun(self: Prop) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)): fun(self: Prop, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)): fun(self: Prop, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Grab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when Character grabs a Prop
 ---@overload fun(event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when this Prop hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?): fun(self: Prop, character: Character): boolean? @When a Character interacts with this Prop (i.e. try to Grab it)
@@ -6183,7 +6183,7 @@ function Prop.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Prop, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Prop, event_name: "Destroy", callback: fun(self: Prop)): fun(self: Prop) @Triggered when an Entity is destroyed
----@overload fun(self: Prop, event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)): fun(self: Prop, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Prop, event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)): fun(self: Prop, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Prop, event_name: "Grab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when Character grabs a Prop
 ---@overload fun(self: Prop, event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when this Prop hits something
 ---@overload fun(self: Prop, event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?): fun(self: Prop, character: Character): boolean? @When a Character interacts with this Prop (i.e. try to Grab it)
@@ -6198,7 +6198,7 @@ function Prop:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Prop, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Prop, event_name: "Destroy", callback: fun(self: Prop)) @Triggered when an Entity is destroyed
----@overload fun(self: Prop, event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Prop, event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Prop, event_name: "Grab", callback: fun(self: Prop, character: Character)) @Triggered when Character grabs a Prop
 ---@overload fun(self: Prop, event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when this Prop hits something
 ---@overload fun(self: Prop, event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?) @When a Character interacts with this Prop (i.e. try to Grab it)
@@ -6214,7 +6214,7 @@ function Prop:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Prop)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Prop, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Grab", callback: fun(self: Prop, character: Character)) @Triggered when Character grabs a Prop
 ---@overload fun(event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when this Prop hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?) @When a Character interacts with this Prop (i.e. try to Grab it)
@@ -6496,7 +6496,7 @@ function SceneCapture:SetShowFlag(flag, enable) end
 ---@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture.Subscribe(event_name, callback) end
@@ -6509,7 +6509,7 @@ function SceneCapture.Subscribe(event_name, callback) end
 ---@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when this SceneCapture does an update/renders a frame
 ---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
----@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
 ---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture:Subscribe(event_name, callback) end
@@ -6520,7 +6520,7 @@ function SceneCapture:Subscribe(event_name, callback) end
 ---@overload fun(self: SceneCapture, event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
 ---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
----@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture:Unsubscribe(event_name, callback) end
@@ -6532,7 +6532,7 @@ function SceneCapture:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Capture", callback: fun(self: SceneCapture)) @Triggered when this SceneCapture does an update/renders a frame
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture.Unsubscribe(event_name, callback) end
@@ -6556,7 +6556,7 @@ function Server.AddMapSpawnPoint(location, rotation) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-banbyaccountid">docs</a>
 ---
----Ban the player from the server by it's Account ID, ideal for banning from inside PlayerConnect event
+---Ban the player from the server by its Account ID, ideal for banning from inside PlayerConnect event
 ---@param player_account_id string 
 ---@param reason string 
 function Server.BanByAccountID(player_account_id, reason) end
@@ -6773,7 +6773,7 @@ function Server.IsPackageLoaded(package_name) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-kickbyaccountid">docs</a>
 ---
----Kicks the player from the server by it's Account ID, ideal for kicking from inside PlayerConnect event
+---Kicks the player from the server by its Account ID, ideal for kicking from inside PlayerConnect event
 ---@param player_account_id string 
 ---@param reason string 
 function Server.KickByAccountID(player_account_id, reason) end
@@ -6872,7 +6872,7 @@ function Server.Stop() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-unban">docs</a>
 ---
----Unbans a Player by it's account ID
+---Unbans a Player by its account ID
 ---@param account_id string @nanos account ID
 function Server.Unban(account_id) end
 
@@ -7193,7 +7193,7 @@ function Sound:GetPitch() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getsoundtype">docs</a>
 ---
 ---
----@return number 
+---@return SoundType 
 function Sound:GetSoundType() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7742,7 +7742,7 @@ function Trigger:SetOverlapOnlyClasses(overlap_only_classes) end
 ---@overload fun(event_name: "BeginOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something overlaps this Trigger
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something leaves this Trigger
 ---@overload fun(event_name: "Spawn", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)): fun(self: Trigger, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -7756,7 +7756,7 @@ function Trigger.Subscribe(event_name, callback) end
 ---@overload fun(self: Trigger, event_name: "BeginOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something overlaps this Trigger
 ---@overload fun(self: Trigger, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Trigger, event_name: "Destroy", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is destroyed
----@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Trigger, event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something leaves this Trigger
 ---@overload fun(self: Trigger, event_name: "Spawn", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Trigger, event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)): fun(self: Trigger, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -7768,7 +7768,7 @@ function Trigger:Subscribe(event_name, callback) end
 ---@overload fun(self: Trigger, event_name: "BeginOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something overlaps this Trigger
 ---@overload fun(self: Trigger, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Trigger, event_name: "Destroy", callback: fun(self: Trigger)) @Triggered when an Entity is destroyed
----@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Trigger, event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something leaves this Trigger
 ---@overload fun(self: Trigger, event_name: "Spawn", callback: fun(self: Trigger)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Trigger, event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -7781,7 +7781,7 @@ function Trigger:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "BeginOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something overlaps this Trigger
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Trigger)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something leaves this Trigger
 ---@overload fun(event_name: "Spawn", callback: fun(self: Trigger)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -7894,7 +7894,7 @@ function Vector:Normalize() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#function-size">docs</a>
 ---
 ---Get the length (magnitude) of this vector
----@return number @The lenght of the vector
+---@return number @The length of the vector
 function Vector:Size() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -7949,7 +7949,7 @@ Vehicle = {}
 ---@param relative_location? Vector @Relative location (Default: Vector(0, 0, 0))
 ---@param relative_rotation? Rotator @Relative rotation (Default: Rotator(0, 0, 0))
 ---@param use_parent_bounds? boolean @If true, this component uses its parents bounds when attached. This can be a significant optimization with many components attached together (Default: true)
----@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying it's animation (Default: true)
+---@param use_base_leader_pose_component? boolean @If true, this component will use the base leader pose component for copying its animation (Default: true)
 ---@param animation_path? string @Path to Animation asset to play on the Skeletal Mesh attached (Default: "")
 ---@param attachable_id? string @Optionally attaches this to another attached skeletal mesh (instead of attaching to the root component) (Default: "")
 function Vehicle:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, use_base_leader_pose_component, animation_path, attachable_id) end
@@ -7957,7 +7957,7 @@ function Vehicle:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relativ
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-addstaticmeshattached">docs</a>
 ---
----Spawns and attaches a StaticMesh to this Pickable in a Socket with a relative location and rotation. Uses a custom ID to be used for removing/customizing it afterwards
+---Spawns and attaches a StaticMesh to this Vehicle in a Socket with a relative location and rotation. Uses a custom ID to be used for removing/customizing it afterwards
 ---@param id string @Unique ID to assign to the StaticMesh
 ---@param static_mesh_path string @Path to StaticMesh asset to attach
 ---@param socket? string @Bone socket to attach to (Default: "")
@@ -8038,14 +8038,14 @@ function Vehicle:RemoveAllStaticMeshesAttached() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-removeskeletalmeshattached">docs</a>
 ---
----Removes, if it exists, a SkeletalMesh from this Pickable given its custom ID
+---Removes, if it exists, a SkeletalMesh from this Vehicle given its custom ID
 ---@param id string @Unique ID of the SkeletalMesh to remove
 function Vehicle:RemoveSkeletalMeshAttached(id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-removestaticmeshattached">docs</a>
 ---
----Removes, if it exists, a StaticMesh from this Pickable given its custom ID
+---Removes, if it exists, a StaticMesh from this Vehicle given its custom ID
 ---@param id string @Unique ID of the StaticMesh to remove
 function Vehicle:RemoveStaticMeshAttached(id) end
 
@@ -8091,8 +8091,8 @@ function Vehicle:SetStaticMeshAttachedTransform(id, relative_location, relative_
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
@@ -8112,8 +8112,8 @@ function Vehicle.Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
----@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
@@ -8131,8 +8131,8 @@ function Vehicle:Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
----@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
@@ -8151,8 +8151,8 @@ function Vehicle:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
@@ -8380,8 +8380,8 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
@@ -8402,8 +8402,8 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
----@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
----@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
@@ -8422,8 +8422,8 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
----@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
@@ -8443,8 +8443,8 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
----@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has it's Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
@@ -8593,7 +8593,7 @@ function Weapon:GetAmmoClip() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammotoreload">docs</a>
 ---
----
+---Gets the amount of ammo needed to fully reload
 ---@return integer 
 function Weapon:GetAmmoToReload() end
 
@@ -8642,7 +8642,7 @@ function Weapon:GetCadence() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getcanholduse">docs</a>
 ---
----
+---Gets if the weapon can be used continuously by holding the use button
 ---@return boolean 
 function Weapon:GetCanHoldUse() end
 
@@ -8670,7 +8670,7 @@ function Weapon:GetHandlingMode() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getholdreleaseuse">docs</a>
 ---
----
+---Gets if the weapon is triggered/fired when releasing the use button
 ---@return boolean 
 function Weapon:GetHoldReleaseUse() end
 
@@ -9073,7 +9073,7 @@ function Weapon:SetWallbangSettings(max_distance, damage_multiplier) end
 ---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Weapon, character: Character, was_triggered_by_player: boolean)): fun(self: Weapon, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Fire", callback: fun(self: Weapon, shooter: Character)): fun(self: Weapon, shooter: Character) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
@@ -9096,7 +9096,7 @@ function Weapon.Subscribe(event_name, callback) end
 ---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)): fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)): fun(self: Weapon) @Triggered when an Entity is destroyed
----@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)): fun(self: Weapon, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Weapon, event_name: "Drop", callback: fun(self: Weapon, character: Character, was_triggered_by_player: boolean)): fun(self: Weapon, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Weapon, event_name: "Fire", callback: fun(self: Weapon, shooter: Character)): fun(self: Weapon, shooter: Character) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(self: Weapon, event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
@@ -9117,7 +9117,7 @@ function Weapon:Subscribe(event_name, callback) end
 ---@overload fun(self: Weapon, event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(self: Weapon, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Weapon, event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
----@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Weapon, event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Weapon, event_name: "Drop", callback: fun(self: Weapon, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Weapon, event_name: "Fire", callback: fun(self: Weapon, shooter: Character)) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(self: Weapon, event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
@@ -9139,7 +9139,7 @@ function Weapon:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "BulletHit", callback: fun(self: Weapon, impact_point: Vector, impact_normal: Vector, damage: integer, actor_hit?: Actor)) @Triggered when bullets hit (this will be triggered for each bullet shot)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Weapon)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Weapon, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Drop", callback: fun(self: Weapon, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Fire", callback: fun(self: Weapon, shooter: Character)) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
@@ -9613,7 +9613,7 @@ function Widget3D:SetAutoRepaintRate(rate) end
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)): fun(self: Widget3D, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D.Subscribe(event_name, callback) end
@@ -9625,7 +9625,7 @@ function Widget3D.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Widget3D, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Widget3D, event_name: "Destroy", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is destroyed
----@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Widget3D, event_name: "Spawn", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Widget3D, event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)): fun(self: Widget3D, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D:Subscribe(event_name, callback) end
@@ -9635,7 +9635,7 @@ function Widget3D:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Widget3D, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Widget3D, event_name: "Destroy", callback: fun(self: Widget3D)) @Triggered when an Entity is destroyed
----@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Widget3D, event_name: "Spawn", callback: fun(self: Widget3D)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Widget3D, event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D:Unsubscribe(event_name, callback) end
@@ -9646,7 +9646,7 @@ function Widget3D:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Widget3D)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes it's dimension
+---@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "Spawn", callback: fun(self: Widget3D)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D.Unsubscribe(event_name, callback) end
@@ -9740,7 +9740,7 @@ CCDMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#collisionchannel">docs</a>
 ---@enum CollisionChannel
 CollisionChannel = {
-    All = (1 << 32) - 1, -- All Objects
+    All = (1 << 23) - 1, -- All Objects
     Foliage = 1 << 20, -- Foliage Meshes
     Mesh = 1 << 17, -- Character Mesh
     Pawn = 1 << 2, -- Capsules (usually from Characters)
@@ -9764,9 +9764,9 @@ CollisionType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#constraintmotion">docs</a>
 ---@enum ConstraintMotion
 ConstraintMotion = {
-    Free = 0,
-    Limited = 1,
-    Locked = 2
+    Free = 0, -- No constraint around this axis.
+    Limited = 1, -- Limited freedom around this axis. The limit for each Motion is controlled individually by a correspondingly named Limit property.
+    Locked = 2, -- Full constraint around this axi
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#cursortype">docs</a>
@@ -10005,7 +10005,7 @@ LightProfile = {
 ---@enum LightType
 LightType = {
     Point = 0,
-    React = 2,
+    Rect = 2,
     Spot = 1
 }
 
