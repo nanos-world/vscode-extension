@@ -4760,7 +4760,7 @@ function Paintable:ResetMaterial(index, attachable_id) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/paintable#function-setmaterial">docs</a>
 ---
 ---Sets the material at the specified index of this Actor
----@param material_path string @The new Material to apply
+---@param material_path string @The new Material to apply.<br/><br/>Note: depending on the entity you are applying, the material needs to be configured to be "Used with Skeletal Mesh" or "Used with Particles", etc. in the material settings, otherwise it may not be applied correctly
 ---@param index? integer @The material index to apply (<code>-1</code> means all indices) (Default: -1)
 ---@param attachable_id? string @The attachable ID (set with <code>AddSkeletalMeshAttached</code> or <code>AddStaticMeshAttached</code>) to apply the material. Pass empty to set on main mesh only (Default: "")
 function Paintable:SetMaterial(material_path, index, attachable_id) end
