@@ -62,6 +62,13 @@ function Actor:GetActorTags() end
 ---@return Vector 
 function Actor:GetAngularForce() end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getangularvelocity">docs</a>
+---
+---Returns the angular velocity of this Actor
+---@return number 
+function Actor:GetAngularVelocity() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getattachedentities">docs</a>
 ---
@@ -117,6 +124,13 @@ function Actor:GetForce() end
 ---Gets this Actor's location in the game world
 ---@return Vector 
 function Actor:GetLocation() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getmass">docs</a>
+---
+---Returns the mass of this Actor
+---@return number 
+function Actor:GetMass() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getnetworkauthority">docs</a>
@@ -386,6 +400,7 @@ function Actor:WasRecentlyRendered() end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Actor, is_network_authority: boolean)): fun(self: Actor, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)): fun(self: Actor, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor.Subscribe(event_name, callback) end
@@ -398,6 +413,7 @@ function Actor.Subscribe(event_name, callback) end
 ---@overload fun(self: Actor, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Actor, event_name: "Destroy", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is destroyed
 ---@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)): fun(self: Actor, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Actor, event_name: "NetworkAuthorityChange", callback: fun(self: Actor, is_network_authority: boolean)): fun(self: Actor, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Actor, event_name: "Spawn", callback: fun(self: Actor)): fun(self: Actor) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Actor, event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)): fun(self: Actor, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor:Subscribe(event_name, callback) end
@@ -408,6 +424,7 @@ function Actor:Subscribe(event_name, callback) end
 ---@overload fun(self: Actor, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Actor, event_name: "Destroy", callback: fun(self: Actor)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Actor, event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Actor, event_name: "NetworkAuthorityChange", callback: fun(self: Actor, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Actor, event_name: "Spawn", callback: fun(self: Actor)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Actor, event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor:Unsubscribe(event_name, callback) end
@@ -419,6 +436,7 @@ function Actor:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Actor)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Actor, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Actor, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Actor)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Actor, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Actor.Unsubscribe(event_name, callback) end
@@ -1175,7 +1193,7 @@ function Character:GetVehicle() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getvehicleseat">docs</a>
 ---
 ---Gets the entered Vehicle seat
----@return integer 
+---@return integer @The seat index the Character is sitting in the Vehicle. -1 if not in a Vehicle
 function Character:GetVehicleSeat() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -1613,6 +1631,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
 ---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1658,6 +1677,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
+---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
 ---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1701,6 +1721,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
+---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
 ---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1745,6 +1766,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
 ---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
 ---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
@@ -1913,6 +1935,7 @@ function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name
 ---@overload fun(event_name: "Land", callback: fun()): fun() @Called upon landing when falling
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)): fun(self: CharacterSimple, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
@@ -1939,6 +1962,7 @@ function CharacterSimple.Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()): fun() @Called upon landing when falling
 ---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)): fun(old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
+---@overload fun(self: CharacterSimple, event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)): fun(self: CharacterSimple, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
@@ -1963,6 +1987,7 @@ function CharacterSimple:Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "Land", callback: fun()) @Called upon landing when falling
 ---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
+---@overload fun(self: CharacterSimple, event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
@@ -1988,6 +2013,7 @@ function CharacterSimple:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Land", callback: fun()) @Called upon landing when falling
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
@@ -2568,6 +2594,7 @@ function Damageable:SetMaxHealth(max_health) end
 ---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Damageable, is_network_authority: boolean)): fun(self: Damageable, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -2584,6 +2611,7 @@ function Damageable.Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is destroyed
 ---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)): fun(self: Damageable, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)): fun(self: Damageable, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "NetworkAuthorityChange", callback: fun(self: Damageable, is_network_authority: boolean)): fun(self: Damageable, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)): fun(self: Damageable) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)): fun(self: Damageable) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -2598,6 +2626,7 @@ function Damageable:Subscribe(event_name, callback) end
 ---@overload fun(self: Damageable, event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Damageable, event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Damageable, event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(self: Damageable, event_name: "NetworkAuthorityChange", callback: fun(self: Damageable, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Damageable, event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(self: Damageable, event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Damageable, event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -2613,6 +2642,7 @@ function Damageable:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Destroy", callback: fun(self: Damageable)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Damageable, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Damageable, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Damageable, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Damageable)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Damageable)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Damageable, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -3486,6 +3516,7 @@ function Gizmo:SetTransformMode(transform_mode, combine_translate_rotate) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Gizmo, is_network_authority: boolean)): fun(self: Gizmo, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has its transform updated
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)): fun(self: Gizmo, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -3499,6 +3530,7 @@ function Gizmo.Subscribe(event_name, callback) end
 ---@overload fun(self: Gizmo, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Gizmo, event_name: "Destroy", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is destroyed
 ---@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)): fun(self: Gizmo, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Gizmo, event_name: "NetworkAuthorityChange", callback: fun(self: Gizmo, is_network_authority: boolean)): fun(self: Gizmo, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Gizmo, event_name: "Spawn", callback: fun(self: Gizmo)): fun(self: Gizmo) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)): fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector) @Triggered when the Gizmo has its transform updated
 ---@overload fun(self: Gizmo, event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)): fun(self: Gizmo, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -3510,6 +3542,7 @@ function Gizmo:Subscribe(event_name, callback) end
 ---@overload fun(self: Gizmo, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Gizmo, event_name: "Destroy", callback: fun(self: Gizmo)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Gizmo, event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Gizmo, event_name: "NetworkAuthorityChange", callback: fun(self: Gizmo, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Gizmo, event_name: "Spawn", callback: fun(self: Gizmo)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Gizmo, event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has its transform updated
 ---@overload fun(self: Gizmo, event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -3522,6 +3555,7 @@ function Gizmo:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Gizmo)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Gizmo, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Gizmo, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Gizmo)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "Transform", callback: fun(self: Gizmo, location: Vector, rotation: Rotator, scale: Vector)) @Triggered when the Gizmo has its transform updated
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Gizmo, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
@@ -3628,6 +3662,7 @@ function Grenade:SetTimeToExplode(time) end
 ---@overload fun(event_name: "Explode", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when the grenade has exploded
 ---@overload fun(event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Grenade, character: Character): boolean?): fun(self: Grenade, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Grenade, is_network_authority: boolean)): fun(self: Grenade, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -3648,6 +3683,7 @@ function Grenade.Subscribe(event_name, callback) end
 ---@overload fun(self: Grenade, event_name: "Explode", callback: fun(self: Grenade)): fun(self: Grenade) @Triggered when the grenade has exploded
 ---@overload fun(self: Grenade, event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Grenade, event_name: "Interact", callback: fun(self: Grenade, character: Character): boolean?): fun(self: Grenade, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Grenade, event_name: "NetworkAuthorityChange", callback: fun(self: Grenade, is_network_authority: boolean)): fun(self: Grenade, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Grenade, event_name: "PickUp", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered When a Character picks this up
 ---@overload fun(self: Grenade, event_name: "PullUse", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Grenade, event_name: "ReleaseUse", callback: fun(self: Grenade, character: Character)): fun(self: Grenade, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -3666,6 +3702,7 @@ function Grenade:Subscribe(event_name, callback) end
 ---@overload fun(self: Grenade, event_name: "Explode", callback: fun(self: Grenade)) @Triggered when the grenade has exploded
 ---@overload fun(self: Grenade, event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Grenade, event_name: "Interact", callback: fun(self: Grenade, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Grenade, event_name: "NetworkAuthorityChange", callback: fun(self: Grenade, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Grenade, event_name: "PickUp", callback: fun(self: Grenade, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(self: Grenade, event_name: "PullUse", callback: fun(self: Grenade, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Grenade, event_name: "ReleaseUse", callback: fun(self: Grenade, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -3685,6 +3722,7 @@ function Grenade:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Explode", callback: fun(self: Grenade)) @Triggered when the grenade has exploded
 ---@overload fun(event_name: "Hit", callback: fun(self: Grenade, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Grenade, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Grenade, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Grenade, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Grenade, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Grenade, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -4295,6 +4333,7 @@ function Melee:SetSoundUse(asset_path) end
 ---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Melee, is_network_authority: boolean)): fun(self: Melee, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -4314,6 +4353,7 @@ function Melee.Subscribe(event_name, callback) end
 ---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)): fun(self: Melee, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?): fun(self: Melee, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Melee, event_name: "NetworkAuthorityChange", callback: fun(self: Melee, is_network_authority: boolean)): fun(self: Melee, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered When a Character picks this up
 ---@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)): fun(self: Melee, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -4331,6 +4371,7 @@ function Melee:Subscribe(event_name, callback) end
 ---@overload fun(self: Melee, event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Melee, event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Melee, event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Melee, event_name: "NetworkAuthorityChange", callback: fun(self: Melee, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Melee, event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(self: Melee, event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Melee, event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -4349,6 +4390,7 @@ function Melee:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Drop", callback: fun(self: Melee, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Melee, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Melee, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Melee, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Melee, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Melee, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -4901,7 +4943,7 @@ function Particle:SetParameterInt(parameter, value) end
 ---
 ---Sets a Material parameter in this Particle System
 ---@param parameter string @The parameter name
----@param value string @The Material value
+---@param value string @The Material to apply.<br/><br/>Note: the material needs to be configured to be "Used with Niagara" or "Used with Particles" in the material asset settings, otherwise it may not be applied correctly
 function Particle:SetParameterMaterial(parameter, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -5237,6 +5279,7 @@ function Pawn:UnHideBone(bone_name) end
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)): fun(self: Pawn, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
@@ -5258,6 +5301,7 @@ function Pawn.Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)): fun(self: Pawn, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)): fun(self: Pawn, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
+---@overload fun(self: Pawn, event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)): fun(self: Pawn, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
@@ -5277,6 +5321,7 @@ function Pawn:Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Pawn, event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
+---@overload fun(self: Pawn, event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
@@ -5297,6 +5342,7 @@ function Pawn:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Pawn, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Pawn, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
@@ -5465,6 +5511,7 @@ function Pickable:SetStaticMeshAttachedTransform(id, relative_location, relative
 ---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pickable, is_network_authority: boolean)): fun(self: Pickable, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -5483,6 +5530,7 @@ function Pickable.Subscribe(event_name, callback) end
 ---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)): fun(self: Pickable, character: Character, was_triggered_by_player: boolean) @When a Character drops this Pickable
 ---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?): fun(self: Pickable, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Pickable, event_name: "NetworkAuthorityChange", callback: fun(self: Pickable, is_network_authority: boolean)): fun(self: Pickable, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered When a Character picks this up
 ---@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)): fun(self: Pickable, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -5499,6 +5547,7 @@ function Pickable:Subscribe(event_name, callback) end
 ---@overload fun(self: Pickable, event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(self: Pickable, event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Pickable, event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Pickable, event_name: "NetworkAuthorityChange", callback: fun(self: Pickable, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Pickable, event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(self: Pickable, event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Pickable, event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -5516,6 +5565,7 @@ function Pickable:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Drop", callback: fun(self: Pickable, character: Character, was_triggered_by_player: boolean)) @When a Character drops this Pickable
 ---@overload fun(event_name: "Hit", callback: fun(self: Pickable, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Pickable, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pickable, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Pickable, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Pickable, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -6170,6 +6220,7 @@ function Prop:SetPhysicsDamping(linear_damping, angular_damping) end
 ---@overload fun(event_name: "Grab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when Character grabs a Prop
 ---@overload fun(event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when this Prop hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?): fun(self: Prop, character: Character): boolean? @When a Character interacts with this Prop (i.e. try to Grab it)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Prop, is_network_authority: boolean)): fun(self: Prop, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Prop)): fun(self: Prop) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor) @When Prop takes Damage
 ---@overload fun(event_name: "UnGrab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when this Prop is ungrabbed
@@ -6187,6 +6238,7 @@ function Prop.Subscribe(event_name, callback) end
 ---@overload fun(self: Prop, event_name: "Grab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when Character grabs a Prop
 ---@overload fun(self: Prop, event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when this Prop hits something
 ---@overload fun(self: Prop, event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?): fun(self: Prop, character: Character): boolean? @When a Character interacts with this Prop (i.e. try to Grab it)
+---@overload fun(self: Prop, event_name: "NetworkAuthorityChange", callback: fun(self: Prop, is_network_authority: boolean)): fun(self: Prop, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Prop, event_name: "Spawn", callback: fun(self: Prop)): fun(self: Prop) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Prop, event_name: "TakeDamage", callback: fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor) @When Prop takes Damage
 ---@overload fun(self: Prop, event_name: "UnGrab", callback: fun(self: Prop, character: Character)): fun(self: Prop, character: Character) @Triggered when this Prop is ungrabbed
@@ -6202,6 +6254,7 @@ function Prop:Subscribe(event_name, callback) end
 ---@overload fun(self: Prop, event_name: "Grab", callback: fun(self: Prop, character: Character)) @Triggered when Character grabs a Prop
 ---@overload fun(self: Prop, event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when this Prop hits something
 ---@overload fun(self: Prop, event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?) @When a Character interacts with this Prop (i.e. try to Grab it)
+---@overload fun(self: Prop, event_name: "NetworkAuthorityChange", callback: fun(self: Prop, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Prop, event_name: "Spawn", callback: fun(self: Prop)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Prop, event_name: "TakeDamage", callback: fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor)) @When Prop takes Damage
 ---@overload fun(self: Prop, event_name: "UnGrab", callback: fun(self: Prop, character: Character)) @Triggered when this Prop is ungrabbed
@@ -6218,6 +6271,7 @@ function Prop:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Grab", callback: fun(self: Prop, character: Character)) @Triggered when Character grabs a Prop
 ---@overload fun(event_name: "Hit", callback: fun(self: Prop, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when this Prop hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Prop, character: Character): boolean?) @When a Character interacts with this Prop (i.e. try to Grab it)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Prop, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Prop)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Prop, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator?: Player, causer?: Actor)) @When Prop takes Damage
 ---@overload fun(event_name: "UnGrab", callback: fun(self: Prop, character: Character)) @Triggered when this Prop is ungrabbed
@@ -6497,6 +6551,7 @@ function SceneCapture:SetShowFlag(flag, enable) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: SceneCapture, is_network_authority: boolean)): fun(self: SceneCapture, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture.Subscribe(event_name, callback) end
@@ -6510,6 +6565,7 @@ function SceneCapture.Subscribe(event_name, callback) end
 ---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is destroyed
 ---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)): fun(self: SceneCapture, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: SceneCapture, event_name: "NetworkAuthorityChange", callback: fun(self: SceneCapture, is_network_authority: boolean)): fun(self: SceneCapture, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)): fun(self: SceneCapture) @Triggered when an Entity is spawned/created
 ---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)): fun(self: SceneCapture, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture:Subscribe(event_name, callback) end
@@ -6521,6 +6577,7 @@ function SceneCapture:Subscribe(event_name, callback) end
 ---@overload fun(self: SceneCapture, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: SceneCapture, event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
 ---@overload fun(self: SceneCapture, event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: SceneCapture, event_name: "NetworkAuthorityChange", callback: fun(self: SceneCapture, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: SceneCapture, event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: SceneCapture, event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture:Unsubscribe(event_name, callback) end
@@ -6533,6 +6590,7 @@ function SceneCapture:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: SceneCapture)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: SceneCapture, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: SceneCapture, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: SceneCapture)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: SceneCapture, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function SceneCapture.Unsubscribe(event_name, callback) end
@@ -7744,6 +7802,7 @@ function Trigger:SetOverlapOnlyClasses(overlap_only_classes) end
 ---@overload fun(event_name: "Destroy", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something leaves this Trigger
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Trigger, is_network_authority: boolean)): fun(self: Trigger, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)): fun(self: Trigger, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Trigger.Subscribe(event_name, callback) end
@@ -7758,6 +7817,7 @@ function Trigger.Subscribe(event_name, callback) end
 ---@overload fun(self: Trigger, event_name: "Destroy", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is destroyed
 ---@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)): fun(self: Trigger, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Trigger, event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)): fun(self: Trigger, entity: Actor) @Triggered when something leaves this Trigger
+---@overload fun(self: Trigger, event_name: "NetworkAuthorityChange", callback: fun(self: Trigger, is_network_authority: boolean)): fun(self: Trigger, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Trigger, event_name: "Spawn", callback: fun(self: Trigger)): fun(self: Trigger) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Trigger, event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)): fun(self: Trigger, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Trigger:Subscribe(event_name, callback) end
@@ -7770,6 +7830,7 @@ function Trigger:Subscribe(event_name, callback) end
 ---@overload fun(self: Trigger, event_name: "Destroy", callback: fun(self: Trigger)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Trigger, event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(self: Trigger, event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something leaves this Trigger
+---@overload fun(self: Trigger, event_name: "NetworkAuthorityChange", callback: fun(self: Trigger, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Trigger, event_name: "Spawn", callback: fun(self: Trigger)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Trigger, event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Trigger:Unsubscribe(event_name, callback) end
@@ -7783,6 +7844,7 @@ function Trigger:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Destroy", callback: fun(self: Trigger)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Trigger, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
 ---@overload fun(event_name: "EndOverlap", callback: fun(self: Trigger, entity: Actor)) @Triggered when something leaves this Trigger
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Trigger, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Trigger)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Trigger, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Trigger.Unsubscribe(event_name, callback) end
@@ -8011,6 +8073,13 @@ function Vehicle:GetPassenger(seat) end
 function Vehicle:GetPassengers() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-isenginestarted">docs</a>
+---
+---Checks if the engine is started
+---@return boolean 
+function Vehicle:IsEngineStarted() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-playanimation">docs</a>
 ---
 ---Plays an Animation on this Vehicle
@@ -8092,8 +8161,11 @@ function Vehicle:SetStaticMeshAttachedTransform(id, relative_location, relative_
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "EngineStart", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine starts
+---@overload fun(event_name: "EngineStop", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine stops
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)): fun(self: Vehicle, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -8113,8 +8185,11 @@ function Vehicle.Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
 ---@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)): fun(self: Vehicle, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Vehicle, event_name: "EngineStart", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine starts
+---@overload fun(self: Vehicle, event_name: "EngineStop", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine stops
 ---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(self: Vehicle, event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)): fun(self: Vehicle, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -8132,8 +8207,11 @@ function Vehicle:Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Vehicle, event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Vehicle, event_name: "EngineStart", callback: fun(self: Vehicle)) @Triggered when the engine starts
+---@overload fun(self: Vehicle, event_name: "EngineStop", callback: fun(self: Vehicle)) @Triggered when the engine stops
 ---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(self: Vehicle, event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(self: Vehicle, event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Vehicle, event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -8152,8 +8230,11 @@ function Vehicle:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Vehicle, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "EngineStart", callback: fun(self: Vehicle)) @Triggered when the engine starts
+---@overload fun(event_name: "EngineStop", callback: fun(self: Vehicle)) @Triggered when the engine stops
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Vehicle)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Vehicle, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -8263,7 +8344,13 @@ function VehicleWheeled:SetDifferentialSetup(differential_type, front_rear_split
 ---@param brake_effect? number @Braking effect from engine, when throttle released (Default: 0.05)
 ---@param rev_up_moi? integer @Affects how fast the engine RPM speed up (Default: 5)
 ---@param rev_down_rate? integer @Affects how fast the engine RPM slows down (Default: 600)
----@param torque_curve? { rpm: number, torque: number } @Map defining the torque [Normalized 0..1] for a given RPM (Default: { 0: 0.0, max_rpm * 0.2: 0.9, max_rpm * 0.4: 1.0, max_rpm * 0.8: 0.8, max_rpm: 0.0 })
+---@param torque_curve? { rpm: number, torque: number } @Map defining the torque [Normalized 0..1] for a given RPM (Default: {
+	0: 0.0,
+	max_rpm * 0.2: 0.9,
+	max_rpm * 0.4: 1.0,
+	max_rpm * 0.8: 0.8,
+	max_rpm: 0.0
+})
 function VehicleWheeled:SetEngineSetup(max_torque, max_rpm, idle_rpm, brake_effect, rev_up_moi, rev_down_rate, torque_curve) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -8272,6 +8359,13 @@ function VehicleWheeled:SetEngineSetup(max_torque, max_rpm, idle_rpm, brake_effe
 ---Sets if the Engine is turned off/on (this will affect Lights, Sounds and ability to Throttle)
 ---@param started boolean 
 function VehicleWheeled:SetEngineStarted(started) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setheadlightsenabled">docs</a>
+---
+---Enables or disables the headlights
+---@param is_enabled boolean 
+function VehicleWheeled:SetHeadlightsEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setheadlightssetup">docs</a>
@@ -8294,7 +8388,12 @@ function VehicleWheeled:SetHornSound(sound_asset) end
 ---Configures the Vehicle Steering
 ---@param steering_type SteeringType @Type of steering to use. Default is SteeringType.AngleRatio
 ---@param angle_ratio? number @Only applies when SteeringType.AngleRatio is selected (Default: 0.7)
----@param steering_curve? { speed: number, maximum_steering: number } @Maximum steering versus forward speed (MPH) (Default: { 0: 1.0, 20: 0.8, 60: 0.4, 120: 0.3 })
+---@param steering_curve? { speed: number, maximum_steering: number } @Maximum steering versus forward speed (MPH) (Default: {
+	0: 1.0,
+	20: 0.8,
+	60: 0.4,
+	120: 0.3
+})
 function VehicleWheeled:SetSteeringSetup(steering_type, angle_ratio, steering_curve) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -8305,6 +8404,13 @@ function VehicleWheeled:SetSteeringSetup(steering_type, angle_ratio, steering_cu
 ---@param radius integer @Radius of the steering wheel to align the hands properly
 ---@param rotation? Rotator @Rotation of the steering wheel to align the hands properly (Default: Rotator(0, 0, 0))
 function VehicleWheeled:SetSteeringWheelSetup(relative_location, radius, rotation) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-settaillightsenabled">docs</a>
+---
+---Enables or disables the taillights
+---@param is_enabled boolean 
+function VehicleWheeled:SetTaillightsEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-settaillightssetup">docs</a>
@@ -8330,7 +8436,12 @@ function VehicleWheeled:SetTireFlat(wheel_index, is_flat) end
 ---@param transmission_change_down_rpm? integer @Engine Revs at which gear down change occurs (Default: 2000)
 ---@param transmission_gear_change_time? number @Time it takes to switch gears (seconds) (Default: 0.4)
 ---@param transmission_efficiency? number @Mechanical frictional losses mean transmission might operate at 0.94 (94% efficiency) (Default: 0.9)
----@param forward_gear_ratios? number[] @List of forward gear ratios (Default: { 2.85, 2.02, 1.35, 1.0 })
+---@param forward_gear_ratios? number[] @List of forward gear ratios (Default: {
+	2.85,
+	2.02,
+	1.35,
+	1.0
+})
 ---@param reverse_gear_ratios? number[] @List of reverse gear ratios (Default: { 2.86 })
 function VehicleWheeled:SetTransmissionSetup(transmission_final_ratio, transmission_change_up_rpm, transmission_change_down_rpm, transmission_gear_change_time, transmission_efficiency, forward_gear_ratios, reverse_gear_ratios) end
 
@@ -8381,9 +8492,12 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "EngineStart", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine starts
+---@overload fun(event_name: "EngineStop", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine stops
 ---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)): fun(self: VehicleWheeled, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -8403,9 +8517,12 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
 ---@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)): fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: VehicleWheeled, event_name: "EngineStart", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine starts
+---@overload fun(self: VehicleWheeled, event_name: "EngineStop", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine stops
 ---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
+---@overload fun(self: VehicleWheeled, event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)): fun(self: VehicleWheeled, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
 ---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
@@ -8423,9 +8540,12 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
 ---@overload fun(self: VehicleWheeled, event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: VehicleWheeled, event_name: "EngineStart", callback: fun(self: VehicleWheeled)) @Triggered when the engine starts
+---@overload fun(self: VehicleWheeled, event_name: "EngineStop", callback: fun(self: VehicleWheeled)) @Triggered when the engine stops
 ---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
+---@overload fun(self: VehicleWheeled, event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -8444,9 +8564,12 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: VehicleWheeled, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "EngineStart", callback: fun(self: VehicleWheeled)) @Triggered when the engine starts
+---@overload fun(event_name: "EngineStop", callback: fun(self: VehicleWheeled)) @Triggered when the engine stops
 ---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
@@ -9078,6 +9201,7 @@ function Weapon:SetWallbangSettings(max_distance, damage_multiplier) end
 ---@overload fun(event_name: "Fire", callback: fun(self: Weapon, shooter: Character)): fun(self: Weapon, shooter: Character) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Weapon, character: Character): boolean?): fun(self: Weapon, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Weapon, is_network_authority: boolean)): fun(self: Weapon, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -9101,6 +9225,7 @@ function Weapon.Subscribe(event_name, callback) end
 ---@overload fun(self: Weapon, event_name: "Fire", callback: fun(self: Weapon, shooter: Character)): fun(self: Weapon, shooter: Character) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(self: Weapon, event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @When this Pickable hits something
 ---@overload fun(self: Weapon, event_name: "Interact", callback: fun(self: Weapon, character: Character): boolean?): fun(self: Weapon, character: Character): boolean? @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Weapon, event_name: "NetworkAuthorityChange", callback: fun(self: Weapon, is_network_authority: boolean)): fun(self: Weapon, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Weapon, event_name: "PickUp", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered When a Character picks this up
 ---@overload fun(self: Weapon, event_name: "PullUse", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Weapon, event_name: "ReleaseUse", callback: fun(self: Weapon, character: Character)): fun(self: Weapon, character: Character) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -9122,6 +9247,7 @@ function Weapon:Subscribe(event_name, callback) end
 ---@overload fun(self: Weapon, event_name: "Fire", callback: fun(self: Weapon, shooter: Character)) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(self: Weapon, event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(self: Weapon, event_name: "Interact", callback: fun(self: Weapon, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(self: Weapon, event_name: "NetworkAuthorityChange", callback: fun(self: Weapon, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Weapon, event_name: "PickUp", callback: fun(self: Weapon, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(self: Weapon, event_name: "PullUse", callback: fun(self: Weapon, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Weapon, event_name: "ReleaseUse", callback: fun(self: Weapon, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -9144,6 +9270,7 @@ function Weapon:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Fire", callback: fun(self: Weapon, shooter: Character)) @Triggered when Weapon fires (this will be triggered for each shot)
 ---@overload fun(event_name: "Hit", callback: fun(self: Weapon, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @When this Pickable hits something
 ---@overload fun(event_name: "Interact", callback: fun(self: Weapon, character: Character): boolean?) @Triggered when a Character interacts with this Pickable (i.e. tries to pick it up)
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Weapon, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Weapon, character: Character)) @Triggered When a Character picks this up
 ---@overload fun(event_name: "PullUse", callback: fun(self: Weapon, character: Character)) @Triggered when a Character presses the use button for this Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "ReleaseUse", callback: fun(self: Weapon, character: Character)) @Triggered when a Character releases the use button for this Pickable (i.e. releases left mouse button with this equipped)
@@ -9614,6 +9741,7 @@ function Widget3D:SetAutoRepaintRate(rate) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Widget3D, is_network_authority: boolean)): fun(self: Widget3D, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)): fun(self: Widget3D, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D.Subscribe(event_name, callback) end
@@ -9626,6 +9754,7 @@ function Widget3D.Subscribe(event_name, callback) end
 ---@overload fun(self: Widget3D, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Widget3D, event_name: "Destroy", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is destroyed
 ---@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)): fun(self: Widget3D, old_dimension: integer, new_dimension: integer) @Triggered when an Actor changes its dimension
+---@overload fun(self: Widget3D, event_name: "NetworkAuthorityChange", callback: fun(self: Widget3D, is_network_authority: boolean)): fun(self: Widget3D, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Widget3D, event_name: "Spawn", callback: fun(self: Widget3D)): fun(self: Widget3D) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Widget3D, event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)): fun(self: Widget3D, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D:Subscribe(event_name, callback) end
@@ -9636,6 +9765,7 @@ function Widget3D:Subscribe(event_name, callback) end
 ---@overload fun(self: Widget3D, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Widget3D, event_name: "Destroy", callback: fun(self: Widget3D)) @Triggered when an Entity is destroyed
 ---@overload fun(self: Widget3D, event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(self: Widget3D, event_name: "NetworkAuthorityChange", callback: fun(self: Widget3D, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Widget3D, event_name: "Spawn", callback: fun(self: Widget3D)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Widget3D, event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D:Unsubscribe(event_name, callback) end
@@ -9647,6 +9777,7 @@ function Widget3D:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: Widget3D)) @Triggered when an Entity is destroyed
 ---@overload fun(event_name: "DimensionChange", callback: fun(self: Widget3D, old_dimension: integer, new_dimension: integer)) @Triggered when an Actor changes its dimension
+---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Widget3D, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Spawn", callback: fun(self: Widget3D)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Widget3D, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Widget3D.Unsubscribe(event_name, callback) end
