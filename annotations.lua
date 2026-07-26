@@ -73,8 +73,9 @@ function Actor:GetAngularVelocity() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getattachedentities">docs</a>
 ---
 ---Gets all Actors attached to this Actor
+---@param recursively? boolean @Also returns the Actors attached to the attached Actors (Default: false)
 ---@return Actor[] 
-function Actor:GetAttachedEntities() end
+function Actor:GetAttachedEntities(recursively) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getattachedto">docs</a>
@@ -608,7 +609,7 @@ function Blueprint:UnbindBlueprintEventDispatcher(dispatcher_name, callback) end
 ---
 ---A Cable represents a Physics Constraint which joins two Actors with a rope-like visual representation between them.
 ---@class Cable : Entity, Actor, Paintable
----@overload fun(location: Vector, enable_visuals?: boolean, defer_spawn?: boolean): Cable
+---@overload fun(location: Vector, enable_visuals?: boolean, spawn_mode?: SpawnMode): Cable
 Cable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -997,7 +998,7 @@ function Canvas.Unsubscribe(event_name, callback) end
 ---
 ---Characters represents Actors which can be possessed, can move and interact with world. They are the default Skeletal Mesh Character built for nanos world.
 ---@class Character : Entity, Actor, Paintable, Damageable, Pawn
----@overload fun(location: Vector, rotation: Rotator, skeletal_mesh_asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, max_health?: integer, death_sound?: string, pain_sound?: string, defer_spawn?: boolean): Character
+---@overload fun(location: Vector, rotation: Rotator, skeletal_mesh_asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, max_health?: integer, death_sound?: string, pain_sound?: string, spawn_mode?: SpawnMode): Character
 Character = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -1040,13 +1041,6 @@ function Character:GetCameraMode() end
 ---Gets if can aim
 ---@return boolean 
 function Character:GetCanAim() end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcancrouch">docs</a>
----
----Gets if can crouch
----@return boolean 
-function Character:GetCanCrouch() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcandrop">docs</a>
@@ -1792,7 +1786,7 @@ function Character.Unsubscribe(event_name, callback) end
 ---
 ---CharacterSimple is a simpler Character implementation with basic Movement implementation. Aimed for custom NPCs or basic Pawns.
 ---@class CharacterSimple : Entity, Actor, Paintable, Damageable, Pawn
----@overload fun(location: Vector, rotation: Rotator, mesh: string|string, custom_animation_blueprint?: string, collision_type?: CollisionType, gravity_enabled?: boolean, defer_spawn?: boolean): CharacterSimple
+---@overload fun(location: Vector, rotation: Rotator, mesh: string|string, custom_animation_blueprint?: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): CharacterSimple
 CharacterSimple = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -1812,6 +1806,21 @@ function CharacterSimple:BindAnimationBlueprintEventDispatcher(dispatcher_name, 
 ---@param ...? any @Sequence of arguments to pass to the event (Default: nil)
 ---@return any... @the function return values
 function CharacterSimple:CallAnimationBlueprintEvent(event_name, ...) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-getanimationblueprintpropertyvalue">docs</a>
+---
+---Gets an Animation Blueprint Property/Variable value directly
+---@param property_name string 
+---@return any @the property value
+function CharacterSimple:GetAnimationBlueprintPropertyValue(property_name) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-iscrouching">docs</a>
+---
+---Gets if this Character is crouching
+---@return boolean 
+function CharacterSimple:IsCrouching() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-playanimation">docs</a>
@@ -1849,6 +1858,13 @@ function CharacterSimple:SetAnimationBlueprint(custom_animation_blueprint) end
 ---@param property_name string 
 ---@param value any 
 function CharacterSimple:SetAnimationBlueprintPropertyValue(property_name, value) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setcrouching">docs</a>
+---
+---Sets if this Character is crouching
+---@param is_crouching boolean 
+function CharacterSimple:SetCrouching(is_crouching) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setmaxacceleration">docs</a>
@@ -3002,10 +3018,10 @@ function Entity:CallRemotePlayersEvent(event_name, players, reliability, ...) en
 ---Destroys this Entity
 function Entity:Destroy() end
 
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-finishspawn">docs</a>
 ---
----Finish the spawning process and send the entity to clients if it was spawned with <code>defer_spawn</code>. Call this after configuring the entity for efficient spawning
+---Finish the spawning process and send the entity to clients if it was spawned with <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code>. Call this after configuring the entity for efficient spawning.<br><br>Note: an Entity of an <a href='/docs/core-concepts/scripting/inheriting-classes'>Inherited Class</a> constructed with <code>SpawnMode.AfterConstructor</code> finishes spawning automatically when its Constructor returns.
 function Entity:FinishSpawn() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -3061,11 +3077,25 @@ function Entity:IsA(class) end
 function Entity:IsBeingDestroyed() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-isspawned">docs</a>
+---
+---Gets if this Entity finished spawning.<br><br>An Entity spawned with a deferred <code>SpawnMode</code> is only spawned after <code>FinishSpawn()</code> is called on it or when the Inherited Class constructor returns, everything else is spawned right away.
+---@return boolean @If the Entity finished spawning
+function Entity:IsSpawned() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-isvalid">docs</a>
 ---
 ---Returns true if this Entity is valid (i.e. wasn't destroyed and points to a valid Entity)
 ---@return boolean 
 function Entity:IsValid() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-setspawnmode">docs</a>
+---
+---Overrides when this Entity finishes spawning, from the Constructor of an <a href='/docs/core-concepts/scripting/inheriting-classes'>Inherited Class</a>.<br><br>Only <code>SpawnMode.AfterConstructor</code> and <code>SpawnMode.Manual</code> are accepted, and only while the Entity has not finished spawning yet.
+---@param spawn_mode SpawnMode @Only <code>SpawnMode.AfterConstructor</code> and <code>SpawnMode.Manual</code> are accepted
+function Entity:SetSpawnMode(spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-setvalue">docs</a>
@@ -3567,7 +3597,7 @@ function Gizmo.Unsubscribe(event_name, callback) end
 ---
 ---Grenades are Pickables which Characters can grab and throw. It explodes after X seconds after thrown, causing damage around.
 ---@class Grenade : Entity, Actor, Paintable, Pickable
----@overload fun(location: Vector, rotation: Rotator, static_mesh_asset?: string, explosion_particles?: string, explosion_sound?: string, collision_type?: CollisionType, gravity_enabled?: boolean, defer_spawn?: boolean): Grenade
+---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset?: string, explosion_particles?: string, explosion_sound?: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): Grenade
 Grenade = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -3844,6 +3874,13 @@ function Input.GetMappedKeys(binding_name) end
 function Input.GetModifierKeys() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getmousecursor">docs</a>
+---
+---Gets the current Mouse Cursor type
+---@return CursorType @the current Cursor type
+function Input.GetMouseCursor() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getscriptingkeybindings">docs</a>
 ---
 ---Returns a table with all Scripting KeyBindings
@@ -3858,6 +3895,14 @@ function Input.GetScriptingKeyBindings() end
 ---@param input_event InputEvent @Which Event to input
 ---@param amount_depressed? number @The amount pressed (Default: 1)
 function Input.InputKey(key_name, input_event, amount_depressed) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-isbindingdown">docs</a>
+---
+---Returns if a Key Binding is being pressed.<br><br>A Binding can be mapped to more than one Key, any of them being pressed is enough for this to return <code>true</code>.
+---@param binding_name string 
+---@return boolean @if the Key Binding is pressed
+function Input.IsBindingDown(binding_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-isinputenabled">docs</a>
@@ -3972,7 +4017,7 @@ function Input.Unsubscribe(event_name, callback) end
 ---
 ---An Instanced Static Mesh entity allows spawning a mesh that can have multiple instances efficiently rendered.
 ---@class InstancedStaticMesh : Entity, Actor, Paintable
----@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, instances?: { Location: Vector, Rotation: Rotator, Scale: Vector }, defer_spawn?: boolean): InstancedStaticMesh
+---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, instances?: { Location: Vector, Rotation: Rotator, Scale: Vector }, spawn_mode?: SpawnMode): InstancedStaticMesh
 InstancedStaticMesh = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
@@ -4142,7 +4187,7 @@ function Level.Unsubscribe(event_name, callback) end
 ---
 ---A Light represents a Lighting source.
 ---@class Light : Entity, Actor
----@overload fun(location: Vector, rotation?: Rotator, color?: Color, light_type?: LightType, intensity?: number, attenuation_radius?: number, cone_angle?: number, inner_cone_angle_percent?: number, max_draw_distance?: number, use_inverse_squared_falloff?: boolean, cast_shadows?: boolean, visible?: boolean, source_radius?: number, defer_spawn?: boolean): Light
+---@overload fun(location: Vector, rotation?: Rotator, color?: Color, light_type?: LightType, intensity?: number, attenuation_radius?: number, cone_angle?: number, inner_cone_angle_percent?: number, max_draw_distance?: number, use_inverse_squared_falloff?: boolean, cast_shadows?: boolean, visible?: boolean, source_radius?: number, spawn_mode?: SpawnMode): Light
 Light = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4236,7 +4281,7 @@ function Matrix:TransformVector(vector) end
 ---
 ---A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Characters can hold it with hands with pre-defined handling modes.
 ---@class Melee : Entity, Actor, Paintable, Pickable
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean, defer_spawn?: boolean): Melee
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean, spawn_mode?: SpawnMode): Melee
 Melee = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -4883,7 +4928,7 @@ function Paintable:SetPhysicalMaterial(physical_material_path) end
 ---
 ---Class to spawn Particle Systems used to create effects in the world.
 ---@class Particle : Entity, Actor
----@overload fun(location: Vector, rotation: Rotator, asset: string, auto_destroy?: boolean, auto_activate?: boolean, defer_spawn?: boolean): Particle
+---@overload fun(location: Vector, rotation: Rotator, asset: string, auto_destroy?: boolean, auto_activate?: boolean, spawn_mode?: SpawnMode): Particle
 Particle = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5039,6 +5084,20 @@ function Pawn:GetAllSkeletalMeshAttached() end
 function Pawn:GetAllStaticMeshAttached() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcancrouch">docs</a>
+---
+---Gets if this Character is allowed to Crouch
+---@return boolean 
+function Pawn:GetCanCrouch() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcanjump">docs</a>
+---
+---Gets if this Character is allowed to Jump
+---@return boolean 
+function Pawn:GetCanJump() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcapsulesize">docs</a>
 ---
 ---Gets the Capsule Size
@@ -5165,7 +5224,7 @@ function Pawn:SetBrakingSettings(ground_friction, braking_friction_factor, braki
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcancrouch">docs</a>
 ---
----Sets if this Character is allowed to Crouch and to Prone
+---Sets if this Character is allowed to Crouch
 ---@param can_crouch boolean 
 function Pawn:SetCanCrouch(can_crouch) end
 
@@ -6128,7 +6187,7 @@ function PostProcess.SetMaterial(material_path) end
 ---
 ---A Prop represents a Dynamic Mesh which can be spawned in the world, can be grabbed around by characters and have physics.
 ---@class Prop : Entity, Actor, Paintable
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, grab_mode?: GrabMode, ccd_mode?: CCDMode, defer_spawn?: boolean): Prop
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, grab_mode?: GrabMode, ccd_mode?: CCDMode, spawn_mode?: SpawnMode): Prop
 Prop = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -7342,7 +7401,7 @@ function Sound:StopDelayed(delay) end
 ---
 ---A StaticMesh entity represents a Mesh which can be spawned in the world, can't move and is more optimized for using in decorating the world.
 ---@class StaticMesh : Entity, Actor, Paintable
----@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, defer_spawn?: boolean): StaticMesh
+---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, spawn_mode?: SpawnMode): StaticMesh
 StaticMesh = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8029,6 +8088,24 @@ function Vehicle:AddSkeletalMeshAttached(id, skeletal_mesh_path, socket, relativ
 ---@param attachable_id? string @Optionally attaches this to another attached static mesh (instead of attaching to the root component) (Default: "")
 function Vehicle:AddStaticMeshAttached(id, static_mesh_path, socket, relative_location, relative_rotation, use_parent_bounds, attachable_id) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-bindanimationblueprinteventdispatcher">docs</a>
+---
+---Assigns and Binds an Animation Blueprint Event Dispatcher.<br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this does nothing.
+---@param dispatcher_name string @Event Dispatcher name
+---@param callback function @Callback function to call
+---@return function @the callback itself
+function Vehicle:BindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-callanimationblueprintevent">docs</a>
+---
+---Calls an Animation Blueprint Event or Function<br/>Returns all Function return values on <strong>Client Side</strong><br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this does nothing.
+---@param event_name string @Event or Function name
+---@param ...? any @Sequence of arguments to pass to the event (Default: nil)
+---@return any... @the function return values
+function Vehicle:CallAnimationBlueprintEvent(event_name, ...) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getallskeletalmeshattached">docs</a>
 ---
@@ -8042,6 +8119,14 @@ function Vehicle:GetAllSkeletalMeshAttached() end
 ---Gets all Static Meshes attached to this entity
 ---@return string[] @the key as the Attached ID, and the value as the Asset Path
 function Vehicle:GetAllStaticMeshAttached() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getanimationblueprintpropertyvalue">docs</a>
+---
+---Gets an Animation Blueprint Property/Variable value directly.<br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this returns <code>nil</code>.
+---@param property_name string 
+---@return any @the property value
+function Vehicle:GetAnimationBlueprintPropertyValue(property_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getdoors">docs</a>
@@ -8118,6 +8203,28 @@ function Vehicle:RemoveSkeletalMeshAttached(id) end
 ---@param id string @Unique ID of the StaticMesh to remove
 function Vehicle:RemoveStaticMeshAttached(id) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setanimationblueprintpropertyvalue">docs</a>
+---
+---Sets an Animation Blueprint Property/Variable value directly on the Animation Blueprint passed in the constructor.<br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this does nothing.
+---@param property_name string 
+---@param value any 
+function Vehicle:SetAnimationBlueprintPropertyValue(property_name, value) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setcameraarmlength">docs</a>
+---
+---Sets how far the camera stays from this Vehicle while driving it, in centimeters.<br><br>This overrides the Player's own <a href='/docs/scripting-reference/classes/player#function-setcameraarmlength'>Camera Arm Length</a> for as long as they are driving it. Set it to <code>0</code> to use the Player's value instead, which is the default.
+---@param arm_length integer @The distance in centimeters, or 0 to use the Player's own value
+function Vehicle:SetCameraArmLength(arm_length) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setcameraoffset">docs</a>
+---
+---Sets the Vehicle Camera Offset
+---@param offset Vector 
+function Vehicle:SetCameraOffset(offset) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setdoor">docs</a>
 ---
@@ -8147,6 +8254,21 @@ function Vehicle:SetExplosionSettings(engine_relative_location, materials_index_
 ---@param relative_location Vector @New relative location
 ---@param relative_rotation Rotator @New relative rotation
 function Vehicle:SetStaticMeshAttachedTransform(id, relative_location, relative_rotation) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-stopanimation">docs</a>
+---
+---Stops an Animation Montage on this Vehicle
+---@param animation_asset? string @Leave empty to stop all Montages (Default: "")
+function Vehicle:StopAnimation(animation_asset) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-unbindanimationblueprinteventdispatcher">docs</a>
+---
+---Unbinds an Animation Blueprint Event Dispatcher
+---@param dispatcher_name string @Event Dispatcher name
+---@param callback? function @Optional callback to unbind (Default: nil)
+function Vehicle:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
 
 
 ---Subscribe to an event
@@ -8247,7 +8369,7 @@ function Vehicle.Unsubscribe(event_name, callback) end
 ---
 ---VehicleWater are entities which Characters can possesses and drive over the water with dynamic physics.
 ---@class VehicleWater : Entity, Actor, Paintable, Damageable, Vehicle
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, defer_spawn?: boolean): VehicleWater
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): VehicleWater
 VehicleWater = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -8269,7 +8391,7 @@ function VehicleWater:SetThrustStrength(force) end
 ---
 ---Vehicles are wheeled entities which Characters can possesses and drive.
 ---@class VehicleWheeled : Entity, Actor, Paintable, Damageable, Vehicle
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, auto_unflip?: boolean, engine_sound?: string, horn_sound?: string, brake_sound?: string, engine_start_sound?: string, vehicle_door_sound?: string, auto_start_engine?: boolean, custom_animation_blueprint?: string, defer_spawn?: boolean): VehicleWheeled
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, auto_unflip?: boolean, engine_sound?: string, horn_sound?: string, brake_sound?: string, engine_start_sound?: string, vehicle_door_sound?: string, auto_start_engine?: boolean, custom_animation_blueprint?: string, spawn_mode?: SpawnMode): VehicleWheeled
 VehicleWheeled = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8318,13 +8440,6 @@ function VehicleWheeled:SetAerodynamicsSetup(mass, drag_coefficient, vehicle_cha
 ---Sets if the Engine auto starts when the driver enters the Vehicle
 ---@param auto_start boolean 
 function VehicleWheeled:SetAutoStartEngine(auto_start) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setcameraoffset">docs</a>
----
----Sets the Vehicle Camera Offset
----@param offset Vector 
-function VehicleWheeled:SetCameraOffset(offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setdifferentialsetup">docs</a>
@@ -8696,7 +8811,7 @@ function Viewport.Unsubscribe(event_name, callback) end
 ---
 ---Weapons are entities with firing, reloading and aiming functionalities.<br/><br/>They are fully customizable, all pieces of the weapon can be changed with immense possibility of creation.
 ---@class Weapon : Entity, Actor, Paintable, Pickable
----@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, defer_spawn?: boolean): Weapon
+---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): Weapon
 Weapon = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -9185,6 +9300,13 @@ function Weapon:SetUsageSettings(can_hold_use, hold_release_use) end
 ---@param max_distance integer @Max distance to pass through another wall
 ---@param damage_multiplier number @Damage given if wallbangged
 function Weapon:SetWallbangSettings(max_distance, damage_multiplier) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-stopanimation">docs</a>
+---
+---Stops an Animation Montage on this Weapon
+---@param animation_asset? string @Leave empty to stop all Montages (Default: "")
+function Weapon:StopAnimation(animation_asset) end
 
 
 ---Subscribe to an event
@@ -10243,12 +10365,19 @@ SoundType = {
     UI = 2
 }
 
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#spawnmode">docs</a>
+---@enum SpawnMode
+SpawnMode = {
+    AfterConstructor = 1, -- Keeps the spawn deferred. An Inherited Class finishes it automatically when its Constructor returns, otherwise it behaves like <code>SpawnMode.Manual</code> for non-inherited classes
+    Immediate = 0, -- Finishes spawning right away when calling the constructor
+    Manual = 2, -- Keeps the spawn deferred until you call <code>FinishSpawn()</code> yoursel
+}
+
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#stancemode">docs</a>
 ---@enum StanceMode
 StanceMode = {
     Crouching = 2,
     None = 0,
-    Proning = 3,
     Standing = 1
 }
 
