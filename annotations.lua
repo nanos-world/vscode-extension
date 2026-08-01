@@ -7938,7 +7938,7 @@ function Vector:Cross(other) end
 ---
 ---Returns the distance of 2 vectors
 ---@param other Vector @The vector to get the distance to
----@return number @The distance betweem the vectors
+---@return number @The distance between the vectors
 function Vector:Distance(other) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -7946,7 +7946,7 @@ function Vector:Distance(other) end
 ---
 ---Return the squared distance of 2 vectors
 ---@param other Vector @The vector to get the squared distance to
----@return number @The squared distance betweem the vectors
+---@return number @The squared distance between the vectors
 function Vector:DistanceSquared(other) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8052,6 +8052,70 @@ function Vector:ToOrientationRotator() end
 ---@operator sub(Vector2D|number): Vector2D
 ---@overload fun(X?: number, Y?: number): Vector2D
 Vector2D = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-cross">docs</a>
+---
+---Returns the cross product between this vector and another vector, which for 2D vectors is a scalar value
+---@param other Vector2D @The vector to cross with
+---@return number @the cross product
+function Vector2D:Cross(other) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-distance">docs</a>
+---
+---Returns the distance of 2 vectors
+---@param other Vector2D @The vector to get the distance to
+---@return number @The distance between the vectors
+function Vector2D:Distance(other) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-distancesquared">docs</a>
+---
+---Return the squared distance of 2 vectors
+---@param other Vector2D @The vector to get the squared distance to
+---@return number @The squared distance between the vectors
+function Vector2D:DistanceSquared(other) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-dot">docs</a>
+---
+---Returns the dot product between this vector and another vector
+---@param other Vector2D @The vector to dot with
+---@return number @the dot product
+function Vector2D:Dot(other) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-isnear">docs</a>
+---
+---Efficiently checks whether vector is near to another vector within a specified radius
+---@param other Vector2D @The vector to compare to
+---@param radius number @The radius to check
+---@return boolean @If the vector is near to the other vector
+function Vector2D:IsNear(other, radius) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-lerp">docs</a>
+---
+---Returns the linear interpolation between this vector and another vector by the given alpha
+---@param other Vector2D @The vector to interpolate to
+---@param alpha number @The interpolation alpha, where 0 returns this vector and 1 returns the other vector
+---@return Vector2D @the interpolated vector
+function Vector2D:Lerp(other, alpha) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-size">docs</a>
+---
+---Get the length (magnitude) of this vector
+---@return number @The length of the vector
+function Vector2D:Size() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#function-sizesquared">docs</a>
+---
+---Get the squared length of this vector
+---@return number @The squared length of the vector
+function Vector2D:SizeSquared() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehicle">docs</a>
