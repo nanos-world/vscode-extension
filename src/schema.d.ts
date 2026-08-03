@@ -60,6 +60,7 @@ export interface DocOperator {
 }
 
 export interface DocConstructor extends DocDescriptive {
+	name?: string;
 	parameters: DocParameter[];
 }
 

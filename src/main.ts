@@ -332,6 +332,49 @@ function generateConstructor(
 	return `\n---@overload fun(${params}): ${className}`;
 }
 
+const INHERITING_SYSTEM_URL =
+	"https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes";
+
+function hasInherit(classes: Record<string, DocClass>, cls: DocClass): boolean {
+	if (cls.staticClass || cls.struct) return false;
+
+	return [cls, ...(cls.inheritance ?? []).map((name) => classes[name])].some(
+		(candidate) =>
+			candidate?.static_functions?.some((fun) => fun.name === "Inherit"),
+	);
+}
+
+function generateConstructorFunction(
+	jsonFileName: string,
+	constructors: DocConstructor[],
+	cls: DocClass,
+): string {
+	// Extra constructors become overloads; colon-methods need an explicit `self`
+	const overloads = constructors
+		.slice(1)
+		.map(
+			(constructor) =>
+				`\n---@overload fun(self: ${cls.name}, ${generateInlineParams(
+					constructor.parameters,
+				)})`,
+		)
+		.join("");
+
+	const constructor = constructors[0];
+	const params = generateParams(constructor.parameters, jsonFileName);
+	const docstring =
+		generateDocstring(constructor, jsonFileName) ||
+		`Calls the original ${cls.name} Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="${INHERITING_SYSTEM_URL}">Inheriting System</a>`;
+
+	return `
+
+---${generateAuthorityString(cls.authority)}
+---${generateDocsLink(jsonFileName, cls.name, "classes")}
+---
+---${docstring}${params.string}${overloads}
+function ${cls.name}:Constructor(${params.names}) end`;
+}
+
 function generateClassAnnotations(
 	jsonFileName: string,
 	classes: Record<string, DocClass>,
@@ -496,7 +539,11 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 }`;
 	}
 
-	let fields = "";
+	const isInheritable = hasInherit(classes, cls);
+	let fields = !isInheritable
+		? ""
+		: `\n---@field Super ${cls.name} @Access to the original/native ${cls.name} methods from within an inherited Class (see the <a href="${INHERITING_SYSTEM_URL}">Inheriting System</a>)`;
+
 	if (cls.properties !== undefined) {
 		[...cls.properties]
 			.sort((a, b) => a.name.localeCompare(b.name))
@@ -525,6 +572,11 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			});
 	}
 
+	const constructorFunction =
+		!isInheritable || !cls.constructors?.length
+			? ""
+			: generateConstructorFunction(jsonFileName, cls.constructors, cls);
+
 	return `
 
 ---${generateAuthorityString(cls.authority)}
@@ -532,7 +584,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---
 ---${generateDocstring(cls, jsonFileName)}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
-${cls.name} = {}${staticFields}${staticFunctions}${functions}${events}`;
+${cls.name} = {}${staticFields}${constructorFunction}${staticFunctions}${functions}${events}`;
 }
 
 function generateEnum(name: string, values: DocEnumValue[]): string {
