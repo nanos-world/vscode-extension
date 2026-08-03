@@ -5,6 +5,7 @@
 ---
 ---An <b>Actor</b> is an object which can be spawned and destroyed through Lua.<br>Actors support 3D transformations such as translation (location), rotation, and scale.<br><br>An <b>Actor</b> is the base for several entities, and all those entities share the same <b>Methods</b> and <b>Events</b> described in this page.
 ---@class Actor : Entity
+---@field Super Actor @Access to the original/native Actor methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Actor = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -551,16 +552,38 @@ function Assets.Precache(asset_path, asset_type) end
 ---
 ---A Billboard is a 2D Material that will be rendered always facing the camera.
 ---@class Billboard : Entity, Actor, Paintable
+---@field Super Billboard @Access to the original/native Billboard methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, material_asset: string, size?: Vector2D, size_in_screen_space?: boolean): Billboard
 Billboard = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard">docs</a>
+---
+---Calls the original Billboard Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param material_asset string 
+---@param size? Vector2D @(Default: Vector2D(32, 32))
+---@param size_in_screen_space? boolean @Size is in Screen or World Space (Default: false)
+function Billboard:Constructor(location, material_asset, size, size_in_screen_space) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
 ---
 ---A Blueprint Class allows spawning any Unreal Blueprint Actor in nanos world.
 ---@class Blueprint : Entity, Actor, Paintable
+---@field Super Blueprint @Access to the original/native Blueprint methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, blueprint_asset: string, collision_type?: CollisionType): Blueprint
 Blueprint = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
+---
+---Calls the original Blueprint Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param blueprint_asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+function Blueprint:Constructor(location, rotation, blueprint_asset, collision_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#function-bindblueprinteventdispatcher">docs</a>
@@ -609,8 +632,18 @@ function Blueprint:UnbindBlueprintEventDispatcher(dispatcher_name, callback) end
 ---
 ---A Cable represents a Physics Constraint which joins two Actors with a rope-like visual representation between them.
 ---@class Cable : Entity, Actor, Paintable
+---@field Super Cable @Access to the original/native Cable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, enable_visuals?: boolean, spawn_mode?: SpawnMode): Cable
 Cable = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable">docs</a>
+---
+---Calls the original Cable Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param enable_visuals? boolean @Toggles the cable visuals (Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Cable:Constructor(location, enable_visuals, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-attachendto">docs</a>
@@ -998,8 +1031,24 @@ function Canvas.Unsubscribe(event_name, callback) end
 ---
 ---Characters represents Actors which can be possessed, can move and interact with world. They are the default Skeletal Mesh Character built for nanos world.
 ---@class Character : Entity, Actor, Paintable, Damageable, Pawn
+---@field Super Character @Access to the original/native Character methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, skeletal_mesh_asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, max_health?: integer, death_sound?: string, pain_sound?: string, spawn_mode?: SpawnMode): Character
 Character = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character">docs</a>
+---
+---Calls the original Character Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param skeletal_mesh_asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param max_health? integer @Current / Max Health (Default: 100)
+---@param death_sound? string @Played when Character dies (Default: nanos-world::A_Male_01_Death)
+---@param pain_sound? string @Played when Character takes damage (Default: nanos-world::A_Male_01_Pain)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Character:Constructor(location, rotation, skeletal_mesh_asset, collision_type, gravity_enabled, max_health, death_sound, pain_sound, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-clearmorphtargets">docs</a>
@@ -1786,8 +1835,22 @@ function Character.Unsubscribe(event_name, callback) end
 ---
 ---CharacterSimple is a simpler Character implementation with basic Movement implementation. Aimed for custom NPCs or basic Pawns.
 ---@class CharacterSimple : Entity, Actor, Paintable, Damageable, Pawn
+---@field Super CharacterSimple @Access to the original/native CharacterSimple methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, mesh: string|string, custom_animation_blueprint?: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): CharacterSimple
 CharacterSimple = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple">docs</a>
+---
+---Calls the original CharacterSimple Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param mesh string|string 
+---@param custom_animation_blueprint? string @(Default: "")
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function CharacterSimple:Constructor(location, rotation, mesh, custom_animation_blueprint, collision_type, gravity_enabled, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-bindanimationblueprinteventdispatcher">docs</a>
@@ -2526,6 +2589,7 @@ function Console.Unsubscribe(event_name, callback) end
 ---
 ---Base class for all Damageable entities. It provides Health and Damage related methods and events.
 ---@class Damageable : Entity, Actor
+---@field Super Damageable @Access to the original/native Damageable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Damageable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -2835,8 +2899,21 @@ function Debug.DrawString(location, text, color, life_time, draw_shadow, font_sc
 ---
 ---Decals are Materials that are projected onto meshes in your level, including Static Meshes and Skeletal Meshes.
 ---@class Decal : Entity, Actor, Paintable
+---@field Super Decal @Access to the original/native Decal methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, material_asset: string, size?: Vector, lifespan?: number, fade_screen_size?: number): Decal
 Decal = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal">docs</a>
+---
+---Calls the original Decal Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param material_asset string @Material Asset
+---@param size? Vector @Size of the Decal (Default: Vector(128, 256, 256))
+---@param lifespan? number @Time until automatically destroyed in seconds (Default: 60)
+---@param fade_screen_size? number @Size percentage in screen to fade out (Default: 0.01)
+function Decal:Constructor(location, rotation, material_asset, size, lifespan, fade_screen_size) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setfadein">docs</a>
@@ -2892,6 +2969,7 @@ function Discord.SetActivity(state, details, large_image, large_text, reset_time
 ---
 ---<b>Entity</b> is the base for all Classes, and all those entities share the same <b>Methods</b> and <b>Events</b> described in this page.
 ---@class Entity
+---@field Super Entity @Access to the original/native Entity methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Entity = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3477,8 +3555,15 @@ function File:Write(data) end
 ---
 ---A tool to transform objects at runtime.
 ---@class Gizmo : Entity, Actor
+---@field Super Gizmo @Access to the original/native Gizmo methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(): Gizmo
 Gizmo = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo">docs</a>
+---
+---Calls the original Gizmo Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+function Gizmo:Constructor() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-activate">docs</a>
@@ -3597,8 +3682,23 @@ function Gizmo.Unsubscribe(event_name, callback) end
 ---
 ---Grenades are Pickables which Characters can grab and throw. It explodes after X seconds after thrown, causing damage around.
 ---@class Grenade : Entity, Actor, Paintable, Pickable
+---@field Super Grenade @Access to the original/native Grenade methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset?: string, explosion_particles?: string, explosion_sound?: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): Grenade
 Grenade = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade">docs</a>
+---
+---Calls the original Grenade Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param static_mesh_asset? string @(Default: nanos-world::SM_Grenade_G67)
+---@param explosion_particles? string @(Default: nanos-world::P_Grenade_Special)
+---@param explosion_sound? string @(Default: nanos-world::A_Explosion_Large)
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Grenade:Constructor(location, rotation, static_mesh_asset, explosion_particles, explosion_sound, collision_type, gravity_enabled, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-explode">docs</a>
@@ -4017,8 +4117,21 @@ function Input.Unsubscribe(event_name, callback) end
 ---
 ---An Instanced Static Mesh entity allows spawning a mesh that can have multiple instances efficiently rendered.
 ---@class InstancedStaticMesh : Entity, Actor, Paintable
+---@field Super InstancedStaticMesh @Access to the original/native InstancedStaticMesh methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, instances?: { Location: Vector, Rotation: Rotator, Scale: Vector }, spawn_mode?: SpawnMode): InstancedStaticMesh
 InstancedStaticMesh = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh">docs</a>
+---
+---Calls the original InstancedStaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param static_mesh_asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param instances? { Location: Vector, Rotation: Rotator, Scale: Vector } @Array with initial instances (Default: {})
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function InstancedStaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, instances, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-addinstance">docs</a>
@@ -4187,8 +4300,29 @@ function Level.Unsubscribe(event_name, callback) end
 ---
 ---A Light represents a Lighting source.
 ---@class Light : Entity, Actor
+---@field Super Light @Access to the original/native Light methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation?: Rotator, color?: Color, light_type?: LightType, intensity?: number, attenuation_radius?: number, cone_angle?: number, inner_cone_angle_percent?: number, max_draw_distance?: number, use_inverse_squared_falloff?: boolean, cast_shadows?: boolean, visible?: boolean, source_radius?: number, spawn_mode?: SpawnMode): Light
 Light = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light">docs</a>
+---
+---Calls the original Light Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation? Rotator @Relevant only for Rect and Spot LightTypes (Default: Rotator(0, 0, 0))
+---@param color? Color @(Default: Color(1, 1, 1))
+---@param light_type? LightType @(Default: LightType.Point)
+---@param intensity? number @(Default: 30)
+---@param attenuation_radius? number @(Default: 250)
+---@param cone_angle? number @Relevant only for Spot LightType (Default: 44)
+---@param inner_cone_angle_percent? number @Inner Cone Angle Percent (Relevant only for Spot LightType) (0-1) (Default: 0)
+---@param max_draw_distance? number @Max Draw Distance (Good for performance) - 0 for infinite (Default: 10000)
+---@param use_inverse_squared_falloff? boolean @Whether to use physically based inverse squared distance falloff, where Attenuation Radius is only clamping the light's contribution. (Spot and Point types only) (Default: true)
+---@param cast_shadows? boolean @(Default: true)
+---@param visible? boolean @(Default: true)
+---@param source_radius? number @Radius of light source shape. (Spot and Point types only) (Default: 2)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Light:Constructor(location, rotation, color, light_type, intensity, attenuation_radius, cone_angle, inner_cone_angle_percent, max_draw_distance, use_inverse_squared_falloff, cast_shadows, visible, source_radius, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getattenuationradius">docs</a>
@@ -4281,8 +4415,24 @@ function Matrix:TransformVector(vector) end
 ---
 ---A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Characters can hold it with hands with pre-defined handling modes.
 ---@class Melee : Entity, Actor, Paintable, Pickable
+---@field Super Melee @Access to the original/native Melee methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, handling_mode?: HandlingMode, crosshair_material?: string, can_use?: boolean, spawn_mode?: SpawnMode): Melee
 Melee = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee">docs</a>
+---
+---Calls the original Melee Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param handling_mode? HandlingMode @(Default: HandlingMode.Torch)
+---@param crosshair_material? string @(Default: "")
+---@param can_use? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Melee:Constructor(location, rotation, asset, collision_type, gravity_enabled, handling_mode, crosshair_material, can_use, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-addanimationcharacteruse">docs</a>
@@ -4793,6 +4943,7 @@ function Package.Unsubscribe(event_name, callback) end
 ---
 ---Base class for all Paintable entities. This class provides customization for materials, exposing common functions to allow you to set custom material parameters, including loading textures from disk.
 ---@class Paintable : Entity, Actor
+---@field Super Paintable @Access to the original/native Paintable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Paintable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4928,8 +5079,21 @@ function Paintable:SetPhysicalMaterial(physical_material_path) end
 ---
 ---Class to spawn Particle Systems used to create effects in the world.
 ---@class Particle : Entity, Actor
+---@field Super Particle @Access to the original/native Particle methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, auto_destroy?: boolean, auto_activate?: boolean, spawn_mode?: SpawnMode): Particle
 Particle = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle">docs</a>
+---
+---Calls the original Particle Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param auto_destroy? boolean @(Default: true)
+---@param auto_activate? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Particle:Constructor(location, rotation, asset, auto_destroy, auto_activate, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#function-activate">docs</a>
@@ -5028,6 +5192,7 @@ function Particle:SetParameterVector(parameter, value) end
 ---
 ---Base class for all Character entities.
 ---@class Pawn : Entity, Actor, Paintable, Damageable
+---@field Super Pawn @Access to the original/native Pawn methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Pawn = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5416,6 +5581,7 @@ function Pawn.Unsubscribe(event_name, callback) end
 ---
 ---<b>Pickables</b> are special Actors which can be <b>grabbed</b>, <b>held</b> and <b>used</b> by Characters.
 ---@class Pickable : Entity, Actor, Paintable
+---@field Super Pickable @Access to the original/native Pickable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Pickable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5638,6 +5804,7 @@ function Pickable.Unsubscribe(event_name, callback) end
 ---
 ---Players are Entities that represents the individual behind the mouse and keyboard. Players are spawned automatically when connected to the server.
 ---@class Player : Entity
+---@field Super Player @Access to the original/native Player methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Player = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -6187,8 +6354,23 @@ function PostProcess.SetMaterial(material_path) end
 ---
 ---A Prop represents a Dynamic Mesh which can be spawned in the world, can be grabbed around by characters and have physics.
 ---@class Prop : Entity, Actor, Paintable
+---@field Super Prop @Access to the original/native Prop methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, grab_mode?: GrabMode, ccd_mode?: CCDMode, spawn_mode?: SpawnMode): Prop
 Prop = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop">docs</a>
+---
+---Calls the original Prop Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param collision_type? CollisionType @Setting <code>CollisionType.Auto</code> will make it automatically switch between <b>Normal</b> and <b>IgnoreOnlyPawn</b> if they are smaller than radius <b>40</b> units. (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param grab_mode? GrabMode @Whether or not the Prop can be grabbed (Default: GrabMode.Auto)
+---@param ccd_mode? CCDMode @Whether or not the Prop should have CCD enabled (disabling it may cause Props passing through objects if it's kinda small). It's smart to force it disabled on 'visual only' props. (Default: CCDMode.Auto)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Prop:Constructor(location, rotation, asset, collision_type, gravity_enabled, grab_mode, ccd_mode, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-getgrabmode">docs</a>
@@ -6511,8 +6693,23 @@ function Rotator:UnrotateVector(vector) end
 ---
 ---Scene Capture is an Actor which captures a fully dynamic image of the scene into a Texture. It captures the scene from its view frustum, stores that view as an image, which is then used within a Material.
 ---@class SceneCapture : Entity, Actor
+---@field Super SceneCapture @Access to the original/native SceneCapture methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location?: Vector, rotation?: Rotator, width?: integer, height?: integer, render_rate?: number, view_distance?: number, fov_angle?: number, enable_distance_optimization?: boolean): SceneCapture
 SceneCapture = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture">docs</a>
+---
+---Calls the original SceneCapture Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location? Vector @Location (Default: Vector(0, 0, 0))
+---@param rotation? Rotator @Rotation (Default: Rotator(0, 0, 0))
+---@param width? integer @Width of the generated Texture (max is 4096) (Default: 128)
+---@param height? integer @Height of the generated Texture (max is 4096) (Default: 128)
+---@param render_rate? number @Render Rate (how frequent is the capture) - pass it -1 to disable auto-rendering, 0 to capture every frame (Default: 0.033)
+---@param view_distance? number @Maximum distance of capturing (Default: 5000)
+---@param fov_angle? number @FOV (Default: 90)
+---@param enable_distance_optimization? boolean @Reduces the rendering frequency if the entities with this Material are too far or not visible. Disable it to always render at the render_rate (Default: true)
+function SceneCapture:Constructor(location, rotation, width, height, render_rate, view_distance, fov_angle, enable_distance_optimization) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-addrenderactor">docs</a>
@@ -7243,8 +7440,28 @@ function Sky.Spawn(spawn_weather, find_existing) end
 ---
 ---Class for playing in-game 2D and 3D sounds.
 ---@class Sound : Entity, Actor
+---@field Super Sound @Access to the original/native Sound methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, asset: string, is_2D_sound?: boolean, auto_destroy?: boolean, sound_type?: SoundType, volume?: number, pitch?: number, inner_radius?: number, falloff_distance?: number, attenuation_function?: AttenuationFunction, keep_playing_when_silent?: boolean, loop_mode?: SoundLoopMode, auto_play?: boolean): Sound
 Sound = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound">docs</a>
+---
+---Calls the original Sound Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector @Only used if 3D sound
+---@param asset string @The Sound Asset to load
+---@param is_2D_sound? boolean @Whether to spawn it as 2D or 3D (Default: false)
+---@param auto_destroy? boolean @Whether to destroy after finished playing (Default: true)
+---@param sound_type? SoundType @Used to apply user's volume settings (Default: SoundType.SFX)
+---@param volume? number @(Default: 1)
+---@param pitch? number @(Default: 1)
+---@param inner_radius? number @Only used if 3D sound (Default: 400)
+---@param falloff_distance? number @Only used if 3D sound (Default: 3600)
+---@param attenuation_function? AttenuationFunction @Only used if 3D sound (Default: Linear)
+---@param keep_playing_when_silent? boolean @Only used if 3D sound - Use with caution, it may cause performance issues! (Default: false)
+---@param loop_mode? SoundLoopMode @Whether should force sound to loop (Default: Default)
+---@param auto_play? boolean @If should should immediately play when loaded (Default: true)
+function Sound:Constructor(location, asset, is_2D_sound, auto_destroy, sound_type, volume, pitch, inner_radius, falloff_distance, attenuation_function, keep_playing_when_silent, loop_mode, auto_play) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-fadein">docs</a>
@@ -7401,8 +7618,20 @@ function Sound:StopDelayed(delay) end
 ---
 ---A StaticMesh entity represents a Mesh which can be spawned in the world, can't move and is more optimized for using in decorating the world.
 ---@class StaticMesh : Entity, Actor, Paintable
+---@field Super StaticMesh @Access to the original/native StaticMesh methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, static_mesh_asset: string, collision_type?: CollisionType, spawn_mode?: SpawnMode): StaticMesh
 StaticMesh = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh">docs</a>
+---
+---Calls the original StaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param static_mesh_asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function StaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#function-getmesh">docs</a>
@@ -7450,8 +7679,22 @@ function Steam.TriggerScreenshot() end
 ---
 ---Class to create 3D Text with advanced options
 ---@class Text3D : Entity, Actor, Paintable
+---@field Super Text3D @Access to the original/native Text3D methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, text: string, scale?: Vector, color?: Color, font_type?: FontType, align_camera?: Text3DAlignCamera): Text3D
 Text3D = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d">docs</a>
+---
+---Calls the original Text3D Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param text string 
+---@param scale? Vector @(Default: Vector(1, 1, 1))
+---@param color? Color @(Default: Color(1, 1, 1, 1))
+---@param font_type? FontType @(Default: FontType.Roboto)
+---@param align_camera? Text3DAlignCamera @(Default: Text3DAlignCamera.Unaligned)
+function Text3D:Constructor(location, rotation, text, scale, color, font_type, align_camera) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setfont">docs</a>
@@ -7510,8 +7753,25 @@ function Text3D:SetTextSettings(kerning, line_spacing, word_spacing, horizontal_
 ---
 ---A Text Render class is useful for spawning Texts in 3D world.
 ---@class TextRender : Entity, Actor
+---@field Super TextRender @Access to the original/native TextRender methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, text: string, word_size?: number, color?: Color, rendering_type?: TextRenderRenderingType, horizontal_alignment?: TextRenderHorizontalAlignment, vertical_alignment?: TextRenderVerticalAlignment, font_asset?: string, cast_shadow?: boolean): TextRender
 TextRender = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender">docs</a>
+---
+---Calls the original TextRender Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param text string 
+---@param word_size? number @Text size (Default: 26)
+---@param color? Color @(Default: Color.WHITE)
+---@param rendering_type? TextRenderRenderingType @To make it unlit, always face the camera or always visible through walls (Default: TextRenderRenderingType.Lit)
+---@param horizontal_alignment? TextRenderHorizontalAlignment @(Default: TextRenderHorizontalAlignment.Center)
+---@param vertical_alignment? TextRenderVerticalAlignment @(Default: TextRenderVerticalAlignment.Center)
+---@param font_asset? string @The font asset to use for the text. Note the font must be a offline cached, distance field font (Default: "")
+---@param cast_shadow? boolean @Controls whether it should cast shadow or not (Default: false)
+function TextRender:Constructor(location, rotation, text, word_size, color, rendering_type, horizontal_alignment, vertical_alignment, font_asset, cast_shadow) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-gettext">docs</a>
@@ -7821,8 +8081,22 @@ function Trace.SphereSingle(start_location, end_location, radius, collision_chan
 ---
 ---A Trigger class is a utility class to trigger events when any Entity enters an Area.
 ---@class Trigger : Entity, Actor
+---@field Super Trigger @Access to the original/native Trigger methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, extent: Vector|number, trigger_type?: TriggerType, is_visible?: boolean, color?: Color, overlap_only_classes?: string[]): Trigger
 Trigger = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger">docs</a>
+---
+---Calls the original Trigger Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param extent Vector|number @Size of the Trigger. If using <code>TriggerType.Sphere</code> it is treated as radius, otherwise as Vector extent
+---@param trigger_type? TriggerType @(Default: TriggerType.Sphere)
+---@param is_visible? boolean @Useful for debugging (Default: false)
+---@param color? Color @Color to paint the Trigger bounds - if Visible (Default: Color.RED)
+---@param overlap_only_classes? string[] @Filter Trigger to only overlap specific Classes. Leave it empty for all Classes (Default: {})
+function Trigger:Constructor(location, rotation, extent, trigger_type, is_visible, color, overlap_only_classes) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-forceoverlapchecking">docs</a>
@@ -8122,6 +8396,7 @@ function Vector2D:SizeSquared() end
 ---
 ---Base class for all Vehicle entities.
 ---@class Vehicle : Entity, Actor, Paintable, Damageable
+---@field Super Vehicle @Access to the original/native Vehicle methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Vehicle = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8433,8 +8708,21 @@ function Vehicle.Unsubscribe(event_name, callback) end
 ---
 ---VehicleWater are entities which Characters can possesses and drive over the water with dynamic physics.
 ---@class VehicleWater : Entity, Actor, Paintable, Damageable, Vehicle
+---@field Super VehicleWater @Access to the original/native VehicleWater methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): VehicleWater
 VehicleWater = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater">docs</a>
+---
+---Calls the original VehicleWater Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function VehicleWater:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setengineoffset">docs</a>
@@ -8455,8 +8743,29 @@ function VehicleWater:SetThrustStrength(force) end
 ---
 ---Vehicles are wheeled entities which Characters can possesses and drive.
 ---@class VehicleWheeled : Entity, Actor, Paintable, Damageable, Vehicle
+---@field Super VehicleWheeled @Access to the original/native VehicleWheeled methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, auto_unflip?: boolean, engine_sound?: string, horn_sound?: string, brake_sound?: string, engine_start_sound?: string, vehicle_door_sound?: string, auto_start_engine?: boolean, custom_animation_blueprint?: string, spawn_mode?: SpawnMode): VehicleWheeled
 VehicleWheeled = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled">docs</a>
+---
+---Calls the original VehicleWheeled Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param auto_unflip? boolean @Auto rotates the vehicle if flipped (Default: true)
+---@param engine_sound? string @(Default: nanos-world::A_Vehicle_Engine_01)
+---@param horn_sound? string @(Default: nanos-world::A_Vehicle_Horn_Toyota)
+---@param brake_sound? string @(Default: nanos-world::A_Vehicle_Brake)
+---@param engine_start_sound? string @(Default: nanos-world::A_Car_Engine_Start)
+---@param vehicle_door_sound? string @(Default: nanos-world::A_Vehicle_Door)
+---@param auto_start_engine? boolean @(Default: true)
+---@param custom_animation_blueprint? string @(Default: "")
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function VehicleWheeled:Constructor(location, rotation, asset, collision_type, gravity_enabled, auto_unflip, engine_sound, horn_sound, brake_sound, engine_start_sound, vehicle_door_sound, auto_start_engine, custom_animation_blueprint, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-getgear">docs</a>
@@ -8875,8 +9184,21 @@ function Viewport.Unsubscribe(event_name, callback) end
 ---
 ---Weapons are entities with firing, reloading and aiming functionalities.<br/><br/>They are fully customizable, all pieces of the weapon can be changed with immense possibility of creation.
 ---@class Weapon : Entity, Actor, Paintable, Pickable
+---@field Super Weapon @Access to the original/native Weapon methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): Weapon
 Weapon = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon">docs</a>
+---
+---Calls the original Weapon Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param location Vector 
+---@param rotation Rotator 
+---@param asset string 
+---@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @(Default: true)
+---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
+function Weapon:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammobag">docs</a>
@@ -9471,8 +9793,22 @@ function Weapon.Unsubscribe(event_name, callback) end
 ---
 ---Class for spawning a dynamic Web Browser.
 ---@class WebUI : Entity
+---@field Super WebUI @Access to the original/native WebUI methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(name: string, path: string, visibility?: WidgetVisibility, is_transparent?: boolean, auto_resize?: boolean, width?: integer, height?: integer): WebUI
 WebUI = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui">docs</a>
+---
+---Calls the original WebUI Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param name string @Used for debugging logs
+---@param path string @Web URL or <a href='#html-path-searchers'>HTML File Path</a> as <code>file://my_file.html</code>
+---@param visibility? WidgetVisibility @if WebUI is visible on screen (Default: WidgetVisibility.Visible)
+---@param is_transparent? boolean @if WebUI background is transparent (Default: true)
+---@param auto_resize? boolean @if should auto resize when screen changes its size (useful OFF when you are painting meshes with WebUI) (Default: true)
+---@param width? integer @size of the WebUI width when you are not using auto_resize (Default: 0)
+---@param height? integer @size of the WebUI height when you are not using auto_resize (Default: 0)
+function WebUI:Constructor(name, path, visibility, is_transparent, auto_resize, width, height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-bringtofront">docs</a>
@@ -9708,9 +10044,18 @@ function WebUI.Unsubscribe(event_name, callback) end
 ---
 ---The Widget class supports spawning Unreal Widgets classes through scripting and manipulate them such as Blueprints!
 ---@class Widget : Entity
+---@field Super Widget @Access to the original/native Widget methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(blueprint_path: string): Widget
 ---@overload fun(native_widget: NativeWidget): Widget
 Widget = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget">docs</a>
+---
+---Spawns a Widget passing a UserWidget blueprint
+---@param blueprint_path string @A custom UserWidget Blueprint to spawn
+---@overload fun(self: Widget, native_widget: NativeWidget)
+function Widget:Constructor(blueprint_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-addchild">docs</a>
@@ -9897,6 +10242,7 @@ function Widget.Unsubscribe(event_name, callback) end
 ---
 ---The Widget3D class is the 3D representation of a Widget class spawned in the world.
 ---@class Widget3D : Entity, Actor
+---@field Super Widget3D @Access to the original/native Widget3D methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Widget3D = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
