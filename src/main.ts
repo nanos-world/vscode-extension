@@ -63,34 +63,70 @@ function getPathCategory(path: string): PathCategory | null {
 }
 
 const DOCS_BASE_URL = "https://docs.nanos-world.com/docs/scripting-reference/";
-function generateDocsLink(
-	jsonFileName: string,
-	name: string,
-	type: string,
-	opts?: Partial<{
-		parent: string;
-		isEnum: boolean;
-		isStatic: boolean;
-	}>,
-): string {
-	let url = DOCS_BASE_URL;
-	const { parent, isEnum, isStatic } = opts ?? {};
-	if (isEnum) {
-		url += `glossary/enums#${name.toLowerCase()}`;
-	} else {
-		url += `${type}/`;
-		if (parent) {
-			const functionType = isStatic ? "static-function" : "function";
-			if (!isStatic && jsonFileName.startsWith("Classes/Base")) {
-				url += "base-classes/";
-			}
-			url += `${parent.toLowerCase()}#${functionType}-${name.toLowerCase()}`;
-		} else {
-			url += `${name.toLowerCase()}`;
-		}
+
+const DOCS_FOLDERS: Record<PathCategory, string> = {
+	[PATH_CATEGORIES.CLASSES]: "classes",
+	[PATH_CATEGORIES.STATIC_CLASSES]: "static-classes",
+	[PATH_CATEGORIES.STRUCTS]: "structs",
+	[PATH_CATEGORIES.UTILITY_CLASSES]: "utility-libraries",
+};
+
+const BASE_CLASSES_PATH_PREFIX = `${PATH_CATEGORIES.CLASSES}/Base`;
+
+const ENUMS_DOCS_FOLDER = "glossary";
+
+function getDocsFolder(jsonFileName: string): string {
+	if (jsonFileName === ENUMS_FILE) {
+		return ENUMS_DOCS_FOLDER;
 	}
 
-	return `<a href="${url}">docs</a>`;
+	const folder =
+		DOCS_FOLDERS[getPathCategory(jsonFileName) ?? PATH_CATEGORIES.CLASSES];
+	return jsonFileName.startsWith(BASE_CLASSES_PATH_PREFIX)
+		? `${folder}/base-classes`
+		: folder;
+}
+
+function generateDocsUrl(
+	jsonFileName: string,
+	page: string,
+	anchor?: string,
+): string {
+	return `${DOCS_BASE_URL}${getDocsFolder(jsonFileName)}/${page.toLowerCase()}${
+		anchor === undefined ? "" : `#${anchor}`
+	}`;
+}
+
+function generateDocsLink(
+	jsonFileName: string,
+	page: string,
+	anchor?: string,
+): string {
+	return `<a href="${generateDocsUrl(jsonFileName, page, anchor)}">docs</a>`;
+}
+
+function getConstructorAnchor(constructor: DocConstructor): string {
+	if (constructor.name === undefined) {
+		return "constructors";
+	}
+	return `constructor-${constructor.name.toLowerCase().replaceAll(" ", "-")}`;
+}
+
+function generateConstructorLinks(jsonFileName: string, cls: DocClass): string {
+	if (!cls.constructors?.length) return "";
+
+	const links = cls.constructors
+		.map(
+			(constructor) =>
+				`<a href="${generateDocsUrl(
+					jsonFileName,
+					cls.name,
+					getConstructorAnchor(constructor),
+				)}">${constructor.name ?? "Constructor"}</a>`,
+		)
+		.join(", ");
+
+	return `\n---<b>Constructors:</b> ${links}`;
 }
 
 const RAW_ASSETS_BASE_URL =
@@ -312,13 +348,12 @@ function generateFunction(
 	className: string,
 	accessor: string = "",
 	isStatic: boolean = false,
-	isStruct: boolean = false,
 ): string {
 	const params = generateParams(fun.parameters);
 	return `
 
 ---${generateAuthorityString(fun.authority)}
----${generateDocsLink(jsonFileName, fun.name, isStatic ? "static-classes" : isStruct ? "structs" : "classes", { parent: className, isStatic })}
+---${generateDocsLink(jsonFileName, className, `${isStatic ? "static-function" : "function"}-${fun.name.toLowerCase()}`)}
 ---
 ---${generateDocstring(fun, jsonFileName)}${params.string}${generateReturns(fun.return, jsonFileName)}
 function ${accessor}${fun.name}(${params.names}) end`;
@@ -369,7 +404,7 @@ function generateConstructorFunction(
 	return `
 
 ---${generateAuthorityString(cls.authority)}
----${generateDocsLink(jsonFileName, cls.name, "classes")}
+---${generateDocsLink(jsonFileName, cls.name, getConstructorAnchor(constructor))}
 ---
 ---${docstring}${params.string}${overloads}
 function ${cls.name}:Constructor(${params.names}) end`;
@@ -410,7 +445,6 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}.`,
 					true,
-					cls.struct,
 				);
 			});
 	}
@@ -433,7 +467,6 @@ function generateClassAnnotations(
 					cls.name,
 					`${cls.name}:`,
 					false,
-					cls.struct,
 				);
 			});
 	}
@@ -580,7 +613,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 	return `
 
 ---${generateAuthorityString(cls.authority)}
----${generateDocsLink(jsonFileName, cls.name, cls.staticClass ? "static-classes" : cls.struct ? "structs" : "classes")}
+---${generateDocsLink(jsonFileName, cls.name)}${generateConstructorLinks(jsonFileName, cls)}
 ---
 ---${generateDocstring(cls, jsonFileName)}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
@@ -595,7 +628,7 @@ function generateEnum(name: string, values: DocEnumValue[]): string {
 
 	return `
 
----${generateDocsLink(ENUMS_FILE, name, "glossary/enums", { isEnum: true })}
+---${generateDocsLink(ENUMS_FILE, "enums", name.toLowerCase())}
 ---@enum ${name}
 ${name} = {${valuesString.slice(0, -1)}
 }`;
