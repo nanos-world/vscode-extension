@@ -1,7 +1,7 @@
 ---@meta
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/actor">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor">docs</a>
 ---
 ---An <b>Actor</b> is an object which can be spawned and destroyed through Lua.<br>Actors support 3D transformations such as translation (location), rotation, and scale.<br><br>An <b>Actor</b> is the base for several entities, and all those entities share the same <b>Methods</b> and <b>Events</b> described in this page.
 ---@class Actor : Entity
@@ -549,6 +549,7 @@ function Assets.Precache(asset_path, asset_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Billboard is a 2D Material that will be rendered always facing the camera.
 ---@class Billboard : Entity, Actor, Paintable
@@ -557,7 +558,7 @@ function Assets.Precache(asset_path, asset_type) end
 Billboard = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Billboard Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -568,6 +569,7 @@ function Billboard:Constructor(location, material_asset, size, size_in_screen_sp
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Blueprint Class allows spawning any Unreal Blueprint Actor in nanos world.
 ---@class Blueprint : Entity, Actor, Paintable
@@ -576,7 +578,7 @@ function Billboard:Constructor(location, material_asset, size, size_in_screen_sp
 Blueprint = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Blueprint Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -629,6 +631,7 @@ function Blueprint:UnbindBlueprintEventDispatcher(dispatcher_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Cable represents a Physics Constraint which joins two Actors with a rope-like visual representation between them.
 ---@class Cable : Entity, Actor, Paintable
@@ -637,7 +640,7 @@ function Blueprint:UnbindBlueprintEventDispatcher(dispatcher_name, callback) end
 Cable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Cable Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -814,6 +817,7 @@ function Cable:SetRenderingSettings(width, num_sides, tile_material) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#constructor-default-constructor">Default Constructor</a>
 ---
 ---Canvas is an entity which you can draw onto it.
 ---@class Canvas
@@ -1028,6 +1032,7 @@ function Canvas.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#constructor-default-constructor">Default Constructor</a>
 ---
 ---Characters represents Actors which can be possessed, can move and interact with world. They are the default Skeletal Mesh Character built for nanos world.
 ---@class Character : Entity, Actor, Paintable, Damageable, Pawn
@@ -1036,7 +1041,7 @@ function Canvas.Unsubscribe(event_name, callback) end
 Character = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Character Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -1832,6 +1837,7 @@ function Character.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#constructor-default-constructor">Default Constructor</a>
 ---
 ---CharacterSimple is a simpler Character implementation with basic Movement implementation. Aimed for custom NPCs or basic Pawns.
 ---@class CharacterSimple : Entity, Actor, Paintable, Damageable, Pawn
@@ -1840,7 +1846,7 @@ function Character.Unsubscribe(event_name, callback) end
 CharacterSimple = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#constructor-default-constructor">docs</a>
 ---
 ---Calls the original CharacterSimple Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -2406,6 +2412,7 @@ function Client.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#constructor-default-constructor">Default Constructor</a>
 ---
 ---A color composed of components (R, G, B, A) with floating point precision.
 ---@class Color
@@ -2436,7 +2443,7 @@ Color.VIOLET = Color(0.5, 0, 1)
 Color.ROSE = Color(1, 0, 0.5)
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-fromcymk">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-fromcymk">docs</a>
 ---
 ---Returns a color from the CYMK format
 ---@param c? number @Cyan (Default: 0)
@@ -2448,7 +2455,7 @@ Color.ROSE = Color(1, 0, 0.5)
 function Color.FromCYMK(c, y, m, k, a) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-fromhex">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-fromhex">docs</a>
 ---
 ---Returns a color from the Hexadecimal format
 ---@param hex string @Hexadecimal
@@ -2456,7 +2463,7 @@ function Color.FromCYMK(c, y, m, k, a) end
 function Color.FromHEX(hex) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-fromhsl">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-fromhsl">docs</a>
 ---
 ---Returns a color from the HSL format
 ---@param h? number @Hue (Default: 0)
@@ -2466,7 +2473,7 @@ function Color.FromHEX(hex) end
 function Color.FromHSL(h, s, l) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-fromhsv">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-fromhsv">docs</a>
 ---
 ---Returns a color from the HSV format
 ---@param h? number @Hue (Default: 0)
@@ -2476,7 +2483,7 @@ function Color.FromHSL(h, s, l) end
 function Color.FromHSV(h, s, v) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-fromrgba">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-fromrgba">docs</a>
 ---
 ---Returns the color from 0-255 range values
 ---@param r? number @Red (Default: 0)
@@ -2487,14 +2494,14 @@ function Color.FromHSV(h, s, v) end
 function Color.FromRGBA(r, g, b, a) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-random">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-random">docs</a>
 ---
 ---Returns a random color from all color scope
 ---@return Color @Random color from all color scope
 function Color.Random() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/color#static-function-randompalette">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/color#static-function-randompalette">docs</a>
 ---
 ---Returns a random color from Color Palette
 ---@param includes_black? boolean @Includes blacks in the scope (Default: true)
@@ -2585,7 +2592,7 @@ function Console.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/damageable">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable">docs</a>
 ---
 ---Base class for all Damageable entities. It provides Health and Damage related methods and events.
 ---@class Damageable : Entity, Actor
@@ -2732,6 +2739,7 @@ function Damageable.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/database">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/database#constructor-default-constructor">Default Constructor</a>
 ---
 ---The Database entity provides programmers a way to access SQL databases easily through scripting.
 ---@class Database
@@ -2896,6 +2904,7 @@ function Debug.DrawString(location, text, color, life_time, draw_shadow, font_sc
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#constructor-default-constructor">Default Constructor</a>
 ---
 ---Decals are Materials that are projected onto meshes in your level, including Static Meshes and Skeletal Meshes.
 ---@class Decal : Entity, Actor, Paintable
@@ -2904,7 +2913,7 @@ function Debug.DrawString(location, text, color, life_time, draw_shadow, font_sc
 Decal = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Decal Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -2965,7 +2974,7 @@ function Discord.Initialize(client_id) end
 function Discord.SetActivity(state, details, large_image, large_text, reset_time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/entity">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity">docs</a>
 ---
 ---<b>Entity</b> is the base for all Classes, and all those entities share the same <b>Methods</b> and <b>Events</b> described in this page.
 ---@class Entity
@@ -2973,14 +2982,14 @@ function Discord.SetActivity(state, details, large_image, large_text, reset_time
 Entity = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getall">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
 ---
 ---Returns a table containing all Entities of the class this is called on
 ---@return Entity[] @Copy of table containing all Entities
 function Entity.GetAll() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getbyindex">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getbyindex">docs</a>
 ---
 ---Returns a specific Entity of this class at an index
 ---@param index integer @The index of the Entity
@@ -2988,14 +2997,14 @@ function Entity.GetAll() end
 function Entity.GetByIndex(index) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getcount">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getcount">docs</a>
 ---
 ---Returns how many Entities of this class exist
 ---@return integer @Number of Entities of this class
 function Entity.GetCount() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getinheritedclasses">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getinheritedclasses">docs</a>
 ---
 ---Gets a list of all directly inherited classes from this Class created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@param recursively? boolean @Returns all inherited children (Default: false)
@@ -3003,21 +3012,21 @@ function Entity.GetCount() end
 function Entity.GetInheritedClasses(recursively) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getpairs">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
 ---
 ---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
 ---@return iterator @Iterator with all Entities of this class
 function Entity.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-getparentclass">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getparentclass">docs</a>
 ---
 ---Gets the parent class if this Class was created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@return table? @The parent class
 function Entity.GetParentClass() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-inherit">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
 ---
 ---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@param name string @The name of the new Class
@@ -3026,7 +3035,7 @@ function Entity.GetParentClass() end
 function Entity.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-ischildof">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-ischildof">docs</a>
 ---
 ---Gets if this Class is child of another class if this Class was created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@param class table @The other class to check
@@ -3034,7 +3043,7 @@ function Entity.Inherit(name, custom_values) end
 function Entity.IsChildOf(class) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/entity#static-function-subscriberemote">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-subscriberemote">docs</a>
 ---
 ---Subscribes to a custom event called from server
 ---@param event_name string @Name of the event to subscribe to
@@ -3357,6 +3366,7 @@ function Events.UnsubscribeRemote(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#constructor-default-constructor">Default Constructor</a>
 ---
 ---A File represents an entry to a system file.
 ---@class File
@@ -3364,7 +3374,7 @@ function Events.UnsubscribeRemote(event_name, callback) end
 File = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-createdirectory">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-createdirectory">docs</a>
 ---
 ---Creates a Directory (for every folder passed)
 ---@param path string @Path to folder
@@ -3372,7 +3382,7 @@ File = {}
 function File.CreateDirectory(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-exists">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-exists">docs</a>
 ---
 ---Verifies if a entry exists in the file system
 ---@param path string @Path to file or folder
@@ -3380,7 +3390,7 @@ function File.CreateDirectory(path) end
 function File.Exists(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-getdirectories">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-getdirectories">docs</a>
 ---
 ---Gets a list of all directories given a path, optionally with filters
 ---@param path_filter? string @Path filter (Default: "")
@@ -3389,7 +3399,7 @@ function File.Exists(path) end
 function File.GetDirectories(path_filter, max_depth) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-getfiles">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-getfiles">docs</a>
 ---
 ---Gets a list of all files in a directory, optionally with filters
 ---@param path_filter? string|table @Path filter (Default: "")
@@ -3399,7 +3409,7 @@ function File.GetDirectories(path_filter, max_depth) end
 function File.GetFiles(path_filter, extension_filter, max_depth) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-getfullpath">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-getfullpath">docs</a>
 ---
 ---Gets the full path given a relative path based on the current side (client or server)
 ---@param path string @Path to file or directory
@@ -3407,7 +3417,7 @@ function File.GetFiles(path_filter, extension_filter, max_depth) end
 function File.GetFullPath(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-isdirectory">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-isdirectory">docs</a>
 ---
 ---Checks if a path is a directory
 ---@param path string @Path to folder
@@ -3415,7 +3425,7 @@ function File.GetFullPath(path) end
 function File.IsDirectory(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-isregularfile">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-isregularfile">docs</a>
 ---
 ---Checks if a path is a file
 ---@param path string @Path to file
@@ -3423,7 +3433,7 @@ function File.IsDirectory(path) end
 function File.IsRegularFile(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-remove">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-remove">docs</a>
 ---
 ---Deletes a folder or file
 ---@param path string @Path to file or folder
@@ -3431,7 +3441,7 @@ function File.IsRegularFile(path) end
 function File.Remove(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/file#static-function-time">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-time">docs</a>
 ---
 ---Returns when a file was last modified in Unix time
 ---@param path string @Path to file
@@ -3552,6 +3562,7 @@ function File:Write(data) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#constructor-default-constructor">Default Constructor</a>
 ---
 ---A tool to transform objects at runtime.
 ---@class Gizmo : Entity, Actor
@@ -3560,7 +3571,7 @@ function File:Write(data) end
 Gizmo = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Gizmo Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 function Gizmo:Constructor() end
@@ -3679,6 +3690,7 @@ function Gizmo.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#constructor-default-constructor">Default Constructor</a>
 ---
 ---Grenades are Pickables which Characters can grab and throw. It explodes after X seconds after thrown, causing damage around.
 ---@class Grenade : Entity, Actor, Paintable, Pickable
@@ -3687,7 +3699,7 @@ function Gizmo.Unsubscribe(event_name, callback) end
 Grenade = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Grenade Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -4114,6 +4126,7 @@ function Input.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#constructor-default-constructor">Default Constructor</a>
 ---
 ---An Instanced Static Mesh entity allows spawning a mesh that can have multiple instances efficiently rendered.
 ---@class InstancedStaticMesh : Entity, Actor, Paintable
@@ -4122,7 +4135,7 @@ function Input.Unsubscribe(event_name, callback) end
 InstancedStaticMesh = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#constructor-default-constructor">docs</a>
 ---
 ---Calls the original InstancedStaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -4198,14 +4211,14 @@ function InstancedStaticMesh:RemoveInstance(index) end
 function InstancedStaticMesh:SetInstanceTransform(index, relative_location, relative_rotation, scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/json">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/json">docs</a>
 ---
 ---JSON library.
 ---@class JSON
 JSON = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/json#static-function-parse">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/json#static-function-parse">docs</a>
 ---
 ---Returns a value representing the decoded JSON string
 ---@param value string @the JSON that will become a table
@@ -4213,7 +4226,7 @@ JSON = {}
 function JSON.parse(value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/json#static-function-stringify">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/json#static-function-stringify">docs</a>
 ---
 ---Returns a string representing value encoded in JSON
 ---@param value table @the table that will become JSON
@@ -4297,6 +4310,7 @@ function Level.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Light represents a Lighting source.
 ---@class Light : Entity, Actor
@@ -4305,7 +4319,7 @@ function Level.Unsubscribe(event_name, callback) end
 Light = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Light Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -4389,6 +4403,7 @@ function Light:SetTextureLightProfile(light_profile) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Matrix is an array of numbers this can be used for geometric and positional calculations. This is mainly used internally.
 ---@class Matrix
@@ -4412,6 +4427,7 @@ function Matrix:TransformVector(vector) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Melee represents an Entity which can be Pickable by a Character and can be used to melee attack, Characters can hold it with hands with pre-defined handling modes.
 ---@class Melee : Entity, Actor, Paintable, Pickable
@@ -4420,7 +4436,7 @@ function Matrix:TransformVector(vector) end
 Melee = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Melee Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -4595,14 +4611,14 @@ function Melee.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath">docs</a>
 ---
 ---A table containing useful and aux Math functions.
 ---@class NanosMath
 NanosMath = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-clamp">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-clamp">docs</a>
 ---
 ---Clamps a number
 ---@param value number @The number to be clamped
@@ -4612,7 +4628,7 @@ NanosMath = {}
 function NanosMath.Clamp(value, min, max) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-clampaxis">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-clampaxis">docs</a>
 ---
 ---Clamps an angle to the range of [0, 360]
 ---@param value number @The number to be clamped
@@ -4620,7 +4636,7 @@ function NanosMath.Clamp(value, min, max) end
 function NanosMath.ClampAxis(value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-finterpto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-finterpto">docs</a>
 ---
 ---Interpolate number from Current to Target
 ---@param current number 
@@ -4631,7 +4647,7 @@ function NanosMath.ClampAxis(value) end
 function NanosMath.FInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-localtoworld">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-localtoworld">docs</a>
 ---
 ---Takes a local position and rotation relative to an actor, applies the actor's location, rotation, and scale to compute world-space location and rotation.
 ---@param local_location Vector @The local location to convert
@@ -4642,7 +4658,7 @@ function NanosMath.FInterpTo(current, target, delta_time, interp_speed) end
 function NanosMath.LocalToWorld(local_location, local_rotation, actor) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-normalizeaxis">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-normalizeaxis">docs</a>
 ---
 ---Clamps an angle to the range of [-180, 180]
 ---@param value number @The number to be clamped
@@ -4650,7 +4666,7 @@ function NanosMath.LocalToWorld(local_location, local_rotation, actor) end
 function NanosMath.NormalizeAxis(value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-randomfloat">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-randomfloat">docs</a>
 ---
 ---Returns a random float value
 ---@param min number @Minimum value
@@ -4659,7 +4675,7 @@ function NanosMath.NormalizeAxis(value) end
 function NanosMath.RandomFloat(min, max) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-relativeto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-relativeto">docs</a>
 ---
 ---Calculates the location and rotation relative to an actor
 ---@param location Vector @The location of the new system
@@ -4670,7 +4686,7 @@ function NanosMath.RandomFloat(min, max) end
 function NanosMath.RelativeTo(location, rotation, actor) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-rinterpconstantto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-rinterpconstantto">docs</a>
 ---
 ---Interpolate Rotator from Current to Target with a constant step
 ---@param current Rotator 
@@ -4681,7 +4697,7 @@ function NanosMath.RelativeTo(location, rotation, actor) end
 function NanosMath.RInterpConstantTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-rinterpto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-rinterpto">docs</a>
 ---
 ---Interpolate Rotator from Current to Target
 ---@param current Rotator 
@@ -4692,7 +4708,7 @@ function NanosMath.RInterpConstantTo(current, target, delta_time, interp_speed) 
 function NanosMath.RInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-round">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-round">docs</a>
 ---
 ---Rounds a number
 ---@param value number @The number to be rounded
@@ -4700,7 +4716,7 @@ function NanosMath.RInterpTo(current, target, delta_time, interp_speed) end
 function NanosMath.Round(value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-vinterpconstantto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-vinterpconstantto">docs</a>
 ---
 ---Interpolate Vector from Current to Target with a constant step
 ---@param current Vector 
@@ -4711,7 +4727,7 @@ function NanosMath.Round(value) end
 function NanosMath.VInterpConstantTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosmath#static-function-vinterpto">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-vinterpto">docs</a>
 ---
 ---Interpolate Vector from Current to Target
 ---@param current Vector 
@@ -4722,14 +4738,14 @@ function NanosMath.VInterpConstantTo(current, target, delta_time, interp_speed) 
 function NanosMath.VInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanostable">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanostable">docs</a>
 ---
 ---A table containing useful and aux table functions.
 ---@class NanosTable
 NanosTable = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanostable#static-function-dump">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanostable#static-function-dump">docs</a>
 ---
 ---Dumps a table into a readable text
 ---@param table table @Table to dump
@@ -4737,7 +4753,7 @@ NanosTable = {}
 function NanosTable.Dump(table) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanostable#static-function-shallowcopy">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanostable#static-function-shallowcopy">docs</a>
 ---
 ---Performs a shallow copy of a table
 ---@param table table @The table to shallow copy
@@ -4745,14 +4761,14 @@ function NanosTable.Dump(table) end
 function NanosTable.ShallowCopy(table) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosutils">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosutils">docs</a>
 ---
 ---A table containing useful and aux functions.
 ---@class NanosUtils
 NanosUtils = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosutils#static-function-benchmark">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosutils#static-function-benchmark">docs</a>
 ---
 ---Benchmarks a function performance, outputs in the console the elapsed time
 ---@param name string @Benchmark name to output
@@ -4763,7 +4779,7 @@ NanosUtils = {}
 function NanosUtils.Benchmark(name, amount, func, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/nanosutils#static-function-isentityvalid">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosutils#static-function-isentityvalid">docs</a>
 ---
 ---Returns if an entity is valid
 ---@param entity any @Entity to verify
@@ -4939,7 +4955,7 @@ function Package.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/paintable">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/paintable">docs</a>
 ---
 ---Base class for all Paintable entities. This class provides customization for materials, exposing common functions to allow you to set custom material parameters, including loading textures from disk.
 ---@class Paintable : Entity, Actor
@@ -5076,6 +5092,7 @@ function Paintable:SetPhysicalMaterial(physical_material_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#constructor-default-constructor">Default Constructor</a>
 ---
 ---Class to spawn Particle Systems used to create effects in the world.
 ---@class Particle : Entity, Actor
@@ -5084,7 +5101,7 @@ function Paintable:SetPhysicalMaterial(physical_material_path) end
 Particle = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Particle Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -5188,7 +5205,7 @@ function Particle:SetParameterMaterialFromWebUI(parameter, value) end
 function Particle:SetParameterVector(parameter, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/pawn">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn">docs</a>
 ---
 ---Base class for all Character entities.
 ---@class Pawn : Entity, Actor, Paintable, Damageable
@@ -5577,7 +5594,7 @@ function Pawn.Unsubscribe(event_name, callback) end
 
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/pickable">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable">docs</a>
 ---
 ---<b>Pickables</b> are special Actors which can be <b>grabbed</b>, <b>held</b> and <b>used</b> by Characters.
 ---@class Pickable : Entity, Actor, Paintable
@@ -5808,7 +5825,7 @@ function Pickable.Unsubscribe(event_name, callback) end
 Player = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/player#static-function-getbysteamid">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#static-function-getbysteamid">docs</a>
 ---
 ---Retrieves a player by their Steam ID
 ---@param steam_id string 
@@ -6351,6 +6368,7 @@ function PostProcess.SetMaterial(material_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Prop represents a Dynamic Mesh which can be spawned in the world, can be grabbed around by characters and have physics.
 ---@class Prop : Entity, Actor, Paintable
@@ -6359,7 +6377,7 @@ function PostProcess.SetMaterial(material_path) end
 Prop = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Prop Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -6522,6 +6540,7 @@ function Prop.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/quat">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/quat#constructor-default-constructor">Default Constructor</a>
 ---
 ---Floating point Quaternion that can represent a rotation about an axis in 3-D space
 ---@class Quat
@@ -6594,6 +6613,7 @@ function Quat:UnrotateVector(vector) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/rotator">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/rotator#constructor-default-constructor">Default Constructor</a>
 ---
 ---A container for rotation information (Pitch, Yaw, Roll). All rotation values are stored in degrees.
 ---@class Rotator
@@ -6607,7 +6627,7 @@ function Quat:UnrotateVector(vector) end
 Rotator = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/rotator#static-function-random">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/rotator#static-function-random">docs</a>
 ---
 ---Generates a random rotation, with optional random roll
 ---@param roll? boolean @Whether to use a random roll in the rotator, otherwise uses 0 for roll (Default: false)
@@ -6690,6 +6710,7 @@ function Rotator:UnrotateVector(vector) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#constructor-default-constructor">Default Constructor</a>
 ---
 ---Scene Capture is an Actor which captures a fully dynamic image of the scene into a Texture. It captures the scene from its view frustum, stores that view as an image, which is then used within a Material.
 ---@class SceneCapture : Entity, Actor
@@ -6698,7 +6719,7 @@ function Rotator:UnrotateVector(vector) end
 SceneCapture = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#constructor-default-constructor">docs</a>
 ---
 ---Calls the original SceneCapture Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location? Vector @Location (Default: Vector(0, 0, 0))
@@ -7437,6 +7458,7 @@ function Sky.Spawn(spawn_weather, find_existing) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#constructor-default-constructor">Default Constructor</a>
 ---
 ---Class for playing in-game 2D and 3D sounds.
 ---@class Sound : Entity, Actor
@@ -7445,7 +7467,7 @@ function Sky.Spawn(spawn_weather, find_existing) end
 Sound = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Sound Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector @Only used if 3D sound
@@ -7615,6 +7637,7 @@ function Sound:StopDelayed(delay) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#constructor-default-constructor">Default Constructor</a>
 ---
 ---A StaticMesh entity represents a Mesh which can be spawned in the world, can't move and is more optimized for using in decorating the world.
 ---@class StaticMesh : Entity, Actor, Paintable
@@ -7623,7 +7646,7 @@ function Sound:StopDelayed(delay) end
 StaticMesh = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#constructor-default-constructor">docs</a>
 ---
 ---Calls the original StaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -7676,6 +7699,7 @@ function Steam.TriggerScreenshot() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#constructor-default-constructor">Default Constructor</a>
 ---
 ---Class to create 3D Text with advanced options
 ---@class Text3D : Entity, Actor, Paintable
@@ -7684,7 +7708,7 @@ function Steam.TriggerScreenshot() end
 Text3D = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Text3D Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -7702,13 +7726,6 @@ function Text3D:Constructor(location, rotation, text, scale, color, font_type, a
 ---Sets the Font
 ---@param font_type FontType 
 function Text3D:SetFont(font_type) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setfreeze">docs</a>
----
----Freeze mesh rebuild, to avoid unnecessary mesh rebuilds when setting a few properties together
----@param freeze boolean 
-function Text3D:SetFreeze(freeze) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setglyphsettings">docs</a>
@@ -7750,6 +7767,7 @@ function Text3D:SetTextSettings(kerning, line_spacing, word_spacing, horizontal_
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Text Render class is useful for spawning Texts in 3D world.
 ---@class TextRender : Entity, Actor
@@ -7758,7 +7776,7 @@ function Text3D:SetTextSettings(kerning, line_spacing, word_spacing, horizontal_
 TextRender = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#constructor-default-constructor">docs</a>
 ---
 ---Calls the original TextRender Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -7774,18 +7792,18 @@ TextRender = {}
 function TextRender:Constructor(location, rotation, text, word_size, color, rendering_type, horizontal_alignment, vertical_alignment, font_asset, cast_shadow) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-getcolor">docs</a>
+---
+---Gets the current Text Color
+---@return Color @The current Text Color
+function TextRender:GetColor() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-gettext">docs</a>
 ---
 ---Gets the current Text
 ---@return string @The current Text
 function TextRender:GetText() end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-gettextcolor">docs</a>
----
----Gets the current Text Color
----@return Color @The current Text Color
-function TextRender:GetTextColor() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-getwordsize">docs</a>
@@ -7801,6 +7819,13 @@ function TextRender:GetWordSize() end
 ---@param horizontal_alignment TextRenderHorizontalAlignment 
 ---@param vertical_alignment TextRenderVerticalAlignment 
 function TextRender:SetAlignment(horizontal_alignment, vertical_alignment) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setcolor">docs</a>
+---
+---Sets the Text Color
+---@param color Color 
+function TextRender:SetColor(color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setfont">docs</a>
@@ -7823,13 +7848,6 @@ function TextRender:SetSpacingAdjust(horizontal_spacing, vertical_spacing) end
 ---Sets the Text
 ---@param text string 
 function TextRender:SetText(text) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-settextcolor">docs</a>
----
----Sets the Text Color
----@param text_color Color 
-function TextRender:SetTextColor(text_color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setwordsize">docs</a>
@@ -7941,14 +7959,14 @@ function Timer.SetRemainingTime(timer_id, time) end
 function Timer.SetTimeout(callback, milliseconds, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/toml">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/toml">docs</a>
 ---
 ---TOML library.
 ---@class TOML
 TOML = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/toml#static-function-dump">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/toml#static-function-dump">docs</a>
 ---
 ---Returns a string representing value encoded in TOML
 ---@param value table @the table that will become TOML
@@ -7956,7 +7974,7 @@ TOML = {}
 function TOML.Dump(value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/toml#static-function-parse">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/toml#static-function-parse">docs</a>
 ---
 ---Returns a value representing the decoded TOML string
 ---@param value string @the TOML that will become a table
@@ -8078,6 +8096,7 @@ function Trace.SphereSingle(start_location, end_location, radius, collision_chan
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Trigger class is a utility class to trigger events when any Entity enters an Area.
 ---@class Trigger : Entity, Actor
@@ -8086,7 +8105,7 @@ function Trace.SphereSingle(start_location, end_location, radius, collision_chan
 Trigger = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Trigger Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -8185,6 +8204,7 @@ function Trigger.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Vector composed of components (X, Y, Z) with floating point precision. Used mainly for entity position.
 ---@class Vector
@@ -8315,6 +8335,7 @@ function Vector:ToOrientationRotator() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector2d#constructor-default-constructor">Default Constructor</a>
 ---
 ---A Vector2D composed of components (X, Y) with floating point precision. Used mainly for HUD and Drawing on screen.
 ---@class Vector2D
@@ -8392,7 +8413,7 @@ function Vector2D:Size() end
 function Vector2D:SizeSquared() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehicle">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle">docs</a>
 ---
 ---Base class for all Vehicle entities.
 ---@class Vehicle : Entity, Actor, Paintable, Damageable
@@ -8705,6 +8726,7 @@ function Vehicle.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#constructor-default-constructor">Default Constructor</a>
 ---
 ---VehicleWater are entities which Characters can possesses and drive over the water with dynamic physics.
 ---@class VehicleWater : Entity, Actor, Paintable, Damageable, Vehicle
@@ -8713,7 +8735,7 @@ function Vehicle.Unsubscribe(event_name, callback) end
 VehicleWater = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#constructor-default-constructor">docs</a>
 ---
 ---Calls the original VehicleWater Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -8740,6 +8762,7 @@ function VehicleWater:SetThrustStrength(force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#constructor-default-constructor">Default Constructor</a>
 ---
 ---Vehicles are wheeled entities which Characters can possesses and drive.
 ---@class VehicleWheeled : Entity, Actor, Paintable, Damageable, Vehicle
@@ -8748,7 +8771,7 @@ function VehicleWater:SetThrustStrength(force) end
 VehicleWheeled = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#constructor-default-constructor">docs</a>
 ---
 ---Calls the original VehicleWheeled Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -9181,6 +9204,7 @@ function Viewport.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#constructor-default-constructor">Default Constructor</a>
 ---
 ---Weapons are entities with firing, reloading and aiming functionalities.<br/><br/>They are fully customizable, all pieces of the weapon can be changed with immense possibility of creation.
 ---@class Weapon : Entity, Actor, Paintable, Pickable
@@ -9189,7 +9213,7 @@ function Viewport.Unsubscribe(event_name, callback) end
 Weapon = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Weapon Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector 
@@ -9790,6 +9814,7 @@ function Weapon.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#constructor-default-constructor">Default Constructor</a>
 ---
 ---Class for spawning a dynamic Web Browser.
 ---@class WebUI : Entity
@@ -9798,7 +9823,7 @@ function Weapon.Unsubscribe(event_name, callback) end
 WebUI = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#constructor-default-constructor">docs</a>
 ---
 ---Calls the original WebUI Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param name string @Used for debugging logs
@@ -10041,6 +10066,7 @@ function WebUI.Unsubscribe(event_name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget">docs</a>
+---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#constructor-userwidget-constructor">UserWidget Constructor</a>, <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#constructor-native-widget-constructor">Native Widget Constructor</a>
 ---
 ---The Widget class supports spawning Unreal Widgets classes through scripting and manipulate them such as Blueprints!
 ---@class Widget : Entity
@@ -10050,7 +10076,7 @@ function WebUI.Unsubscribe(event_name, callback) end
 Widget = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget">docs</a>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#constructor-userwidget-constructor">docs</a>
 ---
 ---Spawns a Widget passing a UserWidget blueprint
 ---@param blueprint_path string @A custom UserWidget Blueprint to spawn
