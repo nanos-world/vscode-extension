@@ -3299,6 +3299,7 @@ function Events.BroadcastRemoteInRadiusDimension(event_name, location, radius, d
 ---Triggers a local custom Event across all Packages on the same side (Client ➔ Client OR Server ➔ Server)<br/>Must be caught using <code>Events.Subscribe()</code>
 ---@param event_name string @The Event Name to trigger the event
 ---@param ...? any @Arguments to pass to the event (Default: nil)
+---@return boolean @Returns false if any of the event listeners returned false, otherwise returns true
 function Events.Call(event_name, ...) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -3392,7 +3393,7 @@ function File.Exists(path) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-getdirectories">docs</a>
 ---
----Gets a list of all directories given a path, optionally with filters
+---Gets a list of all directories given a path, optionally with filters. Note that the results may differ between Linux and Windows due to the way the file system works
 ---@param path_filter? string @Path filter (Default: "")
 ---@param max_depth? integer @The maximum depth to go further in the folders while searching. Pass -1 for maximum depth (Default: -1)
 ---@return string[] @List of directories
@@ -3401,7 +3402,7 @@ function File.GetDirectories(path_filter, max_depth) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-getfiles">docs</a>
 ---
----Gets a list of all files in a directory, optionally with filters
+---Gets a list of all files in a directory, optionally with filters. Note that the results may differ between Linux and Windows due to the way the file system works
 ---@param path_filter? string|table @Path filter (Default: "")
 ---@param extension_filter? string @E.g.: <code>.lua</code> (Default: "")
 ---@param max_depth? integer @The maximum depth to go further in the folders while searching. Pass -1 for maximum depth (Default: -1)
@@ -4088,8 +4089,7 @@ function Input.Unbind(binding_name, input_event, callback) end
 ---
 ---Unregisters a keybinding
 ---@param binding_name string @The keybinding id
----@param key_name string 
-function Input.Unregister(binding_name, key_name) end
+function Input.Unregister(binding_name) end
 
 
 
@@ -4103,8 +4103,8 @@ function Input.Unregister(binding_name, key_name) end
 ---@overload fun(event_name: "KeyUp", callback: fun(key_name: string, delta?: number): boolean?): fun(key_name: string, delta?: number): boolean? @A keyboard key has been released
 ---@overload fun(event_name: "MouseDown", callback: fun(key_name: string, mouse_x: number, mouse_y: number): boolean?): fun(key_name: string, mouse_x: number, mouse_y: number): boolean? @A mouse button has been pressed / is being pressed
 ---@overload fun(event_name: "MouseEnable", callback: fun(is_enabled: boolean)): fun(is_enabled: boolean) @When mouse cursor is displayed/hidden
----@overload fun(event_name: "MouseMove", callback: fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number)): fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number) @Called when the mouse moves
----@overload fun(event_name: "MouseScroll", callback: fun(mouse_x: number, mouse_y: number, delta: number)): fun(mouse_x: number, mouse_y: number, delta: number) @Called when the mouse scrolls
+---@overload fun(event_name: "MouseMove", callback: fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number): boolean?): fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number): boolean? @Called when the mouse moves
+---@overload fun(event_name: "MouseScroll", callback: fun(mouse_x: number, mouse_y: number, delta: number): boolean?): fun(mouse_x: number, mouse_y: number, delta: number): boolean? @Called when the mouse scrolls
 ---@overload fun(event_name: "MouseUp", callback: fun(key_name: string, mouse_x: number, mouse_y: number): boolean?): fun(key_name: string, mouse_x: number, mouse_y: number): boolean? @A mouse button has been released
 function Input.Subscribe(event_name, callback) end
 
@@ -4117,8 +4117,8 @@ function Input.Subscribe(event_name, callback) end
 ---@overload fun(event_name: "KeyUp", callback: fun(key_name: string, delta?: number): boolean?) @A keyboard key has been released
 ---@overload fun(event_name: "MouseDown", callback: fun(key_name: string, mouse_x: number, mouse_y: number): boolean?) @A mouse button has been pressed / is being pressed
 ---@overload fun(event_name: "MouseEnable", callback: fun(is_enabled: boolean)) @When mouse cursor is displayed/hidden
----@overload fun(event_name: "MouseMove", callback: fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number)) @Called when the mouse moves
----@overload fun(event_name: "MouseScroll", callback: fun(mouse_x: number, mouse_y: number, delta: number)) @Called when the mouse scrolls
+---@overload fun(event_name: "MouseMove", callback: fun(cursor_delta_x: number, cursor_delta_y: number, mouse_x: number, mouse_y: number): boolean?) @Called when the mouse moves
+---@overload fun(event_name: "MouseScroll", callback: fun(mouse_x: number, mouse_y: number, delta: number): boolean?) @Called when the mouse scrolls
 ---@overload fun(event_name: "MouseUp", callback: fun(key_name: string, mouse_x: number, mouse_y: number): boolean?) @A mouse button has been released
 function Input.Unsubscribe(event_name, callback) end
 
