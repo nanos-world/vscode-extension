@@ -1677,7 +1677,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)): fun(self: Character, is_highlighted: boolean, object: Prop|Pickable) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
----@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
+---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle, seat: integer)): fun(self: Character, vehicle: Vehicle, seat: integer) @When Character leaves a vehicle
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
@@ -1723,7 +1723,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)): fun(self: Character, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Character, event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)): fun(self: Character, is_highlighted: boolean, object: Prop|Pickable) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?): fun(self: Character, object: Prop|Pickable): boolean? @Triggered when a Character interacts with a Prop or Pickable
----@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)): fun(self: Character, vehicle: Vehicle) @When Character leaves a vehicle
+---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle, seat: integer)): fun(self: Character, vehicle: Vehicle, seat: integer) @When Character leaves a vehicle
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
@@ -1767,7 +1767,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(self: Character, event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(self: Character, event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
----@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
+---@overload fun(self: Character, event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle, seat: integer)) @When Character leaves a vehicle
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
@@ -1812,7 +1812,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Character, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
 ---@overload fun(event_name: "Highlight", callback: fun(self: Character, is_highlighted: boolean, object: Prop|Pickable)) @When Character highlights/looks at a Prop or a Pickable
 ---@overload fun(event_name: "Interact", callback: fun(self: Character, object: Prop|Pickable): boolean?) @Triggered when a Character interacts with a Prop or Pickable
----@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle)) @When Character leaves a vehicle
+---@overload fun(event_name: "LeaveVehicle", callback: fun(self: Character, vehicle: Vehicle, seat: integer)) @When Character leaves a vehicle
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
@@ -3893,7 +3893,7 @@ HTTP = {}
 ---@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
 ---@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
 ---@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
----@return { Status: integer, Data: string } 
+---@return { Status: integer, Data: string, Headers: table } 
 function HTTP.Request(uri, endpoint, method, data, content_type, compress, headers) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5712,6 +5712,23 @@ function Pickable:RemoveStaticMeshAttached(id) end
 ---@param socket? string @Character Socket to attach to when picked up (Default: hand_r_socket)
 function Pickable:SetAttachmentSettings(relative_location, relative_rotation, socket) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setbuoyancypontoons">docs</a>
+---
+---Sets the spherical Pontoons used to float this entity on Water, overriding the ones automatically calculated from the Mesh bounds and mass.<br/><br/>Pass no value (or an empty table) to go back to the automatically calculated ones.<br/><br/>Pontoons only have an effect on Maps with Water Buoyancy enabled
+---@param pontoons? { Offset: Vector, Radius: number } @Array with the Pontoons, or nil to restore the automatically calculated ones (Default: nil)
+function Pickable:SetBuoyancyPontoons(pontoons) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setbuoyancysettings">docs</a>
+---
+---Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
+---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+function Pickable:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setcanuse">docs</a>
 ---
@@ -6424,6 +6441,23 @@ function Prop:GetMassScale() end
 ---Gets the Asset name
 ---@return string @asset name
 function Prop:GetMesh() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setbuoyancypontoons">docs</a>
+---
+---Sets the spherical Pontoons used to float this entity on Water, overriding the ones automatically calculated from the Mesh bounds and mass.<br/><br/>Pass no value (or an empty table) to go back to the automatically calculated ones.<br/><br/>Pontoons only have an effect on Maps with Water Buoyancy enabled
+---@param pontoons? { Offset: Vector, Radius: number } @Array with the Pontoons, or nil to restore the automatically calculated ones (Default: nil)
+function Prop:SetBuoyancyPontoons(pontoons) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setbuoyancysettings">docs</a>
+---
+---Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
+---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+function Prop:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setgrabmode">docs</a>
@@ -8572,6 +8606,23 @@ function Vehicle:RemoveStaticMeshAttached(id) end
 function Vehicle:SetAnimationBlueprintPropertyValue(property_name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setbuoyancypontoons">docs</a>
+---
+---Sets the spherical Pontoons used to float this entity on Water, overriding the ones automatically calculated from the Mesh bounds and mass.<br/><br/>Pass no value (or an empty table) to go back to the automatically calculated ones.<br/><br/>Pontoons only have an effect on Maps with Water Buoyancy enabled
+---@param pontoons? { Offset: Vector, Radius: number } @Array with the Pontoons, or nil to restore the automatically calculated ones (Default: nil)
+function Vehicle:SetBuoyancyPontoons(pontoons) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setbuoyancysettings">docs</a>
+---
+---Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
+---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+function Vehicle:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setcameraarmlength">docs</a>
 ---
 ---Sets how far the camera stays from this Vehicle while driving it, in centimeters.<br><br>This overrides the Player's own <a href='/docs/scripting-reference/classes/player#function-setcameraarmlength'>Camera Arm Length</a> for as long as they are driving it. Set it to <code>0</code> to use the Player's value instead, which is the default.
@@ -8637,8 +8688,8 @@ function Vehicle:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callba
 ---@return function @The callback function passed
 ---@overload fun(event_name: "CharacterAttemptEnter", callback: fun(self: Vehicle, character: Character, seat: integer): boolean?): fun(self: Vehicle, character: Character, seat: integer): boolean? @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(event_name: "CharacterAttemptLeave", callback: fun(self: Vehicle, character: Character): boolean?): fun(self: Vehicle, character: Character): boolean? @Triggered when a Character attempts to leave the Vehicle
----@overload fun(event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat: integer)): fun(self: Vehicle, character: Character, seat: integer) @Triggered when a Character fully enters the Vehicle
----@overload fun(event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character)): fun(self: Vehicle, character: Character) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat_index: integer)): fun(self: Vehicle, character: Character, seat_index: integer) @Triggered when a Character fully enters the Vehicle
+---@overload fun(event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character, seat_index: integer)): fun(self: Vehicle, character: Character, seat_index: integer) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
@@ -8661,8 +8712,8 @@ function Vehicle.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: Vehicle, event_name: "CharacterAttemptEnter", callback: fun(self: Vehicle, character: Character, seat: integer): boolean?): fun(self: Vehicle, character: Character, seat: integer): boolean? @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(self: Vehicle, event_name: "CharacterAttemptLeave", callback: fun(self: Vehicle, character: Character): boolean?): fun(self: Vehicle, character: Character): boolean? @Triggered when a Character attempts to leave the Vehicle
----@overload fun(self: Vehicle, event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat: integer)): fun(self: Vehicle, character: Character, seat: integer) @Triggered when a Character fully enters the Vehicle
----@overload fun(self: Vehicle, event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character)): fun(self: Vehicle, character: Character) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(self: Vehicle, event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat_index: integer)): fun(self: Vehicle, character: Character, seat_index: integer) @Triggered when a Character fully enters the Vehicle
+---@overload fun(self: Vehicle, event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character, seat_index: integer)): fun(self: Vehicle, character: Character, seat_index: integer) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(self: Vehicle, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Entity is destroyed
@@ -8683,8 +8734,8 @@ function Vehicle:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: Vehicle, event_name: "CharacterAttemptEnter", callback: fun(self: Vehicle, character: Character, seat: integer): boolean?) @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(self: Vehicle, event_name: "CharacterAttemptLeave", callback: fun(self: Vehicle, character: Character): boolean?) @Triggered when a Character attempts to leave the Vehicle
----@overload fun(self: Vehicle, event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat: integer)) @Triggered when a Character fully enters the Vehicle
----@overload fun(self: Vehicle, event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character)) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(self: Vehicle, event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat_index: integer)) @Triggered when a Character fully enters the Vehicle
+---@overload fun(self: Vehicle, event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character, seat_index: integer)) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(self: Vehicle, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: Vehicle, event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: Vehicle, event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
@@ -8706,8 +8757,8 @@ function Vehicle:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "CharacterAttemptEnter", callback: fun(self: Vehicle, character: Character, seat: integer): boolean?) @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(event_name: "CharacterAttemptLeave", callback: fun(self: Vehicle, character: Character): boolean?) @Triggered when a Character attempts to leave the Vehicle
----@overload fun(event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat: integer)) @Triggered when a Character fully enters the Vehicle
----@overload fun(event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character)) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(event_name: "CharacterEnter", callback: fun(self: Vehicle, character: Character, seat_index: integer)) @Triggered when a Character fully enters the Vehicle
+---@overload fun(event_name: "CharacterLeave", callback: fun(self: Vehicle, character: Character, seat_index: integer)) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: Vehicle, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: Vehicle)) @Triggered when an Entity is destroyed
@@ -8997,8 +9048,8 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@return function @The callback function passed
 ---@overload fun(event_name: "CharacterAttemptEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer): boolean?): fun(self: VehicleWheeled, character: Character, seat: integer): boolean? @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(event_name: "CharacterAttemptLeave", callback: fun(self: VehicleWheeled, character: Character): boolean?): fun(self: VehicleWheeled, character: Character): boolean? @Triggered when a Character attempts to leave the Vehicle
----@overload fun(event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer)): fun(self: VehicleWheeled, character: Character, seat: integer) @Triggered when a Character fully enters the Vehicle
----@overload fun(event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character)): fun(self: VehicleWheeled, character: Character) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)): fun(self: VehicleWheeled, character: Character, seat_index: integer) @Triggered when a Character fully enters the Vehicle
+---@overload fun(event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)): fun(self: VehicleWheeled, character: Character, seat_index: integer) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
@@ -9022,8 +9073,8 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: VehicleWheeled, event_name: "CharacterAttemptEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer): boolean?): fun(self: VehicleWheeled, character: Character, seat: integer): boolean? @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(self: VehicleWheeled, event_name: "CharacterAttemptLeave", callback: fun(self: VehicleWheeled, character: Character): boolean?): fun(self: VehicleWheeled, character: Character): boolean? @Triggered when a Character attempts to leave the Vehicle
----@overload fun(self: VehicleWheeled, event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer)): fun(self: VehicleWheeled, character: Character, seat: integer) @Triggered when a Character fully enters the Vehicle
----@overload fun(self: VehicleWheeled, event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character)): fun(self: VehicleWheeled, character: Character) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(self: VehicleWheeled, event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)): fun(self: VehicleWheeled, character: Character, seat_index: integer) @Triggered when a Character fully enters the Vehicle
+---@overload fun(self: VehicleWheeled, event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)): fun(self: VehicleWheeled, character: Character, seat_index: integer) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(self: VehicleWheeled, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)): fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is destroyed
@@ -9045,8 +9096,8 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: VehicleWheeled, event_name: "CharacterAttemptEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer): boolean?) @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(self: VehicleWheeled, event_name: "CharacterAttemptLeave", callback: fun(self: VehicleWheeled, character: Character): boolean?) @Triggered when a Character attempts to leave the Vehicle
----@overload fun(self: VehicleWheeled, event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer)) @Triggered when a Character fully enters the Vehicle
----@overload fun(self: VehicleWheeled, event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character)) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(self: VehicleWheeled, event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)) @Triggered when a Character fully enters the Vehicle
+---@overload fun(self: VehicleWheeled, event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(self: VehicleWheeled, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: VehicleWheeled, event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(self: VehicleWheeled, event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
@@ -9069,8 +9120,8 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "CharacterAttemptEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer): boolean?) @Triggered when a Character attempts to enter the Vehicle
 ---@overload fun(event_name: "CharacterAttemptLeave", callback: fun(self: VehicleWheeled, character: Character): boolean?) @Triggered when a Character attempts to leave the Vehicle
----@overload fun(event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat: integer)) @Triggered when a Character fully enters the Vehicle
----@overload fun(event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character)) @Triggered when a Character fully leaves the Vehicle
+---@overload fun(event_name: "CharacterEnter", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)) @Triggered when a Character fully enters the Vehicle
+---@overload fun(event_name: "CharacterLeave", callback: fun(self: VehicleWheeled, character: Character, seat_index: integer)) @Triggered when a Character fully leaves the Vehicle
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Death", callback: fun(self: VehicleWheeled, last_damage_taken: integer, last_bone_damaged: string, damage_type_reason: DamageType, hit_from_direction: Vector, instigator?: Player, causer?: Actor)) @When Entity Dies
 ---@overload fun(event_name: "Destroy", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is destroyed
