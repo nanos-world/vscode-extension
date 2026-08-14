@@ -8,6 +8,19 @@
 ---@field Super Actor @Access to the original/native Actor methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Actor = {}
 
+---A Class created from <code>Actor.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Actor.Inherited : Actor
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Actor.Inherited @The new Class table, inheriting from Actor
+function Actor.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-addactortag">docs</a>
 ---
@@ -575,6 +588,19 @@ Billboard = {}
 ---@param size_in_screen_space? boolean @Size is in Screen or World Space (Default: false)
 function Billboard:Constructor(location, material_asset, size, size_in_screen_space) end
 
+---A Class created from <code>Billboard.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Billboard.Inherited : Billboard
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Billboard.Inherited @The new Class table, inheriting from Billboard
+function Billboard.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#constructor-default-constructor">Default Constructor</a>
@@ -594,6 +620,19 @@ Blueprint = {}
 ---@param blueprint_asset string 
 ---@param collision_type? CollisionType @(Default: CollisionType.Auto)
 function Blueprint:Constructor(location, rotation, blueprint_asset, collision_type) end
+
+---A Class created from <code>Blueprint.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Blueprint.Inherited : Blueprint
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Blueprint.Inherited @The new Class table, inheriting from Blueprint
+function Blueprint.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#function-bindblueprinteventdispatcher">docs</a>
@@ -655,6 +694,19 @@ Cable = {}
 ---@param enable_visuals? boolean @Toggles the cable visuals (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Cable:Constructor(location, enable_visuals, spawn_mode) end
+
+---A Class created from <code>Cable.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Cable.Inherited : Cable
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Cable.Inherited @The new Class table, inheriting from Cable
+function Cable.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-attachendto">docs</a>
@@ -1062,6 +1114,19 @@ Character = {}
 ---@param pain_sound? string @Played when Character takes damage (Default: nanos-world::A_Male_01_Pain)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Character:Constructor(location, rotation, skeletal_mesh_asset, collision_type, gravity_enabled, max_health, death_sound, pain_sound, spawn_mode) end
+
+---A Class created from <code>Character.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Character.Inherited : Character
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Character.Inherited @The new Class table, inheriting from Character
+function Character.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-clearmorphtargets">docs</a>
@@ -1874,6 +1939,19 @@ CharacterSimple = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function CharacterSimple:Constructor(location, rotation, mesh, custom_animation_blueprint, collision_type, gravity_enabled, spawn_mode) end
 
+---A Class created from <code>CharacterSimple.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class CharacterSimple.Inherited : CharacterSimple
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return CharacterSimple.Inherited @The new Class table, inheriting from CharacterSimple
+function CharacterSimple.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-bindanimationblueprinteventdispatcher">docs</a>
 ---
@@ -2623,6 +2701,19 @@ function Console.Unsubscribe(event_name, callback) end
 ---@field Super Damageable @Access to the original/native Damageable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Damageable = {}
 
+---A Class created from <code>Damageable.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Damageable.Inherited : Damageable
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Damageable.Inherited @The new Class table, inheriting from Damageable
+function Damageable.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-applydamage">docs</a>
 ---
@@ -2956,6 +3047,19 @@ Decal = {}
 ---@param fade_screen_size? number @Size percentage in screen to fade out (Default: 0.01)
 function Decal:Constructor(location, rotation, material_asset, size, lifespan, fade_screen_size) end
 
+---A Class created from <code>Decal.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Decal.Inherited : Decal
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Decal.Inherited @The new Class table, inheriting from Decal
+function Decal.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setfadein">docs</a>
 ---
@@ -3013,6 +3117,19 @@ function Discord.SetActivity(state, details, large_image, large_text, reset_time
 ---@field Super Entity @Access to the original/native Entity methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Entity = {}
 
+---A Class created from <code>Entity.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Entity.Inherited : Entity
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Entity.Inherited @The new Class table, inheriting from Entity
+function Entity.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
 ---
@@ -3056,15 +3173,6 @@ function Entity.GetPairs() end
 ---Gets the parent class if this Class was created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@return table? @The parent class
 function Entity.GetParentClass() end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
----
----Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
----@param name string @The name of the new Class
----@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
----@return table @The new Class table
-function Entity.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-ischildof">docs</a>
@@ -3609,6 +3717,19 @@ Gizmo = {}
 ---Calls the original Gizmo Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 function Gizmo:Constructor() end
 
+---A Class created from <code>Gizmo.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Gizmo.Inherited : Gizmo
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Gizmo.Inherited @The new Class table, inheriting from Gizmo
+function Gizmo.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-activate">docs</a>
 ---
@@ -3752,6 +3873,19 @@ Grenade = {}
 ---@param gravity_enabled? boolean @(Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Grenade:Constructor(location, rotation, static_mesh_asset, explosion_particles, explosion_sound, collision_type, gravity_enabled, spawn_mode) end
+
+---A Class created from <code>Grenade.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Grenade.Inherited : Grenade
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Grenade.Inherited @The new Class table, inheriting from Grenade
+function Grenade.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-explode">docs</a>
@@ -4194,6 +4328,19 @@ InstancedStaticMesh = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function InstancedStaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, instances, spawn_mode) end
 
+---A Class created from <code>InstancedStaticMesh.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class InstancedStaticMesh.Inherited : InstancedStaticMesh
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return InstancedStaticMesh.Inherited @The new Class table, inheriting from InstancedStaticMesh
+function InstancedStaticMesh.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-addinstance">docs</a>
 ---
@@ -4386,6 +4533,19 @@ Light = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Light:Constructor(location, rotation, color, light_type, intensity, attenuation_radius, cone_angle, inner_cone_angle_percent, max_draw_distance, use_inverse_squared_falloff, cast_shadows, visible, source_radius, spawn_mode) end
 
+---A Class created from <code>Light.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Light.Inherited : Light
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Light.Inherited @The new Class table, inheriting from Light
+function Light.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getattenuationradius">docs</a>
 ---
@@ -4497,6 +4657,19 @@ Melee = {}
 ---@param can_use? boolean @(Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Melee:Constructor(location, rotation, asset, collision_type, gravity_enabled, handling_mode, crosshair_material, can_use, spawn_mode) end
+
+---A Class created from <code>Melee.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Melee.Inherited : Melee
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Melee.Inherited @The new Class table, inheriting from Melee
+function Melee.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-addanimationcharacteruse">docs</a>
@@ -5018,6 +5191,19 @@ function Package.Unsubscribe(event_name, callback) end
 ---@field Super Paintable @Access to the original/native Paintable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Paintable = {}
 
+---A Class created from <code>Paintable.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Paintable.Inherited : Paintable
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Paintable.Inherited @The new Class table, inheriting from Paintable
+function Paintable.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/paintable#function-getmaterialcolorparameter">docs</a>
 ---
@@ -5168,6 +5354,19 @@ Particle = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Particle:Constructor(location, rotation, asset, auto_destroy, auto_activate, spawn_mode) end
 
+---A Class created from <code>Particle.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Particle.Inherited : Particle
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Particle.Inherited @The new Class table, inheriting from Particle
+function Particle.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#function-activate">docs</a>
 ---
@@ -5267,6 +5466,19 @@ function Particle:SetParameterVector(parameter, value) end
 ---@class Pawn : Entity, Actor, Paintable, Damageable
 ---@field Super Pawn @Access to the original/native Pawn methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Pawn = {}
+
+---A Class created from <code>Pawn.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Pawn.Inherited : Pawn
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Pawn.Inherited @The new Class table, inheriting from Pawn
+function Pawn.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-addskeletalmeshattached">docs</a>
@@ -5665,6 +5877,19 @@ function Pawn.Unsubscribe(event_name, callback) end
 ---@field Super Pickable @Access to the original/native Pickable methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Pickable = {}
 
+---A Class created from <code>Pickable.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Pickable.Inherited : Pickable
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Pickable.Inherited @The new Class table, inheriting from Pickable
+function Pickable.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-addskeletalmeshattached">docs</a>
 ---
@@ -5912,6 +6137,19 @@ function Pickable.Unsubscribe(event_name, callback) end
 ---@class Player : Entity
 ---@field Super Player @Access to the original/native Player methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Player = {}
+
+---A Class created from <code>Player.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Player.Inherited : Player
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Player.Inherited @The new Class table, inheriting from Player
+function Player.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#static-function-getbysteamid">docs</a>
@@ -6479,6 +6717,19 @@ Prop = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Prop:Constructor(location, rotation, asset, collision_type, gravity_enabled, grab_mode, ccd_mode, spawn_mode) end
 
+---A Class created from <code>Prop.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Prop.Inherited : Prop
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Prop.Inherited @The new Class table, inheriting from Prop
+function Prop.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-getgrabmode">docs</a>
 ---
@@ -6845,6 +7096,19 @@ SceneCapture = {}
 ---@param fov_angle? number @FOV (Default: 90)
 ---@param enable_distance_optimization? boolean @Reduces the rendering frequency if the entities with this Material are too far or not visible. Disable it to always render at the render_rate (Default: true)
 function SceneCapture:Constructor(location, rotation, width, height, render_rate, view_distance, fov_angle, enable_distance_optimization) end
+
+---A Class created from <code>SceneCapture.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class SceneCapture.Inherited : SceneCapture
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return SceneCapture.Inherited @The new Class table, inheriting from SceneCapture
+function SceneCapture.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-addrenderactor">docs</a>
@@ -7607,6 +7871,19 @@ Sound = {}
 ---@param auto_play? boolean @If should should immediately play when loaded (Default: true)
 function Sound:Constructor(location, asset, is_2D_sound, auto_destroy, sound_type, volume, pitch, inner_radius, falloff_distance, attenuation_function, keep_playing_when_silent, loop_mode, auto_play) end
 
+---A Class created from <code>Sound.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Sound.Inherited : Sound
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Sound.Inherited @The new Class table, inheriting from Sound
+function Sound.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-fadein">docs</a>
 ---
@@ -7778,6 +8055,19 @@ StaticMesh = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function StaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, spawn_mode) end
 
+---A Class created from <code>StaticMesh.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class StaticMesh.Inherited : StaticMesh
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return StaticMesh.Inherited @The new Class table, inheriting from StaticMesh
+function StaticMesh.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#function-getmesh">docs</a>
 ---
@@ -7841,6 +8131,19 @@ Text3D = {}
 ---@param font_type? FontType @(Default: FontType.Roboto)
 ---@param align_camera? Text3DAlignCamera @(Default: Text3DAlignCamera.Unaligned)
 function Text3D:Constructor(location, rotation, text, scale, color, font_type, align_camera) end
+
+---A Class created from <code>Text3D.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Text3D.Inherited : Text3D
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Text3D.Inherited @The new Class table, inheriting from Text3D
+function Text3D.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setfont">docs</a>
@@ -7912,6 +8215,19 @@ TextRender = {}
 ---@param font_asset? string @The font asset to use for the text. Note the font must be a offline cached, distance field font (Default: "")
 ---@param cast_shadow? boolean @Controls whether it should cast shadow or not (Default: false)
 function TextRender:Constructor(location, rotation, text, word_size, color, rendering_type, horizontal_alignment, vertical_alignment, font_asset, cast_shadow) end
+
+---A Class created from <code>TextRender.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class TextRender.Inherited : TextRender
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return TextRender.Inherited @The new Class table, inheriting from TextRender
+function TextRender.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-getcolor">docs</a>
@@ -8239,6 +8555,19 @@ Trigger = {}
 ---@param overlap_only_classes? string[] @Filter Trigger to only overlap specific Classes. Leave it empty for all Classes (Default: {})
 function Trigger:Constructor(location, rotation, extent, trigger_type, is_visible, color, overlap_only_classes) end
 
+---A Class created from <code>Trigger.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Trigger.Inherited : Trigger
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Trigger.Inherited @The new Class table, inheriting from Trigger
+function Trigger.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-forceoverlapchecking">docs</a>
 ---
@@ -8549,6 +8878,19 @@ function Vector2D:SizeSquared() end
 ---@class Vehicle : Entity, Actor, Paintable, Damageable
 ---@field Super Vehicle @Access to the original/native Vehicle methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Vehicle = {}
+
+---A Class created from <code>Vehicle.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Vehicle.Inherited : Vehicle
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Vehicle.Inherited @The new Class table, inheriting from Vehicle
+function Vehicle.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-addskeletalmeshattached">docs</a>
@@ -8901,6 +9243,19 @@ VehicleWater = {}
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function VehicleWater:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
 
+---A Class created from <code>VehicleWater.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class VehicleWater.Inherited : VehicleWater
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return VehicleWater.Inherited @The new Class table, inheriting from VehicleWater
+function VehicleWater.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setengineoffset">docs</a>
 ---
@@ -8944,6 +9299,19 @@ VehicleWheeled = {}
 ---@param custom_animation_blueprint? string @(Default: "")
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function VehicleWheeled:Constructor(location, rotation, asset, collision_type, gravity_enabled, auto_unflip, engine_sound, horn_sound, brake_sound, engine_start_sound, vehicle_door_sound, auto_start_engine, custom_animation_blueprint, spawn_mode) end
+
+---A Class created from <code>VehicleWheeled.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class VehicleWheeled.Inherited : VehicleWheeled
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return VehicleWheeled.Inherited @The new Class table, inheriting from VehicleWheeled
+function VehicleWheeled.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-getgear">docs</a>
@@ -9386,6 +9754,19 @@ Weapon = {}
 ---@param gravity_enabled? boolean @(Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Weapon:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
+
+---A Class created from <code>Weapon.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Weapon.Inherited : Weapon
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Weapon.Inherited @The new Class table, inheriting from Weapon
+function Weapon.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammobag">docs</a>
@@ -10006,6 +10387,19 @@ WebUI = {}
 ---@param height? integer @size of the WebUI height when you are not using auto_resize (Default: 0)
 function WebUI:Constructor(name, path, visibility, is_transparent, auto_resize, width, height) end
 
+---A Class created from <code>WebUI.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class WebUI.Inherited : WebUI
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return WebUI.Inherited @The new Class table, inheriting from WebUI
+function WebUI.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-bringtofront">docs</a>
 ---
@@ -10254,6 +10648,19 @@ Widget = {}
 ---@overload fun(self: Widget, native_widget: NativeWidget)
 function Widget:Constructor(blueprint_path) end
 
+---A Class created from <code>Widget.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Widget.Inherited : Widget
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Widget.Inherited @The new Class table, inheriting from Widget
+function Widget.Inherit(name, custom_values) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-addchild">docs</a>
 ---
@@ -10441,6 +10848,19 @@ function Widget.Unsubscribe(event_name, callback) end
 ---@class Widget3D : Entity, Actor
 ---@field Super Widget3D @Access to the original/native Widget3D methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Widget3D = {}
+
+---A Class created from <code>Widget3D.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Widget3D.Inherited : Widget3D
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Widget3D.Inherited @The new Class table, inheriting from Widget3D
+function Widget3D.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget3d#function-getwidget">docs</a>
