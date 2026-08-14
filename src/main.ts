@@ -370,13 +370,65 @@ function generateConstructor(
 const INHERITING_SYSTEM_URL =
 	"https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes";
 
-function hasInherit(classes: Record<string, DocClass>, cls: DocClass): boolean {
-	if (cls.staticClass || cls.struct) return false;
+interface InheritSource {
+	fun: DocFunction;
+	owner: DocClass;
+}
 
-	return [cls, ...(cls.inheritance ?? []).map((name) => classes[name])].some(
-		(candidate) =>
-			candidate?.static_functions?.some((fun) => fun.name === "Inherit"),
-	);
+/**
+ * Finds the `Inherit` static function this class exposes, either declared on
+ * itself or picked up from one of its parents.
+ */
+function findInherit(
+	classes: Record<string, DocClass>,
+	cls: DocClass,
+): InheritSource | undefined {
+	if (cls.staticClass || cls.struct) return undefined;
+
+	for (const candidate of [
+		cls,
+		...(cls.inheritance ?? []).map((name) => classes[name]),
+	]) {
+		const fun = candidate?.static_functions?.find(
+			(fun) => fun.name === "Inherit",
+		);
+		if (fun !== undefined) {
+			return { fun, owner: candidate };
+		}
+	}
+
+	return undefined;
+}
+
+/**
+ * Redeclares `Inherit` on the class itself so it returns the class type instead
+ * of the generic `table` from the parent declaration. Without this, `self` in an
+ * inherited Class' methods is untyped and `self.Super` resolves to nothing.
+ *
+ * The return type is a subtype rather than the class itself, so that custom
+ * fields and methods can still be freely added to the inherited Class table
+ * without tripping the `inject-field`/`undefined-field` diagnostics.
+ */
+function generateInheritFunction(
+	inherit: InheritSource,
+	cls: DocClass,
+): string {
+	const { fun, owner } = inherit;
+	const params = generateParams(fun.parameters, owner.jsonFileName);
+	const inheritedType = `${cls.name}.Inherited`;
+
+	return `
+
+---A Class created from <code>${cls.name}.Inherit()</code> (see the <a href="${INHERITING_SYSTEM_URL}">Inheriting System</a>)
+---@class ${inheritedType} : ${cls.name}
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---${generateAuthorityString(fun.authority)}
+---${generateDocsLink(owner.jsonFileName ?? owner.name, owner.name, "static-function-inherit")}
+---
+---${generateDocstring(fun, owner.jsonFileName)}${params.string}
+---@return ${inheritedType} @The new Class table, inheriting from ${cls.name}
+function ${cls.name}.Inherit(${params.names}) end`;
 }
 
 function generateConstructorFunction(
@@ -420,6 +472,9 @@ function generateClassAnnotations(
 		inheritance = ` : ${cls.inheritance.join(", ")}`;
 	}
 
+	const inherit = findInherit(classes, cls);
+	const isInheritable = inherit !== undefined;
+
 	const constructors =
 		cls.constructors?.reduce(
 			(prev, constructor) =>
@@ -436,6 +491,11 @@ function generateClassAnnotations(
 					(fun.name === "Subscribe" || fun.name === "Unsubscribe") &&
 					cls.name !== "Events"
 				) {
+					return;
+				}
+
+				// Redeclared below with the class as its return type
+				if (fun.name === "Inherit" && inherit?.owner === cls) {
 					return;
 				}
 
@@ -572,7 +632,6 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 }`;
 	}
 
-	const isInheritable = hasInherit(classes, cls);
 	let fields = !isInheritable
 		? ""
 		: `\n---@field Super ${cls.name} @Access to the original/native ${cls.name} methods from within an inherited Class (see the <a href="${INHERITING_SYSTEM_URL}">Inheriting System</a>)`;
@@ -610,6 +669,10 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			? ""
 			: generateConstructorFunction(jsonFileName, cls.constructors, cls);
 
+	const inheritFunction = !isInheritable
+		? ""
+		: generateInheritFunction(inherit, cls);
+
 	return `
 
 ---${generateAuthorityString(cls.authority)}
@@ -617,7 +680,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---
 ---${generateDocstring(cls, jsonFileName)}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
-${cls.name} = {}${staticFields}${constructorFunction}${staticFunctions}${functions}${events}`;
+${cls.name} = {}${staticFields}${constructorFunction}${inheritFunction}${staticFunctions}${functions}${events}`;
 }
 
 function generateEnum(name: string, values: DocEnumValue[]): string {
