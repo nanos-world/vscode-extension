@@ -7492,6 +7492,13 @@ function Server.IsAnnounced() end
 function Server.IsPackageLoaded(package_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-isunsafelibsenabled">docs</a>
+---
+---Returns if the server was started with --enable_unsafe_libs
+---@return boolean 
+function Server.IsUnsafeLibsEnabled() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-kickbyaccountid">docs</a>
 ---
 ---Kicks the player from the server by its Account ID, ideal for kicking from inside PlayerConnect event
