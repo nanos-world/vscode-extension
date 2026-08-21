@@ -3582,6 +3582,15 @@ function File.IsRegularFile(path) end
 function File.Remove(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-rename">docs</a>
+---
+---Renames or moves a folder or file
+---@param old_path string @Path to the existing file or folder
+---@param new_path string @New path of the file or folder
+---@return boolean @if it was successfully renamed
+function File.Rename(old_path, new_path) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-time">docs</a>
 ---
 ---Returns when a file was last modified in Unix time
