@@ -6399,7 +6399,7 @@ function Player:SetDimension(dimension) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setdistanceoptimizationmultiplier">docs</a>
 ---
----Sets this Player's distance optimization multiplier.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
+---Sets the multiplier for how much this Player's is affected by distance optimization from other actors.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
 ---@param multiplier number 
 function Player:SetDistanceOptimizationMultiplier(multiplier) end
 
