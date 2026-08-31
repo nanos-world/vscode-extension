@@ -1247,13 +1247,6 @@ function Character:GetGrabbedProp() end
 function Character:GetImpactDamageTaken() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getjumpzvelocity">docs</a>
----
----Gets the Jump Z Velocity
----@return integer 
-function Character:GetJumpZVelocity() end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getmorphtarget">docs</a>
 ---
 ---Returns the value of a Morph Target
@@ -5585,6 +5578,13 @@ function Pawn:GetFlyingMode() end
 function Pawn:GetGravityScale() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getjumpzvelocity">docs</a>
+---
+---Gets the Jump Z Velocity
+---@return integer 
+function Pawn:GetJumpZVelocity() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getmesh">docs</a>
 ---
 ---Gets the base Mesh Asset
@@ -5735,7 +5735,7 @@ function Pawn:SetHitReactionEnabled(is_enabled) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setjumpzvelocity">docs</a>
 ---
 ---Sets the velocity of the jump
----@param jump_z_velocity integer @Default is 450
+---@param jump_z_velocity integer @Default is 420
 function Pawn:SetJumpZVelocity(jump_z_velocity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
