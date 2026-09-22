@@ -25,7 +25,7 @@ function Actor.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-addactortag">docs</a>
 ---
 ---Adds an Unreal Actor Tag to this Actor
----@param tag string 
+---@param tag string @The tag to add
 function Actor:AddActorTag(tag) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
@@ -49,7 +49,7 @@ function Actor:AddImpulse(impulse, velocity_change) end
 ---
 ---Attaches this Actor to any other Actor, optionally at a specific bone
 ---@param other Actor @Other actor to attach
----@param attachment_rule? AttachmentRule @How to attach (Default: SnapToTarget)
+---@param attachment_rule? AttachmentRule @How to attach (Default: AttachmentRule.SnapToTarget)
 ---@param bone_name? string @Which bone to attach to. If empty it will be attached to the Actor, otherwise to the Mesh at the bone/socket (Default: "")
 ---@param lifespan_when_detached? number @Seconds before destroying this Actor when detached, setting it to 0 will automatically destroy this actor when detached, setting it to 10 will destroy this after 10 seconds when detached (Default: -1)
 ---@param use_absolute_rotation? boolean @Whether to force attached object to use absolute rotation (will not follow parent) (Default: false)
@@ -66,21 +66,21 @@ function Actor:Detach() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getactortags">docs</a>
 ---
 ---Gets all Unreal Actor Tags on this Actor
----@return string[] 
+---@return string[] @All Unreal Actor Tags on this Actor
 function Actor:GetActorTags() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getangularforce">docs</a>
 ---
 ---Gets this Actor's angular force (set by <code>SetAngularForce()</code>)
----@return Vector 
+---@return Vector @This Actor's angular force
 function Actor:GetAngularForce() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getangularvelocity">docs</a>
 ---
 ---Returns the angular velocity of this Actor
----@return number 
+---@return number @Angular velocity of this Actor
 function Actor:GetAngularVelocity() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -88,170 +88,184 @@ function Actor:GetAngularVelocity() end
 ---
 ---Gets all Actors attached to this Actor
 ---@param recursively? boolean @Also returns the Actors attached to the attached Actors (Default: false)
----@return Actor[] 
+---@return Actor[] @All Actors attached to this Actor
 function Actor:GetAttachedEntities(recursively) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getattachedto">docs</a>
 ---
 ---Gets the Actor this Actor is attached to
----@return Actor? 
+---@return Actor? @Actor this Actor is attached to
 function Actor:GetAttachedTo() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getattachedtosocket">docs</a>
+---
+---Gets the bone or socket name this Actor is attached to
+---@return string @The bone or socket name, or an empty string if not attached to a bone
+function Actor:GetAttachedToSocket() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getbounds">docs</a>
 ---
----Gets this Actor's bounds
----@return { Origin: Vector, BoxExtent: Vector, SphereRadius: number } 
+---Gets this Actor's bounds, useful to know its size in the world
+---@return { Origin: Vector, BoxExtent: Vector, SphereRadius: number } @This Actor's bounds
 function Actor:GetBounds() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getcollision">docs</a>
 ---
 ---Gets this Actor's collision type
----@return CollisionType 
+---@return CollisionType @This Actor's collision type
 function Actor:GetCollision() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getdimension">docs</a>
 ---
 ---Gets this Actor's dimension
----@return integer 
+---@return integer @This Actor's dimension
 function Actor:GetDimension() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getdistancefromcamera">docs</a>
 ---
 ---Gets the distance of this Actor from the Camera
----@return number 
+---@return number @Distance of this Actor from the Camera
 function Actor:GetDistanceFromCamera() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getforce">docs</a>
 ---
 ---Gets this Actor's force (set by <code>SetForce()</code>)
----@return Vector 
+---@return Vector @This Actor's force
 function Actor:GetForce() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getlifespan">docs</a>
+---
+---Gets the time (in seconds) left before this Actor is destroyed
+---@return number @Seconds before being destroyed
+function Actor:GetLifeSpan() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getlocation">docs</a>
 ---
 ---Gets this Actor's location in the game world
----@return Vector 
+---@return Vector @This Actor's location in the game world
 function Actor:GetLocation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getmass">docs</a>
 ---
 ---Returns the mass of this Actor
----@return number 
+---@return number @Mass of this Actor
 function Actor:GetMass() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getnetworkauthority">docs</a>
 ---
 ---Gets this Actor's Network Authority Player
----@return Player? 
+---@return Player? @This Actor's Network Authority Player
 function Actor:GetNetworkAuthority() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getrelativelocation">docs</a>
 ---
 ---Gets this Actor's Relative Location if it's attached
----@return Vector 
+---@return Vector @This Actor's Relative Location if it's attached
 function Actor:GetRelativeLocation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getrelativerotation">docs</a>
 ---
 ---Gets this Actor's Relative Rotation if it's attached
----@return Rotator 
+---@return Rotator @This Actor's Relative Rotation if it's attached
 function Actor:GetRelativeRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getrotation">docs</a>
 ---
 ---Gets this Actor's angle in the game world
----@return Rotator 
+---@return Rotator @This Actor's angle in the game world
 function Actor:GetRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getscale">docs</a>
 ---
 ---Gets this Actor's scale
----@return Vector 
+---@return Vector @This Actor's scale
 function Actor:GetScale() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getscreenpercentage">docs</a>
 ---
 ---Gets the percentage of this Actor size in the screen
----@return number 
+---@return number @Percentage of this Actor size in the screen
 function Actor:GetScreenPercentage() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getsockettransform">docs</a>
 ---
 ---Gets a Socket Transform in world space given a bone or socket name
----@param socket_name string 
+---@param socket_name string @Name of the socket
 ---@param attachable_id? string @The attachable ID (set with <code>AddSkeletalMeshAttached</code> or <code>AddStaticMeshAttached</code>) to read the Socket from. Pass empty to read from the main mesh (Default: "")
----@return { Location: Vector, Rotation: Rotator } 
+---@return { Location: Vector, Rotation: Rotator } @Socket Transform in world space given a bone or socket name
 function Actor:GetSocketTransform(socket_name, attachable_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-getvelocity">docs</a>
 ---
 ---Gets this Actor's current velocity
----@return Vector 
+---@return Vector @This Actor's current velocity
 function Actor:GetVelocity() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-hasnetworkauthority">docs</a>
 ---
 ---Returns true if the local Player is currently the Network Authority of this Actor
----@return boolean 
+---@return boolean @Whether the local Player is currently the Network Authority of this Actor
 function Actor:HasNetworkAuthority() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-isgravityenabled">docs</a>
 ---
 ---Returns true if gravity is enabled on this Actor
----@return boolean 
+---@return boolean @Whether gravity is enabled on this Actor
 function Actor:IsGravityEnabled() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-isinwater">docs</a>
 ---
 ---Returns true if this Actor is in water. Only Actors that simulate physics work for this function, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
----@return boolean 
+---@return boolean @Whether this Actor is in water
 function Actor:IsInWater() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-isnetworkdistributed">docs</a>
 ---
 ---Returns true if this Actor is currently network distributed. Only actors being network distributed can have their network authority set<br>Entities have NetworkDistributed automatically disabled when: Attached, Possessed, Grabbed, Picked Up or Driving
----@return boolean 
+---@return boolean @Whether this Actor is currently network distributed
 function Actor:IsNetworkDistributed() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-isvisible">docs</a>
 ---
 ---Returns true if this Actor is visible
----@return boolean 
+---@return boolean @Whether this Actor is visible
 function Actor:IsVisible() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-removeactortag">docs</a>
 ---
 ---Removes an Unreal Actor Tag from this Actor
----@param tag string 
+---@param tag string @The tag to remove
 function Actor:RemoveActorTag(tag) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-rotateto">docs</a>
 ---
 ---Smoothly rotates this actor to an angle over a certain time
----@param rotation Rotator 
+---@param rotation Rotator @The target rotation
 ---@param time number @Time to interpolate from current location to target location
 ---@param exp? number @Exponent used to smooth interpolation. Use <code>0</code> for linear movement (Default: 0)
 function Actor:RotateTo(rotation, time, exp) end
@@ -260,42 +274,42 @@ function Actor:RotateTo(rotation, time, exp) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setangularforce">docs</a>
 ---
 ---Adds a permanent angular force to this Actor, set to Vector(0, 0, 0) to cancel
----@param angular_force Vector 
+---@param angular_force Vector @The angular force to apply every frame
 function Actor:SetAngularForce(angular_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setcastshadow">docs</a>
 ---
 ---Sets this Actor's to cast shadows or not
----@param cast_shadow boolean 
+---@param cast_shadow boolean @The new to cast shadows or not
 function Actor:SetCastShadow(cast_shadow) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setcollision">docs</a>
 ---
 ---Sets this Actor's collision type
----@param collision_type CollisionType 
+---@param collision_type CollisionType @The new collision type
 function Actor:SetCollision(collision_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setdimension">docs</a>
 ---
----Sets this Actor's Dimension
----@param dimension integer 
+---Sets this Actor's Dimension. Actors only see and interact with entities in the same Dimension
+---@param dimension integer @The new Dimension
 function Actor:SetDimension(dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setdistanceoptimizationmultiplier">docs</a>
 ---
 ---Sets this Actor's distance optimization multiplier.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
----@param multiplier number 
+---@param multiplier number @The new distance optimization multiplier
 function Actor:SetDistanceOptimizationMultiplier(multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setforce">docs</a>
 ---
 ---Adds a permanent force to this Actor, set to Vector(0, 0, 0) to cancel
----@param force Vector 
+---@param force Vector @The force to apply every frame
 ---@param is_local? boolean @Whether to apply the force in local space (Default: true)
 function Actor:SetForce(force, is_local) end
 
@@ -303,14 +317,14 @@ function Actor:SetForce(force, is_local) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setgravityenabled">docs</a>
 ---
 ---Sets whether gravity is enabled on this Actor
----@param gravity_enabled boolean 
+---@param gravity_enabled boolean @Whether gravity is enabled on this Actor
 function Actor:SetGravityEnabled(gravity_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-sethighlightenabled">docs</a>
 ---
 ---Sets whether the highlight is enabled on this Actor, and which highlight index to use. This will apply the highlight on every attached entity too
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the highlight is enabled
 ---@param index? integer @Index to use (should be <code>0</code>, <code>1</code> or <code>2</code>) (Default: 0)
 function Actor:SetHighlightEnabled(is_enabled, index) end
 
@@ -325,7 +339,7 @@ function Actor:SetLifeSpan(seconds) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setlocation">docs</a>
 ---
 ---Sets this Actor's location in the game world
----@param location Vector 
+---@param location Vector @The new location in the game world
 function Actor:SetLocation(location) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -346,7 +360,7 @@ function Actor:SetNetworkAuthorityAutoDistributed(auto_distribute) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setoutlineenabled">docs</a>
 ---
 ---Sets whether the outline is enabled on this Actor, and which outline index to use. This will apply the outline on every attached entity too
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the outline is enabled
 ---@param index? integer @Index to use (should be <code>0</code>, <code>1</code> or <code>2</code>) (Default: 0)
 function Actor:SetOutlineEnabled(is_enabled, index) end
 
@@ -354,49 +368,49 @@ function Actor:SetOutlineEnabled(is_enabled, index) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setrelativelocation">docs</a>
 ---
 ---Sets this Actor's relative location in local space (only if this actor is attached)
----@param relative_location Vector 
+---@param relative_location Vector @The new relative location in local space
 function Actor:SetRelativeLocation(relative_location) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setrelativerotation">docs</a>
 ---
 ---Sets this Actor's relative rotation in local space (only if this actor is attached)
----@param relative_rotation Rotator 
+---@param relative_rotation Rotator @The new relative rotation in local space
 function Actor:SetRelativeRotation(relative_rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setrenderculldistance">docs</a>
 ---
 ---Sets this Actor's render cull distance. Note: this will only affect the rendering distance, the entity will still be spawned and synced normally regardless of this distance
----@param max_distance integer 
+---@param max_distance integer @The new render cull distance
 function Actor:SetRenderCullDistance(max_distance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setrotation">docs</a>
 ---
 ---Sets this Actor's rotation in the game world
----@param rotation Rotator 
+---@param rotation Rotator @The new rotation in the game world
 function Actor:SetRotation(rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setscale">docs</a>
 ---
 ---Sets this Actor's scale
----@param scale Vector 
+---@param scale Vector @The new scale
 function Actor:SetScale(scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-setvisibility">docs</a>
 ---
 ---Sets whether the actor is visible or not
----@param is_visible boolean 
+---@param is_visible boolean @Whether the actor is visible or not
 function Actor:SetVisibility(is_visible) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-translateto">docs</a>
 ---
 ---Smoothly moves this actor to a location over a certain time
----@param location Vector 
+---@param location Vector @The target location
 ---@param time number @Time to interpolate from current location to target location
 ---@param exp? number @Exponent used to smooth interpolation. Use <code>0</code> for linear movement (Default: 0)
 function Actor:TranslateTo(location, time, exp) end
@@ -405,7 +419,7 @@ function Actor:TranslateTo(location, time, exp) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-wasrecentlyrendered">docs</a>
 ---
 ---Gets if this Actor was recently rendered on screen
----@return boolean 
+---@return boolean @Whether this Actor was recently rendered on screen
 function Actor:WasRecentlyRendered() end
 
 
@@ -485,7 +499,7 @@ function Assets.GetAnimations(asset_pack_path) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/assets#static-function-getassetpacks">docs</a>
 ---
 ---Gets a list containing information about all loaded Asset Packs
----@return { Name: string, Path: string, Author: string, Version: string }[] 
+---@return { Name: string, Path: string, Author: string, Version: string }[] @List containing information about all loaded Asset Packs
 function Assets.GetAssetPacks() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -583,9 +597,9 @@ Billboard = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/billboard#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Billboard Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param material_asset string 
----@param size? Vector2D @(Default: Vector2D(32, 32))
+---@param location Vector @World location to spawn at
+---@param material_asset string @The Material to render
+---@param size? Vector2D @Size in pixels (Default: Vector2D(32, 32))
 ---@param size_in_screen_space? boolean @Size is in Screen or World Space (Default: false)
 function Billboard:Constructor(location, material_asset, size, size_in_screen_space) end
 
@@ -616,10 +630,10 @@ Blueprint = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Blueprint Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param blueprint_asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param blueprint_asset string @The Blueprint asset to spawn
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
 function Blueprint:Constructor(location, rotation, blueprint_asset, collision_type) end
 
 ---A Class created from <code>Blueprint.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
@@ -657,7 +671,7 @@ function Blueprint:CallBlueprintEvent(event_name, ...) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#function-getblueprintpropertyvalue">docs</a>
 ---
 ---Gets a Blueprint Property/Variable value
----@param property_name string 
+---@param property_name string @Name of the Blueprint variable
 ---@return any @the value
 function Blueprint:GetBlueprintPropertyValue(property_name) end
 
@@ -665,8 +679,8 @@ function Blueprint:GetBlueprintPropertyValue(property_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#function-setblueprintpropertyvalue">docs</a>
 ---
 ---Sets a Blueprint Property/Variable value directly
----@param property_name string 
----@param value any 
+---@param property_name string @Name of the Blueprint variable
+---@param value any @The value to set
 function Blueprint:SetBlueprintPropertyValue(property_name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -691,7 +705,7 @@ Cable = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Cable Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
+---@param location Vector @World location to spawn at
 ---@param enable_visuals? boolean @Toggles the cable visuals (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Cable:Constructor(location, enable_visuals, spawn_mode) end
@@ -713,8 +727,8 @@ function Cable.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-attachendto">docs</a>
 ---
 ---Attaches the end of this cable to another Actor at a specific bone or relative location. For optimization, it is recommended to be the last method to call when setting up the cable.<br/><br/>Note¹: You can attach the end only, and the start will fixed at the Cable's location.<br/><br/>Note²: If no linear limit is set, the entity will be snapped to the other actor. Alternatively you can keep a physics constraint offset by passing it as parameter.
----@param other Actor 
----@param relative_location? Vector @(Default: Vector(0, 0, 0))
+---@param other Actor @The Actor to attach to
+---@param relative_location? Vector @Offset relative to the Actor or bone (Default: Vector(0, 0, 0))
 ---@param bone_name? string @Which bone to attach to. If empty it will be attached to the Actor, otherwise to the Mesh at the bone/socket (Default: "")
 ---@param constraint_offset? Vector @The physics constraint offset applied to the attached end, in the local space of the other Actor (Default: Vector(0, 0, 0))
 ---@return boolean @if it was attached successfully
@@ -724,8 +738,8 @@ function Cable:AttachEndTo(other, relative_location, bone_name, constraint_offse
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-attachstartto">docs</a>
 ---
 ---Attaches the beginning of this cable to another Actor at a specific bone or relative location. For optimization, it is recommended attaching start first if you wish to attach both start and end, to avoid double calculations.
----@param other Actor 
----@param relative_location? Vector @(Default: Vector(0, 0, 0))
+---@param other Actor @The Actor to attach to
+---@param relative_location? Vector @Offset relative to the Actor or bone (Default: Vector(0, 0, 0))
 ---@param bone_name? string @Which bone to attach to. If empty it will be attached to the Actor, otherwise to the Mesh at the bone/socket (Default: "")
 ---@return boolean @if it was attached successfully
 function Cable:AttachStartTo(other, relative_location, bone_name) end
@@ -746,14 +760,14 @@ function Cable:DetachStart() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-getattachedendto">docs</a>
 ---
 ---Gets the Actor attached to End
----@return Actor? 
+---@return Actor? @Actor attached to End
 function Cable:GetAttachedEndTo() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-getattachedstartto">docs</a>
 ---
 ---Gets the Actor attached to Start
----@return Actor? 
+---@return Actor? @Actor attached to Start
 function Cable:GetAttachedStartTo() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -831,7 +845,7 @@ function Cable:SetForces(force, gravity_scale) end
 ---@param x_motion ConstraintMotion @Indicates the linear constraint applied along the X-axis. Free implies no constraint at all. Locked implies no movement along X is allowed. Limited implies the distance in the joint along all active axes must be less than the Distance provided
 ---@param y_motion ConstraintMotion @Indicates the linear constraint applied along the Y-axis. Free implies no constraint at all. Locked implies no movement along Y is allowed. Limited implies the distance in the joint along all active axes must be less than the Distance provided
 ---@param z_motion ConstraintMotion @Indicates the linear constraint applied along theZX-axis. Free implies no constraint at all. Locked implies no movement along Z is allowed. Limited implies the distance in the joint along all active axes must be less than the Distance provided
----@param limit? number @The distance allowed between between the two joint reference frames. Distance applies on all axes enabled (one axis means line, two axes implies circle, three axes implies sphere) (Default: 0)
+---@param limit? number @The distance allowed between the two joint reference frames. Distance applies on all axes enabled (one axis means line, two axes implies circle, three axes implies sphere) (Default: 0)
 ---@param restitution? number @Controls the amount of bounce when the constraint is violated. A restitution value of 1 will bounce back with the same velocity the limit was hit. A value of 0 will stop dead (Default: 0)
 ---@param use_soft_constraint? boolean @Whether we want to use a soft constraint (spring) (Default: false)
 ---@param stiffness? number @Stiffness of the soft constraint. Only used when Soft Constraint is on (Default: 0)
@@ -881,79 +895,107 @@ function Cable:SetRenderingSettings(width, num_sides, tile_material) end
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#constructor-default-constructor">Default Constructor</a>
 ---
 ---Canvas is an entity which you can draw onto it.
----@class Canvas
+---@class Canvas : Entity
+---@field Super Canvas @Access to the original/native Canvas methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(is_visible?: boolean, clear_color?: Color, auto_repaint_rate?: number, should_clear_before_update?: boolean, auto_resize?: boolean, width?: integer, height?: integer, screen_position?: Vector2D): Canvas
 Canvas = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#constructor-default-constructor">docs</a>
+---
+---Calls the original Canvas Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
+---@param is_visible? boolean @Whether to draw it on screen (Default: true)
+---@param clear_color? Color @Color to clear with (background color) (Default: Color.TRANSPARENT)
+---@param auto_repaint_rate? number @Rate to auto repaint (call Update event), pass 0 for every frame, -1 to disable (Default: -1)
+---@param should_clear_before_update? boolean @Whether to clear with Clear Color before updates (Default: true)
+---@param auto_resize? boolean @Auto resize with screen's size (Default: true)
+---@param width? integer @If not using auto_resize (Default: 0)
+---@param height? integer @If not using auto_resize (Default: 0)
+---@param screen_position? Vector2D @If not using auto_resize, offset when drawing to screen (Default: Vector2D(0, 0))
+function Canvas:Constructor(is_visible, clear_color, auto_repaint_rate, should_clear_before_update, auto_resize, width, height, screen_position) end
+
+---A Class created from <code>Canvas.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
+---@class Canvas.Inherited : Canvas
+---@field [string] any @Custom values and methods declared on the inherited Class
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-inherit">docs</a>
+---
+---Inherits this class with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@param name string @The name of the new Class
+---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
+---@return Canvas.Inherited @The new Class table, inheriting from Canvas
+function Canvas.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-clear">docs</a>
 ---
 ---Clear the Canvas with a specific Color
----@param clear_color Color 
+---@param clear_color Color @The color to fill the Canvas with
 function Canvas:Clear(clear_color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawbox">docs</a>
 ---
 ---Draws an unfilled box on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param thickness number 
----@param render_color? Color @(Default: Color.WHITE)
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param thickness number @Line thickness
+---@param render_color? Color @Color to tint the drawing with (Default: Color.WHITE)
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawBox(screen_position, screen_size, thickness, render_color, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawline">docs</a>
 ---
 ---Draws a line on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
----@param screen_position_a Vector2D 
----@param screen_position_b Vector2D 
----@param thickness number 
----@param render_color Color 
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param screen_position_a Vector2D @Start position of the line, in pixels
+---@param screen_position_b Vector2D @End position of the line, in pixels
+---@param thickness number @Line thickness
+---@param render_color Color @Color to tint the drawing with
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawLine(screen_position_a, screen_position_b, thickness, render_color, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterial">docs</a>
 ---
 ---Draws a Material on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
----@param material_path string 
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param coordinate_position Vector2D 
----@param coordinate_size? Vector2D @(Default: Vector2D(1, 1))
----@param rotation? number @(Default: 0)
----@param pivot_point? Vector2D @(Default: Vector2D(0.5, 0.5))
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param material_path string @The Material asset to use
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param coordinate_position Vector2D @Top-left UV coordinate of the source to draw (0 to 1)
+---@param coordinate_size? Vector2D @UV size of the source to draw (0 to 1), use (1, 1) for the whole source (Default: Vector2D(1, 1))
+---@param rotation? number @Rotation in degrees (Default: 0)
+---@param pivot_point? Vector2D @Pivot of the rotation, relative to the drawing size (0.5, 0.5 is the center) (Default: Vector2D(0.5, 0.5))
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawMaterial(material_path, screen_position, screen_size, coordinate_position, coordinate_size, rotation, pivot_point, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterialfromscenecapture">docs</a>
 ---
 ---Draws a SceneCapture on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
----@param scenecapture_entity SceneCapture 
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param coordinate_position Vector2D 
----@param coordinate_size? Vector2D @(Default: Vector2D(1, 1))
----@param rotation? number @(Default: 0)
----@param pivot_point? Vector2D @(Default: Vector2D(0.5, 0.5))
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param scenecapture_entity SceneCapture @The SceneCapture to draw
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param coordinate_position Vector2D @Top-left UV coordinate of the source to draw (0 to 1)
+---@param coordinate_size? Vector2D @UV size of the source to draw (0 to 1), use (1, 1) for the whole source (Default: Vector2D(1, 1))
+---@param rotation? number @Rotation in degrees (Default: 0)
+---@param pivot_point? Vector2D @Pivot of the rotation, relative to the drawing size (0.5, 0.5 is the center) (Default: Vector2D(0.5, 0.5))
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawMaterialFromSceneCapture(scenecapture_entity, screen_position, screen_size, coordinate_position, coordinate_size, rotation, pivot_point, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterialfromwebui">docs</a>
 ---
 ---Draws a WebUI on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
----@param webui_entity WebUI 
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param coordinate_position Vector2D 
----@param coordinate_size? Vector2D @(Default: Vector2D(1, 1))
----@param rotation? number @(Default: 0)
----@param pivot_point? Vector2D @(Default: Vector2D(0.5, 0.5))
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param webui_entity WebUI @The WebUI to draw
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param coordinate_position Vector2D @Top-left UV coordinate of the source to draw (0 to 1)
+---@param coordinate_size? Vector2D @UV size of the source to draw (0 to 1), use (1, 1) for the whole source (Default: Vector2D(1, 1))
+---@param rotation? number @Rotation in degrees (Default: 0)
+---@param pivot_point? Vector2D @Pivot of the rotation, relative to the drawing size (0.5, 0.5 is the center) (Default: Vector2D(0.5, 0.5))
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawMaterialFromWebUI(webui_entity, screen_position, screen_size, coordinate_position, coordinate_size, rotation, pivot_point, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -961,11 +1003,11 @@ function Canvas:DrawMaterialFromWebUI(webui_entity, screen_position, screen_size
 ---
 ---Draws a N-Polygon on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
 ---@param texture_path string @Pass empty to use default white Texture
----@param screen_position Vector2D 
----@param radius? Vector2D @(Default: Vector2D(1, 1))
----@param number_of_sides? integer @(Default: 3)
----@param render_color? Color @(Default: Color.WHITE)
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param radius? Vector2D @Radius of the polygon on each axis, in pixels (Default: Vector2D(1, 1))
+---@param number_of_sides? integer @How many sides the polygon has (Default: 3)
+---@param render_color? Color @Color to tint the drawing with (Default: Color.WHITE)
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawPolygon(texture_path, screen_position, radius, number_of_sides, render_color, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -973,43 +1015,43 @@ function Canvas:DrawPolygon(texture_path, screen_position, radius, number_of_sid
 ---
 ---Draws a fille Rect on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
 ---@param texture_path string @Pass empty to use default white Texture
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param render_color? Color @(Default: Color.WHITE)
----@param blend_mode? BlendMode @(Default: BlendMode.Opaque)
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param render_color? Color @Color to tint the drawing with (Default: Color.WHITE)
+---@param blend_mode? BlendMode @How it blends with what is already drawn (Default: BlendMode.Opaque)
 function Canvas:DrawRect(texture_path, screen_position, screen_size, render_color, blend_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawtext">docs</a>
 ---
 ---Draws a Text on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/>Shadow and Outline won't work properly with Transparent <code>clear_color</code>
----@param text string 
----@param screen_position Vector2D 
----@param font_type? FontType @(Default: FontType.Roboto)
----@param font_size? integer @(Default: 12)
----@param text_color? Color @(Default: Color.WHITE)
----@param kerning? number @(Default: 0)
----@param center_x? boolean @(Default: false)
----@param center_y? boolean @(Default: false)
----@param shadow_color? Color @(Default: Color.TRANSPARENT)
----@param shadow_offset? Vector2D @(Default: Vector2D(1, 1))
----@param outlined? boolean @(Default: false)
----@param outline_color? Color @(Default: Color.BLACK)
+---@param text string @The text to draw
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param font_type? FontType @Font to use (Default: FontType.Roboto)
+---@param font_size? integer @Font size (Default: 12)
+---@param text_color? Color @Color of the text (Default: Color.WHITE)
+---@param kerning? number @Extra spacing between characters (Default: 0)
+---@param center_x? boolean @Whether to center the text horizontally on the position (Default: false)
+---@param center_y? boolean @Whether to center the text vertically on the position (Default: false)
+---@param shadow_color? Color @Color of the text shadow, transparent to disable it (Default: Color.TRANSPARENT)
+---@param shadow_offset? Vector2D @Offset of the shadow, in pixels (Default: Vector2D(1, 1))
+---@param outlined? boolean @Whether to draw an outline around the text (Default: false)
+---@param outline_color? Color @Color of the outline (Default: Color.BLACK)
 function Canvas:DrawText(text, screen_position, font_type, font_size, text_color, kerning, center_x, center_y, shadow_color, shadow_offset, outlined, outline_color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawtexture">docs</a>
 ---
 ---Draws a Texture on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
----@param texture_path string 
----@param screen_position Vector2D 
----@param screen_size Vector2D 
----@param coordinate_position Vector2D 
----@param coordinate_size? Vector2D @(Default: Vector2D(1, 1))
----@param render_color? Color @(Default: Color.WHITE)
+---@param texture_path string @The image to draw
+---@param screen_position Vector2D @Position on the Canvas, in pixels
+---@param screen_size Vector2D @Size on the Canvas, in pixels
+---@param coordinate_position Vector2D @Top-left UV coordinate of the source to draw (0 to 1)
+---@param coordinate_size? Vector2D @UV size of the source to draw (0 to 1), use (1, 1) for the whole source (Default: Vector2D(1, 1))
+---@param render_color? Color @Color to tint the drawing with (Default: Color.WHITE)
 ---@param blend_mode? BlendMode @AlphaBlend is recommended for textures with transparency. Otherwise you may use Opaque. (Default: BlendMode.AlphaBlend)
----@param rotation? number @(Default: 0)
----@param pivot_point? Vector2D @(Default: Vector2D(0.5, 0.5))
+---@param rotation? number @Rotation in degrees (Default: 0)
+---@param pivot_point? Vector2D @Pivot of the rotation, relative to the drawing size (0.5, 0.5 is the center) (Default: Vector2D(0.5, 0.5))
 function Canvas:DrawTexture(texture_path, screen_position, screen_size, coordinate_position, coordinate_size, render_color, blend_mode, rotation, pivot_point) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -1029,36 +1071,36 @@ function Canvas:Repaint() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-resize">docs</a>
 ---
 ---Resizes the Canvas if not using auto_resize
----@param width integer 
----@param height integer 
+---@param width integer @Width in pixels
+---@param height integer @Height in pixels
 function Canvas:Resize(width, height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-setautorepaintrate">docs</a>
 ---
 ---Sets it to -1 to stop auto repainting or 0 to repaint every frame
----@param auto_repaint_rate boolean 
+---@param auto_repaint_rate number @Repaint interval in seconds, 0 to repaint every frame or -1 to stop auto repainting
 function Canvas:SetAutoRepaintRate(auto_repaint_rate) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-setautoresize">docs</a>
 ---
 ---Sets if the canvas should auto resize to screen size
----@param auto_resize boolean 
+---@param auto_resize boolean @Whether the canvas should auto resize to screen size
 function Canvas:SetAutoResize(auto_resize) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-setscreenposition">docs</a>
 ---
 ---Sets the Canvas Screen Position offset
----@param screen_position Vector2D 
+---@param screen_position Vector2D @The new Canvas Screen Position offset
 function Canvas:SetScreenPosition(screen_position) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-setvisibility">docs</a>
 ---
 ---Sets if it's visible on screen
----@param visible boolean 
+---@param visible boolean @Whether it's visible on screen
 function Canvas:SetVisibility(visible) end
 
 
@@ -1066,7 +1108,11 @@ function Canvas:SetVisibility(visible) end
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "Destroy", callback: fun(self: Canvas)): fun(self: Canvas) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "Spawn", callback: fun(self: Canvas)): fun(self: Canvas) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "Update", callback: fun(self: Canvas, width: integer, height: integer)): fun(self: Canvas, width: integer, height: integer) @Called when the Canvas needs to be painted<br/><br/>You can only call <code>:Draw...()</code> methods from inside this event
+---@overload fun(event_name: "ValueChange", callback: fun(self: Canvas, key: string, value: any)): fun(self: Canvas, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Canvas.Subscribe(event_name, callback) end
 
 
@@ -1074,20 +1120,32 @@ function Canvas.Subscribe(event_name, callback) end
 ---@param event_name string @Name of the event to subscribe to
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
+---@overload fun(self: Canvas, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Canvas, event_name: "Destroy", callback: fun(self: Canvas)): fun(self: Canvas) @Triggered when an Entity is destroyed
+---@overload fun(self: Canvas, event_name: "Spawn", callback: fun(self: Canvas)): fun(self: Canvas) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Canvas, event_name: "Update", callback: fun(self: Canvas, width: integer, height: integer)): fun(self: Canvas, width: integer, height: integer) @Called when the Canvas needs to be painted<br/><br/>You can only call <code>:Draw...()</code> methods from inside this event
+---@overload fun(self: Canvas, event_name: "ValueChange", callback: fun(self: Canvas, key: string, value: any)): fun(self: Canvas, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Canvas:Subscribe(event_name, callback) end
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(self: Canvas, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(self: Canvas, event_name: "Destroy", callback: fun(self: Canvas)) @Triggered when an Entity is destroyed
+---@overload fun(self: Canvas, event_name: "Spawn", callback: fun(self: Canvas)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Canvas, event_name: "Update", callback: fun(self: Canvas, width: integer, height: integer)) @Called when the Canvas needs to be painted<br/><br/>You can only call <code>:Draw...()</code> methods from inside this event
+---@overload fun(self: Canvas, event_name: "ValueChange", callback: fun(self: Canvas, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Canvas:Unsubscribe(event_name, callback) end
 
 
 ---Unsubscribe from an event
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
+---@overload fun(event_name: "Destroy", callback: fun(self: Canvas)) @Triggered when an Entity is destroyed
+---@overload fun(event_name: "Spawn", callback: fun(self: Canvas)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "Update", callback: fun(self: Canvas, width: integer, height: integer)) @Called when the Canvas needs to be painted<br/><br/>You can only call <code>:Draw...()</code> methods from inside this event
+---@overload fun(event_name: "ValueChange", callback: fun(self: Canvas, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Canvas.Unsubscribe(event_name, callback) end
 
 
@@ -1105,11 +1163,11 @@ Character = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Character Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param skeletal_mesh_asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param skeletal_mesh_asset string @The Skeletal Mesh asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param max_health? integer @Current / Max Health (Default: 100)
 ---@param death_sound? string @Played when Character dies (Default: nanos-world::A_Male_01_Death)
 ---@param pain_sound? string @Played when Character takes damage (Default: nanos-world::A_Male_01_Pain)
@@ -1145,8 +1203,8 @@ function Character:Drop() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-entervehicle">docs</a>
 ---
 ---Enters the Vehicle at Seat (0 - Driver)
----@param vehicle Vehicle 
----@param seat? integer @(Default: 0)
+---@param vehicle Vehicle @The Vehicle
+---@param seat? integer @Seat index to enter, 0 is the driver seat (Default: 0)
 function Character:EnterVehicle(vehicle, seat) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -1160,91 +1218,112 @@ function Character:GetAllMorphTargetNames() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcameramode">docs</a>
 ---
 ---Gets the camera mode
----@return CameraMode 
+---@return CameraMode @Camera mode
 function Character:GetCameraMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcanaim">docs</a>
 ---
----Gets if can aim
----@return boolean 
+---Gets if this Character is allowed to aim
+---@return boolean @Whether it is allowed to aim
 function Character:GetCanAim() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcandeployparachute">docs</a>
+---
+---Gets if this Character is allowed to deploy the Parachute
+---@return boolean @Whether this Character is allowed to deploy the Parachute
+function Character:GetCanDeployParachute() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcandive">docs</a>
+---
+---Gets if this Character is allowed to Dive
+---@return boolean @Whether this Character is allowed to Dive
+function Character:GetCanDive() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcandrop">docs</a>
 ---
----Gets if can drop
----@return boolean 
+---Gets if this Character is allowed to drop the picked up item
+---@return boolean @Whether it is allowed to drop
 function Character:GetCanDrop() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcangrabprops">docs</a>
 ---
----Gets if can grab props
----@return boolean 
+---Gets if this Character is allowed to grab Props
+---@return boolean @Whether it is allowed to grab Props
 function Character:GetCanGrabProps() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcanpickuppickables">docs</a>
 ---
----Gets if can pickup Pickables (Weapons, Melee, Grenade...)
----@return boolean 
+---Gets if this Character is allowed to pick up Pickables (Weapon, Grenade, Melee...)
+---@return boolean @Whether it is allowed to pick up Pickables
 function Character:GetCanPickupPickables() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcanpunch">docs</a>
 ---
----Gets if can punch
----@return boolean 
+---Gets if this Character is allowed to punch
+---@return boolean @Whether it is allowed to punch
 function Character:GetCanPunch() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcansprint">docs</a>
 ---
----Gets if can sprint
----@return boolean 
+---Gets if this Character is allowed to sprint
+---@return boolean @Whether it is allowed to sprint
 function Character:GetCanSprint() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getcanusepickables">docs</a>
 ---
----Gets if can use Pickables (Weapons, Melee, Grenade...)
----@return boolean 
+---Gets if this Character is allowed to use Pickables (Weapon, Grenade, Melee...)
+---@return boolean @Whether it is allowed to use Pickables
 function Character:GetCanUsePickables() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getfalldamagetaken">docs</a>
 ---
----Gets the Fall Damage
----@return integer 
+---Gets the Fall Damage multiplier
+---@return integer @The Fall Damage multiplier
 function Character:GetFallDamageTaken() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getfallingmode">docs</a>
 ---
----Gets the FallingMode
----@return FallingMode 
+---Gets the current Falling Mode
+---@return FallingMode @The current Falling Mode
 function Character:GetFallingMode() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getfootstepvolumemultiplier">docs</a>
+---
+---Gets the Footstep Volume multiplier
+---@return number @Footstep Volume multiplier
+function Character:GetFootstepVolumeMultiplier() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getgaitmode">docs</a>
 ---
----Gets the GaitMode
----@return GaitMode 
+---Gets the current Gait Mode
+---@return GaitMode @The current Gait Mode
 function Character:GetGaitMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getgrabbedprop">docs</a>
 ---
 ---Gets the Grabbed Prop
----@return Prop? 
+---@return Prop? @Grabbed Prop
 function Character:GetGrabbedProp() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getimpactdamagetaken">docs</a>
 ---
----Gets the impact damage taken
----@return integer 
+---Gets the Impact Damage taken when being run over
+---@return integer @The Impact Damage
 function Character:GetImpactDamageTaken() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -1259,49 +1338,56 @@ function Character:GetMorphTarget(name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getpicked">docs</a>
 ---
 ---Gets the Pickable if picking up
----@return Pickable? 
+---@return Pickable? @Pickable if picking up
 function Character:GetPicked() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getpunchdamage">docs</a>
 ---
----Gets the punch damage
----@return integer 
+---Gets the damage dealt by this Character's punches
+---@return integer @The punch damage
 function Character:GetPunchDamage() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getradialdamagetoragdoll">docs</a>
+---
+---Gets the minimum radial damage (e.g. explosions) taken to enter in ragdoll mode
+---@return integer @-1 if the Character never enters ragdoll mode from radial damage
+function Character:GetRadialDamageToRagdoll() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getspeedmultiplier">docs</a>
 ---
----Gets the speed multiplier
----@return number 
+---Gets the movement speed multiplier
+---@return number @The speed multiplier
 function Character:GetSpeedMultiplier() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getstancemode">docs</a>
 ---
 ---Gets the Stance Mode
----@return StanceMode 
+---@return StanceMode @Stance Mode
 function Character:GetStanceMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getswimmingmode">docs</a>
 ---
 ---Gets the Swimming Mode
----@return SwimmingMode 
+---@return SwimmingMode @Swimming Mode
 function Character:GetSwimmingMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getteam">docs</a>
 ---
----Gets the Team
----@return integer 
+---Gets the Team of this Character
+---@return integer @The Team, 0 means no team
 function Character:GetTeam() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getvehicle">docs</a>
 ---
 ---Gets the entered Vehicle
----@return Vehicle? 
+---@return Vehicle? @Entered Vehicle
 function Character:GetVehicle() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -1315,49 +1401,49 @@ function Character:GetVehicleSeat() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getviewmode">docs</a>
 ---
 ---Gets the View Mode
----@return ViewMode 
+---@return ViewMode @View Mode
 function Character:GetViewMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getweaponaimmode">docs</a>
 ---
 ---Gets the Weapon Aim Mode
----@return AimMode 
+---@return AimMode @Weapon Aim Mode
 function Character:GetWeaponAimMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-getweaponshootermode">docs</a>
 ---
 ---Gets if this Character is in Shooter Mode
----@return boolean 
+---@return boolean @Whether this Character is in Shooter Mode
 function Character:GetWeaponShooterMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-grabprop">docs</a>
 ---
 ---Gives a Prop to the Character
----@param prop Prop 
+---@param prop Prop @The Prop
 function Character:GrabProp(prop) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-isinputenabled">docs</a>
 ---
----Gets if has input enabled
----@return boolean 
+---Gets if this Character has input enabled
+---@return boolean @Whether input is enabled
 function Character:IsInputEnabled() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-isinragdollmode">docs</a>
 ---
 ---Gets if Character is in ragdoll mode
----@return boolean 
+---@return boolean @Whether Character is in ragdoll mode
 function Character:IsInRagdollMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-isinvulnerable">docs</a>
 ---
----Gets if is invulnerable
----@return boolean 
+---Gets if this Character is invulnerable
+---@return boolean @Whether this Character is invulnerable
 function Character:IsInvulnerable() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1377,19 +1463,19 @@ function Character:LookAt(location) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-pickup">docs</a>
 ---
 ---Gives a Melee/Grenade/Weapon (Pickable) to the Character
----@param pickable Pickable 
+---@param pickable Pickable @The Weapon, Melee or Grenade to give to this Character
 function Character:PickUp(pickable) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-playanimation">docs</a>
 ---
 ---Plays an Animation Montage on this character
----@param animation_path string 
----@param slot_type? AnimationSlotType @(Default: AnimationSlotType.FullBody)
----@param loop_indefinitely? boolean @(Default: false)
----@param blend_in_time? number @(Default: 0.25)
+---@param animation_path string @The Animation asset to play
+---@param slot_type? AnimationSlotType @Which part of the body plays the animation (Default: AnimationSlotType.FullBody)
+---@param loop_indefinitely? boolean @Whether to keep looping until stopped (Default: false)
+---@param blend_in_time? number @Seconds to blend into the animation (Default: 0.25)
 ---@param blend_out_time? number @Pass it -1 to disable auto blend out and keep the animation running in last pose forever (Default: 0.25)
----@param play_rate? number @(Default: 1.0)
+---@param play_rate? number @Speed multiplier of the animation (Default: 1.0)
 ---@param stop_all_montages? boolean @Stops all running Montages from the same Group (Default: false)
 function Character:PlayAnimation(animation_path, slot_type, loop_indefinitely, blend_in_time, blend_out_time, play_rate, stop_all_montages) end
 
@@ -1403,13 +1489,13 @@ function Character:ResetPhysicalAnimationSettings() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setaccelerationsettings">docs</a>
 ---
 ---Sets the Movement Max Acceleration of this Character
----@param walking? integer @(Default: 768)
----@param parachuting? integer @(Default: 512)
----@param skydiving? integer @(Default: 768)
----@param falling? integer @(Default: 128)
----@param swimming? integer @(Default: 256)
----@param swimming_surface? integer @(Default: 256)
----@param flying? integer @(Default: 1024)
+---@param walking? integer @Max acceleration while walking (Default: 768)
+---@param parachuting? integer @Max acceleration while parachuting (Default: 512)
+---@param skydiving? integer @Max acceleration while skydiving (Default: 768)
+---@param falling? integer @Max air control acceleration while falling (Default: 128)
+---@param swimming? integer @Max acceleration while swimming underwater (Default: 256)
+---@param swimming_surface? integer @Max acceleration while swimming on the surface (Default: 256)
+---@param flying? integer @Max acceleration while flying (Default: 1024)
 function Character:SetAccelerationSettings(walking, parachuting, skydiving, falling, swimming, swimming_surface, flying) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1425,122 +1511,122 @@ function Character:SetAirControl(air_control, boost_multiplier, boost_velocity_t
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationidlewalkruncrouching">docs</a>
 ---
 ---Sets the Blend Space (2D) Animation for Crouching<br/><br/>Horizontal Axis stands for Speed X and Vertical Axis for Speed Y
----@param blend_space_path string 
----@param enable_turn_in_place? boolean @(Default: false)
+---@param blend_space_path string @The Blend Space (2D) asset
+---@param enable_turn_in_place? boolean @Whether the Character plays turn-in-place animations when rotating while idle (Default: false)
 function Character:SetAnimationIdleWalkRunCrouching(blend_space_path, enable_turn_in_place) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationidlewalkrunproning">docs</a>
 ---
 ---Sets the Blend Space (2D) Animation for Proning<br/><br/>Horizontal Axis stands for Speed X and Vertical Axis for Speed Y
----@param blend_space_path string 
+---@param blend_space_path string @The new Blend Space (2D) Animation for Proning
 function Character:SetAnimationIdleWalkRunProning(blend_space_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationidlewalkrunstanding">docs</a>
 ---
 ---Sets the Blend Space (2D) Animation for Standing<br/><br/>Horizontal Axis stands for Speed X and Vertical Axis for Speed Y
----@param blend_space_path string 
----@param enable_turn_in_place? boolean @(Default: false)
+---@param blend_space_path string @The Blend Space (2D) asset
+---@param enable_turn_in_place? boolean @Whether the Character plays turn-in-place animations when rotating while idle (Default: false)
 function Character:SetAnimationIdleWalkRunStanding(blend_space_path, enable_turn_in_place) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationstransitioncrouchingproning">docs</a>
 ---
 ---Sets the Transition Animation between Crouching and Proning
----@param crouching_to_proning string 
----@param proning_to_crouching string 
+---@param crouching_to_proning string @Animation played when going prone
+---@param proning_to_crouching string @Animation played when getting up from prone
 function Character:SetAnimationsTransitionCrouchingProning(crouching_to_proning, proning_to_crouching) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationstransitionstandingcrouching">docs</a>
 ---
 ---Sets the Transition Animation between Standing and Crouching
----@param standing_to_crouching string 
----@param crouching_to_standing string 
+---@param standing_to_crouching string @Animation played when crouching
+---@param crouching_to_standing string @Animation played when standing up
 function Character:SetAnimationsTransitionStandingCrouching(standing_to_crouching, crouching_to_standing) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcameramode">docs</a>
 ---
 ---Sets the Camera Mode (i.e. Only TPS, FPS or if allow both)<br/><br/>Using FPSOnly CameraMode on AI will lock his body rotation (when using LookAt)
----@param camera_mode CameraMode 
+---@param camera_mode CameraMode @The new Camera Mode
 function Character:SetCameraMode(camera_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcanaim">docs</a>
 ---
 ---Sets if this Character is allowed to Aim
----@param can_aim boolean 
+---@param can_aim boolean @Whether this Character is allowed to Aim
 function Character:SetCanAim(can_aim) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcandeployparachute">docs</a>
 ---
 ---Sets if this Character is allowed to deploy the Parachute
----@param can_deploy_parachute boolean 
+---@param can_deploy_parachute boolean @Whether this Character is allowed to deploy the Parachute
 function Character:SetCanDeployParachute(can_deploy_parachute) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcandive">docs</a>
 ---
 ---Sets if this Character is allowed to Dive
----@param can_dive boolean 
+---@param can_dive boolean @Whether this Character is allowed to Dive
 function Character:SetCanDive(can_dive) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcandrop">docs</a>
 ---
 ---Sets if this Character is allowed to Drop the Picked up item
----@param can_drop boolean 
+---@param can_drop boolean @Whether this Character is allowed to Drop the Picked up item
 function Character:SetCanDrop(can_drop) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcangrabprops">docs</a>
 ---
 ---Sets if this Character is allowed to Grab any Prop
----@param can_grab_props boolean 
+---@param can_grab_props boolean @Whether this Character is allowed to Grab any Prop
 function Character:SetCanGrabProps(can_grab_props) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcanpickuppickables">docs</a>
 ---
 ---Sets if this Character is allowed to Pick up any Pickable (Weapon, Grenade, Melee...)
----@param can_pickup boolean 
+---@param can_pickup boolean @Whether this Character is allowed to Pick up any Pickable
 function Character:SetCanPickupPickables(can_pickup) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcanpunch">docs</a>
 ---
 ---Sets if this Character is allowed to Punch
----@param can_punch boolean 
+---@param can_punch boolean @Whether this Character is allowed to Punch
 function Character:SetCanPunch(can_punch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcansprint">docs</a>
 ---
 ---Sets if this Character is allowed to Sprint
----@param can_sprint boolean 
+---@param can_sprint boolean @Whether this Character is allowed to Sprint
 function Character:SetCanSprint(can_sprint) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setcanusepickables">docs</a>
 ---
 ---Sets if this Character is allowed to use Pickables (Weapon, Grenade, Melee...)
----@param can_use boolean 
+---@param can_use boolean @Whether this Character is allowed to use Pickables
 function Character:SetCanUsePickables(can_use) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setdeathsound">docs</a>
 ---
 ---Changes the Death sound when Character dies
----@param sound_asset string 
+---@param sound_asset string @The new Death sound when Character dies
 function Character:SetDeathSound(sound_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setfalldamagetaken">docs</a>
 ---
----Set the Fall Damage multiplier taken when falling from High places.<br/><br/>Setting to 0 will make the Character to do not take any damage
+---Set the Fall Damage multiplier taken when falling from High places.<br/><br/>Setting to 0 will make the Character not take any damage
 ---@param damage integer @Default is 10
 function Character:SetFallDamageTaken(damage) end
 
@@ -1548,21 +1634,21 @@ function Character:SetFallDamageTaken(damage) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setfootstepvolumemultiplier">docs</a>
 ---
 ---Set the Footstep Volume multiplier
----@param volume_multiplier number 
+---@param volume_multiplier number @The new Footstep Volume multiplier
 function Character:SetFootstepVolumeMultiplier(volume_multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setfovmultiplier">docs</a>
 ---
 ---Sets the Field of View multiplier
----@param multiplier number 
+---@param multiplier number @The new Field of View multiplier
 function Character:SetFOVMultiplier(multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setgaitmode">docs</a>
 ---
----Sets the Gait Mode
----@param gait_mode GaitMode 
+---Sets the Gait Mode (walking or sprinting)
+---@param gait_mode GaitMode @The new Gait Mode
 function Character:SetGaitMode(gait_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1575,7 +1661,7 @@ function Character:SetHighFallingTime(time) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setimpactdamagetaken">docs</a>
 ---
----Set the Impact Damage taken when being run over by things.<br/><br/>Setting to 0 will make the Character to do not take damage or enter ragdoll mode
+---Set the Impact Damage taken when being run over by things.<br/><br/>Setting to 0 will make the Character not take damage or enter ragdoll mode
 ---@param impact_damage integer @Default is 10
 function Character:SetImpactDamageTaken(impact_damage) end
 
@@ -1583,43 +1669,43 @@ function Character:SetImpactDamageTaken(impact_damage) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setinputenabled">docs</a>
 ---
 ---Enables/Disables Character's Input
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether to enable Character's Input
 function Character:SetInputEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setinvulnerable">docs</a>
 ---
 ---Sets if the Character can receive any damage
----@param is_invulnerable boolean 
+---@param is_invulnerable boolean @Whether the Character can receive any damage
 function Character:SetInvulnerable(is_invulnerable) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setmesh">docs</a>
 ---
----Changes the Character Mesh on the fly
----@param skeletal_mesh_asset string 
+---Changes the Character Mesh at runtime
+---@param skeletal_mesh_asset string @The new Skeletal Mesh asset
 function Character:SetMesh(skeletal_mesh_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setmorphtarget">docs</a>
 ---
----Set Morph Target with Name and Value
+---Sets the value of a Morph Target
 ---@param name string @Morph Target Name
----@param value number 
+---@param value number @The Morph Target weight, usually from 0 to 1
 function Character:SetMorphTarget(name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setpainsound">docs</a>
 ---
 ---Changes the Pain sound when Character takes damage
----@param sound_asset string 
+---@param sound_asset string @The new Pain sound when Character takes damage
 function Character:SetPainSound(sound_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setparachutetexture">docs</a>
 ---
----Changes the Parachute Texture
----@param texture string 
+---Changes the texture of the Character's parachute
+---@param texture string @The new Parachute Texture
 function Character:SetParachuteTexture(texture) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -1641,7 +1727,7 @@ function Character:SetPhysicalAnimationSettings(bone, include_self, is_local_sim
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setphysicsasset">docs</a>
 ---
 ---Sets the Physics Asset for the Character
----@param physics_asset string 
+---@param physics_asset string @The new Physics Asset for the Character
 function Character:SetPhysicsAsset(physics_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1654,50 +1740,50 @@ function Character:SetPunchDamage(punch_damage) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setradialdamagetoragdoll">docs</a>
 ---
----Set the minimum radial damage taken (e.g. explosions) to enter in ragdoll mode.<br/><br/>Setting to -1 will make the Character to do not enter ragdoll mode when getting radial damage
+---Set the minimum radial damage taken (e.g. explosions) to enter in ragdoll mode.<br/><br/>Setting to -1 will make the Character never enter ragdoll mode when getting radial damage
 ---@param damage integer @Default is 50
 function Character:SetRadialDamageToRagdoll(damage) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setragdollmode">docs</a>
 ---
----Sets Character Ragdoll Mode
----@param ragdoll_enabled boolean 
+---Enables or disables the Ragdoll Mode, making the Character fall as a physics body
+---@param ragdoll_enabled boolean @Whether the Ragdoll Mode is enabled
 function Character:SetRagdollMode(ragdoll_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setragdollonhitenabled">docs</a>
 ---
 ---Sets if the character will enter ragdoll mode when being hit by an object or falling from a high place
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the character will enter ragdoll mode when being hit by an object or falling from a high place
 function Character:SetRagdollOnHitEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setragdollstandupcooldown">docs</a>
 ---
 ---Sets the cooldown time (in seconds) before this Character can stand up from ragdoll
----@param time number 
+---@param time number @The new cooldown time (in seconds) before this Character can stand up from ragdoll
 function Character:SetRagdollStandUpCooldown(time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setsimulatephysics">docs</a>
 ---
 ---Sets the Character Capsule to simulate physics
----@param simulate_physics boolean 
+---@param simulate_physics boolean @The new Character Capsule to simulate physics
 function Character:SetSimulatePhysics(simulate_physics) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setspeedmultiplier">docs</a>
 ---
----Sets all speed multiplier
+---Sets the multiplier applied to all movement speeds
 ---@param speed_multiplier number @1 is normal
 function Character:SetSpeedMultiplier(speed_multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setstancemode">docs</a>
 ---
----Sets the Stance Mode
----@param stance_mode StanceMode 
+---Sets the Stance Mode (standing, crouching or proning)
+---@param stance_mode StanceMode @The new Stance Mode
 function Character:SetStanceMode(stance_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1710,22 +1796,22 @@ function Character:SetTeam(team) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setviewmode">docs</a>
 ---
----Sets the View Mode
----@param view_mode ViewMode 
+---Sets the View Mode (first person, third person or top down)
+---@param view_mode ViewMode @The new View Mode
 function Character:SetViewMode(view_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setweaponaimmode">docs</a>
 ---
 ---Sets the Weapon's Aim Mode
----@param aim_mode AimMode 
+---@param aim_mode AimMode @The new Weapon's Aim Mode
 function Character:SetWeaponAimMode(aim_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setweaponshootermode">docs</a>
 ---
 ---Sets if this Character is in Shooter Mode, in which a held Weapon is always aimed while idle or walking, is lowered while sprinting, and the aim input aims down sights instead of raising the Weapon
----@param weapon_shooter_mode boolean 
+---@param weapon_shooter_mode boolean @Whether this Character is in Shooter Mode, in which a held Weapon is always aimed while idle or walking, is lowered while sprinting, and the aim input aims down sights instead of raising the Weapon
 function Character:SetWeaponShooterMode(weapon_shooter_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -1764,7 +1850,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
----@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "Punch", callback: fun(self: Character)): fun(self: Character) @When Character punches
 ---@overload fun(event_name: "RagdollModeChange", callback: fun(self: Character, old_state: boolean, new_state: boolean)): fun(self: Character, old_state: boolean, new_state: boolean) @When Character enters or leaves ragdoll
@@ -1776,7 +1862,7 @@ function Character:UnGrabProp() end
 ---@overload fun(event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)): fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode) @Called when Swimming Mode changes
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
----@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes its View Mode
 ---@overload fun(event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)): fun(self: Character, old_state: AimMode, new_state: AimMode) @Called when Weapon Aim Mode changes
@@ -1812,7 +1898,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)): fun(self: Character, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)): fun(self: Character, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)): fun(self: Character, object: Pickable) @When Character picks up anything
----@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When Character is possessed by a Player
+---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)): fun(self: Character, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)): fun(self: Character, pickable: Pickable) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Character, event_name: "Punch", callback: fun(self: Character)): fun(self: Character) @When Character punches
 ---@overload fun(self: Character, event_name: "RagdollModeChange", callback: fun(self: Character, old_state: boolean, new_state: boolean)): fun(self: Character, old_state: boolean, new_state: boolean) @When Character enters or leaves ragdoll
@@ -1824,7 +1910,7 @@ function Character.Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)): fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode) @Called when Swimming Mode changes
 ---@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)): fun(self: Character, prop: Prop) @When Character drops a Prop
----@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)): fun(self: Character, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)): fun(self: Character, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)): fun(self: Character, old_state: ViewMode, new_state: ViewMode) @When Character changes its View Mode
 ---@overload fun(self: Character, event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)): fun(self: Character, old_state: AimMode, new_state: AimMode) @Called when Weapon Aim Mode changes
@@ -1858,7 +1944,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Character, event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Character, event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
----@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
+---@overload fun(self: Character, event_name: "Possess", callback: fun(self: Character, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(self: Character, event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(self: Character, event_name: "Punch", callback: fun(self: Character)) @When Character punches
 ---@overload fun(self: Character, event_name: "RagdollModeChange", callback: fun(self: Character, old_state: boolean, new_state: boolean)) @When Character enters or leaves ragdoll
@@ -1870,7 +1956,7 @@ function Character:Subscribe(event_name, callback) end
 ---@overload fun(self: Character, event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)) @Called when Swimming Mode changes
 ---@overload fun(self: Character, event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(self: Character, event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
----@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(self: Character, event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: Character, event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(self: Character, event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes its View Mode
 ---@overload fun(self: Character, event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)) @Called when Weapon Aim Mode changes
@@ -1905,7 +1991,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Character, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Character, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "PickUp", callback: fun(self: Character, object: Pickable)) @When Character picks up anything
----@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: Character, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "PullUse", callback: fun(self: Character, pickable: Pickable)) @Triggered when a Character presses the use button for a Pickable (i.e. clicks left mouse button with this equipped)
 ---@overload fun(event_name: "Punch", callback: fun(self: Character)) @When Character punches
 ---@overload fun(event_name: "RagdollModeChange", callback: fun(self: Character, old_state: boolean, new_state: boolean)) @When Character enters or leaves ragdoll
@@ -1917,7 +2003,7 @@ function Character:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "SwimmingModeChange", callback: fun(self: Character, old_state: SwimmingMode, new_state: SwimmingMode)) @Called when Swimming Mode changes
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Character, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
 ---@overload fun(event_name: "UnGrabProp", callback: fun(self: Character, prop: Prop)) @When Character drops a Prop
----@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Character, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Character, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 ---@overload fun(event_name: "ViewModeChange", callback: fun(self: Character, old_state: ViewMode, new_state: ViewMode)) @When Character changes its View Mode
 ---@overload fun(event_name: "WeaponAimModeChange", callback: fun(self: Character, old_state: AimMode, new_state: AimMode)) @Called when Weapon Aim Mode changes
@@ -1938,12 +2024,12 @@ CharacterSimple = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#constructor-default-constructor">docs</a>
 ---
 ---Calls the original CharacterSimple Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param mesh string|string 
----@param custom_animation_blueprint? string @(Default: "")
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param mesh string|string @The Skeletal or Static Mesh asset
+---@param custom_animation_blueprint? string @Animation Blueprint to drive the Skeletal Mesh animations (Default: "")
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function CharacterSimple:Constructor(location, rotation, mesh, custom_animation_blueprint, collision_type, gravity_enabled, spawn_mode) end
 
@@ -1982,7 +2068,7 @@ function CharacterSimple:CallAnimationBlueprintEvent(event_name, ...) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-getanimationblueprintpropertyvalue">docs</a>
 ---
 ---Gets an Animation Blueprint Property/Variable value directly
----@param property_name string 
+---@param property_name string @Name of the Animation Blueprint variable
 ---@return any @the property value
 function CharacterSimple:GetAnimationBlueprintPropertyValue(property_name) end
 
@@ -1990,19 +2076,19 @@ function CharacterSimple:GetAnimationBlueprintPropertyValue(property_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-iscrouching">docs</a>
 ---
 ---Gets if this Character is crouching
----@return boolean 
+---@return boolean @Whether this Character is crouching
 function CharacterSimple:IsCrouching() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-playanimation">docs</a>
 ---
 ---Plays an Animation Montage on this character
----@param animation_path string 
----@param slot_name? string @(Default: "")
----@param loop_indefinitely? boolean @(Default: false)
----@param blend_in_time? number @(Default: 0.25)
+---@param animation_path string @The Animation asset to play
+---@param slot_name? string @The Animation Slot to play it on (Default: "")
+---@param loop_indefinitely? boolean @Whether to keep looping until stopped (Default: false)
+---@param blend_in_time? number @Seconds to blend into the animation (Default: 0.25)
 ---@param blend_out_time? number @Pass it -1 to disable auto blend out and keep the animation running in last pose forever (Default: 0.25)
----@param play_rate? number @(Default: 1.0)
+---@param play_rate? number @Speed multiplier of the animation (Default: 1.0)
 ---@param stop_all_montages? boolean @Stops all running Montages from the same Group (Default: false)
 function CharacterSimple:PlayAnimation(animation_path, slot_name, loop_indefinitely, blend_in_time, blend_out_time, play_rate, stop_all_montages) end
 
@@ -2019,70 +2105,70 @@ function CharacterSimple:SetAirControl(air_control, boost_multiplier, boost_velo
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setanimationblueprint">docs</a>
 ---
 ---Sets the Animation Blueprint of this Character
----@param custom_animation_blueprint string 
+---@param custom_animation_blueprint string @The new Animation Blueprint of this Character
 function CharacterSimple:SetAnimationBlueprint(custom_animation_blueprint) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setanimationblueprintpropertyvalue">docs</a>
 ---
 ---Sets an Animation Blueprint Property/Variable value directly
----@param property_name string 
----@param value any 
+---@param property_name string @Name of the Animation Blueprint variable
+---@param value any @The value to set
 function CharacterSimple:SetAnimationBlueprintPropertyValue(property_name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setcrouching">docs</a>
 ---
 ---Sets if this Character is crouching
----@param is_crouching boolean 
+---@param is_crouching boolean @Whether this Character is crouching
 function CharacterSimple:SetCrouching(is_crouching) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setmaxacceleration">docs</a>
 ---
----Sets the max acceleration
+---Sets the max acceleration of the movement
 ---@param acceleration integer @Default is 2048
 function CharacterSimple:SetMaxAcceleration(acceleration) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setmesh">docs</a>
 ---
----Changes the Character Mesh on the fly
----@param mesh_asset string|string 
+---Changes the Character Mesh at runtime
+---@param mesh_asset string|string @The new Skeletal or Static Mesh asset
 function CharacterSimple:SetMesh(mesh_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setpawnsettings">docs</a>
 ---
 ---Sets the Pawn Settings of this Character
----@param use_controller_rotation_pitch boolean 
----@param use_controller_rotation_yaw boolean 
----@param use_controller_rotation_roll boolean 
+---@param use_controller_rotation_pitch boolean @Whether the Pawn follows the controller Pitch
+---@param use_controller_rotation_yaw boolean @Whether the Pawn follows the controller Yaw
+---@param use_controller_rotation_roll boolean @Whether the Pawn follows the controller Roll
 function CharacterSimple:SetPawnSettings(use_controller_rotation_pitch, use_controller_rotation_yaw, use_controller_rotation_roll) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setphysicsasset">docs</a>
 ---
 ---Sets the Physics Asset for the Character
----@param physics_asset string 
+---@param physics_asset string @The new Physics Asset for the Character
 function CharacterSimple:SetPhysicsAsset(physics_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setrotationsettings">docs</a>
 ---
 ---Sets the Rotation Settings of this Character
----@param rotation_rate Rotator 
----@param use_controller_desired_rotation boolean 
----@param orient_rotation_to_movement boolean 
+---@param rotation_rate Rotator @Max rotation speed, in degrees per second
+---@param use_controller_desired_rotation boolean @Whether to smoothly rotate towards the controller rotation
+---@param orient_rotation_to_movement boolean @Whether to rotate towards the movement direction
 function CharacterSimple:SetRotationSettings(rotation_rate, use_controller_desired_rotation, orient_rotation_to_movement) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-setspeedsettings">docs</a>
 ---
 ---Sets the Speed Settings of this Character
----@param max_walk_speed? integer @(Default: 600)
----@param max_walk_speed_crouched? integer @(Default: 300)
----@param max_fly_speed? integer @(Default: 600)
+---@param max_walk_speed? integer @Max speed while walking (Default: 600)
+---@param max_walk_speed_crouched? integer @Max speed while crouched (Default: 300)
+---@param max_fly_speed? integer @Max speed while flying (Default: 600)
 function CharacterSimple:SetSpeedSettings(max_walk_speed, max_walk_speed_crouched, max_fly_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -2090,11 +2176,11 @@ function CharacterSimple:SetSpeedSettings(max_walk_speed, max_walk_speed_crouche
 ---
 ---Sets the Spring Arm Settings of this Character
 ---@param relative_location? Vector @Pass nil to use default as capsule height * 1.8 (Default: Vector(0, 0, -1))
----@param target_arm_length? number @(Default: 300.0)
----@param socket_offset? Vector @(Default: Vector(0, 0, 0))
----@param enable_camera_lag? boolean @(Default: true)
----@param camera_lag_speed? number @(Default: 15.0)
----@param camera_lag_max_distance? number @(Default: 1.0)
+---@param target_arm_length? number @Distance from the camera to the Character, in units (Default: 300.0)
+---@param socket_offset? Vector @Offset of the camera at the end of the arm (Default: Vector(0, 0, 0))
+---@param enable_camera_lag? boolean @Whether the camera smoothly lags behind the Character (Default: true)
+---@param camera_lag_speed? number @How fast the camera catches up when lagging (Default: 15.0)
+---@param camera_lag_max_distance? number @Max distance the camera can lag behind (Default: 1.0)
 function CharacterSimple:SetSpringArmSettings(relative_location, target_arm_length, socket_offset, enable_camera_lag, camera_lag_speed, camera_lag_max_distance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2125,12 +2211,12 @@ function CharacterSimple:UnbindAnimationBlueprintEventDispatcher(dispatcher_name
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(self: CharacterSimple, old_mode: integer, new_mode: integer)): fun(self: CharacterSimple, old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)): fun(self: CharacterSimple, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StartCrouch", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Called when Character crouches
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
----@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple.Subscribe(event_name, callback) end
 
@@ -2154,12 +2240,12 @@ function CharacterSimple.Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)): fun(self: CharacterSimple, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(self: CharacterSimple, old_mode: integer, new_mode: integer)): fun(self: CharacterSimple, old_mode: integer, new_mode: integer) @Called when the Character movement mode changes
 ---@overload fun(self: CharacterSimple, event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)): fun(self: CharacterSimple, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When Character is possessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)): fun(self: CharacterSimple, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Triggered when an Entity is spawned/created
 ---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun(self: CharacterSimple)): fun(self: CharacterSimple) @Called when Character crouches
 ---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
----@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)): fun(self: CharacterSimple, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)): fun(self: CharacterSimple, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple:Subscribe(event_name, callback) end
 
@@ -2181,12 +2267,12 @@ function CharacterSimple:Subscribe(event_name, callback) end
 ---@overload fun(self: CharacterSimple, event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: CharacterSimple, event_name: "MovementModeChange", callback: fun(self: CharacterSimple, old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
 ---@overload fun(self: CharacterSimple, event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(self: CharacterSimple, event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: CharacterSimple, event_name: "StartCrouch", callback: fun(self: CharacterSimple)) @Called when Character crouches
 ---@overload fun(self: CharacterSimple, event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
----@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(self: CharacterSimple, event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: CharacterSimple, event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple:Unsubscribe(event_name, callback) end
 
@@ -2209,12 +2295,12 @@ function CharacterSimple:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: CharacterSimple, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "MovementModeChange", callback: fun(self: CharacterSimple, old_mode: integer, new_mode: integer)) @Called when the Character movement mode changes
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: CharacterSimple, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: CharacterSimple, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: CharacterSimple)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: CharacterSimple)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "StartCrouch", callback: fun(self: CharacterSimple)) @Called when Character crouches
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: CharacterSimple, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
----@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: CharacterSimple, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: CharacterSimple, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function CharacterSimple.Unsubscribe(event_name, callback) end
 
@@ -2230,7 +2316,7 @@ Chat = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/chat#static-function-addmessage">docs</a>
 ---
 ---Adds a chat message which will display local only
----@param message string 
+---@param message string @The message, supports the same rich text tags as the chat
 function Chat.AddMessage(message) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -2258,20 +2344,20 @@ function Chat.SendMessage(player, message) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/chat#static-function-setconfiguration">docs</a>
 ---
 ---Configures the Chat visuals and position
----@param screen_location? Vector2D @(Default: Vector2D(-25, 0))
----@param size? Vector2D @(Default: Vector2D(600, 250))
----@param anchors_min? Vector2D @(Default: Vector2D(1, 0.5))
----@param anchors_max? Vector2D @(Default: Vector2D(1, 0.5))
----@param alignment? Vector2D @(Default: Vector2D(1, 0.5))
----@param justify? boolean @(Default: true)
----@param show_scrollbar? boolean @(Default: true)
+---@param screen_location? Vector2D @Screen location, or the left and top offsets when the anchors are stretched (Default: Vector2D(-25, 0))
+---@param size? Vector2D @Size, or the right and bottom offsets when the anchors are stretched (Default: Vector2D(600, 250))
+---@param anchors_min? Vector2D @Min anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector2D(1, 0.5))
+---@param anchors_max? Vector2D @Max anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector2D(1, 0.5))
+---@param alignment? Vector2D @Pivot of the chat, (0.5, 0.5) is the center (Default: Vector2D(1, 0.5))
+---@param justify? boolean @Whether the text is justified (Default: true)
+---@param show_scrollbar? boolean @Whether to show the scrollbar (Default: true)
 function Chat.SetConfiguration(screen_location, size, anchors_min, anchors_max, alignment, justify, show_scrollbar) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/chat#static-function-setvisibility">docs</a>
 ---
 ---Sets if the Chat is visible or not
----@param is_visible boolean 
+---@param is_visible boolean @Whether the Chat is visible or not
 function Chat.SetVisibility(is_visible) end
 
 
@@ -2308,7 +2394,7 @@ Client = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-copytoclipboard">docs</a>
 ---
 ---Copies a text to Clipboard
----@param text string 
+---@param text string @The text to copy
 function Client.CopyToClipboard(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2338,14 +2424,14 @@ function Client.GetAllValuesKeys() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getconnectedserverip">docs</a>
 ---
 ---Gets the current connected server IP:Port
----@return string 
+---@return string @Current connected server IP:Port
 function Client.GetConnectedServerIP() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getentitybyid">docs</a>
 ---
 ---Returns the entity with the specified ID
----@param entity_id integer 
+---@param entity_id integer @The entity ID
 ---@return Entity? @the entity
 function Client.GetEntityByID(entity_id) end
 
@@ -2380,7 +2466,7 @@ function Client.GetLogLevel() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getmap">docs</a>
 ---
----Returns the current Map
+---Returns the current map package name
 ---@return string @the current Map
 function Client.GetMap() end
 
@@ -2388,7 +2474,7 @@ function Client.GetMap() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getnearclipplane">docs</a>
 ---
 ---Gets the Near Clip Plane value
----@return number 
+---@return number @Near Clip Plane value
 function Client.GetNearClipPlane() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2417,8 +2503,8 @@ function Client.GetTime() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-getvalue">docs</a>
 ---
 ---Gets a value given a key
----@param key string 
----@param fallback any 
+---@param key string @The key
+---@param fallback any @Value returned if the key doesn't exist
 ---@return any @Value at key or fallback if key doesn't exist
 function Client.GetValue(key, fallback) end
 
@@ -2426,7 +2512,7 @@ function Client.GetValue(key, fallback) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-ispackageloaded">docs</a>
 ---
 ---Returns if a Package is currently loaded
----@param package_name string 
+---@param package_name string @The package folder name
 ---@return boolean @if the package is loaded
 function Client.IsPackageLoaded(package_name) end
 
@@ -2441,7 +2527,7 @@ function Client.OpenEscapeMenu(open_settings) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setdebugenabled">docs</a>
 ---
 ---Enables/Disables Debug settings and Client Console to be used
----@param enable_debug boolean 
+---@param enable_debug boolean @Whether to enable Debug settings and Client Console to be used
 function Client.SetDebugEnabled(enable_debug) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2455,25 +2541,25 @@ function Client.SetEscapeMenuText(text) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-sethighlightcolor">docs</a>
 ---
 ---Changes the Highlight Color for highlighted actors at a specific Index. Multiply it by 5 (or more) for having a glowing effect.<br/><br/><code>HighlightMode.Always</code> will always be visible, even behind walls<br/><code>HighlightMode.OnlyHidden</code> will only be visible if behind a wall<br/><code>HighlightMode.OnlyVisible</code> will only be visible if not behind a wall<br/><br/>Note: You can only have 3 different indexes (0, 1 or 2).
----@param highlight_color Color 
----@param index integer 
----@param mode? HighlightMode @(Default: HighlightMode.Always)
+---@param highlight_color Color @The color to use
+---@param index integer @Highlight slot index (0 to 2)
+---@param mode? HighlightMode @When the highlight is visible (Default: HighlightMode.Always)
 function Client.SetHighlightColor(highlight_color, index, mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setnearclipplane">docs</a>
 ---
 ---Sets the Near Clip Plane
----@param near_clip_plane number 
+---@param near_clip_plane number @The new Near Clip Plane
 function Client.SetNearClipPlane(near_clip_plane) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setoutlinecolor">docs</a>
 ---
 ---Changes the Outline Color for outlined actors at a specific Index. Multiply it by 5 (or more) for having a glowing effect.<br/><br/>Note: You can only have 3 different indexes (0, 1 or 2), and the default Outline color index used by the game is  <code>0</code> (when interacting with stuff).
----@param outline_color Color 
----@param index? integer @(Default: 0)
----@param thickness? number @(Default: 2)
+---@param outline_color Color @The color to use
+---@param index? integer @Outline slot index (0 to 2) (Default: 0)
+---@param thickness? number @Line thickness (Default: 2)
 function Client.SetOutlineColor(outline_color, index, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -2496,8 +2582,8 @@ function Client.SetValue(key, value) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-shownotification">docs</a>
 ---
 ---Shows a notification using the built-in notification system.
----@param text string 
----@param notification_type? NotificationType @(Default: NotificationType.Info)
+---@param text string @The text of the notification
+---@param notification_type? NotificationType @The notification style (Default: NotificationType.Info)
 ---@param add_to_notification_list? boolean @Whether to add this notification to the notification list (accessible from the bell icon on the top-right corner) (Default: true)
 ---@param duration? number @Duration in seconds to display the notification (Default: 10)
 function Client.ShowNotification(text, notification_type, add_to_notification_list, duration) end
@@ -2733,10 +2819,10 @@ function Damageable.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-applydamage">docs</a>
 ---
 ---Do damage to this entity, will trigger all related events and apply modified damage based on bone. Also will apply impulse if it's a heavy explosion
----@param damage integer 
----@param bone_name? string @(Default: "")
----@param damage_type? DamageType @(Default: DamageType.Shot)
----@param from_direction? Vector @(Default: Vector(0, 0, 0))
+---@param damage integer @Amount of damage
+---@param bone_name? string @Name of the bone or socket (Default: "")
+---@param damage_type? DamageType @Type of the damage, used for effects and in the damage events (Default: DamageType.Shot)
+---@param from_direction? Vector @Direction the damage came from (Default: Vector(0, 0, 0))
 ---@param instigator? Player @The player which caused the damage (Default: nil)
 ---@param causer? any @The object which caused the damage (Default: nil)
 ---@return integer @the damage applied
@@ -2746,7 +2832,7 @@ function Damageable:ApplyDamage(damage, bone_name, damage_type, from_direction, 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-getdamagemultiplier">docs</a>
 ---
 ---Gets the Damage Multiplier of a bone
----@param bone_name string 
+---@param bone_name string @Name of the bone or socket
 ---@return number @the damage multiplier of the bone
 function Damageable:GetDamageMultiplier(bone_name) end
 
@@ -2754,21 +2840,21 @@ function Damageable:GetDamageMultiplier(bone_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-gethealth">docs</a>
 ---
 ---Gets the current health
----@return integer 
+---@return integer @Current health
 function Damageable:GetHealth() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-getmaxhealth">docs</a>
 ---
 ---Gets the Max Health
----@return integer 
+---@return integer @Max Health
 function Damageable:GetMaxHealth() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-isdead">docs</a>
 ---
 ---Returns if the entity is dead
----@return boolean 
+---@return boolean @Whether the entity is dead
 function Damageable:IsDead() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -2776,29 +2862,29 @@ function Damageable:IsDead() end
 ---
 ---Respawns the Entity, filling its Health and moving it to its Initial Location
 ---@param location? Vector @If not passed will use the initial location passed when the Entity spawned (Default: initial location)
----@param rotation? Rotator @(Default: Rotator(0, 0, 0))
+---@param rotation? Rotator @Rotation to respawn with (Default: Rotator(0, 0, 0))
 function Damageable:Respawn(location, rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-setdamagemultiplier">docs</a>
 ---
 ---Changes how much damage this entity takes on specific bones
----@param bone_name string 
----@param multiplier number 
+---@param bone_name string @Name of the bone or socket
+---@param multiplier number @Damage multiplier for that bone, 1 is the default
 function Damageable:SetDamageMultiplier(bone_name, multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-sethealth">docs</a>
 ---
 ---Sets the Health of this Entity. You can only call it on alive Entities (call Respawn first)
----@param new_health integer 
+---@param new_health integer @The new Health of this Entity
 function Damageable:SetHealth(new_health) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-setmaxhealth">docs</a>
 ---
 ---Sets the MaxHealth of this Entity
----@param max_health integer 
+---@param max_health integer @The new MaxHealth of this Entity
 function Damageable:SetMaxHealth(max_health) end
 
 
@@ -2893,7 +2979,7 @@ function Database:Close() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/database#function-execute">docs</a>
 ---
----Execute a query synchronously
+---Executes a query synchronously, blocking until it finishes. Prefer <code>ExecuteAsync</code> to avoid freezing the server
 ---@param query string @Query to execute
 ---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
 ---@return integer @affected rows
@@ -2912,7 +2998,7 @@ function Database:ExecuteAsync(query, callback, ...) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/database#function-select">docs</a>
 ---
----Selects a query synchronously
+---Runs a SELECT query synchronously, blocking until it finishes. Prefer <code>SelectAsync</code> to avoid freezing the server
 ---@param query string @Query to execute
 ---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
 ---@return table[] @rows fetched
@@ -2939,105 +3025,118 @@ Debug = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawbox">docs</a>
 ---
 ---Draws a Debug box in the world
----@param location Vector 
----@param extent Vector 
----@param rotation Rotator 
----@param color Color 
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param location Vector @World location
+---@param extent Vector @Half size of the box on each axis
+---@param rotation Rotator @World rotation
+---@param color Color @The color to use
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawBox(location, extent, rotation, color, life_time, thickness) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawcapsule">docs</a>
+---
+---Draws a Debug capsule in the World
+---@param center Vector @Center of the capsule
+---@param half_height number @Half of the capsule height
+---@param radius number @Radius of the capsule
+---@param rotation Rotator @Rotation of the capsule
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the debug drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
+function Debug.DrawCapsule(center, half_height, radius, rotation, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawcoordinatesystem">docs</a>
 ---
 ---Draws a Debug coordinate system in the world
----@param location Vector 
----@param rotation Rotator 
----@param size? number @(Default: 100)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param location Vector @World location
+---@param rotation Rotator @World rotation
+---@param size? number @Size of the drawing (Default: 100)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawCoordinateSystem(location, rotation, size, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawcrosshairs">docs</a>
 ---
 ---Draws a Debug crosshair in the world
----@param location Vector 
----@param rotation Rotator 
----@param size? number @(Default: 100)
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param location Vector @World location
+---@param rotation Rotator @World rotation
+---@param size? number @Size of the drawing (Default: 100)
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawCrosshairs(location, rotation, size, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawcylinder">docs</a>
 ---
 ---Draws a Debug cylinder in the world
----@param start_location Vector 
----@param end_location Vector 
----@param radius number 
----@param segments integer 
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param start_location Vector @World start location
+---@param end_location Vector @World end location
+---@param radius number @Radius
+---@param segments integer @Number of segments used to draw it, more segments look smoother
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawCylinder(start_location, end_location, radius, segments, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawdirectionalarrow">docs</a>
 ---
 ---Draws a Debug directional arrow in the world
----@param start_location Vector 
----@param end_location Vector 
----@param arrow_size? number @(Default: 100)
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param start_location Vector @World start location
+---@param end_location Vector @World end location
+---@param arrow_size? number @Size of the arrow head (Default: 100)
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawDirectionalArrow(start_location, end_location, arrow_size, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawline">docs</a>
 ---
 ---Draws a Debug Line in the World
----@param start_position Vector 
----@param end_position Vector 
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param start_position Vector @World start location
+---@param end_position Vector @World end location
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawLine(start_position, end_position, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawpoint">docs</a>
 ---
 ---Draws a Debug Point in the World
----@param start_position Vector 
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param size? number @(Default: 10)
+---@param start_position Vector @World start location
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param size? number @Size of the drawing (Default: 10)
 function Debug.DrawPoint(start_position, color, life_time, size) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawsphere">docs</a>
 ---
 ---Draws a Debug sphere in the World
----@param start_location Vector 
----@param radius number 
----@param segments integer 
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param thickness? number @(Default: 0)
+---@param start_location Vector @World start location
+---@param radius number @Radius
+---@param segments integer @Number of segments used to draw it, more segments look smoother
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param thickness? number @Line thickness (Default: 0)
 function Debug.DrawSphere(start_location, radius, segments, color, life_time, thickness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-drawstring">docs</a>
 ---
 ---Draws a Debug string in the world
----@param location Vector 
----@param text string 
----@param color? Color @(Default: Color.RED)
----@param life_time? number @(Default: 5)
----@param draw_shadow? boolean @(Default: false)
----@param font_scale? number @(Default: 1)
+---@param location Vector @World location
+---@param text string @The text to draw
+---@param color? Color @The color to use (Default: Color.RED)
+---@param life_time? number @Seconds before the drawing disappears (Default: 5)
+---@param draw_shadow? boolean @Whether to draw a shadow behind the text (Default: false)
+---@param font_scale? number @Scale of the text (Default: 1)
 function Debug.DrawString(location, text, color, life_time, draw_shadow, font_scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -3054,8 +3153,8 @@ Decal = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Decal Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
 ---@param material_asset string @Material Asset
 ---@param size? Vector @Size of the Decal (Default: Vector(128, 256, 256))
 ---@param lifespan? number @Time until automatically destroyed in seconds (Default: 60)
@@ -3080,7 +3179,7 @@ function Decal.Inherit(name, custom_values) end
 ---
 ---Starts fading in this Decal after a delay.
 ---@param start_delay number @Seconds to wait before starting the fade-in
----@param duration number @Duration of the fade-in in seconds
+---@param duration number @Duration of the fade-in, in seconds
 function Decal:SetFadeIn(start_delay, duration) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
@@ -3110,17 +3209,17 @@ Discord = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/discord#static-function-initialize">docs</a>
 ---
 ---Initializes the Discord Integration with your custom client_id
----@param client_id integer 
+---@param client_id integer @Your Discord application client ID
 function Discord.Initialize(client_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/discord#static-function-setactivity">docs</a>
 ---
 ---Communicates with Discord and sets a custom user status
----@param state string 
----@param details string 
----@param large_image string 
----@param large_text string 
+---@param state string @First line of the status
+---@param details string @Second line of the status
+---@param large_image string @Asset key of the large image, configured in your Discord application
+---@param large_text string @Tooltip of the large image
 ---@param reset_time? boolean @Whether or not to reset current activity elapsed time (Default: false)
 function Discord.SetActivity(state, details, large_image, large_text, reset_time) end
 
@@ -3194,7 +3293,7 @@ function Entity.GetParentClass() end
 ---
 ---Gets if this Class is child of another class if this Class was created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@param class table @The other class to check
----@return boolean 
+---@return boolean @Whether this Class is child of another class if this Class was created with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 function Entity.IsChildOf(class) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3277,21 +3376,21 @@ function Entity:GetAllValuesKeys() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-getclass">docs</a>
 ---
 ---Gets the class of this entity
----@return table 
+---@return table @Class of this entity
 function Entity:GetClass() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-getid">docs</a>
 ---
 ---Gets the universal network ID of this Entity (same on both client and server)
----@return integer 
+---@return integer @Universal network ID of this Entity
 function Entity:GetID() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-getvalue">docs</a>
 ---
 ---Gets a <a href='/docs/core-concepts/scripting/entity-values'>Value</a> stored on this Entity at the given key. Please refer to <a href="/docs/core-concepts/scripting/entity-values">Entity Values</a> for more information
----@param key string 
+---@param key string @The key
 ---@param fallback any @Fallback value if key doesn't exist
 ---@return any @Value at key or fallback if key doesn't exist
 function Entity:GetValue(key, fallback) end
@@ -3308,14 +3407,14 @@ function Entity:HasAuthority() end
 ---
 ---Recursively checks if this entity is <a href='/docs/core-concepts/scripting/inheriting-classes'>inherited</a> from a Class
 ---@param class table @The Class
----@return boolean 
+---@return boolean @Whether this entity is of that class or inherits from it
 function Entity:IsA(class) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-isbeingdestroyed">docs</a>
 ---
 ---Returns true if this Entity is being destroyed.<br>You can check this inside events like <code>Drop</code> to see if a Pickable is being dropped because it's going to be destroyed
----@return boolean 
+---@return boolean @Whether this Entity is being destroyed
 function Entity:IsBeingDestroyed() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3329,7 +3428,7 @@ function Entity:IsSpawned() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-isvalid">docs</a>
 ---
 ---Returns true if this Entity is valid (i.e. wasn't destroyed and points to a valid Entity)
----@return boolean 
+---@return boolean @Whether this Entity is valid
 function Entity:IsValid() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3343,8 +3442,8 @@ function Entity:SetSpawnMode(spawn_mode) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#function-setvalue">docs</a>
 ---
 ---Sets a value in this Entity, which can be accessed by any package (optionally sync on clients if called from server)<br><br>Please refer to <a href="/docs/core-concepts/scripting/entity-values">Entity Values</a> for more information
----@param key string 
----@param value any 
+---@param key string @The key
+---@param value any @The value, can be any serializable type (not functions)
 ---@param sync_on_clients? boolean @Server side parameter, if enabled will sync this value with all clients (Default: false)
 function Entity:SetValue(key, value, sync_on_clients) end
 
@@ -3540,7 +3639,7 @@ function File.CreateDirectory(path) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/file#static-function-exists">docs</a>
 ---
----Verifies if a entry exists in the file system
+---Verifies if an entry exists in the file system
 ---@param path string @Path to file or folder
 ---@return boolean @if exists
 function File.Exists(path) end
@@ -3577,7 +3676,7 @@ function File.GetFullPath(path) end
 ---
 ---Checks if a path is a directory
 ---@param path string @Path to folder
----@return boolean @if is a directory
+---@return boolean @Whether the path is a directory
 function File.IsDirectory(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3585,7 +3684,7 @@ function File.IsDirectory(path) end
 ---
 ---Checks if a path is a file
 ---@param path string @Path to file
----@return boolean @if is a regular file
+---@return boolean @Whether the path is a regular file
 function File.IsRegularFile(path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -3757,10 +3856,10 @@ function Gizmo.Inherit(name, custom_values) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-activate">docs</a>
 ---
----Enable the interaction
----@param location Vector 
----@param rotation Rotator 
----@param scale Vector 
+---Enables the interaction, placing the Gizmo at the given transform
+---@param location Vector @World location of the Gizmo
+---@param rotation Rotator @World rotation of the Gizmo
+---@param scale Vector @Scale of the Gizmo
 function Gizmo:Activate(location, rotation, scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -3773,7 +3872,7 @@ function Gizmo:Deactivate() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-isinteracting">docs</a>
 ---
 ---Returns if it's currently interacting
----@return boolean 
+---@return boolean @Whether it's currently interacting
 function Gizmo:IsInteracting() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -3791,25 +3890,25 @@ function Gizmo:ReleasePointer() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-setalignspace">docs</a>
 ---
----
----@param align_space GizmoAlignSpace 
+---Sets whether the Gizmo is aligned to the local or the world space
+---@param align_space GizmoAlignSpace @The align space
 function Gizmo:SetAlignSpace(align_space) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-setsnapsettings">docs</a>
 ---
----
----@param location_grid_size number 
----@param rotation_grid_size number 
----@param scale_grid_size number 
+---Sets the snapping grid sizes, 0 to disable snapping
+---@param location_grid_size number @Translation snap size, in units
+---@param rotation_grid_size number @Rotation snap size, in degrees
+---@param scale_grid_size number @Scale snap size
 function Gizmo:SetSnapSettings(location_grid_size, rotation_grid_size, scale_grid_size) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-settransformmode">docs</a>
 ---
----
----@param transform_mode GizmoTransformMode 
----@param combine_translate_rotate boolean 
+---Sets whether the Gizmo translates, rotates or scales
+---@param transform_mode GizmoTransformMode @The transform mode
+---@param combine_translate_rotate boolean @Whether to show the translation and rotation handles together
 function Gizmo:SetTransformMode(transform_mode, combine_translate_rotate) end
 
 
@@ -3888,13 +3987,13 @@ Grenade = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Grenade Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param static_mesh_asset? string @(Default: nanos-world::SM_Grenade_G67)
----@param explosion_particles? string @(Default: nanos-world::P_Grenade_Special)
----@param explosion_sound? string @(Default: nanos-world::A_Explosion_Large)
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param static_mesh_asset? string @The Static Mesh asset to use (Default: nanos-world::SM_Grenade_G67)
+---@param explosion_particles? string @Particle spawned when exploding (Default: nanos-world::P_Grenade_Special)
+---@param explosion_sound? string @Sound played when exploding (Default: nanos-world::A_Explosion_Large)
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Grenade:Constructor(location, rotation, static_mesh_asset, explosion_particles, explosion_sound, collision_type, gravity_enabled, spawn_mode) end
 
@@ -3920,50 +4019,50 @@ function Grenade:Explode() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getbasedamage">docs</a>
 ---
----Damage at Inner Radius
----@return number 
+---Gets the max damage, applied within the inner radius
+---@return number @The base damage
 function Grenade:GetBaseDamage() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getdamagefalloff">docs</a>
 ---
----Radius which BaseDamage will apply proportionally
----@return number 
+---Gets the falloff exponent used to interpolate between the base and the minimum damage
+---@return number @The damage falloff
 function Grenade:GetDamageFalloff() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getdamageinnerradius">docs</a>
 ---
----Radius which MinimumDamage will apply
----@return number 
+---Gets the radius within which the base damage is fully applied
+---@return number @The inner radius
 function Grenade:GetDamageInnerRadius() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getdamageouterradius">docs</a>
 ---
----Radius which BaseDamage will apply
----@return number 
+---Gets the radius at which the damage reaches the minimum damage
+---@return number @The outer radius
 function Grenade:GetDamageOuterRadius() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getminimumdamage">docs</a>
 ---
----Damage at Outer Radius
----@return number 
+---Gets the min damage, applied at the outer radius
+---@return number @The minimum damage
 function Grenade:GetMinimumDamage() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getthrowforce">docs</a>
 ---
----Impulse applied when throwing
----@return number 
+---Gets the impulse applied when throwing
+---@return number @The throw force
 function Grenade:GetThrowForce() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-gettimetoexplode">docs</a>
 ---
----Time until Explosion
----@return number 
+---Gets the time until the explosion after throwing
+---@return number @Seconds until the explosion
 function Grenade:GetTimeToExplode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -3981,7 +4080,7 @@ function Grenade:SetDamage(base_damage, minimum_damage, damage_inner_radius, dam
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-setthrowforce">docs</a>
 ---
 ---Set Impulse applied when throwing
----@param throw_force integer 
+---@param throw_force integer @The new Impulse applied when throwing
 function Grenade:SetThrowForce(throw_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -4099,7 +4198,7 @@ HTTP = {}
 ---@param content_type? string @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types'>Content Type</a> to be used (Default: application/json)
 ---@param compress? boolean @Whether or not to compress the content with gzip (Default: false)
 ---@param headers? table @The <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers'>Headers</a> to be used (Default: {})
----@return { Status: integer, Data: string, Headers: table } 
+---@return { Status: integer, Data: string, Headers: table } @Table with the response <code>Status</code>, <code>Data</code> and <code>Headers</code>
 function HTTP.Request(uri, endpoint, method, data, content_type, compress, headers) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4150,31 +4249,31 @@ function Input.Bind(binding_name, input_event, callback) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getgamekeybindings">docs</a>
 ---
 ---Returns a table with all Game KeyBindings
----@return table 
+---@return table @Table with all Game KeyBindings
 function Input.GetGameKeyBindings() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getkeyboardlayout">docs</a>
 ---
 ---Gets the keyboard layout of the user
----@return KeyboardLayout 
+---@return KeyboardLayout @Keyboard layout of the user
 function Input.GetKeyboardLayout() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getkeycode">docs</a>
 ---
 ---Gets the key code of a key
----@param key_name string 
----@return integer 
+---@param key_name string @The key name, e.g. <code>E</code> or <code>LeftMouseButton</code>
+---@return integer @Key code of a key
 function Input.GetKeyCode(key_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getkeyicon">docs</a>
 ---
 ---Gets the icon path of a key
----@param key_name string 
----@param dark_mode? boolean @(Default: false)
----@return string 
+---@param key_name string @The key name, e.g. <code>E</code> or <code>LeftMouseButton</code>
+---@param dark_mode? boolean @Whether to return the dark version of the icon (Default: false)
+---@return string @Icon path of a key
 function Input.GetKeyIcon(key_name, dark_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -4189,7 +4288,7 @@ function Input.GetMappedKeys(binding_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getmodifierkeys">docs</a>
 ---
 ---Gets the currently pressed modifier keys
----@return KeyModifier 
+---@return KeyModifier @Currently pressed modifier keys
 function Input.GetModifierKeys() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -4203,7 +4302,7 @@ function Input.GetMouseCursor() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-getscriptingkeybindings">docs</a>
 ---
 ---Returns a table with all Scripting KeyBindings
----@return table 
+---@return table @Table with all Scripting KeyBindings
 function Input.GetScriptingKeyBindings() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -4219,14 +4318,14 @@ function Input.InputKey(key_name, input_event, amount_depressed) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-isbindingdown">docs</a>
 ---
 ---Returns if a Key Binding is being pressed.<br><br>A Binding can be mapped to more than one Key, any of them being pressed is enough for this to return <code>true</code>.
----@param binding_name string 
+---@param binding_name string @The name of the Key Binding
 ---@return boolean @if the Key Binding is pressed
 function Input.IsBindingDown(binding_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-isinputenabled">docs</a>
 ---
----
+---Gets if the game input is enabled
 ---@return boolean @if the input is visible
 function Input.IsInputEnabled() end
 
@@ -4234,14 +4333,14 @@ function Input.IsInputEnabled() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-iskeydown">docs</a>
 ---
 ---Returns if a key is being pressed
----@param key_name string 
+---@param key_name string @The key name, e.g. <code>E</code> or <code>LeftMouseButton</code>
 ---@return boolean @if the key is pressed
 function Input.IsKeyDown(key_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-ismouseenabled">docs</a>
 ---
----
+---Gets if the mouse cursor is enabled
 ---@return boolean @if the mouse is visible
 function Input.IsMouseEnabled() end
 
@@ -4264,21 +4363,21 @@ function Input.ResetBindings() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-setinputenabled">docs</a>
 ---
 ---Toggles Local Player input
----@param enable_input boolean 
+---@param enable_input boolean @Whether to enable Local Player input
 function Input.SetInputEnabled(enable_input) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-setmousecursor">docs</a>
 ---
 ---Sets the current Mouse Cursor type
----@param cursor_type CursorType 
+---@param cursor_type CursorType @The new current Mouse Cursor type
 function Input.SetMouseCursor(cursor_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/input#static-function-setmouseenabled">docs</a>
 ---
----Displays/Hides Mouse Cursor
----@param is_enabled boolean 
+---Shows or hides the mouse cursor
+---@param is_enabled boolean @Whether the mouse cursor is enabled
 function Input.SetMouseEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -4344,10 +4443,10 @@ InstancedStaticMesh = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#constructor-default-constructor">docs</a>
 ---
 ---Calls the original InstancedStaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param static_mesh_asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param static_mesh_asset string @The Static Mesh asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
 ---@param instances? { Location: Vector, Rotation: Rotator, Scale: Vector } @Array with initial instances (Default: {})
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function InstancedStaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, instances, spawn_mode) end
@@ -4369,9 +4468,9 @@ function InstancedStaticMesh.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-addinstance">docs</a>
 ---
 ---Add an instance to this component
----@param relative_location Vector 
----@param relative_rotation? Rotator @(Default: Rotator(0, 0, 0))
----@param scale? Vector @(Default: Vector(1, 1, 1))
+---@param relative_location Vector @Location relative to this component
+---@param relative_rotation? Rotator @Rotation relative to this component (Default: Rotator(0, 0, 0))
+---@param scale? Vector @Scale of the instance (Default: Vector(1, 1, 1))
 ---@return integer @the index of the added instance
 function InstancedStaticMesh:AddInstance(relative_location, relative_rotation, scale) end
 
@@ -4392,41 +4491,41 @@ function InstancedStaticMesh:ClearInstances() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-getinstancecount">docs</a>
 ---
 ---Returns the number of instances currently stored
----@return integer 
+---@return integer @Number of instances currently stored
 function InstancedStaticMesh:GetInstanceCount() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-getinstancetransform">docs</a>
 ---
 ---Returns the current transform of the instance at the given index
----@param index integer 
----@return Vector 
----@return Rotator 
----@return Vector 
+---@param index integer @Index of the instance
+---@return Vector @The instance relative location
+---@return Rotator @The instance relative rotation
+---@return Vector @The instance scale
 function InstancedStaticMesh:GetInstanceTransform(index) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-getmesh">docs</a>
 ---
 ---Gets the Asset path mesh used
----@return string 
+---@return string @Asset path mesh used
 function InstancedStaticMesh:GetMesh() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-removeinstance">docs</a>
 ---
 ---Removes the instance at the given index. This will move the last element to the provided index, reducing the count by 1
----@param index integer 
+---@param index integer @Index of the instance
 function InstancedStaticMesh:RemoveInstance(index) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-setinstancetransform">docs</a>
 ---
 ---Changes the transform of an existing instance. You can pass all other parameters as nil to modify only a single property
----@param index integer 
----@param relative_location? Vector @(Default: (current location))
----@param relative_rotation? Rotator @(Default: (current rotation))
----@param scale? Vector @(Default: (current scale))
+---@param index integer @Index of the instance
+---@param relative_location? Vector @Location relative to this component (Default: (current location))
+---@param relative_rotation? Rotator @Rotation relative to this component (Default: (current rotation))
+---@param scale? Vector @Scale of the instance (Default: (current scale))
 function InstancedStaticMesh:SetInstanceTransform(index, relative_location, relative_rotation, scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4472,14 +4571,14 @@ function Level.CallLevelBlueprintEvent(event_name, ...) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/level#static-function-getstreamlevels">docs</a>
 ---
 ---Gets a list of all Stream Levels
----@return { name: string, path: string, is_loaded: boolean, is_visible: boolean, is_temp: boolean }[] 
+---@return { name: string, path: string, is_loaded: boolean, is_visible: boolean, is_temp: boolean }[] @List of all Stream Levels
 function Level.GetStreamLevels() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/level#static-function-loadstreamlevel">docs</a>
 ---
 ---Loads a Level in runtime
----@param level_name string 
+---@param level_name string @Name of the Stream Level
 ---@param should_block_on_load? boolean @If this should be a blocking operation - the game will freeze (Default: false)
 ---@param make_visible_after_load? boolean @If this should be visible automatically after loaded (Default: true)
 function Level.LoadStreamLevel(level_name, should_block_on_load, make_visible_after_load) end
@@ -4488,7 +4587,7 @@ function Level.LoadStreamLevel(level_name, should_block_on_load, make_visible_af
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/level#static-function-setstreamlevelvisibility">docs</a>
 ---
 ---Sets a Stream Level visibility
----@param level_name string 
+---@param level_name string @Name of the Stream Level
 ---@param visibility boolean @If this level should be visible
 function Level.SetStreamLevelVisibility(level_name, visibility) end
 
@@ -4496,7 +4595,7 @@ function Level.SetStreamLevelVisibility(level_name, visibility) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/level#static-function-unloadstreamlevel">docs</a>
 ---
 ---Unloads a Level in runtime
----@param level_name string 
+---@param level_name string @Name of the Stream Level
 ---@param should_block_on_unload? boolean @If this should be a blocking operation - the game will freeze (Default: false)
 function Level.UnloadStreamLevel(level_name, should_block_on_unload) end
 
@@ -4541,18 +4640,18 @@ Light = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Light Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
+---@param location Vector @World location to spawn at
 ---@param rotation? Rotator @Relevant only for Rect and Spot LightTypes (Default: Rotator(0, 0, 0))
----@param color? Color @(Default: Color(1, 1, 1))
----@param light_type? LightType @(Default: LightType.Point)
----@param intensity? number @(Default: 30)
----@param attenuation_radius? number @(Default: 250)
+---@param color? Color @Color of the light (Default: Color(1, 1, 1))
+---@param light_type? LightType @Point, Spot or Rect (Default: LightType.Point)
+---@param intensity? number @Brightness of the light (Default: 30)
+---@param attenuation_radius? number @Distance the light reaches (Default: 250)
 ---@param cone_angle? number @Relevant only for Spot LightType (Default: 44)
 ---@param inner_cone_angle_percent? number @Inner Cone Angle Percent (Relevant only for Spot LightType) (0-1) (Default: 0)
 ---@param max_draw_distance? number @Max Draw Distance (Good for performance) - 0 for infinite (Default: 10000)
 ---@param use_inverse_squared_falloff? boolean @Whether to use physically based inverse squared distance falloff, where Attenuation Radius is only clamping the light's contribution. (Spot and Point types only) (Default: true)
----@param cast_shadows? boolean @(Default: true)
----@param visible? boolean @(Default: true)
+---@param cast_shadows? boolean @Whether the light casts shadows (Default: true)
+---@param visible? boolean @Whether the light starts visible (Default: true)
 ---@param source_radius? number @Radius of light source shape. (Spot and Point types only) (Default: 2)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Light:Constructor(location, rotation, color, light_type, intensity, attenuation_radius, cone_angle, inner_cone_angle_percent, max_draw_distance, use_inverse_squared_falloff, cast_shadows, visible, source_radius, spawn_mode) end
@@ -4573,43 +4672,43 @@ function Light.Inherit(name, custom_values) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getattenuationradius">docs</a>
 ---
----
----@return number 
+---Gets the distance this Light reaches
+---@return number @The attenuation radius
 function Light:GetAttenuationRadius() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getcastshadows">docs</a>
 ---
----
----@return boolean 
+---Gets if this Light casts shadows
+---@return boolean @Whether it casts shadows
 function Light:GetCastShadows() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getcolor">docs</a>
 ---
----
----@return Color 
+---Gets the color of this Light
+---@return Color @The light color
 function Light:GetColor() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getintensity">docs</a>
 ---
----
----@return number 
+---Gets the brightness of this Light
+---@return number @The brightness
 function Light:GetIntensity() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-setattenuationradius">docs</a>
 ---
----
----@param attenuation_radius number 
+---Sets the distance this Light reaches
+---@param attenuation_radius number @The new attenuation radius
 function Light:SetAttenuationRadius(attenuation_radius) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-setcastshadows">docs</a>
 ---
----
----@param is_shadows_enabled boolean 
+---Sets if this Light casts shadows
+---@param is_shadows_enabled boolean @Whether it casts shadows
 function Light:SetCastShadows(is_shadows_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4622,8 +4721,8 @@ function Light:SetColor(color) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-setintensity">docs</a>
 ---
----
----@param intensity number 
+---Sets the brightness of this Light
+---@param intensity number @The new brightness
 function Light:SetIntensity(intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4637,7 +4736,7 @@ function Light:SetTextureLightProfile(light_profile) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix#constructor-default-constructor">Default Constructor</a>
 ---
----A Matrix is an array of numbers this can be used for geometric and positional calculations. This is mainly used internally.
+---A 4x4 transformation Matrix built from a rotation and an origin, which can be used for geometric and positional calculations. This is mainly used internally.
 ---@class Matrix
 ---@overload fun(rotation: Rotator, origin: Vector): Matrix
 Matrix = {}
@@ -4646,14 +4745,14 @@ Matrix = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix#function-gettransposed">docs</a>
 ---
 ---Returns a new matrix transposed (<a href="https://en.wikipedia.org/wiki/Transpose">Wikipedia</a>)
----@return Matrix @The matrix transpoosed
+---@return Matrix @The transposed matrix
 function Matrix:GetTransposed() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/matrix#function-transformvector">docs</a>
 ---
----Transform the vector with the matrix
----@param vector Vector @The vector who will be transformed
+---Rotates the Vector by this Matrix rotation (the origin is not applied)
+---@param vector Vector @The Vector to be transformed
 ---@return Vector @The new vector
 function Matrix:TransformVector(vector) end
 
@@ -4671,14 +4770,14 @@ Melee = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Melee Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
----@param handling_mode? HandlingMode @(Default: HandlingMode.Torch)
----@param crosshair_material? string @(Default: "")
----@param can_use? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
+---@param handling_mode? HandlingMode @How the Character holds it (Default: HandlingMode.Torch)
+---@param crosshair_material? string @Material of the crosshair (Default: "")
+---@param can_use? boolean @Whether it can be used (attack) when picked up (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Melee:Constructor(location, rotation, asset, collision_type, gravity_enabled, handling_mode, crosshair_material, can_use, spawn_mode) end
 
@@ -4701,8 +4800,8 @@ function Melee.Inherit(name, custom_values) end
 ---Sets an Animation when attacking<br/><br/>You can add more than one animation, which will be selected randomly when attacking
 ---@param asset_path string @The Animation used when attacking
 ---@param play_rate? number @The Animation Play Rate (Default: 1.0)
----@param slot_Type? AnimationSlotType @Whether to play it on upper body or full body (Default: AnimationSlotType.UpperBody)
-function Melee:AddAnimationCharacterUse(asset_path, play_rate, slot_Type) end
+---@param slot_type? AnimationSlotType @Whether to play it on upper body or full body (Default: AnimationSlotType.UpperBody)
+function Melee:AddAnimationCharacterUse(asset_path, play_rate, slot_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-clearanimationscharacteruse">docs</a>
@@ -4714,42 +4813,42 @@ function Melee:ClearAnimationsCharacterUse() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-getanimationscharacteruse">docs</a>
 ---
 ---Gets the Animations when Character uses it
----@return string[] 
+---@return string[] @Animations when Character uses it
 function Melee:GetAnimationsCharacterUse() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-getbasedamage">docs</a>
 ---
 ---Gets the Base Damage
----@return integer 
+---@return integer @Base Damage
 function Melee:GetBaseDamage() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-getcooldown">docs</a>
 ---
 ---Gets the Cooldown between usages
----@return number 
+---@return number @Cooldown between usages
 function Melee:GetCooldown() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-getsounduse">docs</a>
 ---
 ---Gets the Sound when Character uses it
----@return string 
+---@return string @Sound when Character uses it
 function Melee:GetSoundUse() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-setbasedamage">docs</a>
 ---
 ---Sets the Base Damage
----@param damage? integer @The Base Damage value (Default: "")
+---@param damage integer @The Base Damage value
 function Melee:SetBaseDamage(damage) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-setcooldown">docs</a>
 ---
 ---Sets the cooldown between attacking
----@param cooldown number 
+---@param cooldown number @The new cooldown between attacking
 function Melee:SetCooldown(cooldown) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -4766,8 +4865,8 @@ function Melee:SetDamageSettings(damage_start_time, damage_duration_time) end
 ---Sets the Sound when hitting something
 ---@param surface_type SurfaceType @The surface to apply the sound. Use <code>SurfaceType.Default</code> to be the default to all non defined surfaces. Note: Surfaces <b>Water</b> and <b>Flesh</b> already have default sounds and must be explicitly overridden
 ---@param asset_path string @The Sound used when attacking
----@param volume? number @(Default: 1.0)
----@param pitch? number @(Default: 1.0)
+---@param volume? number @Volume multiplier (Default: 1.0)
+---@param pitch? number @Pitch multiplier (Default: 1.0)
 function Melee:SetImpactSound(surface_type, asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4892,11 +4991,11 @@ function NanosMath.ClampAxis(value) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-finterpto">docs</a>
 ---
 ---Interpolate number from Current to Target
----@param current number 
----@param target number 
----@param delta_time number 
----@param interp_speed number 
----@return number 
+---@param current number @The current value
+---@param target number @The target value
+---@param delta_time number @Time since the last call, usually the Tick delta time
+---@param interp_speed number @Interpolation speed, 0 jumps straight to the target
+---@return number @The interpolated value
 function NanosMath.FInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -4942,52 +5041,53 @@ function NanosMath.RelativeTo(location, rotation, actor) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-rinterpconstantto">docs</a>
 ---
 ---Interpolate Rotator from Current to Target with a constant step
----@param current Rotator 
----@param target Rotator 
----@param delta_time number 
----@param interp_speed number 
----@return Rotator 
+---@param current Rotator @The current value
+---@param target Rotator @The target value
+---@param delta_time number @Time since the last call, usually the Tick delta time
+---@param interp_speed number @Interpolation speed, 0 jumps straight to the target
+---@return Rotator @The interpolated Rotator
 function NanosMath.RInterpConstantTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-rinterpto">docs</a>
 ---
 ---Interpolate Rotator from Current to Target
----@param current Rotator 
----@param target Rotator 
----@param delta_time number 
----@param interp_speed number 
----@return Rotator 
+---@param current Rotator @The current value
+---@param target Rotator @The target value
+---@param delta_time number @Time since the last call, usually the Tick delta time
+---@param interp_speed number @Interpolation speed, 0 jumps straight to the target
+---@return Rotator @The interpolated Rotator
 function NanosMath.RInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-round">docs</a>
 ---
----Rounds a number
+---Rounds a number to the nearest value with the given decimal places
 ---@param value number @The number to be rounded
+---@param decimals? integer @How many decimal places to keep (Default: 0)
 ---@return number @the rounded number
-function NanosMath.Round(value) end
+function NanosMath.Round(value, decimals) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-vinterpconstantto">docs</a>
 ---
 ---Interpolate Vector from Current to Target with a constant step
----@param current Vector 
----@param target Vector 
----@param delta_time number 
----@param interp_speed number 
----@return Vector 
+---@param current Vector @The current value
+---@param target Vector @The target value
+---@param delta_time number @Time since the last call, usually the Tick delta time
+---@param interp_speed number @Interpolation speed, 0 jumps straight to the target
+---@return Vector @The interpolated Vector
 function NanosMath.VInterpConstantTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/nanosmath#static-function-vinterpto">docs</a>
 ---
 ---Interpolate Vector from Current to Target
----@param current Vector 
----@param target Vector 
----@param delta_time number 
----@param interp_speed number 
----@return Vector 
+---@param current Vector @The current value
+---@param target Vector @The target value
+---@param delta_time number @Time since the last call, usually the Tick delta time
+---@param interp_speed number @Interpolation speed, 0 jumps straight to the target
+---@return Vector @The interpolated Vector
 function NanosMath.VInterpTo(current, target, delta_time, interp_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5050,17 +5150,17 @@ Navigation = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/navigation#static-function-findpathtolocation">docs</a>
 ---
 ---Finds a Path given Start and End location (only if map has a NavMesh)
----@param start_location Vector 
----@param end_location Vector 
----@return { IsValid: boolean, IsPartial: boolean, Length: number, Cost: number, PathPoints: Vector[] } 
+---@param start_location Vector @World start location
+---@param end_location Vector @World end location
+---@return { IsValid: boolean, IsPartial: boolean, Length: number, Cost: number, PathPoints: Vector[] } @Table with the path points and whether a path was found
 function Navigation.FindPathToLocation(start_location, end_location) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/navigation#static-function-getrandompointinnavigableradius">docs</a>
 ---
 ---Finds random, point in navigable space restricted to Radius around Origin. Resulting location is not tested for reachability from the Origin (only if map has a NavMesh)
----@param origin Vector 
----@param radius number 
+---@param origin Vector @Center of the search
+---@param radius number @Search radius
 ---@return Vector @The random point
 function Navigation.GetRandomPointInNavigableRadius(origin, radius) end
 
@@ -5068,8 +5168,8 @@ function Navigation.GetRandomPointInNavigableRadius(origin, radius) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/navigation#static-function-getrandomreachablepointinradius">docs</a>
 ---
 ---Finds random, reachable point in navigable space restricted to radius around origin (only if map has a NavMesh)
----@param origin Vector 
----@param radius number 
+---@param origin Vector @Center of the search
+---@param radius number @Search radius
 ---@return Vector @The random point
 function Navigation.GetRandomReachablePointInRadius(origin, radius) end
 
@@ -5091,7 +5191,7 @@ function Package.Export(variable_name, value) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-flushpersistentdata">docs</a>
 ---
----Flushes the Persistent Data pending changes to disk immediately
+---Flushes the Persistent Data pending changes to disk immediately. Note: this operation is already performed automatically under the hood, it is not necessary to keep always flushing and should only be used when really needed, as disk writing is a slow operation
 function Package.FlushPersistentData() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5121,14 +5221,14 @@ function Package.GetFiles(path_filter, extension_filter) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-getname">docs</a>
 ---
----Returns the package name/path
+---Returns the package folder name
 ---@return string @The package name/path
 function Package.GetName() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-getpersistentdata">docs</a>
 ---
----Gets the Persistent Value from the disk
+---Gets a Persistent Value from the disk<br/>Pass no parameter to return the whole table, or a key to get a specific value
 ---@param key? string @The key to get the data (Default: "")
 ---@return table @Persistent values from disk
 function Package.GetPersistentData(key) end
@@ -5151,7 +5251,7 @@ function Package.GetVersion() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/package#static-function-isunloading">docs</a>
 ---
 ---Returns whether this package is currently unloading
----@return boolean 
+---@return boolean @Whether this package is currently unloading
 function Package.IsUnloading() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5159,7 +5259,7 @@ function Package.IsUnloading() end
 ---
 ---Compiles a .lua file and returns a function to run it. To be used for loading files in a sandboxed environment.<br/><br/>Supports the same searchers as <a href="#static-function-require">Package.Require</a>.
 ---@param file_path string @Path to the script file to compile
----@return function @the compiled function to run the script, allowing you to pass a environment env table for the script
+---@return function @the compiled function to run the script, allowing you to pass an environment table for the script
 function Package.LoadFile(file_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -5370,11 +5470,11 @@ Particle = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Particle Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
----@param auto_destroy? boolean @(Default: true)
----@param auto_activate? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
+---@param auto_destroy? boolean @Whether to destroy it after it finishes playing (Default: true)
+---@param auto_activate? boolean @Whether to start playing immediately (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Particle:Constructor(location, rotation, asset, auto_destroy, auto_activate, spawn_mode) end
 
@@ -5408,7 +5508,7 @@ function Particle:Deactivate() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#function-isactive">docs</a>
 ---
 ---Returns if this Particle is active
----@return boolean 
+---@return boolean @Whether this Particle is active
 function Particle:IsActive() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5486,7 +5586,7 @@ function Particle:SetParameterVector(parameter, value) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn">docs</a>
 ---
----Base class for all Character entities.
+---Base class for all Pawn entities (Character and CharacterSimple).
 ---@class Pawn : Entity, Actor, Paintable, Damageable
 ---@field Super Pawn @Access to the original/native Pawn methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 Pawn = {}
@@ -5535,7 +5635,7 @@ function Pawn:AddStaticMeshAttached(id, static_mesh_path, socket, relative_locat
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-follow">docs</a>
 ---
----AI: Makes this Character to follow another actor<br/><br/>Triggers event <a href='pawn#event-movecomplete'>MoveComplete</a>
+---AI: Makes this Pawn follow another actor<br/><br/>Triggers event <a href='/docs/scripting-reference/classes/base-classes/pawn#event-movecomplete'>MoveComplete</a>
 ---@param actor Actor @Actor to follow
 ---@param acceptance_radius? number @Radius to consider success (Default: 50)
 ---@param stop_on_succeed? boolean @Whether to stop when reaching the target (Default: false)
@@ -5560,57 +5660,57 @@ function Pawn:GetAllStaticMeshAttached() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcancrouch">docs</a>
 ---
----Gets if this Character is allowed to Crouch
----@return boolean 
+---Gets if this Pawn is allowed to Crouch
+---@return boolean @Whether this Pawn is allowed to Crouch
 function Pawn:GetCanCrouch() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcanjump">docs</a>
 ---
----Gets if this Character is allowed to Jump
----@return boolean 
+---Gets if this Pawn is allowed to Jump
+---@return boolean @Whether this Pawn is allowed to Jump
 function Pawn:GetCanJump() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcapsulesize">docs</a>
 ---
 ---Gets the Capsule Size
----@return { Radius: integer, HalfHeight: integer, CrouchedHalfHeight: integer } 
+---@return { Radius: integer, HalfHeight: integer, CrouchedHalfHeight: integer } @Capsule Size
 function Pawn:GetCapsuleSize() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getcontrolrotation">docs</a>
 ---
----Gets the Control Rotation
----@return Rotator 
+---Gets the Control Rotation, which is where this Pawn is looking or aiming
+---@return Rotator @Control Rotation
 function Pawn:GetControlRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getflyingmode">docs</a>
 ---
 ---Gets if it's in Flying mode
----@return boolean 
+---@return boolean @Whether it's in Flying mode
 function Pawn:GetFlyingMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getgravityscale">docs</a>
 ---
 ---Gets the gravity scale
----@return number 
+---@return number @Gravity scale
 function Pawn:GetGravityScale() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getjumpzvelocity">docs</a>
 ---
----Gets the Jump Z Velocity
----@return integer 
+---Gets the initial vertical velocity when jumping, which defines the jump height
+---@return integer @Jump Z Velocity
 function Pawn:GetJumpZVelocity() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getmesh">docs</a>
 ---
 ---Gets the base Mesh Asset
----@return string 
+---@return string @Base Mesh Asset
 function Pawn:GetMesh() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5624,13 +5724,13 @@ function Pawn:GetMovingTo() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-getplayer">docs</a>
 ---
 ---Gets the possessing Player
----@return Player? 
+---@return Player? @Possessing Player
 function Pawn:GetPlayer() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-hidebone">docs</a>
 ---
----Hides a bone of this Character.<br/><br/>Check <a href='character.mdx#characters-skeleton-bone-names'>Bone Names List</a>
+---Hides a bone of this Pawn.<br/><br/>Check <a href='/docs/scripting-reference/classes/character#characters-skeleton-bone-names'>Bone Names List</a>
 ---@param bone_name? string @Bone to hide (Default: "")
 function Pawn:HideBone(bone_name) end
 
@@ -5645,15 +5745,15 @@ function Pawn:IsBoneHidden(bone_name) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-jump">docs</a>
 ---
----Triggers this Character to jump
+---Triggers this Pawn to jump
 function Pawn:Jump() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-moveto">docs</a>
 ---
----AI: Makes this Character to walk to the Location<br/><br/>Triggers event <a href='pawn#event-movecomplete'>MoveComplete</a>
----@param location Vector 
----@param acceptance_radius? number @(Default: 50)
+---AI: Makes this Pawn walk to the Location<br/><br/>Triggers event <a href='/docs/scripting-reference/classes/base-classes/pawn#event-movecomplete'>MoveComplete</a>
+---@param location Vector @The destination
+---@param acceptance_radius? number @Distance from the destination considered as arrived (Default: 50)
 function Pawn:MoveTo(location, acceptance_radius) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5693,33 +5793,33 @@ function Pawn:SetAIAvoidanceSettings(enabled, avoidance_consideration_radius) en
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setbrakingsettings">docs</a>
 ---
----Sets the Movement Braking Settings of this Character
----@param ground_friction? number @(Default: 2)
----@param braking_friction_factor? number @(Default: 2)
----@param braking_walking? integer @(Default: 96)
----@param braking_flying? integer @(Default: 3000)
----@param braking_swimming? integer @(Default: 10)
----@param braking_falling? integer @(Default: 0)
+---Sets the Movement Braking Settings of this Pawn
+---@param ground_friction? number @Friction applied when walking on the ground (Default: 2)
+---@param braking_friction_factor? number @Multiplier of the friction applied when braking (Default: 2)
+---@param braking_walking? integer @Deceleration when walking without input (Default: 96)
+---@param braking_flying? integer @Deceleration when flying without input (Default: 3000)
+---@param braking_swimming? integer @Deceleration when swimming without input (Default: 10)
+---@param braking_falling? integer @Horizontal deceleration when falling without input (Default: 0)
 function Pawn:SetBrakingSettings(ground_friction, braking_friction_factor, braking_walking, braking_flying, braking_swimming, braking_falling) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcancrouch">docs</a>
 ---
----Sets if this Character is allowed to Crouch
----@param can_crouch boolean 
+---Sets if this Pawn is allowed to Crouch
+---@param can_crouch boolean @Whether this Pawn is allowed to Crouch
 function Pawn:SetCanCrouch(can_crouch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcanjump">docs</a>
 ---
----Sets if this Character is allowed to Jump
----@param can_jump boolean 
+---Sets if this Pawn is allowed to Jump
+---@param can_jump boolean @Whether this Pawn is allowed to Jump
 function Pawn:SetCanJump(can_jump) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcapsulesize">docs</a>
 ---
----Sets this Character's Capsule size (will affect Camera location and Character's collision)
+---Sets this Pawn's Capsule size (will affect Camera location and the Pawn's collision)
 ---@param radius? integer @Pass 0 to auto calculate the radius based on the mesh bounds (Default: 0)
 ---@param half_height? integer @Pass 0 to auto calculate the half height based on the mesh bounds (Default: 0)
 ---@param crouched_half_height? integer @Pass 0 to auto calculate the crouched half height based on the mesh bounds (Default: 0)
@@ -5728,29 +5828,29 @@ function Pawn:SetCapsuleSize(radius, half_height, crouched_half_height) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setcontrolrotation">docs</a>
 ---
----Sets the Control Rotation
----@param control_rotation Rotator 
+---Sets the Control Rotation, which is where this Pawn is looking or aiming
+---@param control_rotation Rotator @The new Control Rotation
 function Pawn:SetControlRotation(control_rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setflyingmode">docs</a>
 ---
----Sets the Flying Mode
----@param flying_mode boolean 
+---Enables or disables the Flying Mode, which removes gravity and allows moving in all directions
+---@param flying_mode boolean @Whether the Flying Mode is enabled
 function Pawn:SetFlyingMode(flying_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setgravityscale">docs</a>
 ---
----Changes the Gravity Scale of this Character (can be negative)
----@param gravity_scale number 
+---Changes the Gravity Scale of this Pawn (can be negative)
+---@param gravity_scale number @The new Gravity Scale
 function Pawn:SetGravityScale(gravity_scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-sethitreactionenabled">docs</a>
 ---
 ---Sets if the character will react to damage by applying small dynamic ragdoll effect to local bones damaged
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the character will react to damage by applying small dynamic ragdoll effect to local bones damaged
 function Pawn:SetHitReactionEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
@@ -5764,16 +5864,16 @@ function Pawn:SetJumpZVelocity(jump_z_velocity) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setmeshsettings">docs</a>
 ---
 ---Configures the mesh attachment settings and visibility
----@param relative_location? Vector @(Default: Vector(0, 0, 0))
----@param relative_rotation? Rotator @(Default: Rotator(0, -90, 0))
----@param is_visible? bool @Whether the mesh is visible (useful for using retargeters using child meshes) (Default: true)
+---@param relative_location? Vector @Location of the mesh relative to the capsule (Default: Vector(0, 0, 0))
+---@param relative_rotation? Rotator @Rotation of the mesh relative to the capsule (Default: Rotator(0, -90, 0))
+---@param is_visible? boolean @Whether the mesh is visible (useful for using retargeters using child meshes) (Default: true)
 function Pawn:SetMeshSettings(relative_location, relative_rotation, is_visible) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setragdollondeathenabled">docs</a>
 ---
 ---Sets if the character will enter ragdoll mode when it dies. You can set it to false to apply custom Death animations
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the character will enter ragdoll mode when it dies. You can set it to false to apply custom Death animations
 function Pawn:SetRagdollOnDeathEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -5789,20 +5889,20 @@ function Pawn:SetStaticMeshAttachedTransform(id, relative_location, relative_rot
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-stopanimation">docs</a>
 ---
 ---Stops an Animation Montage on this character
----@param animation_asset string 
+---@param animation_asset string @The Animation asset to stop
 function Pawn:StopAnimation(animation_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-stopmovement">docs</a>
 ---
----AI: Stops the movement, optionally zeroing the velocity as well (stops even for non AI)<br/><br/>Triggers event <a href='pawn#event-movecomplete'>MoveComplete</a>
+---AI: Stops the movement, optionally zeroing the velocity as well (stops even for non AI)<br/><br/>Triggers event <a href='/docs/scripting-reference/classes/base-classes/pawn#event-movecomplete'>MoveComplete</a>
 ---@param stops_velocity? boolean @Also stops the Pawn's current velocity (Default: false)
 function Pawn:StopMovement(stops_velocity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-unhidebone">docs</a>
 ---
----UnHide a bone of this Character.<br/><br/>Check <a href='character.mdx#characters-skeleton-bone-names'>Bone Names List</a>
+---Unhides a bone of this Pawn.<br/><br/>Check <a href='/docs/scripting-reference/classes/character#characters-skeleton-bone-names'>Bone Names List</a>
 ---@param bone_name string @Bone to unhide
 function Pawn:UnHideBone(bone_name) end
 
@@ -5822,11 +5922,11 @@ function Pawn:UnHideBone(bone_name) end
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)): fun(self: Pawn, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
----@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)): fun(self: Pawn, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn.Subscribe(event_name, callback) end
 
@@ -5846,11 +5946,11 @@ function Pawn.Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "LeaveWater", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)): fun(self: Pawn, succeeded: boolean) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Pawn, event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)): fun(self: Pawn, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When Character is possessed by a Player
+---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)): fun(self: Pawn, player: Player) @When this Pawn is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)): fun(self: Pawn) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)): fun(self: Pawn) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
----@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When Character is unpossessed by a Player
+---@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)): fun(self: Pawn, old_player: Player) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: Pawn, event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)): fun(self: Pawn, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn:Subscribe(event_name, callback) end
 
@@ -5868,11 +5968,11 @@ function Pawn:Subscribe(event_name, callback) end
 ---@overload fun(self: Pawn, event_name: "LeaveWater", callback: fun(self: Pawn)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Pawn, event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(self: Pawn, event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
+---@overload fun(self: Pawn, event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(self: Pawn, event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(self: Pawn, event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: Pawn, event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
----@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(self: Pawn, event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(self: Pawn, event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn:Unsubscribe(event_name, callback) end
 
@@ -5891,11 +5991,11 @@ function Pawn:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: Pawn)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "MoveComplete", callback: fun(self: Pawn, succeeded: boolean)) @Called when AI reaches its destination, or when it fails
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Pawn, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
----@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When Character is possessed by a Player
+---@overload fun(event_name: "Possess", callback: fun(self: Pawn, player: Player)) @When this Pawn is possessed by a Player
 ---@overload fun(event_name: "Respawn", callback: fun(self: Pawn)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: Pawn)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: Pawn, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
----@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When Character is unpossessed by a Player
+---@overload fun(event_name: "UnPossess", callback: fun(self: Pawn, old_player: Player)) @When this Pawn is unpossessed by a Player
 ---@overload fun(event_name: "ValueChange", callback: fun(self: Pawn, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function Pawn.Unsubscribe(event_name, callback) end
 
@@ -5967,21 +6067,21 @@ function Pickable:GetAllStaticMeshAttached() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-gethandler">docs</a>
 ---
 ---Gets the Character, if it exists, that's holding this Pickable
----@return Character? 
+---@return Character? @Character, if it exists, that's holding this Pickable
 function Pickable:GetHandler() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-gethandlingmode">docs</a>
 ---
 ---Gets the Handling Mode of this Pickable
----@return HandlingMode 
+---@return HandlingMode @Handling Mode of this Pickable
 function Pickable:GetHandlingMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-getmesh">docs</a>
 ---
 ---Gets the name of the asset this Pickable uses
----@return string 
+---@return string @Name of the asset this Pickable uses
 function Pickable:GetMesh() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -6053,7 +6153,7 @@ function Pickable:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_da
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setcanuse">docs</a>
 ---
 ---Sets if this Pickable can be used by the player when held
----@param can_use boolean 
+---@param can_use boolean @Whether this Pickable can be used by the player when held
 function Pickable:SetCanUse(can_use) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -6067,7 +6167,7 @@ function Pickable:SetCrosshairMaterial(material_asset) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setpickable">docs</a>
 ---
 ---Sets if this Pickable can be picked up from ground by the player
----@param is_pickable boolean 
+---@param is_pickable boolean @Whether this Pickable can be picked up from ground by the player
 function Pickable:SetPickable(is_pickable) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6186,117 +6286,117 @@ function Player.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#static-function-getbysteamid">docs</a>
 ---
 ---Retrieves a player by their Steam ID
----@param steam_id string 
----@return Player? 
+---@param steam_id string @The Steam ID (SteamID64) to look for
+---@return Player? @Player by their Steam ID
 function Player.GetBySteamID(steam_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-attachcamerato">docs</a>
 ---
----Attaches the Player`s Camera to an Actor
----@param actor Actor 
----@param socket_offset? Vector @(Default: Vector(0, 0, 0))
----@param blend_speed? number @(Default: 0.0)
+---Attaches the Player's Camera to an Actor
+---@param actor Actor @The Actor to attach the camera to
+---@param socket_offset? Vector @Offset of the camera relative to the Actor (Default: Vector(0, 0, 0))
+---@param blend_speed? number @Speed of the camera blend, 0 to snap immediately (Default: 0.0)
 function Player:AttachCameraTo(actor, socket_offset, blend_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-ban">docs</a>
 ---
 ---Bans the player from the server
----@param reason string 
+---@param reason string @The reason shown to the Player
 function Player:Ban(reason) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-connect">docs</a>
 ---
 ---Redirects the player to another server
----@param IP string 
+---@param ip string @The server address to connect to, in the format <code>IP:PORT</code>
 ---@param password? string @Server password (Default: "")
-function Player:Connect(IP, password) end
+function Player:Connect(ip, password) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getaccounticonurl">docs</a>
 ---
 ---Return a URL which can be used through WebUI and Widgets to display the Player's Steam Avatar (64x64)
----@return string 
+---@return string @URL of the Steam avatar image
 function Player:GetAccountIconURL() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getaccountid">docs</a>
 ---
----
----@return string 
+---Gets the Player's nanos world account ID
+---@return string @The nanos world account ID
 function Player:GetAccountID() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getaccountname">docs</a>
 ---
----
----@return string 
+---Gets the Player's nanos world account name
+---@return string @The account name
 function Player:GetAccountName() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getcameraarmlength">docs</a>
 ---
----
+---Gets the Player's camera arm (spring arm) length
 ---@param return_base? boolean @Whether to return the current (false) or base (true) value. The base is the same value set by SetCameraArmLength(). Use base if you want to get the original value set by SetCameraArmLength() and not the current (interpolated) value. (Default: false)
----@return number 
+---@return number @The camera arm length, in units
 function Player:GetCameraArmLength(return_base) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getcameralocation">docs</a>
 ---
----
----@return Vector 
+---Gets the location of the Player's camera
+---@return Vector @The camera location
 function Player:GetCameraLocation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getcamerarotation">docs</a>
 ---
----
----@return Rotator 
+---Gets the rotation of the Player's camera
+---@return Rotator @The camera rotation
 function Player:GetCameraRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getcontrolledcharacter">docs</a>
 ---
----
----@return Pawn? 
+---Gets the Pawn (Character) this Player is currently possessing
+---@return Pawn? @The possessed Pawn, or nil if not possessing any
 function Player:GetControlledCharacter() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getdimension">docs</a>
 ---
 ---Gets this Player's dimension
----@return integer 
+---@return integer @This Player's dimension
 function Player:GetDimension() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getip">docs</a>
 ---
----
----@return string 
+---Gets the Player's IP address
+---@return string @The IP address
 function Player:GetIP() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getname">docs</a>
 ---
----
----@return string 
+---Gets the Player's name
+---@return string @The Player's name
 function Player:GetName() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getping">docs</a>
 ---
----
----@return integer 
+---Gets the Player's ping
+---@return integer @The ping, in milliseconds
 function Player:GetPing() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getsteamid">docs</a>
 ---
----
----@return string 
+---Gets the Player's Steam ID
+---@return string @The Steam ID (SteamID64)
 function Player:GetSteamID() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6316,38 +6416,38 @@ function Player:GetVOIPSpeakingChannels() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-ishost">docs</a>
 ---
----
----@return boolean 
+---Gets if this Player is the host of a P2P (listen) server
+---@return boolean @Whether this Player is the host
 function Player:IsHost() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-islocalplayer">docs</a>
 ---
----
----@return boolean 
+---Gets if this Player is the local Player (the one running this client)
+---@return boolean @Whether this is the local Player
 function Player:IsLocalPlayer() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-isvoipmuted">docs</a>
 ---
 ---Returns whether VOIP is muted for this player
----@return boolean 
+---@return boolean @Whether VOIP is muted for this player
 function Player:IsVOIPMuted() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-kick">docs</a>
 ---
 ---Kicks the player from the server
----@param reason string 
+---@param reason string @The reason shown to the Player
 function Player:Kick(reason) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-possess">docs</a>
 ---
----Makes a Player to possess and control a Pawn (Character)
----@param new_pawn Pawn 
----@param blend_time? number @(Default: 0)
----@param exp? number @(Default: 0)
+---Makes this Player possess and control a Pawn (Character)
+---@param new_pawn Pawn @The Pawn to possess
+---@param blend_time? number @Seconds to smoothly blend the camera to the new Pawn (Default: 0)
+---@param exp? number @Exponent used to smooth the blend, use 0 for linear (Default: 0)
 function Player:Possess(new_pawn, blend_time, exp) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6360,8 +6460,8 @@ function Player:ResetCamera() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-rotatecamerato">docs</a>
 ---
 ---Smoothly moves the Player's Camera Rotation
----@param rotation Rotator 
----@param time number 
+---@param rotation Rotator @The target camera rotation
+---@param time number @Seconds to reach the target
 ---@param exp? number @Exponential used to smooth interp, use 0 for linear movement (Default: 0)
 function Player:RotateCameraTo(rotation, time, exp) end
 
@@ -6369,7 +6469,7 @@ function Player:RotateCameraTo(rotation, time, exp) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setcameraarmlength">docs</a>
 ---
 ---Sets the Player's Camera Arm Length (Spring Arm length)
----@param length number 
+---@param length number @Length of the camera spring arm, in units
 ---@param force? boolean @Whether to bypass interpolation and set the target to its value directly (Default: false)
 function Player:SetCameraArmLength(length, force) end
 
@@ -6384,21 +6484,21 @@ function Player:SetCameraFOV(fov) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setcameralocation">docs</a>
 ---
 ---Sets the Player's Camera Location (only works if not possessing any Character)
----@param location Vector 
+---@param location Vector @The new Player's Camera Location
 function Player:SetCameraLocation(location) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setcamerarotation">docs</a>
 ---
 ---Sets the Player's Camera Rotation
----@param rotation Rotator 
+---@param rotation Rotator @The new Player's Camera Rotation
 function Player:SetCameraRotation(rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setcamerasocketoffset">docs</a>
 ---
 ---Sets the Player's Camera Socket Offset (Spring Arm Offset)
----@param socket_offset Vector 
+---@param socket_offset Vector @The new Player's Camera Socket Offset
 function Player:SetCameraSocketOffset(socket_offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6415,14 +6515,14 @@ function Player:SetCameraSpeedSettings(max_speed, acceleration, deceleration, tu
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setdimension">docs</a>
 ---
 ---Sets this Player's dimension
----@param dimension integer 
+---@param dimension integer @The new dimension
 function Player:SetDimension(dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setdistanceoptimizationmultiplier">docs</a>
 ---
 ---Sets the multiplier for how much this Player's is affected by distance optimization from other actors.<br/>A value of 0 disables optimization. Values under 1 decrease the effect, while values over 1 increase it
----@param multiplier number 
+---@param multiplier number @The new multiplier for how much this Player's is affected by distance optimization from other actors
 function Player:SetDistanceOptimizationMultiplier(multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6430,51 +6530,51 @@ function Player:SetDistanceOptimizationMultiplier(multiplier) end
 ---
 ---Turns on camera fading at the given opacity. Does not auto-animate, allowing user to animate themselves. Call StopCameraFade to turn fading back off.
 ---@param in_fade_amount number @Range [0..1], where 0 is fully transparent and 1 is fully opaque solid color.
----@param color Color 
----@param in_fade_audio boolean 
+---@param color Color @The color to use
+---@param in_fade_audio boolean @Whether to fade the audio as well
 function Player:SetManualCameraFade(in_fade_amount, color, in_fade_audio) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setname">docs</a>
 ---
 ---Sets the player's name
----@param player_name string 
+---@param player_name string @The new player's name
 function Player:SetName(player_name) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipglobalallchannelssetting">docs</a>
 ---
 ---Sets the VOIP setting for all global channels
----@param setting VOIPSetting 
+---@param setting VOIPSetting @The new VOIP setting for all global channels
 function Player:SetVOIPGlobalAllChannelsSetting(setting) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipglobalchannelsetting">docs</a>
 ---
 ---Sets the VOIP setting for a specific global channel
----@param channel integer @0-63
----@param setting VOIPSetting 
+---@param channel integer @Channel number, from 1 to 63
+---@param setting VOIPSetting @Whether this Player listens, speaks, both or none on this channel
 function Player:SetVOIPGlobalChannelSetting(channel, setting) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipglobalhighpassfilter">docs</a>
 ---
 ---Sets the global VOIP high-pass filter threshold frequency. Set it to 0 to disable it
----@param threshold integer 
+---@param threshold integer @The new global VOIP high-pass filter threshold frequency
 function Player:SetVOIPGlobalHighPassFilter(threshold) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipgloballowpassfilter">docs</a>
 ---
 ---Sets the global VOIP low-pass filter threshold frequency. Set it to 0 to disable it
----@param threshold integer 
+---@param threshold integer @The new global VOIP low-pass filter threshold frequency
 function Player:SetVOIPGlobalLowPassFilter(threshold) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipglobalvolume">docs</a>
 ---
 ---Sets the global VOIP volume. It only affects the global channels
----@param volume number 
+---@param volume number @The new global VOIP volume. It only affects the global channels
 function Player:SetVOIPGlobalVolume(volume) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6488,29 +6588,29 @@ function Player:SetVOIPLocalMaxDistance(max_distance) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalsetting">docs</a>
 ---
 ---Sets the VOIP setting for the local/proximity
----@param setting VOIPSetting 
+---@param setting VOIPSetting @The new VOIP setting for the local/proximity
 function Player:SetVOIPLocalSetting(setting) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalvolume">docs</a>
 ---
 ---Sets the local/proximity VOIP input/output volume. It only affects the local/proximity channel
----@param volume number 
+---@param volume number @The new local/proximity VOIP input/output volume. It only affects the local/proximity channel
 function Player:SetVOIPLocalVolume(volume) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoipmuted">docs</a>
 ---
 ---Mutes or unmutes VOIP for this player
----@param is_muted boolean 
+---@param is_muted boolean @Whether VOIP is muted
 function Player:SetVOIPMuted(is_muted) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-spectate">docs</a>
 ---
----Spectates other Player
----@param player Player 
----@param blend_speed? number @(Default: 0)
+---Makes this Player spectate another Player
+---@param player Player @The Player
+---@param blend_speed? number @Speed of the camera blend, 0 to snap immediately (Default: 0)
 function Player:Spectate(player, blend_speed) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6535,8 +6635,8 @@ function Player:StopCameraFade() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-translatecamerato">docs</a>
 ---
 ---Smoothly moves the Player's Camera Location (only works if not possessing any Character)
----@param location Vector 
----@param time number 
+---@param location Vector @The target camera location
+---@param time number @Seconds to reach the target
 ---@param exp? number @Exponential used to smooth interp, use 0 for linear movement (Default: 0)
 function Player:TranslateCameraTo(location, time, exp) end
 
@@ -6633,88 +6733,88 @@ function PostProcess.RemoveMaterial() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setbloom">docs</a>
 ---
 ---Set Post Process Bloom Settings
----@param intensity? number @(Default: 0.675)
----@param threshold? number @(Default: -1)
+---@param intensity? number @Bloom intensity (Default: 0.675)
+---@param threshold? number @Minimum brightness for a pixel to bloom (Default: -1)
 function PostProcess.SetBloom(intensity, threshold) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setchromaticaberration">docs</a>
 ---
 ---Set Post Process Chromatic Aberration Settings
----@param intensity? number @(Default: 0)
----@param start_offset? number @(Default: 0)
+---@param intensity? number @Chromatic aberration intensity (Default: 0)
+---@param start_offset? number @Distance from the screen center where it starts (0 to 1) (Default: 0)
 function PostProcess.SetChromaticAberration(intensity, start_offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setexposure">docs</a>
 ---
 ---Set Post Process Exposure Settings
----@param exposure_compensation? number @(Default: 1)
----@param min_ev100? number @(Default: -10)
----@param max_ev100? number @(Default: 20)
----@param low_percent? number @(Default: 10)
----@param high_percent? number @(Default: 90)
+---@param exposure_compensation? number @Exposure bias, in EV (Default: 1)
+---@param min_ev100? number @Min auto exposure brightness, in EV100 (Default: -10)
+---@param max_ev100? number @Max auto exposure brightness, in EV100 (Default: 20)
+---@param low_percent? number @Histogram low percentage used by auto exposure (Default: 10)
+---@param high_percent? number @Histogram high percentage used by auto exposure (Default: 90)
 function PostProcess.SetExposure(exposure_compensation, min_ev100, max_ev100, low_percent, high_percent) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setfilm">docs</a>
 ---
 ---Set Post Process Film Settings
----@param slope? number @(Default: 0.8)
----@param toe? number @(Default: 0.55)
----@param shoulder? number @(Default: 0.26)
----@param black_clip? number @(Default: 0)
----@param white_clip? number @(Default: 0.3)
+---@param slope? number @Steepness of the tonemapper S-curve (Default: 0.8)
+---@param toe? number @Adjusts the dark tones (Default: 0.55)
+---@param shoulder? number @Adjusts the bright tones (Default: 0.26)
+---@param black_clip? number @Where the dark tones clip (Default: 0)
+---@param white_clip? number @Where the bright tones clip (Default: 0.3)
 function PostProcess.SetFilm(slope, toe, shoulder, black_clip, white_clip) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setglobalcontrast">docs</a>
 ---
 ---Set Post Process Global Contrast
----@param contrast Color 
+---@param contrast Color @The new Post Process Global Contrast
 function PostProcess.SetGlobalContrast(contrast) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setglobalgain">docs</a>
 ---
 ---Set Post Process Global Gain
----@param gain Color 
+---@param gain Color @The new Post Process Global Gain
 function PostProcess.SetGlobalGain(gain) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setglobalgamma">docs</a>
 ---
 ---Set Post Process Global Gamma
----@param gamma Color 
+---@param gamma Color @The new Post Process Global Gamma
 function PostProcess.SetGlobalGamma(gamma) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setglobaloffset">docs</a>
 ---
 ---Set Post Process Global Offset
----@param offset Color 
+---@param offset Color @The new Post Process Global Offset
 function PostProcess.SetGlobalOffset(offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setglobalsaturation">docs</a>
 ---
 ---Set Post Process Saturation Colors. Use Alpha for overall Saturation intensity
----@param color Color 
+---@param color Color @The new Post Process Saturation Colors. Use Alpha for overall Saturation intensity
 function PostProcess.SetGlobalSaturation(color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setimageeffects">docs</a>
 ---
 ---Set Post Process Image Effect Settings
----@param vignette_intensity? number @(Default: 0.6)
----@param film_grain_intensity? number @(Default: 0)
+---@param vignette_intensity? number @Darkening of the screen edges (Default: 0.6)
+---@param film_grain_intensity? number @Amount of film grain noise (Default: 0)
 function PostProcess.SetImageEffects(vignette_intensity, film_grain_intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/postprocess#static-function-setlookuptable">docs</a>
 ---
 ---Set Post Process Lookup Table (LUT) Texture
----@param texture_path string 
+---@param texture_path string @The new Post Process Lookup Table (LUT) Texture
 function PostProcess.SetLookupTable(texture_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -6738,11 +6838,11 @@ Prop = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Prop Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
 ---@param collision_type? CollisionType @Setting <code>CollisionType.Auto</code> will make it automatically switch between <b>Normal</b> and <b>IgnoreOnlyPawn</b> if they are smaller than radius <b>40</b> units. (Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param grab_mode? GrabMode @Whether or not the Prop can be grabbed (Default: GrabMode.Auto)
 ---@param ccd_mode? CCDMode @Whether or not the Prop should have CCD enabled (disabling it may cause Props passing through objects if it's kinda small). It's smart to force it disabled on 'visual only' props. (Default: CCDMode.Auto)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
@@ -6765,7 +6865,7 @@ function Prop.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-getgrabmode">docs</a>
 ---
 ---Gets ability to Grab this Prop
----@return GrabMode 
+---@return GrabMode @Ability to Grab this Prop
 function Prop:GetGrabMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -6838,7 +6938,7 @@ function Prop:SetMassOverride(mass) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setmassscale">docs</a>
 ---
 ---Change the mass scale used to calculate the mass of this Prop
----@param scale number 
+---@param scale number @The new mass scale used to calculate the mass of this Prop
 function Prop:SetMassScale(scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
@@ -6982,7 +7082,8 @@ function Quat:Inverse() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/quat#function-normalize">docs</a>
 ---
 ---In place normalize this Quaternion
-function Quat:Normalize() end
+---@param tolerance? number @Minimum squared size to consider it non-zero (Default: 0.000001)
+function Quat:Normalize(tolerance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/quat#function-rotatevector">docs</a>
@@ -7031,6 +7132,15 @@ Rotator = {}
 ---@param max? number @Maximum value (Default: 180)
 ---@return Rotator @the random rotation
 function Rotator.Random(roll, min, max) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/rotator#function-equals">docs</a>
+---
+---Checks against another Rotator for equality, within a tolerance
+---@param other Rotator @The Rotator to compare to
+---@param tolerance? number @Max difference allowed per axis, in degrees (Default: 0.000001)
+---@return boolean @Whether the Rotators are equal
+function Rotator:Equals(other, tolerance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/rotator#function-getforwardvector">docs</a>
@@ -7145,7 +7255,7 @@ function SceneCapture.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-addrenderactor">docs</a>
 ---
 ---Adds an Actor to the Render Only list<br/><br/>Note: adding one actor to this will make the SceneCapture only to render those Actors.
----@param actor Actor 
+---@param actor Actor @The Actor to render
 function SceneCapture:AddRenderActor(actor) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7166,7 +7276,7 @@ function SceneCapture:ClearRenderActors() end
 ---
 ---Takes a snapshot of the SceneCapture and returns a Base64 of it
 ---@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
----@return string 
+---@return string @The snapshot as a Base64 string
 function SceneCapture:EncodeToBase64(image_format) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7181,51 +7291,51 @@ function SceneCapture:EncodeToBase64Async(image_format, callback) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-removerenderactor">docs</a>
 ---
 ---Removes an Actor from the Render Only list
----@param actor Actor 
+---@param actor Actor @The Actor to stop rendering
 function SceneCapture:RemoveRenderActor(actor) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-resize">docs</a>
 ---
 ---Change the output Texture size<br>Note: too high texture will make the capture slower and will affect game performance
----@param width integer 
----@param height integer 
+---@param width integer @Width in pixels
+---@param height integer @Height in pixels
 function SceneCapture:Resize(width, height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setdistanceoptimizationenabled">docs</a>
 ---
 ---Enables or not the rendering frequency optimization if the entities with this Material are too far
----@param enabled boolean 
+---@param enabled boolean @Whether to enable or not the rendering frequency optimization if the entities with this Material are too far
 function SceneCapture:SetDistanceOptimizationEnabled(enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setfovangle">docs</a>
 ---
 ---Sets the FOV
----@param angle number 
+---@param angle number @The new FOV
 function SceneCapture:SetFOVAngle(angle) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setfreeze">docs</a>
 ---
----Stops or Restore Capturing
----@param freeze boolean 
+---Stops or resumes capturing
+---@param freeze boolean @Whether to stop capturing
 function SceneCapture:SetFreeze(freeze) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setrenderrate">docs</a>
 ---
 ---Set how frequent is the capture<br>Note: Set to 0 to capture every frame, or -1 to disable auto-capturing
----@param render_rate number 
+---@param render_rate number @Seconds between captures, 0 for every frame or -1 to disable automatic capture
 function SceneCapture:SetRenderRate(render_rate) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setshowflag">docs</a>
 ---
----Enables/Disables rendering features from being captured<br/>A complete list of available flags can be found in the <a href='https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/FEngineShowFlags/'>Official Unreal Documentation</a>
----@param flag string 
----@param enable boolean 
+---Enables/Disables rendering features from being captured<br/>A complete list of available flags can be found in the <a href='https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/FEngineShowFlags'>Official Unreal Documentation</a>
+---@param flag string @Name of the Unreal Show Flag, e.g. <code>Fog</code>
+---@param enable boolean @Whether it is rendered
 function SceneCapture:SetShowFlag(flag, enable) end
 
 
@@ -7309,8 +7419,8 @@ function Server.AddMapSpawnPoint(location, rotation) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-banbyaccountid">docs</a>
 ---
 ---Ban the player from the server by its Account ID, ideal for banning from inside PlayerConnect event
----@param player_account_id string 
----@param reason string 
+---@param player_account_id string @The Player's nanos world account ID
+---@param reason string @The reason shown to the Player
 function Server.BanByAccountID(player_account_id, reason) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7349,7 +7459,7 @@ function Server.GetCompressionLevel() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getconnectioncount">docs</a>
 ---
 ---Returns the number of connected players (including players in the process of connecting)
----@return integer 
+---@return integer @Number of connected players
 function Server.GetConnectionCount() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7363,14 +7473,14 @@ function Server.GetCustomSettings() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getdefaultentitydimension">docs</a>
 ---
 ---Returns the default entity dimension
----@return integer 
+---@return integer @Default entity dimension
 function Server.GetDefaultEntityDimension() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getdefaultplayerdimension">docs</a>
 ---
 ---Returns the default player dimension
----@return integer 
+---@return integer @Default player dimension
 function Server.GetDefaultPlayerDimension() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7384,7 +7494,7 @@ function Server.GetDescription() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getentitybyid">docs</a>
 ---
 ---Returns the entity with the specified ID
----@param entity_id integer 
+---@param entity_id integer @The entity ID
 ---@return Entity? @the entity
 function Server.GetEntityByID(entity_id) end
 
@@ -7419,14 +7529,14 @@ function Server.GetMapAsset() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getmapconfig">docs</a>
 ---
----Returns a list of the Custom Config of the current map (stored in the MAP_NAME.toml)
+---Returns a list of the Custom Config of the current map (defined in the map package's Package.toml)
 ---@return table @a list of the Custom Config of the current map
 function Server.GetMapConfig() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-getmapspawnpoints">docs</a>
 ---
----Returns a list of the Spawn Points of the current map (stored in the MAP_NAME.toml)
+---Returns a list of the Spawn Points of the current map (defined in the map package's Package.toml)
 ---@return { location: Vector, rotation: Rotator }[] @a list of the Spawn Points of the current map
 function Server.GetMapSpawnPoints() end
 
@@ -7518,7 +7628,7 @@ function Server.IsAnnounced() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-ispackageloaded">docs</a>
 ---
 ---Returns if a Package is currently loaded
----@param package_name string 
+---@param package_name string @The package folder name
 ---@return boolean @If the package is loaded
 function Server.IsPackageLoaded(package_name) end
 
@@ -7526,15 +7636,15 @@ function Server.IsPackageLoaded(package_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-isunsafelibsenabled">docs</a>
 ---
 ---Returns if the server was started with --enable_unsafe_libs
----@return boolean 
+---@return boolean @Whether the server was started with --enable_unsafe_libs
 function Server.IsUnsafeLibsEnabled() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-kickbyaccountid">docs</a>
 ---
 ---Kicks the player from the server by its Account ID, ideal for kicking from inside PlayerConnect event
----@param player_account_id string 
----@param reason string 
+---@param player_account_id string @The Player's nanos world account ID
+---@param reason string @The reason shown to the Player
 function Server.KickByAccountID(player_account_id, reason) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7563,14 +7673,14 @@ function Server.Restart() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-setdefaultentitydimension">docs</a>
 ---
 ---Sets the default server dimension that entities will spawn in. You can change it before spawning an entity and restore it afterwards to just spawn a specific entity directly on it
----@param default_dimension integer 
+---@param default_dimension integer @The new default server dimension that entities will spawn in
 function Server.SetDefaultEntityDimension(default_dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-setdefaultplayerdimension">docs</a>
 ---
 ---Sets the default server dimension that players will spawn in
----@param default_dimension integer 
+---@param default_dimension integer @The new default server dimension that players will spawn in
 function Server.SetDefaultPlayerDimension(default_dimension) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7650,11 +7760,11 @@ function Server.UnloadPackage(package_folder_name) end
 ---@param callback function @Function to call when the event is triggered
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ChangeMap", callback: fun(old_map: string, new_map: string)): fun(old_map: string, new_map: string) @Called when the map changes. This is always called just before Restart event
----@overload fun(event_name: "PlayerConnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string)): fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string) @Called when a player is attempting to connect to the server<br/><br/>Use Server.KickByAccountID() or Server.BanByAccountID() to kick or ban the player from inside this event.
----@overload fun(event_name: "PlayerDisconnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string)): fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string) @Called when a player is disconnecting from the server
----@overload fun(event_name: "Restart", callback: fun()): fun() @Server has been restarted
----@overload fun(event_name: "Start", callback: fun()): fun() @Server has been started
----@overload fun(event_name: "Stop", callback: fun()): fun() @Server has been stopped
+---@overload fun(event_name: "PlayerConnect", callback: fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string)): fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string) @Called when a player is attempting to connect to the server, before the Player entity is created.<br/><br/>To refuse the connection, call <code>Server.KickByAccountID()</code> or <code>Server.BanByAccountID()</code> with the <code>player_account_id</code> (returning <code>false</code> is deprecated).
+---@overload fun(event_name: "PlayerDisconnect", callback: fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string, disconnect_reason: string)): fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string, disconnect_reason: string) @Called when a player is disconnecting from the server
+---@overload fun(event_name: "Restart", callback: fun()): fun() @Triggered when the server is restarting
+---@overload fun(event_name: "Start", callback: fun()): fun() @Triggered once when the server has started and all packages are loaded
+---@overload fun(event_name: "Stop", callback: fun()): fun() @Triggered when the server is stopping
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)): fun(delta_time: number) @Triggered every 33ms by default<br/><br/>Caution: Only small operations should be performed here, otherwise this can lead to server lag and delays
 ---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)): fun(key: string, value: any) @Triggered when a Value is changed with <code>Server.SetValue()</code>
 function Server.Subscribe(event_name, callback) end
@@ -7663,11 +7773,11 @@ function Server.Subscribe(event_name, callback) end
 ---@param event_name string @Name of the event to unsubscribe from
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ChangeMap", callback: fun(old_map: string, new_map: string)) @Called when the map changes. This is always called just before Restart event
----@overload fun(event_name: "PlayerConnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string)) @Called when a player is attempting to connect to the server<br/><br/>Use Server.KickByAccountID() or Server.BanByAccountID() to kick or ban the player from inside this event.
----@overload fun(event_name: "PlayerDisconnect", callback: fun(IP: string, player_account_ID: string, player_name: string, player_steam_ID: string, disconnect_reason: string)) @Called when a player is disconnecting from the server
----@overload fun(event_name: "Restart", callback: fun()) @Server has been restarted
----@overload fun(event_name: "Start", callback: fun()) @Server has been started
----@overload fun(event_name: "Stop", callback: fun()) @Server has been stopped
+---@overload fun(event_name: "PlayerConnect", callback: fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string)) @Called when a player is attempting to connect to the server, before the Player entity is created.<br/><br/>To refuse the connection, call <code>Server.KickByAccountID()</code> or <code>Server.BanByAccountID()</code> with the <code>player_account_id</code> (returning <code>false</code> is deprecated).
+---@overload fun(event_name: "PlayerDisconnect", callback: fun(ip: string, player_account_id: string, player_name: string, player_steam_id: string, disconnect_reason: string)) @Called when a player is disconnecting from the server
+---@overload fun(event_name: "Restart", callback: fun()) @Triggered when the server is restarting
+---@overload fun(event_name: "Start", callback: fun()) @Triggered once when the server has started and all packages are loaded
+---@overload fun(event_name: "Stop", callback: fun()) @Triggered when the server is stopping
 ---@overload fun(event_name: "Tick", callback: fun(delta_time: number)) @Triggered every 33ms by default<br/><br/>Caution: Only small operations should be performed here, otherwise this can lead to server lag and delays
 ---@overload fun(event_name: "ValueChange", callback: fun(key: string, value: any)) @Triggered when a Value is changed with <code>Server.SetValue()</code>
 function Server.Unsubscribe(event_name, callback) end
@@ -7699,16 +7809,16 @@ function Sky.DestroyAllSky() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-gettimeofday">docs</a>
 ---
 ---Gets the current time
----@return integer 
----@return integer 
----@return integer 
+---@return integer @Hour of the day (0-23)
+---@return integer @Minutes (0-59)
+---@return integer @Seconds (0-59)
 function Sky.GetTimeOfDay() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-getweather">docs</a>
 ---
 ---Gets the current weather
----@return WeatherType 
+---@return WeatherType @Current weather
 function Sky.GetWeather() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7716,7 +7826,7 @@ function Sky.GetWeather() end
 ---
 ---Returns if the Ultra Dynamic Sky was spawned
 ---@param including_weather boolean @if to check for Weather Actor too
----@return boolean 
+---@return boolean @Whether the Ultra Dynamic Sky was spawned
 function Sky.IsSpawned(including_weather) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7738,49 +7848,49 @@ function Sky.SetAnimateTimeOfDay(animate, day_length, night_length) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setcloudcoverage">docs</a>
 ---
 ---The amount of coverage for the cloud layer, from a clear sky to overcast
----@param cloud_coverage number 
+---@param cloud_coverage number @From 0 (clear sky) to 10 (overcast)
 function Sky.SetCloudCoverage(cloud_coverage) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setcontrast">docs</a>
 ---
 ---A simple contrast boost for the sky material. Cannot affect volumetric clouds
----@param contrast number 
+---@param contrast number @Contrast multiplier of the sky
 function Sky.SetContrast(contrast) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setfog">docs</a>
 ---
 ---The fogginess of the scene. The impact this has on fog density is scaled from the Fog Density category
----@param fog_percentage number 
+---@param fog_percentage number @Fog amount, from 0 to 100
 function Sky.SetFog(fog_percentage) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonangle">docs</a>
 ---
 ---Sets the Moon Angle
----@param yaw number 
----@param pitch number 
+---@param yaw number @Yaw angle, in degrees
+---@param pitch number @Pitch angle, in degrees
 function Sky.SetMoonAngle(yaw, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonglowintensity">docs</a>
 ---
 ---Sets the Moon Glow Intensity
----@param glow_intensity number 
+---@param glow_intensity number @The new Moon Glow Intensity
 function Sky.SetMoonGlowIntensity(glow_intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonlightintensity">docs</a>
 ---
 ---Sets the Moon Light Intensity
----@param intensity number 
+---@param intensity number @The new Moon Light Intensity
 function Sky.SetMoonLightIntensity(intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonphase">docs</a>
 ---
----Sets the Moon Phase
+---Sets the Moon Phase, from new moon to full moon and back
 ---@param phase number @Ranges from 0-30
 function Sky.SetMoonPhase(phase) end
 
@@ -7788,87 +7898,87 @@ function Sky.SetMoonPhase(phase) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonscale">docs</a>
 ---
 ---Sets the Moon Scale
----@param scale number 
+---@param scale number @The new Moon Scale
 function Sky.SetMoonScale(scale) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoontexture">docs</a>
 ---
 ---Sets the Moon Texture<br /><br />Set it to empty to restore the default. After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
----@param texture string 
+---@param texture string @The new Moon Texture
 function Sky.SetMoonTexture(texture) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoontexturerotation">docs</a>
 ---
 ---Sets the Moon Texture Rotation
----@param rotation number 
+---@param rotation number @The new Moon Texture Rotation
 function Sky.SetMoonTextureRotation(rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setmoonverticaloffset">docs</a>
 ---
 ---Sets the Moon Vertical Offset
----@param offset number 
+---@param offset number @The new Moon Vertical Offset
 function Sky.SetMoonVerticalOffset(offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setnightbrightness">docs</a>
 ---
 ---Can be used to scale the brightness of the sky and lighting, at night
----@param brightness number 
+---@param brightness number @Brightness multiplier at night
 function Sky.SetNightBrightness(brightness) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setoverallintensity">docs</a>
 ---
 ---The overall brightness of the shader
----@param intensity number 
+---@param intensity number @Brightness multiplier of the sky
 function Sky.SetOverallIntensity(intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setskymode">docs</a>
 ---
 ---Sets the Sky Mode<br /><br />After setting it, you must call <code>Sky.Reconstruct()</code> to have it applied properly
----@param sky_mode SkyMode 
+---@param sky_mode SkyMode @The new Sky Mode
 function Sky.SetSkyMode(sky_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setsunangle">docs</a>
 ---
 ---Sets the Sun Angle
----@param yaw number 
----@param pitch number 
+---@param yaw number @Yaw angle, in degrees
+---@param pitch number @Pitch angle, in degrees
 function Sky.SetSunAngle(yaw, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setsunlightintensity">docs</a>
 ---
 ---Sets the Sun Light Intensity
----@param intensity number 
+---@param intensity number @The new Sun Light Intensity
 function Sky.SetSunLightIntensity(intensity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setsunscale">docs</a>
 ---
 ---Sets the Sun Scale
----@param radius number 
+---@param radius number @The new Sun Scale
 function Sky.SetSunScale(radius) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-settimeofday">docs</a>
 ---
 ---Sets the current time
----@param hours integer 
----@param minutes integer 
----@param transition_time? number @(Default: 0.0)
+---@param hours integer @Hour of the day (0-23)
+---@param minutes integer @Minutes (0-59)
+---@param transition_time? number @Seconds to smoothly transition to the new time, 0 to change immediately (Default: 0.0)
 function Sky.SetTimeOfDay(hours, minutes, transition_time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/sky#static-function-setvolumetriccloudcolor">docs</a>
 ---
 ---Sets the Volumetric Cloud Color<br /><br />This is only applied if <code>SetSkyMode(SkyMode.VolumetricClouds)</code> is set
----@param color Color 
+---@param color Color @The new Volumetric Cloud Color
 function Sky.SetVolumetricCloudColor(color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7887,7 +7997,7 @@ function Sky.Spawn(spawn_weather, find_existing) end
 ---Class for playing in-game 2D and 3D sounds.
 ---@class Sound : Entity, Actor
 ---@field Super Sound @Access to the original/native Sound methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
----@overload fun(location: Vector, asset: string, is_2D_sound?: boolean, auto_destroy?: boolean, sound_type?: SoundType, volume?: number, pitch?: number, inner_radius?: number, falloff_distance?: number, attenuation_function?: AttenuationFunction, keep_playing_when_silent?: boolean, loop_mode?: SoundLoopMode, auto_play?: boolean): Sound
+---@overload fun(location: Vector, asset: string, is_2d_sound?: boolean, auto_destroy?: boolean, sound_type?: SoundType, volume?: number, pitch?: number, inner_radius?: number, falloff_distance?: number, attenuation_function?: AttenuationFunction, keep_playing_when_silent?: boolean, loop_mode?: SoundLoopMode, auto_play?: boolean): Sound
 Sound = {}
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -7896,18 +8006,18 @@ Sound = {}
 ---Calls the original Sound Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector @Only used if 3D sound
 ---@param asset string @The Sound Asset to load
----@param is_2D_sound? boolean @Whether to spawn it as 2D or 3D (Default: false)
+---@param is_2d_sound? boolean @Whether to spawn it as 2D or 3D (Default: false)
 ---@param auto_destroy? boolean @Whether to destroy after finished playing (Default: true)
 ---@param sound_type? SoundType @Used to apply user's volume settings (Default: SoundType.SFX)
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 ---@param inner_radius? number @Only used if 3D sound (Default: 400)
 ---@param falloff_distance? number @Only used if 3D sound (Default: 3600)
----@param attenuation_function? AttenuationFunction @Only used if 3D sound (Default: Linear)
+---@param attenuation_function? AttenuationFunction @Only used if 3D sound (Default: AttenuationFunction.Linear)
 ---@param keep_playing_when_silent? boolean @Only used if 3D sound - Use with caution, it may cause performance issues! (Default: false)
----@param loop_mode? SoundLoopMode @Whether should force sound to loop (Default: Default)
----@param auto_play? boolean @If should should immediately play when loaded (Default: true)
-function Sound:Constructor(location, asset, is_2D_sound, auto_destroy, sound_type, volume, pitch, inner_radius, falloff_distance, attenuation_function, keep_playing_when_silent, loop_mode, auto_play) end
+---@param loop_mode? SoundLoopMode @Whether should force sound to loop (Default: SoundLoopMode.Default)
+---@param auto_play? boolean @Whether it should immediately play when loaded (Default: true)
+function Sound:Constructor(location, asset, is_2d_sound, auto_destroy, sound_type, volume, pitch, inner_radius, falloff_distance, attenuation_function, keep_playing_when_silent, loop_mode, auto_play) end
 
 ---A Class created from <code>Sound.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@class Sound.Inherited : Sound
@@ -7926,137 +8036,137 @@ function Sound.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-fadein">docs</a>
 ---
 ---Plays the sound with a fade effect
----@param fade_in_duration number 
----@param fade_volume_level? number @(Default: 1.0)
----@param start_time? number @(Default: 0.0)
+---@param fade_in_duration number @Seconds to fade in
+---@param fade_volume_level? number @Volume multiplier to fade to (Default: 1.0)
+---@param start_time? number @Seconds into the sound to start playing from (Default: 0.0)
 function Sound:FadeIn(fade_in_duration, fade_volume_level, start_time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-fadeout">docs</a>
 ---
 ---Stops the sound with a fade effect
----@param fade_out_duration number 
----@param fade_volume_level? number @(Default: 0.0)
----@param destroy_after_fadeout? boolean @(Default: false)
+---@param fade_out_duration number @Seconds to fade out
+---@param fade_volume_level? number @Volume multiplier to fade to (Default: 0.0)
+---@param destroy_after_fadeout? boolean @Whether to destroy the Sound after fading out (Default: false)
 function Sound:FadeOut(fade_out_duration, fade_volume_level, destroy_after_fadeout) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getduration">docs</a>
 ---
 ---Gets the duration of the Sound
----@return number 
+---@return number @Duration of the Sound
 function Sound:GetDuration() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getfalloffdistance">docs</a>
 ---
----
----@return number 
+---Gets the distance at which the sound becomes inaudible
+---@return number @The falloff distance
 function Sound:GetFalloffDistance() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getinnerradius">docs</a>
 ---
----
----@return number 
+---Gets the radius within which the volume is 100%
+---@return number @The inner radius
 function Sound:GetInnerRadius() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getlowpassfilter">docs</a>
 ---
----
----@return number 
+---Gets the low pass filter frequency
+---@return number @The low pass filter frequency
 function Sound:GetLowPassFilter() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getpath">docs</a>
 ---
----
----@return string 
+---Gets the asset path of this Sound
+---@return string @The asset path
 function Sound:GetPath() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getpitch">docs</a>
 ---
----
----@return number 
+---Gets the pitch multiplier
+---@return number @The pitch multiplier
 function Sound:GetPitch() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getsoundtype">docs</a>
 ---
----
----@return SoundType 
+---Gets the Sound Type, used to apply the user's volume settings
+---@return SoundType @The Sound Type
 function Sound:GetSoundType() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-getvolume">docs</a>
 ---
----
----@return number 
+---Gets the volume multiplier
+---@return number @The volume multiplier
 function Sound:GetVolume() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-is2d">docs</a>
 ---
 ---Gets if the sound is 2D
----@return boolean 
+---@return boolean @Whether the sound is 2D
 function Sound:Is2D() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-isplaying">docs</a>
 ---
 ---Gets if the sound is playing
----@return boolean 
+---@return boolean @Whether the sound is playing
 function Sound:IsPlaying() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-play">docs</a>
 ---
 ---Starts the sound
----@param start_time? number @(Default: 0.0)
+---@param start_time? number @Seconds into the sound to start playing from (Default: 0.0)
 function Sound:Play(start_time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setfalloffdistance">docs</a>
 ---
 ---If a 3D Sound, sets the distance which the sound is inaudible
----@param falloff_distance number 
+---@param falloff_distance number @Distance from the inner radius at which the sound becomes inaudible
 function Sound:SetFalloffDistance(falloff_distance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setinnerradius">docs</a>
 ---
----If a 3D Sound, sets the distance within the volume is 100%
----@param inner_radius number 
+---If a 3D Sound, sets the radius within which the volume is 100%
+---@param inner_radius number @Radius within which the volume is 100%
 function Sound:SetInnerRadius(inner_radius) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setlowpassfilter">docs</a>
 ---
 ---Sets low-pass filter frequency. Sets 0 to disable it.
----@param frequency number 
+---@param frequency number @The new low-pass filter frequency. Sets 0 to disable it
 function Sound:SetLowPassFilter(frequency) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setpaused">docs</a>
 ---
----Pauses the sound
----@param pause? boolean @(Default: true)
+---Pauses or resumes the sound
+---@param pause? boolean @Whether to pause (true) or resume (false) (Default: true)
 function Sound:SetPaused(pause) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setpitch">docs</a>
 ---
 ---Sets the Sound's pitch
----@param new_pitch number 
+---@param new_pitch number @The new Sound's pitch
 function Sound:SetPitch(new_pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setvolume">docs</a>
 ---
 ---Sets the Sound's volume
----@param new_volume number @from 0.0 to 1.0
+---@param new_volume number @Volume multiplier, 1 is the original volume
 function Sound:SetVolume(new_volume) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8069,7 +8179,7 @@ function Sound:Stop() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-stopdelayed">docs</a>
 ---
 ---Stops the sound after the provided delay
----@param delay number 
+---@param delay number @Seconds to wait before stopping
 function Sound:StopDelayed(delay) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8086,10 +8196,10 @@ StaticMesh = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#constructor-default-constructor">docs</a>
 ---
 ---Calls the original StaticMesh Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param static_mesh_asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param static_mesh_asset string @The Static Mesh asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function StaticMesh:Constructor(location, rotation, static_mesh_asset, collision_type, spawn_mode) end
 
@@ -8138,7 +8248,7 @@ Steam = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/steam#static-function-setrichpresence">docs</a>
 ---
 ---Sets Steam Rich Presence text
----@param text string 
+---@param text string @The new Steam Rich Presence text
 function Steam.SetRichPresence(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8161,13 +8271,13 @@ Text3D = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Text3D Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param text string 
----@param scale? Vector @(Default: Vector(1, 1, 1))
----@param color? Color @(Default: Color(1, 1, 1, 1))
----@param font_type? FontType @(Default: FontType.Roboto)
----@param align_camera? Text3DAlignCamera @(Default: Text3DAlignCamera.Unaligned)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param text string @The text to display
+---@param scale? Vector @Scale of the text (Default: Vector(1, 1, 1))
+---@param color? Color @Color of the text (Default: Color(1, 1, 1, 1))
+---@param font_type? FontType @Font to use (Default: FontType.Roboto)
+---@param align_camera? Text3DAlignCamera @Whether and how the text rotates to face the camera (Default: Text3DAlignCamera.Unaligned)
 function Text3D:Constructor(location, rotation, text, scale, color, font_type, align_camera) end
 
 ---A Class created from <code>Text3D.Inherit()</code> (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
@@ -8187,45 +8297,45 @@ function Text3D.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setfont">docs</a>
 ---
 ---Sets the Font
----@param font_type FontType 
+---@param font_type FontType @The new Font
 function Text3D:SetFont(font_type) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setglyphsettings">docs</a>
 ---
 ---Sets the Glyph representation settings to generate the 3D Mesh for this text render
----@param extrude? number @(Default: 0)
----@param level? number @(Default: 0)
----@param bevel_type? Text3DBevelType @(Default: Text3DBevelType.Convex)
----@param bevel_segments? integer @(Default: 8)
----@param outline? boolean @(Default: false)
+---@param extrude? number @Depth of the 3D letters (Default: 0)
+---@param level? number @Size of the bevel (Default: 0)
+---@param bevel_type? Text3DBevelType @Shape of the bevel (Default: Text3DBevelType.Convex)
+---@param bevel_segments? integer @Number of segments of the bevel, more looks smoother (Default: 8)
+---@param outline? boolean @Whether to only generate the outline of the letters (Default: false)
 function Text3D:SetGlyphSettings(extrude, level, bevel_type, bevel_segments, outline) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setmaxsize">docs</a>
 ---
 ---Sets the Max Size of the Text3D, optionally scaling it proportionally
----@param max_width? integer @(Default: 0)
----@param max_height? integer @(Default: 0)
----@param scale_proportionally? boolean @(Default: true)
+---@param max_width? integer @Max width of the text, 0 for no limit (Default: 0)
+---@param max_height? integer @Max height of the text, 0 for no limit (Default: 0)
+---@param scale_proportionally? boolean @Whether to keep the aspect ratio when scaling down (Default: true)
 function Text3D:SetMaxSize(max_width, max_height, scale_proportionally) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-settext">docs</a>
 ---
 ---Sets the Text
----@param text string 
+---@param text string @The new Text
 function Text3D:SetText(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-settextsettings">docs</a>
 ---
 ---Sets the Text & Font settings for this text render
----@param kerning? number @(Default: 0)
----@param line_spacing? number @(Default: 0)
----@param word_spacing? number @(Default: 0)
----@param horizontal_alignment? Text3DHorizontalAlignment @(Default: Text3DHorizontalAlignment.Center)
----@param vertical_alignment? Text3DVerticalAlignment @(Default: Text3DVerticalAlignment.Center)
+---@param kerning? number @Extra spacing between characters (Default: 0)
+---@param line_spacing? number @Extra spacing between lines (Default: 0)
+---@param word_spacing? number @Extra spacing between words (Default: 0)
+---@param horizontal_alignment? Text3DHorizontalAlignment @Horizontal alignment of the text (Default: Text3DHorizontalAlignment.Center)
+---@param vertical_alignment? Text3DVerticalAlignment @Vertical alignment of the text (Default: Text3DVerticalAlignment.Center)
 function Text3D:SetTextSettings(kerning, line_spacing, word_spacing, horizontal_alignment, vertical_alignment) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8242,15 +8352,15 @@ TextRender = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#constructor-default-constructor">docs</a>
 ---
 ---Calls the original TextRender Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param text string 
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param text string @The text to display
 ---@param word_size? number @Text size (Default: 26)
----@param color? Color @(Default: Color.WHITE)
+---@param color? Color @Color of the text (Default: Color.WHITE)
 ---@param rendering_type? TextRenderRenderingType @To make it unlit, always face the camera or always visible through walls (Default: TextRenderRenderingType.Lit)
----@param horizontal_alignment? TextRenderHorizontalAlignment @(Default: TextRenderHorizontalAlignment.Center)
----@param vertical_alignment? TextRenderVerticalAlignment @(Default: TextRenderVerticalAlignment.Center)
----@param font_asset? string @The font asset to use for the text. Note the font must be a offline cached, distance field font (Default: "")
+---@param horizontal_alignment? TextRenderHorizontalAlignment @Horizontal alignment of the text (Default: TextRenderHorizontalAlignment.Center)
+---@param vertical_alignment? TextRenderVerticalAlignment @Vertical alignment of the text (Default: TextRenderVerticalAlignment.Center)
+---@param font_asset? string @The font asset to use for the text. Note the font must be an offline cached, distance field font (Default: "")
 ---@param cast_shadow? boolean @Controls whether it should cast shadow or not (Default: false)
 function TextRender:Constructor(location, rotation, text, word_size, color, rendering_type, horizontal_alignment, vertical_alignment, font_asset, cast_shadow) end
 
@@ -8292,44 +8402,44 @@ function TextRender:GetWordSize() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setalignment">docs</a>
 ---
 ---Sets the Text alignment
----@param horizontal_alignment TextRenderHorizontalAlignment 
----@param vertical_alignment TextRenderVerticalAlignment 
+---@param horizontal_alignment TextRenderHorizontalAlignment @Horizontal alignment of the text
+---@param vertical_alignment TextRenderVerticalAlignment @Vertical alignment of the text
 function TextRender:SetAlignment(horizontal_alignment, vertical_alignment) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setcolor">docs</a>
 ---
 ---Sets the Text Color
----@param color Color 
+---@param color Color @The new Text Color
 function TextRender:SetColor(color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setfont">docs</a>
 ---
----Sets the Font. The font must be pre-cooked as a offline cached, distance field font.<br/><br/>Example working fonts:<br/>- <code>nanos-world::Font_LondrinaSolid_DistanceField</code><br/>- <code>nanos-world::Font_BoldPixels_DistanceField</code><br/>- <code>nanos-world::Font_Roboto_DistanceField</code>
----@param font_asset string 
+---Sets the Font. The font must be pre-cooked as an offline cached, distance field font.<br/><br/>Example working fonts:<br/>- <code>nanos-world::Font_LondrinaSolid_DistanceField</code><br/>- <code>nanos-world::Font_BoldPixels_DistanceField</code><br/>- <code>nanos-world::Font_Roboto_DistanceField</code>
+---@param font_asset string @The new Font. The font must be pre-cooked as an offline cached, distance field font
 function TextRender:SetFont(font_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setspacingadjust">docs</a>
 ---
 ---Sets the horizontal and vertical spacing adjust values
----@param horizontal_spacing number 
----@param vertical_spacing number 
+---@param horizontal_spacing number @Extra horizontal spacing between characters
+---@param vertical_spacing number @Extra vertical spacing between lines
 function TextRender:SetSpacingAdjust(horizontal_spacing, vertical_spacing) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-settext">docs</a>
 ---
 ---Sets the Text
----@param text string 
+---@param text string @The new Text
 function TextRender:SetText(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-setwordsize">docs</a>
 ---
 ---Sets the Word Size
----@param word_size number 
+---@param word_size number @The new Word Size
 function TextRender:SetWordSize(word_size) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8366,7 +8476,7 @@ function Timer.ClearTimeout(timeout_id) end
 ---
 ---Returns the time elapsed since the last tick
 ---@param timer_id integer @The Timer ID
----@return integer 
+---@return integer @Time elapsed since the last tick
 function Timer.GetElapsedTime(timer_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8374,7 +8484,7 @@ function Timer.GetElapsedTime(timer_id) end
 ---
 ---Returns the time remaining to the next tick
 ---@param timer_id integer @The Timer ID
----@return integer 
+---@return integer @Time remaining to the next tick
 function Timer.GetRemainingTime(timer_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8382,7 +8492,7 @@ function Timer.GetRemainingTime(timer_id) end
 ---
 ---Checks if a Timer is currently active or waiting to be triggered
 ---@param timer_id integer @The Timer ID
----@return boolean 
+---@return boolean @Whether a Timer is currently active or waiting to be triggered
 function Timer.IsValid(timer_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8475,7 +8585,7 @@ Trace = {}
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] @List of tables with the hit information of each hit
 function Trace.BoxMulti(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8489,7 +8599,7 @@ function Trace.BoxMulti(start_location, end_location, half_size, orientation, co
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } @Table with the hit information
 function Trace.BoxSingle(start_location, end_location, half_size, orientation, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8503,7 +8613,7 @@ function Trace.BoxSingle(start_location, end_location, half_size, orientation, c
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] @List of tables with the hit information of each hit
 function Trace.CapsuleMulti(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8517,7 +8627,7 @@ function Trace.CapsuleMulti(start_location, end_location, radius, half_height, c
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } @Table with the hit information
 function Trace.CapsuleSingle(start_location, end_location, radius, half_height, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8529,7 +8639,7 @@ function Trace.CapsuleSingle(start_location, end_location, radius, half_height, 
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] @List of tables with the hit information of each hit
 function Trace.LineMulti(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8541,7 +8651,7 @@ function Trace.LineMulti(start_location, end_location, collision_channel, trace_
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } @Table with the hit information
 function Trace.LineSingle(start_location, end_location, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8554,7 +8664,7 @@ function Trace.LineSingle(start_location, end_location, collision_channel, trace
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer }[] @List of tables with the hit information of each hit
 function Trace.SphereMulti(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -8567,7 +8677,7 @@ function Trace.SphereMulti(start_location, end_location, radius, collision_chann
 ---@param collision_channel? CollisionChannel|integer @Supports several channels separating by <code>|</code> (using bit-wise operations) (Default: WorldStatic)
 ---@param trace_mode? TraceMode|integer @Trace Mode, pass all parameters separating by <code>|</code> (using bit-wise operations)<br/><br/>You need to explicitly pass the modes to return the values you want (Default: 0)
 ---@param ignored_actors? Actor[] @Array of actors to ignore during the trace (Default: {})
----@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } 
+---@return { Success: boolean, Location: Vector, ImpactPoint: Vector, Normal: Vector, Entity: Actor, BoneName: string, ActorName: string, ComponentName: string, SurfaceType: SurfaceType, UV: Vector2D, Item: integer } @Table with the hit information
 function Trace.SphereSingle(start_location, end_location, radius, collision_channel, trace_mode, ignored_actors) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -8584,10 +8694,10 @@ Trigger = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Trigger Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
 ---@param extent Vector|number @Size of the Trigger. If using <code>TriggerType.Sphere</code> it is treated as radius, otherwise as Vector extent
----@param trigger_type? TriggerType @(Default: TriggerType.Sphere)
+---@param trigger_type? TriggerType @Shape of the Trigger, sphere or box (Default: TriggerType.Sphere)
 ---@param is_visible? boolean @Useful for debugging (Default: false)
 ---@param color? Color @Color to paint the Trigger bounds - if Visible (Default: Color.RED)
 ---@param overlap_only_classes? string[] @Filter Trigger to only overlap specific Classes. Leave it empty for all Classes (Default: {})
@@ -8609,28 +8719,28 @@ function Trigger.Inherit(name, custom_values) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-forceoverlapchecking">docs</a>
 ---
----Forces a Overlap checking to occur, will immediately trigger overlaps
+---Forces an Overlap check to occur, will immediately trigger overlaps
 function Trigger:ForceOverlapChecking() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-setcolor">docs</a>
 ---
 ---Sets the Trigger color (if visible)
----@param color Color 
+---@param color Color @The new Trigger color
 function Trigger:SetColor(color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-setextent">docs</a>
 ---
 ---Sets the extent size of this trigger (sphere triggers can receive as float for radius)
----@param extent Vector|number 
+---@param extent Vector|number @The new extent size of this trigger
 function Trigger:SetExtent(extent) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-setoverlaponlyclasses">docs</a>
 ---
 ---Sets the filter to Trigger to only overlap specific Classes. Leave it empty for all Classes
----@param overlap_only_classes string[] 
+---@param overlap_only_classes string[] @The new filter to Trigger to only overlap specific Classes. Leave it empty for all Classes
 function Trigger:SetOverlapOnlyClasses(overlap_only_classes) end
 
 
@@ -8713,6 +8823,7 @@ function Trigger.Unsubscribe(event_name, callback) end
 ---@operator mul(Vector|number): Vector
 ---@operator pow(Vector|number): Vector
 ---@operator sub(Vector|number): Vector
+---@operator unm: Vector
 ---@overload fun(X?: number, Y?: number, Z?: number): Vector
 Vector = {}
 
@@ -8761,8 +8872,9 @@ function Vector:Equals(other, tolerance) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#function-getsafenormal">docs</a>
 ---
 ---Returns a normalized copy of the vector, checking it is safe to do so based on the length
+---@param tolerance? number @Minimum squared size to consider it non-zero (Default: 0.000001)
 ---@return Vector @The safe normal
-function Vector:GetSafeNormal() end
+function Vector:GetSafeNormal(tolerance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#function-getunsafenormal">docs</a>
@@ -8799,8 +8911,9 @@ function Vector:IsZero() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#function-normalize">docs</a>
 ---
 ---Normalize this vector in-place if it is larger than a given tolerance. Leaves it unchanged if not
+---@param tolerance? number @Minimum squared size to consider it non-zero (Default: 0.000001)
 ---@return boolean @If the vector has been modified
-function Vector:Normalize() end
+function Vector:Normalize(tolerance) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/structs/vector#function-size">docs</a>
@@ -8842,6 +8955,7 @@ function Vector:ToOrientationRotator() end
 ---@operator div(Vector2D|number): Vector2D
 ---@operator mul(Vector2D|number): Vector2D
 ---@operator sub(Vector2D|number): Vector2D
+---@operator unm: Vector2D
 ---@overload fun(X?: number, Y?: number): Vector2D
 Vector2D = {}
 
@@ -8994,7 +9108,7 @@ function Vehicle:GetAllStaticMeshAttached() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getanimationblueprintpropertyvalue">docs</a>
 ---
 ---Gets an Animation Blueprint Property/Variable value directly.<br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this returns <code>nil</code>.
----@param property_name string 
+---@param property_name string @Name of the Animation Blueprint variable
 ---@return any @the property value
 function Vehicle:GetAnimationBlueprintPropertyValue(property_name) end
 
@@ -9002,7 +9116,7 @@ function Vehicle:GetAnimationBlueprintPropertyValue(property_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getdoors">docs</a>
 ---
 ---Gets all configured Doors
----@return { seat_index: integer, offset_location: Vector, seat_location: Vector, seat_rotation: Rotator, leave_lateral_offset: integer, sphere_radius: integer } 
+---@return { seat_index: integer, offset_location: Vector, seat_location: Vector, seat_rotation: Rotator, leave_lateral_offset: integer, sphere_radius: integer } @All configured Doors
 function Vehicle:GetDoors() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
@@ -9016,7 +9130,7 @@ function Vehicle:GetMesh() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getpassenger">docs</a>
 ---
 ---Gets a passenger from a seat
----@param seat integer 
+---@param seat integer @Index of the seat, 0 is the driver
 ---@return Character @or nil if no passenger in seat
 function Vehicle:GetPassenger(seat) end
 
@@ -9024,22 +9138,22 @@ function Vehicle:GetPassenger(seat) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-getpassengers">docs</a>
 ---
 ---Gets all passengers
----@return Character[] 
+---@return Character[] @All passengers
 function Vehicle:GetPassengers() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-isenginestarted">docs</a>
 ---
 ---Checks if the engine is started
----@return boolean 
+---@return boolean @Whether the engine is started
 function Vehicle:IsEngineStarted() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-playanimation">docs</a>
 ---
 ---Plays an Animation on this Vehicle
----@param animation_path string 
----@param slot_name? string @(Default: DefaultSlot)
+---@param animation_path string @The Animation asset to play
+---@param slot_name? string @The Animation Slot to play it on (Default: DefaultSlot)
 ---@param loop_indefinitely? boolean @This parameter is only used if the Vehicle has an Animation Blueprint (Default: false)
 ---@param blend_in_time? number @This parameter is only used if the Vehicle has an Animation Blueprint (Default: 0.25)
 ---@param blend_out_time? number @This parameter is only used if the Vehicle has an Animation Blueprint (Default: 0.25)
@@ -9077,8 +9191,8 @@ function Vehicle:RemoveStaticMeshAttached(id) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setanimationblueprintpropertyvalue">docs</a>
 ---
 ---Sets an Animation Blueprint Property/Variable value directly on the Animation Blueprint passed in the constructor.<br><br><b>Note:</b> only <a href='/docs/scripting-reference/classes/vehiclewheeled'>VehicleWheeled</a> has an Animation Blueprint, on any other Vehicle type this does nothing.
----@param property_name string 
----@param value any 
+---@param property_name string @Name of the Animation Blueprint variable
+---@param value any @The value to set
 function Vehicle:SetAnimationBlueprintPropertyValue(property_name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
@@ -9109,18 +9223,18 @@ function Vehicle:SetCameraArmLength(arm_length) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setcameraoffset">docs</a>
 ---
 ---Sets the Vehicle Camera Offset
----@param offset Vector 
+---@param offset Vector @The new Vehicle Camera Offset
 function Vehicle:SetCameraOffset(offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setdoor">docs</a>
 ---
 ---Adds a Door at offset_location from root which will pose the Character at seat_location with seat_rotation rotation.
----@param seat_index integer 
----@param offset_location Vector 
----@param seat_location Vector 
----@param seat_rotation Rotator 
----@param trigger_radius integer 
+---@param seat_index integer @Index of the seat, 0 is the driver
+---@param offset_location Vector @Location of the door trigger relative to the vehicle
+---@param seat_location Vector @Location of the seat relative to the vehicle
+---@param seat_rotation Rotator @Rotation of the seat relative to the vehicle
+---@param trigger_radius integer @Radius of the trigger used to enter through this door
 ---@param leave_lateral_offset integer @It's where the Character will be ejected when leaving it (e.g. -150 for left door or 150 for right door)
 function Vehicle:SetDoor(seat_index, offset_location, seat_location, seat_rotation, trigger_radius, leave_lateral_offset) end
 
@@ -9174,7 +9288,7 @@ function Vehicle:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callba
 ---@overload fun(event_name: "EngineStop", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine stops
 ---@overload fun(event_name: "EnterWater", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)): fun(self: Vehicle, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
@@ -9200,7 +9314,7 @@ function Vehicle.Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "EngineStop", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when the engine stops
 ---@overload fun(self: Vehicle, event_name: "EnterWater", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)): fun(self: Vehicle, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "LeaveWater", callback: fun(self: Vehicle)): fun(self: Vehicle) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Vehicle, event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)): fun(self: Vehicle, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)): fun(self: Vehicle) @When Entity Respawns
@@ -9224,7 +9338,7 @@ function Vehicle:Subscribe(event_name, callback) end
 ---@overload fun(self: Vehicle, event_name: "EngineStop", callback: fun(self: Vehicle)) @Triggered when the engine stops
 ---@overload fun(self: Vehicle, event_name: "EnterWater", callback: fun(self: Vehicle)) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Vehicle, event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(self: Vehicle, event_name: "Hit", callback: fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: Vehicle, event_name: "LeaveWater", callback: fun(self: Vehicle)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: Vehicle, event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(self: Vehicle, event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
@@ -9249,7 +9363,7 @@ function Vehicle:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "EngineStop", callback: fun(self: Vehicle)) @Triggered when the engine stops
 ---@overload fun(event_name: "EnterWater", callback: fun(self: Vehicle)) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "HealthChange", callback: fun(self: Vehicle, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(event_name: "Hit", callback: fun(self: Vehicle, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: Vehicle)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: Vehicle, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
 ---@overload fun(event_name: "Respawn", callback: fun(self: Vehicle)) @When Entity Respawns
@@ -9263,7 +9377,7 @@ function Vehicle.Unsubscribe(event_name, callback) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#constructor-default-constructor">Default Constructor</a>
 ---
----VehicleWater are entities which Characters can possesses and drive over the water with dynamic physics.
+---VehicleWater are entities which Characters can possess and drive over the water with dynamic physics.
 ---@class VehicleWater : Entity, Actor, Paintable, Damageable, Vehicle
 ---@field Super VehicleWater @Access to the original/native VehicleWater methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, spawn_mode?: SpawnMode): VehicleWater
@@ -9273,11 +9387,11 @@ VehicleWater = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#constructor-default-constructor">docs</a>
 ---
 ---Calls the original VehicleWater Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function VehicleWater:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
 
@@ -9298,21 +9412,21 @@ function VehicleWater.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setengineoffset">docs</a>
 ---
 ---Sets the relative location of the Engine (where the Physics Thruster, sounds and effects are attached). Default is Vector(-200, 0, 0)
----@param offset Vector 
+---@param offset Vector @The new relative location of the Engine
 function VehicleWater:SetEngineOffset(offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setthruststrength">docs</a>
 ---
 ---Sets the force of the Engine/Thruster. Default is 1000
----@param force integer 
+---@param force integer @The new force of the Engine/Thruster
 function VehicleWater:SetThrustStrength(force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#constructor-default-constructor">Default Constructor</a>
 ---
----Vehicles are wheeled entities which Characters can possesses and drive.
+---Vehicles are wheeled entities which Characters can possess and drive.
 ---@class VehicleWheeled : Entity, Actor, Paintable, Damageable, Vehicle
 ---@field Super VehicleWheeled @Access to the original/native VehicleWheeled methods from within an inherited Class (see the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>)
 ---@overload fun(location: Vector, rotation: Rotator, asset: string, collision_type?: CollisionType, gravity_enabled?: boolean, auto_unflip?: boolean, engine_sound?: string, horn_sound?: string, brake_sound?: string, engine_start_sound?: string, vehicle_door_sound?: string, auto_start_engine?: boolean, custom_animation_blueprint?: string, spawn_mode?: SpawnMode): VehicleWheeled
@@ -9322,19 +9436,19 @@ VehicleWheeled = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#constructor-default-constructor">docs</a>
 ---
 ---Calls the original VehicleWheeled Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param auto_unflip? boolean @Auto rotates the vehicle if flipped (Default: true)
----@param engine_sound? string @(Default: nanos-world::A_Vehicle_Engine_01)
----@param horn_sound? string @(Default: nanos-world::A_Vehicle_Horn_Toyota)
----@param brake_sound? string @(Default: nanos-world::A_Vehicle_Brake)
----@param engine_start_sound? string @(Default: nanos-world::A_Car_Engine_Start)
----@param vehicle_door_sound? string @(Default: nanos-world::A_Vehicle_Door)
----@param auto_start_engine? boolean @(Default: true)
----@param custom_animation_blueprint? string @(Default: "")
+---@param engine_sound? string @Sound played while the engine runs (Default: nanos-world::A_Vehicle_Engine_01)
+---@param horn_sound? string @Sound played when honking (Default: nanos-world::A_Vehicle_Horn_Toyota)
+---@param brake_sound? string @Sound played when braking (Default: nanos-world::A_Vehicle_Brake)
+---@param engine_start_sound? string @Sound played when starting the engine (Default: nanos-world::A_Car_Engine_Start)
+---@param vehicle_door_sound? string @Sound played when entering or leaving (Default: nanos-world::A_Vehicle_Door)
+---@param auto_start_engine? boolean @Whether the engine starts when a driver enters (Default: true)
+---@param custom_animation_blueprint? string @Animation Blueprint to drive the vehicle mesh (Default: "")
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function VehicleWheeled:Constructor(location, rotation, asset, collision_type, gravity_enabled, auto_unflip, engine_sound, horn_sound, brake_sound, engine_start_sound, vehicle_door_sound, auto_start_engine, custom_animation_blueprint, spawn_mode) end
 
@@ -9355,28 +9469,28 @@ function VehicleWheeled.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-getgear">docs</a>
 ---
 ---Gets the current Gear
----@return integer 
+---@return integer @Current Gear
 function VehicleWheeled:GetGear() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-getrpm">docs</a>
 ---
 ---Gets the current RPM
----@return integer 
+---@return integer @Current RPM
 function VehicleWheeled:GetRPM() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-horn">docs</a>
 ---
----Starts or stops the vehicles horn
----@param enable_horn boolean 
+---Starts or stops the vehicle horn
+---@param enable_horn boolean @Whether to honk
 function VehicleWheeled:Horn(enable_horn) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-isinair">docs</a>
 ---
 ---Checks if the vehicle is in the air (no wheels touching the ground)
----@return boolean 
+---@return boolean @Whether the vehicle is in the air
 function VehicleWheeled:IsInAir() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9395,7 +9509,7 @@ function VehicleWheeled:SetAerodynamicsSetup(mass, drag_coefficient, vehicle_cha
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setautostartengine">docs</a>
 ---
 ---Sets if the Engine auto starts when the driver enters the Vehicle
----@param auto_start boolean 
+---@param auto_start boolean @Whether the Engine auto starts when the driver enters the Vehicle
 function VehicleWheeled:SetAutoStartEngine(auto_start) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9417,41 +9531,41 @@ function VehicleWheeled:SetDifferentialSetup(differential_type, front_rear_split
 ---@param rev_up_moi? integer @Affects how fast the engine RPM speed up (Default: 5)
 ---@param rev_down_rate? integer @Affects how fast the engine RPM slows down (Default: 600)
 ---@param torque_curve? { rpm: number, torque: number } @Map defining the torque [Normalized 0..1] for a given RPM (Default: {
-	0: 0.0,
-	max_rpm * 0.2: 0.9,
-	max_rpm * 0.4: 1.0,
-	max_rpm * 0.8: 0.8,
-	max_rpm: 0.0
-})
+--- 	0: 0.0,
+--- 	max_rpm * 0.2: 0.9,
+--- 	max_rpm * 0.4: 1.0,
+--- 	max_rpm * 0.8: 0.8,
+--- 	max_rpm: 0.0
+--- })
 function VehicleWheeled:SetEngineSetup(max_torque, max_rpm, idle_rpm, brake_effect, rev_up_moi, rev_down_rate, torque_curve) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setenginestarted">docs</a>
 ---
 ---Sets if the Engine is turned off/on (this will affect Lights, Sounds and ability to Throttle)
----@param started boolean 
+---@param started boolean @Whether the Engine is turned off/on
 function VehicleWheeled:SetEngineStarted(started) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setheadlightsenabled">docs</a>
 ---
 ---Enables or disables the headlights
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the headlights are on
 function VehicleWheeled:SetHeadlightsEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-setheadlightssetup">docs</a>
 ---
----Configures the Headlights Offset and Color.
----@param location Vector 
----@param color? Color @(Default: Color(1, 0.86, 0.5))
+---Configures the Headlights offset and color
+---@param location Vector @Offset of the headlights relative to the vehicle
+---@param color? Color @The color to use (Default: Color(1, 0.86, 0.5))
 function VehicleWheeled:SetHeadlightsSetup(location, color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-sethornsound">docs</a>
 ---
 ---Sets the sound asset used by the vehicle horn
----@param sound_asset string 
+---@param sound_asset string @The new sound asset used by the vehicle horn
 function VehicleWheeled:SetHornSound(sound_asset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9461,11 +9575,11 @@ function VehicleWheeled:SetHornSound(sound_asset) end
 ---@param steering_type SteeringType @Type of steering to use. Default is SteeringType.AngleRatio
 ---@param angle_ratio? number @Only applies when SteeringType.AngleRatio is selected (Default: 0.7)
 ---@param steering_curve? { speed: number, maximum_steering: number } @Maximum steering versus forward speed (MPH) (Default: {
-	0: 1.0,
-	20: 0.8,
-	60: 0.4,
-	120: 0.3
-})
+--- 	0: 1.0,
+--- 	20: 0.8,
+--- 	60: 0.4,
+--- 	120: 0.3
+--- })
 function VehicleWheeled:SetSteeringSetup(steering_type, angle_ratio, steering_curve) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9481,22 +9595,22 @@ function VehicleWheeled:SetSteeringWheelSetup(relative_location, radius, rotatio
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-settaillightsenabled">docs</a>
 ---
 ---Enables or disables the taillights
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether the taillights are on
 function VehicleWheeled:SetTaillightsEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-settaillightssetup">docs</a>
 ---
----Configures the Taillights Offset.
----@param location Vector 
+---Configures the Taillights offset
+---@param location Vector @Offset of the taillights relative to the vehicle
 function VehicleWheeled:SetTaillightsSetup(location) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-settireflat">docs</a>
 ---
 ---Sets a Tire as Flat or not
----@param wheel_index integer 
----@param is_flat boolean 
+---@param wheel_index integer @Index of the wheel
+---@param is_flat boolean @Whether the tire is flat
 function VehicleWheeled:SetTireFlat(wheel_index, is_flat) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9509,11 +9623,11 @@ function VehicleWheeled:SetTireFlat(wheel_index, is_flat) end
 ---@param transmission_gear_change_time? number @Time it takes to switch gears (seconds) (Default: 0.4)
 ---@param transmission_efficiency? number @Mechanical frictional losses mean transmission might operate at 0.94 (94% efficiency) (Default: 0.9)
 ---@param forward_gear_ratios? number[] @List of forward gear ratios (Default: {
-	2.85,
-	2.02,
-	1.35,
-	1.0
-})
+--- 	2.85,
+--- 	2.02,
+--- 	1.35,
+--- 	1.0
+--- })
 ---@param reverse_gear_ratios? number[] @List of reverse gear ratios (Default: { 2.86 })
 function VehicleWheeled:SetTransmissionSetup(transmission_final_ratio, transmission_change_up_rpm, transmission_change_down_rpm, transmission_gear_change_time, transmission_efficiency, forward_gear_ratios, reverse_gear_ratios) end
 
@@ -9568,7 +9682,7 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@overload fun(event_name: "EngineStop", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine stops
 ---@overload fun(event_name: "EnterWater", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)): fun(self: VehicleWheeled, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
@@ -9595,7 +9709,7 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "EngineStop", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when the engine stops
 ---@overload fun(self: VehicleWheeled, event_name: "EnterWater", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)): fun(self: VehicleWheeled, old_health: integer, new_health: integer) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
+---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)): fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)): fun(self: VehicleWheeled, is_honking: boolean) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "LeaveWater", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: VehicleWheeled, event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)): fun(self: VehicleWheeled, is_network_authority: boolean) @Triggered when the local Player gets/loses network authority over this actor
@@ -9620,7 +9734,7 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "EngineStop", callback: fun(self: VehicleWheeled)) @Triggered when the engine stops
 ---@overload fun(self: VehicleWheeled, event_name: "EnterWater", callback: fun(self: VehicleWheeled)) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: VehicleWheeled, event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(self: VehicleWheeled, event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(self: VehicleWheeled, event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(self: VehicleWheeled, event_name: "LeaveWater", callback: fun(self: VehicleWheeled)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(self: VehicleWheeled, event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
@@ -9646,7 +9760,7 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "EngineStop", callback: fun(self: VehicleWheeled)) @Triggered when the engine stops
 ---@overload fun(event_name: "EnterWater", callback: fun(self: VehicleWheeled)) @Triggered when an Actor enters a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "HealthChange", callback: fun(self: VehicleWheeled, old_health: integer, new_health: integer)) @When Entity has its Health changed, or because took damage or manually set through scripting or respawning
----@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: integer, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
+---@overload fun(event_name: "Hit", callback: fun(self: VehicleWheeled, impact_force: number, normal_impulse: Vector, impact_location: Vector, velocity: Vector, other_actor?: Actor)) @Triggered when Vehicle hits something
 ---@overload fun(event_name: "Horn", callback: fun(self: VehicleWheeled, is_honking: boolean)) @Triggered when Vehicle honks
 ---@overload fun(event_name: "LeaveWater", callback: fun(self: VehicleWheeled)) @Triggered when an Actor leaves a water body. Only Actors that simulate physics trigger this event, such as <code>Prop</code>, <code>Vehicle</code>, <code>Pickables</code> and <code>Character</code> only.
 ---@overload fun(event_name: "NetworkAuthorityChange", callback: fun(self: VehicleWheeled, is_network_authority: boolean)) @Triggered when the local Player gets/loses network authority over this actor
@@ -9669,7 +9783,7 @@ Viewport = {}
 ---
 ---Transforms a 2D screen coordinates into 3D world-space location
 ---@param screen_position Vector2D @Screen position
----@return { Position: Vector, Direction: Vector } 
+---@return { Position: Vector, Direction: Vector } @Table with the world <code>Position</code> and the <code>Direction</code> the screen point looks at
 function Viewport.DeprojectScreenToWorld(screen_position) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -9698,20 +9812,20 @@ function Viewport.GetViewportSize() end
 ---
 ---Transforms a 3D world-space vector into 2D screen coordinates
 ---@param world_position Vector @World 3D position
----@return Vector2D 
+---@return Vector2D @The screen position, in pixels
 function Viewport.ProjectWorldToScreen(world_position) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-setbloodscreenenabled">docs</a>
 ---
 ---Enables/Disables the Blood Screen effect
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether to enable the Blood Screen effect
 function Viewport.SetBloodScreenEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-setbloodscreenintensity">docs</a>
 ---
----If you want the Blood Screen to do not be overridden, disable it with <code>Client.SetBloodScreenEnabled(false)</code> before
+---If you don't want the Blood Screen to be overridden by the default damage effect, disable it first with <code>Viewport.SetBloodScreenEnabled(false)</code>
 ---@param intensity number @From 0.0 to 1.0
 function Viewport.SetBloodScreenIntensity(intensity) end
 
@@ -9728,30 +9842,30 @@ function Viewport.SetBrandingBarSettings(horizontal_alignment, vertical_alignmen
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-setcrosshairenabled">docs</a>
 ---
 ---Enables/Disables the Crosshair
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether to enable the Crosshair
 function Viewport.SetCrosshairEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-sethardwarecursor">docs</a>
 ---
 ---Loads and sets a hardware cursor in the game from a PNG image<br/>Note: due an engine limitation modifying an already set cursor image will not change the cursor until the game is restarted
----@param cursor_shape CursorType 
+---@param cursor_shape CursorType @Which cursor shape to replace
 ---@param cursor_path string @a PNG image relative to Assets/
----@param hotspot? Vector2D @(Default: Vector(0, 0))
+---@param hotspot? Vector2D @Click point of the cursor image, in pixels (Default: Vector(0, 0))
 function Viewport.SetHardwareCursor(cursor_shape, cursor_path, hotspot) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-setinteractiontooltipenabled">docs</a>
 ---
 ---Enables/Disables the Interaction ToolTip
----@param is_enabled boolean 
+---@param is_enabled boolean @Whether to enable the Interaction ToolTip
 function Viewport.SetInteractionToolTipEnabled(is_enabled) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/viewport#static-function-setmouseposition">docs</a>
 ---
 ---Sets the mouse position
----@param new_position Vector2D 
+---@param new_position Vector2D @The new mouse position
 function Viewport.SetMousePosition(new_position) end
 
 
@@ -9785,11 +9899,11 @@ Weapon = {}
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#constructor-default-constructor">docs</a>
 ---
 ---Calls the original Weapon Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
----@param location Vector 
----@param rotation Rotator 
----@param asset string 
----@param collision_type? CollisionType @(Default: CollisionType.Auto)
----@param gravity_enabled? boolean @(Default: true)
+---@param location Vector @World location to spawn at
+---@param rotation Rotator @World rotation to spawn with
+---@param asset string @The asset to use
+---@param collision_type? CollisionType @Collision profile of this Actor (Default: CollisionType.Auto)
+---@param gravity_enabled? boolean @Whether gravity affects this Actor (Default: true)
 ---@param spawn_mode? SpawnMode @Pass <code>SpawnMode.AfterConstructor</code> or <code>SpawnMode.Manual</code> to avoid immediately sending the entity to clients and improve performance when you want to configure it by setting several configs. Must call <code>FinishSpawn()</code> after all (Default: SpawnMode.Immediate)
 function Weapon:Constructor(location, rotation, asset, collision_type, gravity_enabled, spawn_mode) end
 
@@ -9810,225 +9924,239 @@ function Weapon.Inherit(name, custom_values) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammobag">docs</a>
 ---
 ---Gets this Weapon's Ammo Bag
----@return integer 
+---@return integer @This Weapon's Ammo Bag
 function Weapon:GetAmmoBag() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammoclip">docs</a>
 ---
 ---Gets this Weapon's Ammo Clip
----@return integer 
+---@return integer @This Weapon's Ammo Clip
 function Weapon:GetAmmoClip() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammotoreload">docs</a>
 ---
 ---Gets the amount of ammo needed to fully reload
----@return integer 
+---@return integer @Amount of ammo needed to fully reload
 function Weapon:GetAmmoToReload() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getanimationcharacterfire">docs</a>
 ---
----
----@return string 
+---Gets the Animation played by the Character when firing
+---@return string @The Animation asset
 function Weapon:GetAnimationCharacterFire() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getanimationfire">docs</a>
 ---
----
----@return string 
+---Gets the Animation played by the Weapon when firing
+---@return string @The Animation asset
 function Weapon:GetAnimationFire() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getanimationreload">docs</a>
 ---
 ---Gets the reload animation
----@return string 
+---@return string @Reload animation
 function Weapon:GetAnimationReload() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getbulletcolor">docs</a>
 ---
----
----@return Color 
+---Gets the color of the bullet trail
+---@return Color @The bullet trail color
 function Weapon:GetBulletColor() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getbulletcount">docs</a>
 ---
----
----@return integer 
+---Gets how many bullets are fired per shot
+---@return integer @Bullets per shot
 function Weapon:GetBulletCount() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getcadence">docs</a>
 ---
----
----@return number 
+---Gets the time between shots
+---@return number @Seconds between shots
 function Weapon:GetCadence() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getcanholduse">docs</a>
 ---
 ---Gets if the weapon can be used continuously by holding the use button
----@return boolean 
+---@return boolean @Whether the weapon can be used continuously by holding the use button
 function Weapon:GetCanHoldUse() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getclipcapacity">docs</a>
 ---
----
----@return integer 
+---Gets the max number of bullets the clip can hold
+---@return integer @The clip capacity
 function Weapon:GetClipCapacity() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getdamage">docs</a>
 ---
----
----@return integer 
+---Gets the base damage of this Weapon
+---@return integer @The base damage
 function Weapon:GetDamage() end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-gethandlingmode">docs</a>
----
----
----@return HandlingMode 
-function Weapon:GetHandlingMode() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getholdreleaseuse">docs</a>
 ---
 ---Gets if the weapon is triggered/fired when releasing the use button
----@return boolean 
+---@return boolean @Whether the weapon is triggered/fired when releasing the use button
 function Weapon:GetHoldReleaseUse() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getlefthandlocation">docs</a>
 ---
----
----@return Vector 
+---Gets the location offset of the left hand
+---@return Vector @The left hand location offset
 function Weapon:GetLeftHandLocation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getlefthandrotation">docs</a>
 ---
----
----@return Rotator 
+---Gets the rotation offset of the left hand
+---@return Rotator @The left hand rotation offset
 function Weapon:GetLeftHandRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getmagazinemesh">docs</a>
 ---
----
----@return string 
+---Gets the magazine Static Mesh used when reloading
+---@return string @The Static Mesh asset
 function Weapon:GetMagazineMesh() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getparticlesbarrel">docs</a>
+---
+---Gets the Particle of the Fire Blast in the muzzle
+---@return string @Particle of the Fire Blast in the muzzle
+function Weapon:GetParticlesBarrel() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getparticlesbullettrail">docs</a>
 ---
----
----@return string 
+---Gets the Particle of the bullet trail
+---@return string @The Particle asset
 function Weapon:GetParticlesBulletTrail() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getparticlesshells">docs</a>
 ---
----
----@return string 
+---Gets the Particle of the ejected shells
+---@return string @The Particle asset
 function Weapon:GetParticlesShells() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getrecoil">docs</a>
 ---
----
----@return number 
+---Gets the base recoil of this Weapon
+---@return number @The base recoil, 0 means no recoil
 function Weapon:GetRecoil() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getrighthandoffset">docs</a>
 ---
----
----@return Vector 
+---Gets the offset of the right hand, relative to the camera
+---@return Vector @The right hand offset
 function Weapon:GetRightHandOffset() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsightfovmultiplier">docs</a>
 ---
----
----@return number 
+---Gets the Field of View multiplier applied when aiming down sights
+---@return number @The FOV multiplier
 function Weapon:GetSightFOVMultiplier() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsightlocation">docs</a>
 ---
----
----@return Vector 
+---Gets the sight location offset used when aiming down sights
+---@return Vector @The sight location offset
 function Weapon:GetSightLocation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsightrotation">docs</a>
 ---
----
----@return Rotator 
+---Gets the sight rotation used when aiming down sights
+---@return Rotator @The sight rotation
 function Weapon:GetSightRotation() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsoundaim">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when aiming
+---@return string @The Sound asset
 function Weapon:GetSoundAim() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsounddry">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when firing with an empty clip
+---@return string @The Sound asset
 function Weapon:GetSoundDry() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsoundfire">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when firing
+---@return string @The Sound asset
 function Weapon:GetSoundFire() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsoundload">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when loading a magazine
+---@return string @The Sound asset
 function Weapon:GetSoundLoad() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsoundunload">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when unloading a magazine
+---@return string @The Sound asset
 function Weapon:GetSoundUnload() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getsoundzooming">docs</a>
 ---
----
----@return string 
+---Gets the Sound played when zooming
+---@return string @The Sound asset
 function Weapon:GetSoundZooming() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getspread">docs</a>
 ---
----
----@return number 
+---Gets the base spread of this Weapon
+---@return number @The base spread, higher means less precision
 function Weapon:GetSpread() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getwallbangdamagemultiplier">docs</a>
+---
+---Gets the damage multiplier applied when a bullet passes through a wall
+---@return number @Damage multiplier applied when a bullet passes through a wall
+function Weapon:GetWallbangDamageMultiplier() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getwallbangmaxdistance">docs</a>
+---
+---Gets the max distance a bullet can pass through walls
+---@return number @Max distance a bullet can pass through walls
+function Weapon:GetWallbangMaxDistance() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-playanimation">docs</a>
 ---
 ---Plays an Animation on this Weapon
----@param animation_path string 
----@param slot_name? string @(Default: DefaultSlot)
+---@param animation_path string @The Animation asset to play
+---@param slot_name? string @The Animation Slot to play it on (Default: DefaultSlot)
 ---@param loop_indefinitely? boolean @This parameter is only used if the Weapon has an Animation Blueprint (Default: false)
 ---@param blend_in_time? number @This parameter is only used if the Weapon has an Animation Blueprint (Default: 0.25)
 ---@param blend_out_time? number @This parameter is only used if the Weapon has an Animation Blueprint (Default: 0.25)
@@ -10046,143 +10174,143 @@ function Weapon:Reload() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setammobag">docs</a>
 ---
 ---Sets this Weapon's Ammo in the Bag
----@param new_ammo_bag integer 
+---@param new_ammo_bag integer @The new Ammo in the Bag
 function Weapon:SetAmmoBag(new_ammo_bag) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setammoclip">docs</a>
 ---
 ---Sets this Weapon's Ammo in the Clip
----@param new_ammo_clip integer 
+---@param new_ammo_clip integer @The new Ammo in the Clip
 function Weapon:SetAmmoClip(new_ammo_clip) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setammosettings">docs</a>
 ---
----Aux for setting and configuring ammo
----@param ammo_clip integer 
----@param ammo_bag integer 
----@param ammo_to_reload? integer @(Default: ammo_clip)
----@param clip_capacity? integer @(Default: ammo_clip)
+---Sets the ammo counts and the clip capacity at once
+---@param ammo_clip integer @Bullets currently loaded in the clip
+---@param ammo_bag integer @Spare bullets carried, used when reloading
+---@param ammo_to_reload? integer @Bullets loaded on each reload, useful for shotguns that load one shell at a time. Defaults to the clip capacity (Default: ammo_clip)
+---@param clip_capacity? integer @Max bullets the clip can hold (Default: ammo_clip)
 function Weapon:SetAmmoSettings(ammo_clip, ammo_bag, ammo_to_reload, clip_capacity) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setanimationcharacterfire">docs</a>
 ---
----Animation played by the Character when Firing
----@param animation_character_fire_path string 
----@param play_rate? number @(Default: 1)
+---Sets the Animation played by the Character when firing this Weapon
+---@param animation_character_fire_path string @The Animation asset to play on the Character
+---@param play_rate? number @Speed multiplier of the animation (Default: 1)
 function Weapon:SetAnimationCharacterFire(animation_character_fire_path, play_rate) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setanimationfire">docs</a>
 ---
----Animation played by the Weapon when Firing
----@param animation_fire_path string 
----@param play_rate? number @(Default: 1)
+---Sets the Animation played by the Weapon itself when firing
+---@param animation_fire_path string @The Animation asset to play on the Weapon mesh
+---@param play_rate? number @Speed multiplier of the animation (Default: 1)
 function Weapon:SetAnimationFire(animation_fire_path, play_rate) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setanimationreload">docs</a>
 ---
----Animation played by the Character when Reloading
----@param reload_animation_path string 
----@param play_rate? number @(Default: 1)
+---Sets the Animation played by the Character when reloading this Weapon
+---@param reload_animation_path string @The Animation asset to play on the Character
+---@param play_rate? number @Speed multiplier of the animation (Default: 1)
 function Weapon:SetAnimationReload(reload_animation_path, play_rate) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setautoreload">docs</a>
 ---
 ---If the Character will reload automatically when ammo empties. Default is true
----@param auto_reload boolean 
+---@param auto_reload boolean @Whether to reload automatically
 function Weapon:SetAutoReload(auto_reload) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setbulletcolor">docs</a>
 ---
 ---Set the Bullet Color<br/><br/>Only has effect if using Bullet Trail particle P_Bullet_Trail or if you particle has the Color parameter
----@param bullet_color Color 
+---@param bullet_color Color @The new Bullet Color
 function Weapon:SetBulletColor(bullet_color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setbulletsettings">docs</a>
 ---
----Aux for setting and configuring the Bullet
+---Sets how many bullets are fired per shot and how they look and travel
 ---@param bullet_count integer @1 for common weapons<br/>> 1 for shotguns
----@param bullet_max_distance integer 
+---@param bullet_max_distance integer @Max distance the bullet travels (in units, 1 unit = 1 cm)
 ---@param bullet_velocity integer @Visuals only
----@param bullet_color Color 
+---@param bullet_color Color @Color of the bullet trail
 function Weapon:SetBulletSettings(bullet_count, bullet_max_distance, bullet_velocity, bullet_color) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setcadence">docs</a>
 ---
----Speed of shots
+---Sets the time between shots
 ---@param cadence number @1 shot at each <code>cadence</code> second
 function Weapon:SetCadence(cadence) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setclipcapacity">docs</a>
 ---
----Capacity of the Weapon's clip
----@param clip integer 
+---Sets the max number of bullets the Weapon's clip can hold
+---@param clip integer @The new clip capacity
 function Weapon:SetClipCapacity(clip) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setdamage">docs</a>
 ---
 ---Base Weapon's Damage<br/><br/>This will be multiplied by multiplier factors when hitting specific bones
----@param damage integer 
+---@param damage integer @The new Base Weapon's Damage
 function Weapon:SetDamage(damage) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-sethandlingmode">docs</a>
 ---
 ---Sets how the Character grabs this Weapon
----@param handling_mode HandlingMode 
+---@param handling_mode HandlingMode @The new how the Character grabs this Weapon
 function Weapon:SetHandlingMode(handling_mode) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setlefthandtransform">docs</a>
 ---
----Left Hand Offset
----@param left_hand_location Vector 
----@param left_hand_rotation Rotator 
+---Sets where the Character's left hand holds this Weapon, relative to the Weapon
+---@param left_hand_location Vector @Location offset of the left hand
+---@param left_hand_rotation Rotator @Rotation offset of the left hand
 function Weapon:SetLeftHandTransform(left_hand_location, left_hand_rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setmagazinemesh">docs</a>
 ---
 ---Set the mesh used when the Character reloads the weapon.<br/><br/>Will drop this Mesh as an animation effect.
----@param magazine_mesh string 
+---@param magazine_mesh string @The Static Mesh of the magazine, spawned in the Character's hand during the reload
 ---@param magazine_mesh_hide_bone? string @Weapon bone to hide when reloading it (Default: b_gun_mag)
 function Weapon:SetMagazineMesh(magazine_mesh, magazine_mesh_hide_bone) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setparticlesbarrel">docs</a>
 ---
----Particle of the Fire Blast in the muzzle
----@param particle_asset_path string 
+---Sets the Particle of the fire blast at the muzzle
+---@param particle_asset_path string @The Particle asset to spawn at the muzzle when firing
 function Weapon:SetParticlesBarrel(particle_asset_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setparticlesbullettrail">docs</a>
 ---
----Particle of the Bullet flying
----@param particle_bullet_trail_asset_path string 
+---Sets the Particle of the bullet trail
+---@param particle_bullet_trail_asset_path string @The Particle asset to spawn for each bullet
 function Weapon:SetParticlesBulletTrail(particle_bullet_trail_asset_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setparticlesshells">docs</a>
 ---
----Particle of the empty bullet flying from the weapon when shooting
----@param particle_shells_asset_path string 
+---Sets the Particle of the empty shells ejected when firing
+---@param particle_shells_asset_path string @The Particle asset to spawn when ejecting a shell
 function Weapon:SetParticlesShells(particle_shells_asset_path) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setrecoil">docs</a>
 ---
----Base Weapon's Recoil
+---Sets the base recoil of this Weapon
 ---@param recoil number @0 means no Recoil, default is 1
 function Weapon:SetRecoil(recoil) end
 
@@ -10190,90 +10318,90 @@ function Weapon:SetRecoil(recoil) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setrighthandoffset">docs</a>
 ---
 ---Set the Offset of Right Hand. To position relative to the camera.
----@param right_hand_offset Vector 
+---@param right_hand_offset Vector @The new offset of Right Hand
 function Weapon:SetRightHandOffset(right_hand_offset) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsightfovmultiplier">docs</a>
 ---
----The FOV multiplier when ADS
----@param sight_fov_multiplier number 
+---Sets the Field of View multiplier applied when aiming down sights
+---@param sight_fov_multiplier number @Values below 1 zoom in, for example 0.5 for a scope
 function Weapon:SetSightFOVMultiplier(sight_fov_multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsighttransform">docs</a>
 ---
----Offset applied to align player's head to weapon's sight and rotation applied on the weapon when ADS
----@param sight_location Vector 
----@param sight_rotation Rotator 
+---Sets the offset that aligns the Player's view with the Weapon's sight when aiming down sights
+---@param sight_location Vector @Offset between the camera and the sight
+---@param sight_rotation Rotator @Rotation applied to the Weapon while aiming
 function Weapon:SetSightTransform(sight_location, sight_rotation) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundaim">docs</a>
 ---
----Sound when Aiming
----@param sound_aim_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when starting to aim
+---@param sound_aim_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundAim(sound_aim_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsounddry">docs</a>
 ---
----Sound when weapon has not bullet and try to shoot
----@param sound_dry_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when trying to fire with an empty clip
+---@param sound_dry_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundDry(sound_dry_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundfire">docs</a>
 ---
----Sound when Shooting
----@param sound_fire_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when firing
+---@param sound_fire_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundFire(sound_fire_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundfirelastbullets">docs</a>
 ---
 ---Sound when firing with only having X remaining bullets in the magazine, useful for last shot 'ping' or sound when low on bullets
----@param sound_asset_path string 
+---@param sound_asset_path string @The Sound asset to play
 ---@param remaining_bullets_count? integer @The amount of remaining bullet to start playing this sound (Default: 1)
 function Weapon:SetSoundFireLastBullets(sound_asset_path, remaining_bullets_count) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundload">docs</a>
 ---
----Sound when Loading a magazine
----@param sound_load_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when loading a magazine
+---@param sound_load_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundLoad(sound_load_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundunload">docs</a>
 ---
----Sound when Unloading a magazine
----@param sound_unload_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when unloading a magazine
+---@param sound_unload_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundUnload(sound_unload_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setsoundzooming">docs</a>
 ---
----Sound when Zooming
----@param sound_zooming_asset_path string 
----@param volume? number @(Default: 1)
----@param pitch? number @(Default: 1)
+---Sets the Sound played when zooming
+---@param sound_zooming_asset_path string @The Sound asset to play
+---@param volume? number @Volume multiplier (Default: 1)
+---@param pitch? number @Pitch multiplier (Default: 1)
 function Weapon:SetSoundZooming(sound_zooming_asset_path, volume, pitch) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setspread">docs</a>
 ---
----Base Weapon's Spread
+---Sets the base spread of this Weapon
 ---@param spread number @the higher the less precision - recommended value: 20
 function Weapon:SetSpread(spread) end
 
@@ -10281,8 +10409,8 @@ function Weapon:SetSpread(spread) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-setusagesettings">docs</a>
 ---
 ---Sets if the Weapon can hold to keep firing and if it needs to release to fire
----@param can_hold_use boolean 
----@param hold_release_use boolean 
+---@param can_hold_use boolean @Whether holding the fire button keeps firing (automatic weapons)
+---@param hold_release_use boolean @Whether it only fires when the fire button is released (e.g. bows)
 function Weapon:SetUsageSettings(can_hold_use, hold_release_use) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -10462,62 +10590,63 @@ function WebUI:CloseDevTools() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-executejavascript">docs</a>
 ---
 ---Executes a JavaScript code in the Browser<br/>Note: This method is experimental and should be used cautiously. Events are still the preferred way of communicating between Packages and WebUI.
----@param javascript_code string 
+---@param javascript_code string @The JavaScript code to run
 function WebUI:ExecuteJavaScript(javascript_code) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-getname">docs</a>
 ---
 ---Gets this WebUI name
----@return string 
+---@return string @This WebUI name
 function WebUI:GetName() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-getsize">docs</a>
 ---
 ---Gets the current size of this WebUI
----@return Vector2D 
+---@return Vector2D @Current size of this WebUI
 function WebUI:GetSize() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-getvisibility">docs</a>
 ---
 ---Returns the current WebUI visibility
----@return WidgetVisibility 
+---@return WidgetVisibility @Current WebUI visibility
 function WebUI:GetVisibility() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-hasnodefocus">docs</a>
 ---
 ---Returns if this WebUI has any DOM Node focused
+---@return boolean @Whether any DOM node is focused
 function WebUI:HasNodeFocus() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-isfrozen">docs</a>
 ---
 ---Returns if this WebUI is currently frozen
----@return boolean 
+---@return boolean @Whether this WebUI is currently frozen
 function WebUI:IsFrozen() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-isready">docs</a>
 ---
 ---Returns if this WebUI is ready
----@return boolean 
+---@return boolean @Whether this WebUI is ready
 function WebUI:IsReady() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-loadhtml">docs</a>
 ---
 ---Loads a pure HTML in this Browser
----@param html string 
+---@param html string @The HTML content to load
 function WebUI:LoadHTML(html) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-loadurl">docs</a>
 ---
 ---Loads a new File/URL in this Browser
----@param url string 
+---@param url string @The URL or package file to load, e.g. <code>file://UI/index.html</code> or <code>https://...</code>
 function WebUI:LoadURL(url) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10536,8 +10665,8 @@ function WebUI:RemoveFocus() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-sendkeyevent">docs</a>
 ---
 ---Sends a Key Event into the WebUI programmatically
----@param key_type WebUIKeyType 
----@param key_code integer 
+---@param key_type WebUIKeyType @Whether it is a key down, key up or char event
+---@param key_code integer @The JavaScript key code
 ---@param modifiers? WebUIModifier @Supports several modifiers separating by <code>|</code> (using bit-wise operations) (Default: WebUIModifier.None)
 function WebUI:SendKeyEvent(key_type, key_code, modifiers) end
 
@@ -10560,7 +10689,7 @@ function WebUI:SendMouseClickEvent(mouse_x, mouse_y, mouse_type, is_mouse_up, mo
 ---@param mouse_x integer @Position X of the mouse
 ---@param mouse_y integer @Position Y of the mouse
 ---@param modifiers? WebUIModifier @Supports several modifiers separating by <code>|</code> (using bit-wise operations) (Default: WebUIModifier.None)
----@param mouse_leave? boolean @(Default: false)
+---@param mouse_leave? boolean @Whether the mouse left the WebUI (Default: false)
 function WebUI:SendMouseMoveEvent(mouse_x, mouse_y, modifiers, mouse_leave) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10569,8 +10698,8 @@ function WebUI:SendMouseMoveEvent(mouse_x, mouse_y, modifiers, mouse_leave) end
 ---Sends a Mouse Event into the WebUI programmatically
 ---@param mouse_x integer @Position X of the mouse
 ---@param mouse_y integer @Position Y of the mouse
----@param delta_x number 
----@param delta_y number 
+---@param delta_x number @Horizontal scroll amount
+---@param delta_y number @Vertical scroll amount
 function WebUI:SendMouseWheelEvent(mouse_x, mouse_y, delta_x, delta_y) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10582,39 +10711,39 @@ function WebUI:SetFocus() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-setfreeze">docs</a>
 ---
----Freezes the WebUI Rendering to the surface (it will still execute the JS under the hood)
----@param freeze boolean 
+---Freezes the WebUI rendering to the surface (JavaScript keeps running)
+---@param freeze boolean @Whether to freeze the rendering
 function WebUI:SetFreeze(freeze) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-setlayout">docs</a>
 ---
 ---Sets the Layout as Canvas on Screen. <strong>Anchors</strong>:<br/><br/><img src='/img/docs/anchors.webp' />
----@param screen_location_offset_left_top? Vector2D @(Default: Vector(0, 0))
----@param size_offset_right_bottom? Vector2D @(Default: Vector(0, 0))
----@param anchors_min? Vector2D @(Default: Vector(0, 0))
----@param anchors_max? Vector2D @(Default: Vector(1, 1))
----@param alignment? Vector2D @(Default: Vector(0.5, 0.5))
-function WebUI:SetLayout(screen_location_offset_left_top, size_offset_right_bottom, anchors_min, anchors_max, alignment) end
+---@param location? Vector2D @Screen location, or the left and top offsets when the anchors are stretched (Default: Vector2D(0, 0))
+---@param size? Vector2D @Size, or the right and bottom offsets when the anchors are stretched (Default: Vector2D(0, 0))
+---@param anchors_min? Vector2D @Min anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector2D(0, 0))
+---@param anchors_max? Vector2D @Max anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector2D(1, 1))
+---@param alignment? Vector2D @Pivot of the WebUI, (0.5, 0.5) is the center (Default: Vector2D(0.5, 0.5))
+function WebUI:SetLayout(location, size, anchors_min, anchors_max, alignment) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-setvisibility">docs</a>
 ---
 ---Sets the visibility in screen
----@param visibility WidgetVisibility 
+---@param visibility WidgetVisibility @The new visibility in screen
 function WebUI:SetVisibility(visibility) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-spawnsound">docs</a>
 ---
----Spawns a Sound entity to plays this WebUI sound
----@param location? Vector @(Default: Vector(0, 0, 0))
----@param is_2d? boolean @(Default: true)
----@param volume? number @(Default: 1.0)
----@param inner_radius? integer @(Default: 400)
----@param falloff_distance? integer @(Default: 3600)
----@param attenuation_function? AttenuationFunction @(Default: AttenuationFunction.Linear)
----@return Sound 
+---Spawns a Sound entity that plays this WebUI audio
+---@param location? Vector @World location of the Sound, if 3D (Default: Vector(0, 0, 0))
+---@param is_2d? boolean @Whether the Sound is 2D (Default: true)
+---@param volume? number @Volume multiplier (Default: 1.0)
+---@param inner_radius? integer @Radius within which the volume is 100%, if 3D (Default: 400)
+---@param falloff_distance? integer @Distance at which the sound becomes inaudible, if 3D (Default: 3600)
+---@param attenuation_function? AttenuationFunction @How the volume fades with distance, if 3D (Default: AttenuationFunction.Linear)
+---@return Sound @The spawned Sound
 function WebUI:SpawnSound(location, is_2d, volume, inner_radius, falloff_distance, attenuation_function) end
 
 
@@ -10624,8 +10753,8 @@ function WebUI:SpawnSound(location, is_2d, volume, inner_radius, falloff_distanc
 ---@return function @The callback function passed
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when an Entity is destroyed
----@overload fun(event_name: "Fail", callback: fun(error_code: integer, message: string)): fun(error_code: integer, message: string) @Triggered when this page fails to load
----@overload fun(event_name: "Ready", callback: fun()): fun() @Triggered when this page is fully loaded
+---@overload fun(event_name: "Fail", callback: fun(self: WebUI, error_code: integer, message: string)): fun(self: WebUI, error_code: integer, message: string) @Triggered when this page fails to load
+---@overload fun(event_name: "Ready", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when this page is fully loaded
 ---@overload fun(event_name: "Spawn", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: WebUI, key: string, value: any)): fun(self: WebUI, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function WebUI.Subscribe(event_name, callback) end
@@ -10637,8 +10766,8 @@ function WebUI.Subscribe(event_name, callback) end
 ---@return function @The callback function passed
 ---@overload fun(self: WebUI, event_name: "ClassRegister", callback: fun(class: table)): fun(class: table) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: WebUI, event_name: "Destroy", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when an Entity is destroyed
----@overload fun(self: WebUI, event_name: "Fail", callback: fun(error_code: integer, message: string)): fun(error_code: integer, message: string) @Triggered when this page fails to load
----@overload fun(self: WebUI, event_name: "Ready", callback: fun()): fun() @Triggered when this page is fully loaded
+---@overload fun(self: WebUI, event_name: "Fail", callback: fun(self: WebUI, error_code: integer, message: string)): fun(self: WebUI, error_code: integer, message: string) @Triggered when this page fails to load
+---@overload fun(self: WebUI, event_name: "Ready", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when this page is fully loaded
 ---@overload fun(self: WebUI, event_name: "Spawn", callback: fun(self: WebUI)): fun(self: WebUI) @Triggered when an Entity is spawned/created
 ---@overload fun(self: WebUI, event_name: "ValueChange", callback: fun(self: WebUI, key: string, value: any)): fun(self: WebUI, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function WebUI:Subscribe(event_name, callback) end
@@ -10648,8 +10777,8 @@ function WebUI:Subscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(self: WebUI, event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(self: WebUI, event_name: "Destroy", callback: fun(self: WebUI)) @Triggered when an Entity is destroyed
----@overload fun(self: WebUI, event_name: "Fail", callback: fun(error_code: integer, message: string)) @Triggered when this page fails to load
----@overload fun(self: WebUI, event_name: "Ready", callback: fun()) @Triggered when this page is fully loaded
+---@overload fun(self: WebUI, event_name: "Fail", callback: fun(self: WebUI, error_code: integer, message: string)) @Triggered when this page fails to load
+---@overload fun(self: WebUI, event_name: "Ready", callback: fun(self: WebUI)) @Triggered when this page is fully loaded
 ---@overload fun(self: WebUI, event_name: "Spawn", callback: fun(self: WebUI)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: WebUI, event_name: "ValueChange", callback: fun(self: WebUI, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function WebUI:Unsubscribe(event_name, callback) end
@@ -10660,8 +10789,8 @@ function WebUI:Unsubscribe(event_name, callback) end
 ---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
 ---@overload fun(event_name: "ClassRegister", callback: fun(class: table)) @Triggered when a new Class is registered with the <a href='/docs/core-concepts/scripting/inheriting-classes'>Inheriting System</a>
 ---@overload fun(event_name: "Destroy", callback: fun(self: WebUI)) @Triggered when an Entity is destroyed
----@overload fun(event_name: "Fail", callback: fun(error_code: integer, message: string)) @Triggered when this page fails to load
----@overload fun(event_name: "Ready", callback: fun()) @Triggered when this page is fully loaded
+---@overload fun(event_name: "Fail", callback: fun(self: WebUI, error_code: integer, message: string)) @Triggered when this page fails to load
+---@overload fun(event_name: "Ready", callback: fun(self: WebUI)) @Triggered when this page is fully loaded
 ---@overload fun(event_name: "Spawn", callback: fun(self: WebUI)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "ValueChange", callback: fun(self: WebUI, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function WebUI.Unsubscribe(event_name, callback) end
@@ -10702,8 +10831,8 @@ function Widget.Inherit(name, custom_values) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-addchild">docs</a>
 ---
----Adds a new child widget to this Widget container, if this is a <a href='https://docs.unrealengine.com/5.1/en-US/API/Runtime/UMG/Components/UPanelWidget/'>Panel</a>
----@param other WebUI|Widget 
+---Adds a new child widget to this Widget container, if this is a <a href='https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/UMG/UPanelWidget'>Panel</a>
+---@param other WebUI|Widget @The WebUI or Widget to add
 function Widget:AddChild(other) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10740,7 +10869,7 @@ function Widget:CallBlueprintEvent(event_name, ...) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-getblueprintpropertyvalue">docs</a>
 ---
 ---Gets a Blueprint Property/Variable value
----@param property_name string 
+---@param property_name string @Name of the Blueprint variable
 ---@return any @the value
 function Widget:GetBlueprintPropertyValue(property_name) end
 
@@ -10748,22 +10877,22 @@ function Widget:GetBlueprintPropertyValue(property_name) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-getvisibility">docs</a>
 ---
 ---Returns the current WebUI visibility
----@return WidgetVisibility 
+---@return WidgetVisibility @Current WebUI visibility
 function Widget:GetVisibility() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setblueprintpropertyvalue">docs</a>
 ---
 ---Sets a Blueprint Property/Variable value directly
----@param property_name string 
----@param value any 
+---@param property_name string @Name of the Blueprint variable
+---@param value any @The value to set
 function Widget:SetBlueprintPropertyValue(property_name, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setcontentforslot">docs</a>
 ---
----Sets the widget for a given <a href='https://docs.unrealengine.com/5.0/en-US/using-named-slots-in-umg-for-unreal-engine/'>slot</a> by name, if this is a <a href='https://docs.unrealengine.com/5.1/en-US/API/Runtime/UMG/Blueprint/UUserWidget/'>UserWidget</a>
----@param slot_name string 
+---Sets the widget for a given <a href='https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/UMG/UNamedSlot'>slot</a> by name, if this is a <a href='https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/UMG/UUserWidget'>UserWidget</a>
+---@param slot_name string @Name of the Named Slot
 ---@param widget? Widget @Pass nil to remove it (Default: nil)
 function Widget:SetContentForSlot(slot_name, widget) end
 
@@ -10785,12 +10914,12 @@ function Widget:SetSlotAlignment(horizontal_alignment, vertical_alignment) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setslotcanvaslayout">docs</a>
 ---
 ---Sets the Layout as Canvas on Screen.<br/><br/>Note: This method only works if this Widget is child of a Canvas Panel.<br/><br/><strong>Anchors</strong>:<br/><br/><img src='/img/docs/anchors.webp' />
----@param screen_location_offset_left_top? Vector2D @(Default: Vector(0, 0))
----@param size_offset_right_bottom? Vector2D @(Default: Vector(0, 0))
----@param anchors_min? Vector2D @(Default: Vector(0, 0))
----@param anchors_max? Vector2D @(Default: Vector(1, 1))
----@param alignment? Vector2D @(Default: Vector(0.5, 0.5))
-function Widget:SetSlotCanvasLayout(screen_location_offset_left_top, size_offset_right_bottom, anchors_min, anchors_max, alignment) end
+---@param location? Vector2D @Screen location, or the left and top offsets when the anchors are stretched (Default: Vector(0, 0))
+---@param size? Vector2D @Size, or the right and bottom offsets when the anchors are stretched (Default: Vector(0, 0))
+---@param anchors_min? Vector2D @Min anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector(0, 0))
+---@param anchors_max? Vector2D @Max anchor, from (0, 0) top-left to (1, 1) bottom-right (Default: Vector(1, 1))
+---@param alignment? Vector2D @Pivot of the Widget, (0.5, 0.5) is the center (Default: Vector(0.5, 0.5))
+function Widget:SetSlotCanvasLayout(location, size, anchors_min, anchors_max, alignment) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setslotpadding">docs</a>
@@ -10812,21 +10941,21 @@ function Widget:SetSlotSize(size, slate_size_rule) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setvisibility">docs</a>
 ---
 ---Sets the visibility in screen
----@param visibility WidgetVisibility 
+---@param visibility WidgetVisibility @The new visibility in screen
 function Widget:SetVisibility(visibility) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-spawnwidget3d">docs</a>
 ---
 ---Spawns a 3D Widget actor rendering this Widget in the world
----@param location? Vector @(Default: Vector(0, 0, 0))
----@param rotation? Rotator @(Default: Rotator(0, 0, 0))
----@param widget_space? WidgetSpace @(Default: WidgetSpace.World)
----@param auto_size? bool @(Default: false)
+---@param location? Vector @World location (Default: Vector(0, 0, 0))
+---@param rotation? Rotator @World rotation (Default: Rotator(0, 0, 0))
+---@param widget_space? WidgetSpace @Whether it renders in the world or always facing the screen (Default: WidgetSpace.World)
+---@param auto_size? boolean @Whether to size it automatically based on its content (Default: false)
 ---@param size? Vector2D @Only works if auto_size = false (Default: Vector2D(500, 500))
 ---@param auto_repaint_rate? number @Leaves -1 to repaint every frame (Default: -1)
----@param pivot? Vector2D @(Default: Vector2D(0.5, 0.5))
----@return Widget3D 
+---@param pivot? Vector2D @Pivot of the widget, (0.5, 0.5) is the center (Default: Vector2D(0.5, 0.5))
+---@return Widget3D @The spawned Widget3D
 function Widget:SpawnWidget3D(location, rotation, widget_space, auto_size, size, auto_repaint_rate, pivot) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10903,8 +11032,8 @@ function Widget3D.Inherit(name, custom_values) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget3d#function-getwidget">docs</a>
 ---
----
----@return Widget 
+---Gets the Widget rendered by this Widget3D
+---@return Widget @The Widget
 function Widget3D:GetWidget() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10917,7 +11046,7 @@ function Widget3D:Repaint() end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget3d#function-setautorepaintrate">docs</a>
 ---
 ---Sets the auto repaint rate
----@param rate number 
+---@param rate number @The new auto repaint rate
 function Widget3D:SetAutoRepaintRate(rate) end
 
 
@@ -10981,19 +11110,19 @@ function Widget3D.Unsubscribe(event_name, callback) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#aimmode">docs</a>
 ---@enum AimMode
 AimMode = {
-    ADS = 1,
-    None = 0,
-    Zoomed = 3,
-    ZoomedFar = 4,
-    ZoomedZoom = 2
+    ADS = 1, -- Aiming down sights
+    None = 0, -- Not aiming
+    Zoomed = 3, -- Third person zoomed aim
+    ZoomedFar = 4, -- Third person zoomed aim, farther away
+    ZoomedZoom = 2, -- Aiming through a scope, zoomed i
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#animationslottype">docs</a>
 ---@enum AnimationSlotType
 AnimationSlotType = {
-    FullBody = 0,
-    Head = 2,
-    UpperBody = 1
+    FullBody = 0, -- The whole body
+    Head = 2, -- Only the head
+    UpperBody = 1, -- From the waist up, keeping the legs animatio
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#assettype">docs</a>
@@ -11021,26 +11150,26 @@ AttachmentRule = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#attenuationfunction">docs</a>
 ---@enum AttenuationFunction
 AttenuationFunction = {
-    Inverse = 2,
-    Linear = 0,
-    Logarithmic = 1,
-    LogReverse = 3,
-    NaturalSound = 4
+    Inverse = 2, -- Fades very quickly near the source
+    Linear = 0, -- Fades evenly with distance
+    Logarithmic = 1, -- Fades quickly when close and slowly when far
+    LogReverse = 3, -- Fades slowly when close and quickly when far
+    NaturalSound = 4, -- Physically based falloff, the most realisti
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#blendmode">docs</a>
 ---@enum BlendMode
 BlendMode = {
-    Additive = 3,
-    AlphaBlend = 11,
+    Additive = 3, -- Adds its color to the existing pixels
+    AlphaBlend = 11, -- Standard alpha blending, recommended for images with transparency
     AlphaComposite = 9,
     AlphaHoldout = 10,
-    Masked = 1,
+    Masked = 1, -- Pixels are either fully visible or fully hidden
     MaskedDistanceField = 5,
     MaskedDistanceFieldShadowed = 6,
-    Modulate = 4,
-    Opaque = 0,
-    Translucent = 2,
+    Modulate = 4, -- Multiplies its color with the existing pixels
+    Opaque = 0, -- Fully replaces the pixels, ignoring alpha
+    Translucent = 2, -- Blends using the alpha
     TranslucentAlphaOnly = 12,
     TranslucentAlphaOnlyWriteAlpha = 13,
     TranslucentDistanceField = 7,
@@ -11050,9 +11179,9 @@ BlendMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#cameramode">docs</a>
 ---@enum CameraMode
 CameraMode = {
-    FPSOnly = 1,
-    FPSTPS = 0,
-    TPSOnly = 2
+    FPSOnly = 1, -- First person only
+    FPSTPS = 0, -- Can switch between first and third person
+    TPSOnly = 2, -- Third person onl
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#ccdmode">docs</a>
@@ -11066,11 +11195,12 @@ CCDMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#collisionchannel">docs</a>
 ---@enum CollisionChannel
 CollisionChannel = {
-    All = (1 << 23) - 1, -- All Objects
+    All = (1 << 32) - 1, -- All Objects
     Foliage = 1 << 20, -- Foliage Meshes
     Mesh = 1 << 17, -- Character Mesh
     Pawn = 1 << 2, -- Capsules (usually from Characters)
     PhysicsBody = 1 << 5, -- Pickables and Props Meshes
+    TracePrimitive = 1 << 16, -- Primitive components used for traces
     Vehicle = 1 << 22, -- Vehicles Meshes
     Water = 1 << 19, -- Water Body
     WorldDynamic = 1 << 1, -- WorldDynamic Object Types
@@ -11117,14 +11247,14 @@ CursorType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#damagetype">docs</a>
 ---@enum DamageType
 DamageType = {
-    Explosion = 1,
-    Fall = 3,
-    Melee = 6,
-    Punch = 2,
-    RunOverProp = 4,
-    RunOverVehicle = 5,
-    Shot = 0,
-    Unknown = 7
+    Explosion = 1, -- An explosion, such as a Grenade
+    Fall = 3, -- Falling from a high place
+    Melee = 6, -- Hit by a Melee
+    Punch = 2, -- A punch
+    RunOverProp = 4, -- Hit by a Prop
+    RunOverVehicle = 5, -- Run over by a Vehicle
+    Shot = 0, -- Shot by a Weapon
+    Unknown = 7, -- Anything else, such as scripted damag
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#databaseengine">docs</a>
@@ -11138,23 +11268,21 @@ DatabaseEngine = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#differentialtype">docs</a>
 ---@enum DifferentialType
 DifferentialType = {
-    AllWheelDrive = 1,
-    FrontWheelDrive = 2,
-    RearWheelDrive = 3,
-    Undefined = 0
+    AllWheelDrive = 1, -- All wheels
+    FrontWheelDrive = 2, -- Only the front wheels
+    RearWheelDrive = 3, -- Only the rear wheels
+    Undefined = 0, -- Not configure
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#fallingmode">docs</a>
 ---@enum FallingMode
 FallingMode = {
-    Climbing = 2,
-    Falling = 4,
-    HighFalling = 5,
-    Jumping = 1,
-    None = 0,
-    Parachuting = 6,
-    SkyDiving = 7,
-    Vaulting = 3
+    Falling = 4, -- Falling
+    HighFalling = 5, -- Falling from a height that will cause damage
+    Jumping = 1, -- Going up after a jump
+    None = 0, -- Not falling
+    Parachuting = 6, -- Parachute deployed
+    SkyDiving = 7, -- Skydiving before opening the parachut
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#fonttype">docs</a>
@@ -11165,22 +11293,22 @@ FontType = {
     Oswald = 3,
     PoiretOne = 2,
     Roboto = 0,
-    RobotoMono = 4
+    Roboto_Mono = 4
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#gaitmode">docs</a>
 ---@enum GaitMode
 GaitMode = {
-    None = 0,
-    Sprinting = 2,
-    Walking = 1
+    None = 0, -- Not moving
+    Sprinting = 2, -- Sprinting
+    Walking = 1, -- Walking or runnin
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#gizmoalignspace">docs</a>
 ---@enum GizmoAlignSpace
 GizmoAlignSpace = {
-    Local = 0,
-    World = 1
+    Local = 0, -- Aligned to the object rotation
+    World = 1, -- Aligned to the world axe
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#gizmotransformmode">docs</a>
@@ -11202,22 +11330,22 @@ GrabMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#handlingmode">docs</a>
 ---@enum HandlingMode
 HandlingMode = {
-    Barrel = 6,
-    Box = 7,
+    Barrel = 6, -- Heavy objects carried in front with both hands
+    Box = 7, -- Boxes carried with both hands
     DoubleHandedMelee = 3,
     DoubleHandedWeapon = 1,
     SingleHandedMelee = 2,
     SingleHandedWeapon = 0,
-    Throwable = 4,
-    Torch = 5
+    Throwable = 4, -- Grenades and other throwables
+    Torch = 5, -- A light source held in one han
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#highlightmode">docs</a>
 ---@enum HighlightMode
 HighlightMode = {
-    Always = 0,
-    OnlyHidden = 1,
-    OnlyVisible = 2
+    Always = 0, -- Always visible
+    OnlyHidden = 1, -- Only when occluded by other objects (x-ray)
+    OnlyVisible = 2, -- Only when not occlude
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#httpmethod">docs</a>
@@ -11338,18 +11466,18 @@ LightType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#logtype">docs</a>
 ---@enum LogType
 LogType = {
-    Chat = 8,
+    Chat = 8, -- Chat messages
     Debug = 3,
     Display = 0,
     Error = 2,
     Fatal = 11,
-    Scripting = 5,
-    ScriptingError = 7,
-    ScriptingWarn = 6,
+    Scripting = 5, -- Messages printed by scripts
+    ScriptingError = 7, -- Errors raised by scripts
+    ScriptingWarn = 6, -- Warnings printed by scripts
     Success = 10,
     Verbose = 4,
     Warning = 1,
-    WebUI = 9
+    WebUI = 9, -- Messages logged from WebUI JavaScrip
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#nativewidget">docs</a>
@@ -11395,12 +11523,12 @@ NotificationType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#packagetype">docs</a>
 ---@enum PackageType
 PackageType = {
-    All = -1,
-    CModule = 32,
-    GameMode = 2,
-    LoadingScreen = 4,
-    Map = 16,
-    Script = 1
+    All = -1, -- All types
+    CModule = 32, -- C Module package
+    GameMode = 2, -- Game-mode package, only one can be loaded
+    LoadingScreen = 4, -- Loading screen package
+    Map = 16, -- Map package
+    Script = 1, -- Script packag
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#reliability">docs</a>
@@ -11432,10 +11560,10 @@ SoundLoopMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#soundtype">docs</a>
 ---@enum SoundType
 SoundType = {
-    Ambient = 3,
-    Music = 1,
-    SFX = 0,
-    UI = 2
+    Ambient = 3, -- Ambient sounds
+    Music = 1, -- Music
+    SFX = 0, -- Sound effects
+    UI = 2, -- User interface sound
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#spawnmode">docs</a>
@@ -11449,9 +11577,10 @@ SpawnMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#stancemode">docs</a>
 ---@enum StanceMode
 StanceMode = {
-    Crouching = 2,
-    None = 0,
-    Standing = 1
+    Crouching = 2, -- Crouching
+    None = 0, -- No stance
+    Proning = 3, -- Lying prone
+    Standing = 1, -- Standin
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#steeringtype">docs</a>
@@ -11500,22 +11629,22 @@ SuspensionSweepShape = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#swimmingmode">docs</a>
 ---@enum SwimmingMode
 SwimmingMode = {
-    None = 0,
-    Surface = 1,
-    Underwater = 2
+    None = 0, -- Not swimming
+    Surface = 1, -- Swimming on the surface
+    Underwater = 2, -- Diving underwate
 }
 
----<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderaligncamera">docs</a>
----@enum TextRenderAlignCamera
-TextRenderAlignCamera = {
-    AlignCameraRotation = 1,
-    FaceCamera = 2,
-    Unaligned = 0
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#text3daligncamera">docs</a>
+---@enum Text3DAlignCamera
+Text3DAlignCamera = {
+    AlignCameraRotation = 1, -- Rotates to match the camera rotation
+    FaceCamera = 2, -- Always faces the camera location
+    Unaligned = 0, -- Keeps its own rotatio
 }
 
----<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderbeveltype">docs</a>
----@enum TextRenderBevelType
-TextRenderBevelType = {
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#text3dbeveltype">docs</a>
+---@enum Text3DBevelType
+Text3DBevelType = {
     Concave = 3,
     Convex = 2,
     Engraved = 6,
@@ -11523,6 +11652,23 @@ TextRenderBevelType = {
     Linear = 0,
     OneStep = 4,
     TwoSteps = 5
+}
+
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#text3dhorizontalalignment">docs</a>
+---@enum Text3DHorizontalAlignment
+Text3DHorizontalAlignment = {
+    Center = 1,
+    Left = 0,
+    Right = 2
+}
+
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#text3dverticalalignment">docs</a>
+---@enum Text3DVerticalAlignment
+Text3DVerticalAlignment = {
+    Bottom = 3,
+    Center = 2,
+    FirstLine = 0, -- Aligned to the first line of text
+    Top = 1
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderhorizontalalignment">docs</a>
@@ -11536,10 +11682,10 @@ TextRenderHorizontalAlignment = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderrenderingtype">docs</a>
 ---@enum TextRenderRenderingType
 TextRenderRenderingType = {
-    Lit = 0,
-    Unlit = 1,
-    UnlitCameraAligned = 2,
-    UnlitCameraAlignedDepth = 3
+    Lit = 0, -- Affected by the scene lighting
+    Unlit = 1, -- Ignores lighting, always fully bright
+    UnlitCameraAligned = 2, -- Unlit and always facing the camera
+    UnlitCameraAlignedDepth = 3, -- Unlit, facing the camera and occluded by the scen
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderverticalalignment">docs</a>
@@ -11547,7 +11693,7 @@ TextRenderRenderingType = {
 TextRenderVerticalAlignment = {
     Bottom = 2,
     Center = 1,
-    QuadTop = 3,
+    QuadTop = 3, -- Aligned to the top of the text quad
     Top = 0
 }
 
@@ -11584,10 +11730,10 @@ ViewMode = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#voipsetting">docs</a>
 ---@enum VOIPSetting
 VOIPSetting = {
-    Both = 3,
-    ListenOnly = 1,
-    None = 0,
-    SpeakOnly = 2
+    Both = 3, -- Can talk and listen
+    ListenOnly = 1, -- Can only listen
+    None = 0, -- Can neither talk nor listen
+    SpeakOnly = 2, -- Can only tal
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#weathertype">docs</a>
@@ -11611,9 +11757,9 @@ WeatherType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#webuikeytype">docs</a>
 ---@enum WebUIKeyType
 WebUIKeyType = {
-    Char = 2,
-    Down = 0,
-    Up = 1
+    Char = 2, -- Character typed
+    Down = 0, -- Key pressed
+    Up = 1, -- Key release
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#webuimodifier">docs</a>
@@ -11656,8 +11802,8 @@ WidgetHorizontalAlignment = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#widgetsizerule">docs</a>
 ---@enum WidgetSizeRule
 WidgetSizeRule = {
-    Automatic = 0,
-    Fill = 1
+    Automatic = 0, -- Uses the widget desired size
+    Fill = 1, -- Fills the available spac
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#widgetspace">docs</a>
@@ -11679,7 +11825,7 @@ WidgetVerticalAlignment = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#widgetvisibility">docs</a>
 ---@enum WidgetVisibility
 WidgetVisibility = {
-    Hidden = 0,
-    Visible = 1,
-    VisibleNotHitTestable = 2
+    Hidden = 0, -- Not rendered and not interactable
+    Visible = 1, -- Rendered and interactable
+    VisibleNotHitTestable = 2, -- Rendered but ignores the mous
 }
