@@ -55,7 +55,7 @@ export interface DocOperator {
 	name: string;
 	operator: string;
 	lhs: string;
-	rhs: string;
+	rhs?: string;
 	return: string;
 }
 
