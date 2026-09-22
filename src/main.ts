@@ -176,7 +176,9 @@ function generateDocstring(obj: DocDescriptive, jsonFileName?: string): string {
 				? ""
 				: obj.description
 			: obj.description_long
-	).replaceAll("\n", "<br>");
+	)
+		.replaceAll("\r\n", "\n")
+		.replaceAll("\n", "<br>");
 }
 
 function generateInlineDocstring(
@@ -193,7 +195,13 @@ function generateParamDocstring(
 ): string {
 	let docstring = generateInlineDocstring(param, jsonFileName);
 	if (param.default !== undefined) {
-		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${param.default.length === 0 ? '""' : param.default})`;
+		const defaultValue =
+			param.default.length === 0
+				? '""'
+				: param.default
+						.replaceAll("\r\n", "\n")
+						.replaceAll("\n", "\n--- ");
+		docstring += `${docstring.length > 0 ? " " : "@"}(Default: ${defaultValue})`;
 	}
 	return docstring;
 }
@@ -656,9 +664,12 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 			.sort((a, b) => a.operator.localeCompare(b.operator))
 			.filter((op) => op.operator in OPERATORS)
 			.forEach((op) => {
+				const rhs = op.rhs
+					? `(${generateType({ type: op.rhs }).toString()})`
+					: "";
 				operators += `\n---@operator ${
 					OPERATORS[op.operator as keyof typeof OPERATORS]
-				}(${generateType({ type: op.rhs }).toString()}): ${generateType(
+				}${rhs}: ${generateType(
 					{ type: op.return },
 				).toString()}`;
 			});
