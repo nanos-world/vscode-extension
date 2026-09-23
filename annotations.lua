@@ -937,7 +937,7 @@ function Canvas:Clear(clear_color) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawbox">docs</a>
 ---
----Draws an unfilled box on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
+---Draws an unfilled box on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
 ---@param thickness number @Line thickness
@@ -948,7 +948,7 @@ function Canvas:DrawBox(screen_position, screen_size, thickness, render_color, b
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawline">docs</a>
 ---
----Draws a line on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
+---Draws a line on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event
 ---@param screen_position_a Vector2D @Start position of the line, in pixels
 ---@param screen_position_b Vector2D @End position of the line, in pixels
 ---@param thickness number @Line thickness
@@ -959,7 +959,7 @@ function Canvas:DrawLine(screen_position_a, screen_position_b, thickness, render
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterial">docs</a>
 ---
----Draws a Material on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
+---Draws a Material on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
 ---@param material_path string @The Material asset to use
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
@@ -973,7 +973,7 @@ function Canvas:DrawMaterial(material_path, screen_position, screen_size, coordi
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterialfromscenecapture">docs</a>
 ---
----Draws a SceneCapture on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
+---Draws a SceneCapture on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
 ---@param scenecapture_entity SceneCapture @The SceneCapture to draw
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
@@ -987,7 +987,7 @@ function Canvas:DrawMaterialFromSceneCapture(scenecapture_entity, screen_positio
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawmaterialfromwebui">docs</a>
 ---
----Draws a WebUI on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
+---Draws a WebUI on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event<br/><br/><strong>Note:</strong> Due how Unreal handles Render Targets, drawing material on Canvas result on a weird translucent effect. Hope in the future to be improved.
 ---@param webui_entity WebUI @The WebUI to draw
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
@@ -1001,7 +1001,7 @@ function Canvas:DrawMaterialFromWebUI(webui_entity, screen_position, screen_size
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawpolygon">docs</a>
 ---
----Draws a N-Polygon on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
+---Draws a N-Polygon on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event
 ---@param texture_path string @Pass empty to use default white Texture
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param radius? Vector2D @Radius of the polygon on each axis, in pixels (Default: Vector2D(1, 1))
@@ -1013,7 +1013,7 @@ function Canvas:DrawPolygon(texture_path, screen_position, radius, number_of_sid
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawrect">docs</a>
 ---
----Draws a fille Rect on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
+---Draws a fille Rect on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event
 ---@param texture_path string @Pass empty to use default white Texture
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
@@ -1024,7 +1024,7 @@ function Canvas:DrawRect(texture_path, screen_position, screen_size, render_colo
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawtext">docs</a>
 ---
----Draws a Text on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event<br/><br/>Shadow and Outline won't work properly with Transparent <code>clear_color</code>
+---Draws a Text on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event<br/><br/>Shadow and Outline won't work properly with Transparent <code>clear_color</code>
 ---@param text string @The text to draw
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param font_type? FontType @Font to use (Default: FontType.Roboto)
@@ -1042,7 +1042,7 @@ function Canvas:DrawText(text, screen_position, font_type, font_size, text_color
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-drawtexture">docs</a>
 ---
----Draws a Texture on the Canvas<br/></br>This method can only be called from inside <code>Update</code> event
+---Draws a Texture on the Canvas<br/><br/>This method can only be called from inside <code>Update</code> event
 ---@param texture_path string @The image to draw
 ---@param screen_position Vector2D @Position on the Canvas, in pixels
 ---@param screen_size Vector2D @Size on the Canvas, in pixels
@@ -2534,7 +2534,7 @@ function Client.SetDebugEnabled(enable_debug) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setescapemenutext">docs</a>
 ---
 ---Sets the Escape Menu text
----@param text string @Supports using <code>&#60h1&#62</code>, <code>&#60h2&#62</code>, <code>&#60h3&#62</code> and <code>&#60strong&#62</code> tags in the text.
+---@param text string @Supports using <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> and <code>&lt;strong&gt;</code> tags in the text.
 function Client.SetEscapeMenuText(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -9142,6 +9142,21 @@ function Vehicle:GetPassenger(seat) end
 function Vehicle:GetPassengers() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-hidebone">docs</a>
+---
+---Hides a bone of this Vehicle
+---@param bone_name string @Bone to hide
+function Vehicle:HideBone(bone_name) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-isbonehidden">docs</a>
+---
+---Gets if a bone is hidden
+---@param bone_name string @Bone to check
+---@return boolean @if the bone is hidden
+function Vehicle:IsBoneHidden(bone_name) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-isenginestarted">docs</a>
 ---
 ---Checks if the engine is started
@@ -9270,6 +9285,13 @@ function Vehicle:StopAnimation(animation_asset) end
 ---@param dispatcher_name string @Event Dispatcher name
 ---@param callback? function @Optional callback to unbind (Default: nil)
 function Vehicle:UnbindAnimationBlueprintEventDispatcher(dispatcher_name, callback) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-unhidebone">docs</a>
+---
+---UnHide a bone of this Vehicle
+---@param bone_name string @Bone to unhide
+function Vehicle:UnHideBone(bone_name) end
 
 
 ---Subscribe to an event
