@@ -209,7 +209,7 @@ function Actor:GetScreenPercentage() end
 ---Gets a Socket Transform in world space given a bone or socket name
 ---@param socket_name string @Name of the socket
 ---@param attachable_id? string @The attachable ID (set with <code>AddSkeletalMeshAttached</code> or <code>AddStaticMeshAttached</code>) to read the Socket from. Pass empty to read from the main mesh (Default: "")
----@return { Location: Vector, Rotation: Rotator } @Socket Transform in world space given a bone or socket name
+---@return { Location: Vector, Rotation: Rotator, Scale: Vector } @Socket Transform in world space given a bone or socket name
 function Actor:GetSocketTransform(socket_name, attachable_id) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
