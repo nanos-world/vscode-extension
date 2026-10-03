@@ -19,24 +19,6 @@ import type {
 	DocConstructor,
 } from "./schema.d.ts";
 
-console.log("Building documentation...");
-
-const TOKEN = getInput("github-token");
-const REPO_OWNER = getInput("repository-owner");
-const REPO_NAME = getInput("repository-name");
-const REPO_BRANCH = getInput("repository-branch");
-
-// Set global dispatcher with 60 second connect timeout
-setGlobalDispatcher(
-	new Agent({
-		connect: {
-			timeout: 60000,
-		},
-	}),
-);
-
-const octokit = getOctokit(TOKEN);
-
 // Path category constants for class types
 const PATH_CATEGORIES = {
 	CLASSES: "Classes",
@@ -378,27 +360,43 @@ function generateConstructor(
 const INHERITING_SYSTEM_URL =
 	"https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes";
 
-interface InheritSource {
+interface StaticFunctionSource {
 	fun: DocFunction;
 	owner: DocClass;
 }
 
-/**
- * Finds the `Inherit` static function this class exposes, either declared on
- * itself or picked up from one of its parents.
- */
-function findInherit(
+function getClassHierarchy(
 	classes: Record<string, DocClass>,
 	cls: DocClass,
-): InheritSource | undefined {
+	visited = new Set<string>(),
+): DocClass[] {
+	if (visited.has(cls.name)) return [];
+	visited.add(cls.name);
+
+	return [
+		cls,
+		...(cls.inheritance ?? []).flatMap((name) =>
+			classes[name] === undefined
+				? []
+				: getClassHierarchy(classes, classes[name], visited),
+		),
+	];
+}
+
+/**
+ * Finds a static function this class exposes, either declared on
+ * itself or picked up from one of its parents.
+ */
+function findStaticFunction(
+	classes: Record<string, DocClass>,
+	cls: DocClass,
+	name: string,
+): StaticFunctionSource | undefined {
 	if (cls.staticClass || cls.struct) return undefined;
 
-	for (const candidate of [
-		cls,
-		...(cls.inheritance ?? []).map((name) => classes[name]),
-	]) {
+	for (const candidate of getClassHierarchy(classes, cls)) {
 		const fun = candidate?.static_functions?.find(
-			(fun) => fun.name === "Inherit",
+			(fun) => fun.name === name,
 		);
 		if (fun !== undefined) {
 			return { fun, owner: candidate };
@@ -406,6 +404,50 @@ function findInherit(
 	}
 
 	return undefined;
+}
+
+// Collection values belong to the class the method is called on, even when
+// the method itself is inherited from Entity.
+function findEntityCollections(
+	classes: Record<string, DocClass>,
+	cls: DocClass,
+): StaticFunctionSource[] {
+	if (cls.staticClass || cls.struct) return [];
+	if (
+		!getClassHierarchy(classes, cls).some(
+			(parent) => parent.name === "Entity",
+		)
+	) {
+		return [];
+	}
+
+	return ["GetAll", "GetPairs"].flatMap((name) => {
+		const source = findStaticFunction(classes, cls, name);
+		return source === undefined ? [] : [source];
+	});
+}
+
+function generateCollectionFunction(
+	collection: StaticFunctionSource,
+	cls: DocClass,
+): string {
+	const { fun, owner } = collection;
+	const type =
+		fun.name === "GetAll" ? `${cls.name}[]` : `EntityIterator<${cls.name}>`;
+
+	return generateFunction(
+		owner.jsonFileName ?? owner.name,
+		{
+			...fun,
+			return: [
+				{ ...fun.return?.[0], type },
+				...(fun.return?.slice(1) ?? []),
+			],
+		},
+		owner.name,
+		`${cls.name}.`,
+		true,
+	);
 }
 
 /**
@@ -418,7 +460,7 @@ function findInherit(
  * without tripping the `inject-field`/`undefined-field` diagnostics.
  */
 function generateInheritFunction(
-	inherit: InheritSource,
+	inherit: StaticFunctionSource,
 	cls: DocClass,
 ): string {
 	const { fun, owner } = inherit;
@@ -480,8 +522,9 @@ function generateClassAnnotations(
 		inheritance = ` : ${cls.inheritance.join(", ")}`;
 	}
 
-	const inherit = findInherit(classes, cls);
+	const inherit = findStaticFunction(classes, cls, "Inherit");
 	const isInheritable = inherit !== undefined;
+	const collections = findEntityCollections(classes, cls);
 
 	const constructors =
 		cls.constructors?.reduce(
@@ -504,6 +547,9 @@ function generateClassAnnotations(
 
 				// Redeclared below with the class as its return type
 				if (fun.name === "Inherit" && inherit?.owner === cls) {
+					return;
+				}
+				if (collections.some((source) => source.fun === fun)) {
 					return;
 				}
 
@@ -669,9 +715,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 					: "";
 				operators += `\n---@operator ${
 					OPERATORS[op.operator as keyof typeof OPERATORS]
-				}${rhs}: ${generateType(
-					{ type: op.return },
-				).toString()}`;
+				}${rhs}: ${generateType({ type: op.return }).toString()}`;
 			});
 	}
 
@@ -683,6 +727,9 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 	const inheritFunction = !isInheritable
 		? ""
 		: generateInheritFunction(inherit, cls);
+	const collectionFunctions = collections
+		.map((source) => generateCollectionFunction(source, cls))
+		.join("");
 
 	return `
 
@@ -691,7 +738,7 @@ function ${cls.name}.Unsubscribe(event_name, callback) end
 ---
 ---${generateDocstring(cls, jsonFileName)}
 ---@class ${cls.name}${inheritance}${fields}${operators}${constructors}
-${cls.name} = {}${staticFields}${constructorFunction}${inheritFunction}${staticFunctions}${functions}${events}`;
+${cls.name} = {}${staticFields}${constructorFunction}${inheritFunction}${collectionFunctions}${staticFunctions}${functions}${events}`;
 }
 
 function generateEnum(name: string, values: DocEnumValue[]): string {
@@ -709,6 +756,19 @@ ${name} = {${valuesString.slice(0, -1)}
 }
 
 async function buildDocs() {
+	// Set global dispatcher with 60 second connect timeout
+	setGlobalDispatcher(
+		new Agent({
+			connect: {
+				timeout: 60000,
+			},
+		}),
+	);
+
+	const octokit = getOctokit(getInput("github-token"));
+	const REPO_OWNER = getInput("repository-owner");
+	const REPO_NAME = getInput("repository-name");
+	const REPO_BRANCH = getInput("repository-branch");
 	const response = await octokit.request(
 		"GET /repos/{owner}/{repo}/git/trees/{tree_sha}",
 		{
@@ -791,7 +851,21 @@ async function buildDocs() {
 		);
 	await Promise.all(promises);
 
-	let output = "---@meta";
+	const output = generateAnnotations(docs);
+	try {
+		await fs.promises.mkdir("./docs");
+	} catch {
+		// it is fine if it exists already
+	}
+	await fs.promises.writeFile("./docs/annotations.lua", output);
+}
+
+export function generateAnnotations(docs: Docs): string {
+	let output = `---@meta
+
+---Models the values yielded by pairs(Class.GetPairs()).
+---The engine returns a pairs-compatible proxy, not a copy of the entities table.
+---@class EntityIterator<T>: { [any]: T }`;
 
 	Object.entries(docs.classes)
 		.sort(([aName], [bName]) => aName.localeCompare(bName))
@@ -813,15 +887,11 @@ async function buildDocs() {
 			output += generateEnum(name, sortedValues);
 		});
 
-	try {
-		await fs.promises.mkdir("./docs");
-	} catch {
-		// it is fine if it exists already
-	}
-	await fs.promises.writeFile("./docs/annotations.lua", output);
+	return output;
 }
 
 export async function run(): Promise<void> {
+	console.log("Building documentation...");
 	await buildDocs();
 	console.log("Build finished");
 }
