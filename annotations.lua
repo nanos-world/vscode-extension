@@ -1,5 +1,9 @@
 ---@meta
 
+---Models the values yielded by pairs(Class.GetPairs()).
+---The engine returns a pairs-compatible proxy, not a copy of the entities table.
+---@class EntityIterator<T>: { [any]: T }
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor">docs</a>
 ---
@@ -20,6 +24,20 @@ Actor = {}
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Actor.Inherited @The new Class table, inheriting from Actor
 function Actor.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Actor[] @Copy of table containing all Entities
+function Actor.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Actor> @Iterator with all Entities of this class
+function Actor.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-addactortag">docs</a>
@@ -617,6 +635,20 @@ function Billboard:Constructor(location, material_asset, size, size_in_screen_sp
 function Billboard.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Billboard[] @Copy of table containing all Entities
+function Billboard.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Billboard> @Iterator with all Entities of this class
+function Billboard.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#constructor-default-constructor">Default Constructor</a>
 ---
@@ -648,6 +680,20 @@ function Blueprint:Constructor(location, rotation, blueprint_asset, collision_ty
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Blueprint.Inherited @The new Class table, inheriting from Blueprint
 function Blueprint.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Blueprint[] @Copy of table containing all Entities
+function Blueprint.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Blueprint> @Iterator with all Entities of this class
+function Blueprint.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/blueprint#function-bindblueprinteventdispatcher">docs</a>
@@ -722,6 +768,20 @@ function Cable:Constructor(location, enable_visuals, spawn_mode) end
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Cable.Inherited @The new Class table, inheriting from Cable
 function Cable.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Cable[] @Copy of table containing all Entities
+function Cable.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Cable> @Iterator with all Entities of this class
+function Cable.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-attachendto">docs</a>
@@ -926,6 +986,20 @@ function Canvas:Constructor(is_visible, clear_color, auto_repaint_rate, should_c
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Canvas.Inherited @The new Class table, inheriting from Canvas
 function Canvas.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Canvas[] @Copy of table containing all Entities
+function Canvas.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Canvas> @Iterator with all Entities of this class
+function Canvas.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas#function-clear">docs</a>
@@ -1186,6 +1260,20 @@ function Character:Constructor(location, rotation, skeletal_mesh_asset, collisio
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Character.Inherited @The new Class table, inheriting from Character
 function Character.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Character[] @Copy of table containing all Entities
+function Character.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Character> @Iterator with all Entities of this class
+function Character.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-clearmorphtargets">docs</a>
@@ -2046,6 +2134,20 @@ function CharacterSimple:Constructor(location, rotation, mesh, custom_animation_
 ---@return CharacterSimple.Inherited @The new Class table, inheriting from CharacterSimple
 function CharacterSimple.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return CharacterSimple[] @Copy of table containing all Entities
+function CharacterSimple.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<CharacterSimple> @Iterator with all Entities of this class
+function CharacterSimple.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/charactersimple#function-bindanimationblueprinteventdispatcher">docs</a>
 ---
@@ -2815,6 +2917,20 @@ Damageable = {}
 ---@return Damageable.Inherited @The new Class table, inheriting from Damageable
 function Damageable.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Damageable[] @Copy of table containing all Entities
+function Damageable.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Damageable> @Iterator with all Entities of this class
+function Damageable.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/damageable#function-applydamage">docs</a>
 ---
@@ -3174,6 +3290,20 @@ function Decal:Constructor(location, rotation, material_asset, size, lifespan, f
 ---@return Decal.Inherited @The new Class table, inheriting from Decal
 function Decal.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Decal[] @Copy of table containing all Entities
+function Decal.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Decal> @Iterator with all Entities of this class
+function Decal.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal#function-setfadein">docs</a>
 ---
@@ -3252,6 +3382,13 @@ function Entity.Inherit(name, custom_values) end
 function Entity.GetAll() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Entity> @Iterator with all Entities of this class
+function Entity.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getbyindex">docs</a>
 ---
 ---Returns a specific Entity of this class at an index
@@ -3273,13 +3410,6 @@ function Entity.GetCount() end
 ---@param recursively? boolean @Returns all inherited children (Default: false)
 ---@return table[] @All children Classes
 function Entity.GetInheritedClasses(recursively) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
----
----Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
----@return iterator @Iterator with all Entities of this class
-function Entity.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getparentclass">docs</a>
@@ -3853,6 +3983,20 @@ function Gizmo:Constructor() end
 ---@return Gizmo.Inherited @The new Class table, inheriting from Gizmo
 function Gizmo.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Gizmo[] @Copy of table containing all Entities
+function Gizmo.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Gizmo> @Iterator with all Entities of this class
+function Gizmo.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/gizmo#function-activate">docs</a>
 ---
@@ -4009,6 +4153,20 @@ function Grenade:Constructor(location, rotation, static_mesh_asset, explosion_pa
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Grenade.Inherited @The new Class table, inheriting from Grenade
 function Grenade.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Grenade[] @Copy of table containing all Entities
+function Grenade.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Grenade> @Iterator with all Entities of this class
+function Grenade.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-explode">docs</a>
@@ -4464,6 +4622,20 @@ function InstancedStaticMesh:Constructor(location, rotation, static_mesh_asset, 
 ---@return InstancedStaticMesh.Inherited @The new Class table, inheriting from InstancedStaticMesh
 function InstancedStaticMesh.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return InstancedStaticMesh[] @Copy of table containing all Entities
+function InstancedStaticMesh.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<InstancedStaticMesh> @Iterator with all Entities of this class
+function InstancedStaticMesh.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/instancedstaticmesh#function-addinstance">docs</a>
 ---
@@ -4670,6 +4842,20 @@ function Light:Constructor(location, rotation, color, light_type, intensity, att
 function Light.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Light[] @Copy of table containing all Entities
+function Light.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Light> @Iterator with all Entities of this class
+function Light.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/light#function-getattenuationradius">docs</a>
 ---
 ---Gets the distance this Light reaches
@@ -4793,6 +4979,20 @@ function Melee:Constructor(location, rotation, asset, collision_type, gravity_en
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Melee.Inherited @The new Class table, inheriting from Melee
 function Melee.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Melee[] @Copy of table containing all Entities
+function Melee.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Melee> @Iterator with all Entities of this class
+function Melee.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/melee#function-addanimationcharacteruse">docs</a>
@@ -5329,6 +5529,20 @@ Paintable = {}
 function Paintable.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Paintable[] @Copy of table containing all Entities
+function Paintable.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Paintable> @Iterator with all Entities of this class
+function Paintable.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/paintable#function-getmaterialcolorparameter">docs</a>
 ---
 ---Gets a Color parameter from this Actor's material
@@ -5492,6 +5706,20 @@ function Particle:Constructor(location, rotation, asset, auto_destroy, auto_acti
 function Particle.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Particle[] @Copy of table containing all Entities
+function Particle.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Particle> @Iterator with all Entities of this class
+function Particle.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/particle#function-activate">docs</a>
 ---
 ---Activates the Emitter
@@ -5603,6 +5831,20 @@ Pawn = {}
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Pawn.Inherited @The new Class table, inheriting from Pawn
 function Pawn.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Pawn[] @Copy of table containing all Entities
+function Pawn.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Pawn> @Iterator with all Entities of this class
+function Pawn.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-addskeletalmeshattached">docs</a>
@@ -6022,6 +6264,20 @@ Pickable = {}
 function Pickable.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Pickable[] @Copy of table containing all Entities
+function Pickable.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Pickable> @Iterator with all Entities of this class
+function Pickable.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-addskeletalmeshattached">docs</a>
 ---
 ---Spawns and attaches a SkeletalMesh to this entity, the SkeletalMesh must have the same skeleton used by this Actor's mesh, and will follow all animations from it. Uses a custom ID to be used for removing/customizing it afterwards
@@ -6281,6 +6537,20 @@ Player = {}
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Player.Inherited @The new Class table, inheriting from Player
 function Player.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Player[] @Copy of table containing all Entities
+function Player.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Player> @Iterator with all Entities of this class
+function Player.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#static-function-getbysteamid">docs</a>
@@ -6862,6 +7132,20 @@ function Prop:Constructor(location, rotation, asset, collision_type, gravity_ena
 function Prop.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Prop[] @Copy of table containing all Entities
+function Prop.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Prop> @Iterator with all Entities of this class
+function Prop.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-getgrabmode">docs</a>
 ---
 ---Gets ability to Grab this Prop
@@ -7250,6 +7534,20 @@ function SceneCapture:Constructor(location, rotation, width, height, render_rate
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return SceneCapture.Inherited @The new Class table, inheriting from SceneCapture
 function SceneCapture.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return SceneCapture[] @Copy of table containing all Entities
+function SceneCapture.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<SceneCapture> @Iterator with all Entities of this class
+function SceneCapture.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-addrenderactor">docs</a>
@@ -8032,6 +8330,20 @@ function Sound:Constructor(location, asset, is_2d_sound, auto_destroy, sound_typ
 ---@return Sound.Inherited @The new Class table, inheriting from Sound
 function Sound.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Sound[] @Copy of table containing all Entities
+function Sound.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Sound> @Iterator with all Entities of this class
+function Sound.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-fadein">docs</a>
 ---
@@ -8217,6 +8529,20 @@ function StaticMesh:Constructor(location, rotation, static_mesh_asset, collision
 function StaticMesh.Inherit(name, custom_values) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return StaticMesh[] @Copy of table containing all Entities
+function StaticMesh.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<StaticMesh> @Iterator with all Entities of this class
+function StaticMesh.GetPairs() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/staticmesh#function-getmesh">docs</a>
 ---
 ---Gets the Asset path mesh used
@@ -8292,6 +8618,20 @@ function Text3D:Constructor(location, rotation, text, scale, color, font_type, a
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Text3D.Inherited @The new Class table, inheriting from Text3D
 function Text3D.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Text3D[] @Copy of table containing all Entities
+function Text3D.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Text3D> @Iterator with all Entities of this class
+function Text3D.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#function-setfont">docs</a>
@@ -8376,6 +8716,20 @@ function TextRender:Constructor(location, rotation, text, word_size, color, rend
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return TextRender.Inherited @The new Class table, inheriting from TextRender
 function TextRender.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return TextRender[] @Copy of table containing all Entities
+function TextRender.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<TextRender> @Iterator with all Entities of this class
+function TextRender.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/textrender#function-getcolor">docs</a>
@@ -8716,6 +9070,20 @@ function Trigger:Constructor(location, rotation, extent, trigger_type, is_visibl
 ---@return Trigger.Inherited @The new Class table, inheriting from Trigger
 function Trigger.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Trigger[] @Copy of table containing all Entities
+function Trigger.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Trigger> @Iterator with all Entities of this class
+function Trigger.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/trigger#function-forceoverlapchecking">docs</a>
 ---
@@ -9043,6 +9411,20 @@ Vehicle = {}
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Vehicle.Inherited @The new Class table, inheriting from Vehicle
 function Vehicle.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Vehicle[] @Copy of table containing all Entities
+function Vehicle.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Vehicle> @Iterator with all Entities of this class
+function Vehicle.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-addskeletalmeshattached">docs</a>
@@ -9430,6 +9812,20 @@ function VehicleWater:Constructor(location, rotation, asset, collision_type, gra
 ---@return VehicleWater.Inherited @The new Class table, inheriting from VehicleWater
 function VehicleWater.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return VehicleWater[] @Copy of table containing all Entities
+function VehicleWater.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<VehicleWater> @Iterator with all Entities of this class
+function VehicleWater.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setengineoffset">docs</a>
 ---
@@ -9486,6 +9882,20 @@ function VehicleWheeled:Constructor(location, rotation, asset, collision_type, g
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return VehicleWheeled.Inherited @The new Class table, inheriting from VehicleWheeled
 function VehicleWheeled.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return VehicleWheeled[] @Copy of table containing all Entities
+function VehicleWheeled.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<VehicleWheeled> @Iterator with all Entities of this class
+function VehicleWheeled.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewheeled#function-getgear">docs</a>
@@ -9941,6 +10351,20 @@ function Weapon:Constructor(location, rotation, asset, collision_type, gravity_e
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Weapon.Inherited @The new Class table, inheriting from Weapon
 function Weapon.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Weapon[] @Copy of table containing all Entities
+function Weapon.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Weapon> @Iterator with all Entities of this class
+function Weapon.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-getammobag">docs</a>
@@ -10588,6 +11012,20 @@ function WebUI:Constructor(name, path, visibility, is_transparent, auto_resize, 
 ---@return WebUI.Inherited @The new Class table, inheriting from WebUI
 function WebUI.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return WebUI[] @Copy of table containing all Entities
+function WebUI.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<WebUI> @Iterator with all Entities of this class
+function WebUI.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/webui#function-bringtofront">docs</a>
 ---
@@ -10850,6 +11288,20 @@ function Widget:Constructor(blueprint_path) end
 ---@return Widget.Inherited @The new Class table, inheriting from Widget
 function Widget.Inherit(name, custom_values) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Widget[] @Copy of table containing all Entities
+function Widget.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Widget> @Iterator with all Entities of this class
+function Widget.GetPairs() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-addchild">docs</a>
 ---
@@ -11050,6 +11502,20 @@ Widget3D = {}
 ---@param custom_values? table @An optional table with custom values to be set in the inherited class table (Default: {})
 ---@return Widget3D.Inherited @The new Class table, inheriting from Widget3D
 function Widget3D.Inherit(name, custom_values) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getall">docs</a>
+---
+---Returns a table containing all Entities of the class this is called on
+---@return Widget3D[] @Copy of table containing all Entities
+function Widget3D.GetAll() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/entity#static-function-getpairs">docs</a>
+---
+---Returns an iterator with all Entities of this class to be used with <code>pairs()</code>. This is a more performant method than <code>GetAll()</code>, as it will return the iterator to access the Entities directly instead of creating and returning a copy of the Entities table.<br><br><b>Note:</b> Destroying Entities from inside a <code>GetPairs()</code> loop will cause the iterable to change size during the process. If you want to loop-and-destroy, please use <code>GetAll()</code>.
+---@return EntityIterator<Widget3D> @Iterator with all Entities of this class
+function Widget3D.GetPairs() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget3d#function-getwidget">docs</a>
