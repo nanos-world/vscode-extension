@@ -862,6 +862,13 @@ function Cable:GetAttachedEndTo() end
 ---@return Actor? @Actor attached to Start
 function Cable:GetAttachedStartTo() end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-isvisible">docs</a>
+---
+---Returns true if this cable is visible
+---@return boolean @Whether this cable is visible
+function Cable:IsVisible() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-setangularlimits">docs</a>
 ---
@@ -981,6 +988,13 @@ function Cable:SetPhysicsConstraintSettings(disable_collision) end
 ---@param num_sides integer @Number of sides of the cable geometry. Default is 4
 ---@param tile_material integer @How many times to repeat the material along the length of the cable. Default is 1
 function Cable:SetRenderingSettings(width, num_sides, tile_material) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/cable#function-setvisibility">docs</a>
+---
+---Sets whether the cable is visible or not (visuals only, the constraint keeps working)
+---@param is_visible boolean @Whether the cable is visible or not
+function Cable:SetVisibility(is_visible) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/canvas">docs</a>
