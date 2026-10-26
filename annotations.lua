@@ -6090,6 +6090,13 @@ function Pawn:RemoveStaticMeshAttached(id) end
 function Pawn:SetAIAvoidanceSettings(enabled, avoidance_consideration_radius) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setaistopwithbraking">docs</a>
+---
+---AI: Sets whether the AI brakes to a stop when finishing a movement, instead of stopping instantly<br/><br/>When enabled, the Pawn keeps its velocity when it reaches the destination and slows down using its own braking settings (see Character:SetBrakingSettings and CharacterSimple:SetBrakingSettings), so it may stop slightly past the acceptance radius. Disabled by default
+---@param enabled boolean @Whether to brake to a stop
+function Pawn:SetAIStopWithBraking(enabled) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-setbrakingsettings">docs</a>
 ---
 ---Sets the Movement Braking Settings of this Pawn
