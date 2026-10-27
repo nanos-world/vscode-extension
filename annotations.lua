@@ -649,7 +649,7 @@ Billboard = {}
 ---Calls the original Billboard Constructor. Call this from an inherited Class' <code>Constructor</code> through <code>self.Super:Constructor(...)</code>. See the <a href="https://docs.nanos-world.com/docs/core-concepts/scripting/inheriting-classes">Inheriting System</a>
 ---@param location Vector @World location to spawn at
 ---@param material_asset string @The Material to render
----@param size? Vector2D @Size in pixels (Default: Vector2D(32, 32))
+---@param size? Vector2D @Half size of the Billboard, X is the width and Y the height (before 1.166.0 they were swapped). In units, or in screen space if size_in_screen_space is true (Default: Vector2D(32, 32))
 ---@param size_in_screen_space? boolean @Size is in Screen or World Space (Default: false)
 function Billboard:Constructor(location, material_asset, size, size_in_screen_space) end
 
@@ -7259,6 +7259,13 @@ function Prop:GetMassScale() end
 ---@return string @asset name
 function Prop:GetMesh() end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-isonewayinteraction">docs</a>
+---
+---Gets whether one-way interaction is enabled on this Prop
+---@return boolean 
+function Prop:IsOneWayInteraction() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setbuoyancypontoons">docs</a>
 ---
@@ -7310,6 +7317,13 @@ function Prop:SetMassScale(scale) end
 ---Changes the mesh in runtime
 ---@param asset string @asset
 function Prop:SetMesh(asset) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setonewayinteraction">docs</a>
+---
+---Sets whether this Prop treats every physics body without it as infinitely heavy, so they push it around but never get pushed back
+---@param one_way_interaction boolean 
+function Prop:SetOneWayInteraction(one_way_interaction) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setphysicsdamping">docs</a>
