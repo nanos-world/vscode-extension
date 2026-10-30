@@ -286,6 +286,12 @@ function Actor:IsVisible() end
 ---@param tag string @The tag to remove
 function Actor:RemoveActorTag(tag) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-resetvelocity">docs</a>
+---
+---Resets this Actor's linear and angular velocities to zero.<br/>For Pawns, also resets the character movement velocity.
+function Actor:ResetVelocity() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/network-authority.png" height="21"> <b>[Network Authority]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/actor#function-rotaterelativeto">docs</a>
 ---
@@ -6216,9 +6222,8 @@ function Pawn:StopAnimation(animation_asset) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-stopmovement">docs</a>
 ---
----AI: Stops the movement, optionally zeroing the velocity as well (stops even for non AI)<br/><br/>Triggers event <a href='/docs/scripting-reference/classes/base-classes/pawn#event-movecomplete'>MoveComplete</a>
----@param stops_velocity? boolean @Also stops the Pawn's current velocity (Default: false)
-function Pawn:StopMovement(stops_velocity) end
+---AI: Stops MoveTo and Follow navigation.<br/><br/>Triggers event <a href='/docs/scripting-reference/classes/base-classes/pawn#event-movecomplete'>MoveComplete</a>
+function Pawn:StopMovement() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pawn#function-unhidebone">docs</a>
@@ -9987,8 +9992,8 @@ function VehicleWater:SetEngineOffset(offset) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/vehiclewater#function-setthruststrength">docs</a>
 ---
----Sets the force of the Engine/Thruster. Default is 1000
----@param force integer @The new force of the Engine/Thruster
+---Sets the force of the Engine/Thruster, in Newtons. Default is 3000, up to 65535.<br/><br/>Scale it with the boat's mass: the default suits a ~400 kg boat
+---@param force integer @The new force of the Engine/Thruster, in Newtons
 function VehicleWater:SetThrustStrength(force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
