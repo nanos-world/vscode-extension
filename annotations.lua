@@ -1628,27 +1628,12 @@ function Character:SetAirControl(air_control, boost_multiplier, boost_velocity_t
 function Character:SetAnimationIdleWalkRunCrouching(blend_space_path, enable_turn_in_place) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationidlewalkrunproning">docs</a>
----
----Sets the Blend Space (2D) Animation for Proning<br/><br/>Horizontal Axis stands for Speed X and Vertical Axis for Speed Y
----@param blend_space_path string @The new Blend Space (2D) Animation for Proning
-function Character:SetAnimationIdleWalkRunProning(blend_space_path) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationidlewalkrunstanding">docs</a>
 ---
 ---Sets the Blend Space (2D) Animation for Standing<br/><br/>Horizontal Axis stands for Speed X and Vertical Axis for Speed Y
 ---@param blend_space_path string @The Blend Space (2D) asset
 ---@param enable_turn_in_place? boolean @Whether the Character plays turn-in-place animations when rotating while idle (Default: false)
 function Character:SetAnimationIdleWalkRunStanding(blend_space_path, enable_turn_in_place) end
-
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
----<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationstransitioncrouchingproning">docs</a>
----
----Sets the Transition Animation between Crouching and Proning
----@param crouching_to_proning string @Animation played when going prone
----@param proning_to_crouching string @Animation played when getting up from prone
-function Character:SetAnimationsTransitionCrouchingProning(crouching_to_proning, proning_to_crouching) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setanimationstransitionstandingcrouching">docs</a>
@@ -1886,7 +1871,7 @@ function Character:SetSpeedMultiplier(speed_multiplier) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/character#function-setstancemode">docs</a>
 ---
----Sets the Stance Mode (standing, crouching or proning)
+---Sets the Stance Mode (standing or crouching)
 ---@param stance_mode StanceMode @The new Stance Mode
 function Character:SetStanceMode(stance_mode) end
 
@@ -4203,8 +4188,9 @@ function Grenade.GetPairs() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-explode">docs</a>
 ---
----Forces this grenade to Explode
-function Grenade:Explode() end
+---Forces this grenade to Explode.</br></br>Without an instigator, the explosion belongs to the last Player who held this grenade, or to nobody if it was never picked up. An explosion with no owner damages everyone, ignoring Teams.
+---@param instigator? Player @The Player who owns the explosion, so Characters on the same Team are not damaged (Default: nil)
+function Grenade:Explode(instigator) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/grenade#function-getbasedamage">docs</a>
@@ -7670,18 +7656,22 @@ function SceneCapture:ClearRenderActors() end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-encodetobase64">docs</a>
 ---
----Takes a snapshot of the SceneCapture and returns a Base64 of it
+---Takes a snapshot of the SceneCapture and returns a Base64 of it.<br/><br/>Optional output dimensions resize only the encoded image using a smooth, gamma-correct filter. PNG and BMP resizing weights colors by alpha to preserve transparent edges. The capture texture is unchanged. Each omitted dimension keeps its capture size; aspect ratio is not adjusted automatically. Capture at a higher resolution and export at a smaller size for supersampling.
 ---@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
+---@param output_width? integer @Encoded image width in pixels (1 to 4096). If omitted, uses the capture texture width (Default: nil)
+---@param output_height? integer @Encoded image height in pixels (1 to 4096). If omitted, uses the capture texture height (Default: nil)
 ---@return string @The snapshot as a Base64 string
-function SceneCapture:EncodeToBase64(image_format) end
+function SceneCapture:EncodeToBase64(image_format, output_width, output_height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-encodetobase64async">docs</a>
 ---
----Takes a snapshot of the SceneCapture and returns a Base64 of it (asynchronously)
+---Takes a snapshot of the SceneCapture and returns a Base64 of it (asynchronously).<br/><br/>Optional output dimensions resize only the encoded image using a smooth, gamma-correct filter. PNG and BMP resizing weights colors by alpha to preserve transparent edges. The capture texture is unchanged. Each omitted dimension keeps its capture size; aspect ratio is not adjusted automatically. Capture at a higher resolution and export at a smaller size for supersampling.
 ---@param image_format? ImageFormat @Which format to generate - JPEG is fastest but discards Alpha channel (Default: ImageFormat.JPEG)
 ---@param callback function @Callback
-function SceneCapture:EncodeToBase64Async(image_format, callback) end
+---@param output_width? integer @Encoded image width in pixels (1 to 4096). If omitted, uses the capture texture width (Default: nil)
+---@param output_height? integer @Encoded image height in pixels (1 to 4096). If omitted, uses the capture texture height (Default: nil)
+function SceneCapture:EncodeToBase64Async(image_format, callback, output_width, output_height) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-removerenderactor">docs</a>
@@ -7718,6 +7708,13 @@ function SceneCapture:SetFOVAngle(angle) end
 ---Stops or resumes capturing
 ---@param freeze boolean @Whether to stop capturing
 function SceneCapture:SetFreeze(freeze) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setloddistancefactor">docs</a>
+---
+---Sets the distance scale used to select mesh detail in this SceneCapture.<br/><br/>The default is 2. Values below 1 favor more detail; values above 1 favor less detail. This also affects Nanite detail selection, but does not force a specific LOD or load higher-resolution texture mips. Only this SceneCapture is affected.
+---@param factor number @Finite LOD distance factor between 0.01 and 100
+function SceneCapture:SetLODDistanceFactor(factor) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/scenecapture#function-setrenderrate">docs</a>
@@ -12223,7 +12220,6 @@ SpawnMode = {
 StanceMode = {
     Crouching = 2, -- Crouching
     None = 0, -- No stance
-    Proning = 3, -- Lying prone
     Standing = 1, -- Standin
 }
 
