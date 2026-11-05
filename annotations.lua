@@ -10274,6 +10274,7 @@ function VehicleWheeled:SetWheel(index, bone_name, radius, width, max_steer_angl
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
+---@overload fun(event_name: "TireFlat", callback: fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean)): fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean) @Triggered when a Tire goes flat or is restored<br/><br/>Fires when the flat state of a tire actually changes, by damage or by <code>SetTireFlat</code>. Note that "Respawn" event restores all tires
 ---@overload fun(event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)): fun(self: VehicleWheeled, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled.Subscribe(event_name, callback) end
 
@@ -10301,6 +10302,7 @@ function VehicleWheeled.Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)): fun(self: VehicleWheeled) @Triggered when an Entity is spawned/created
 ---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?): fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number? @Triggered when this Entity takes damage
+---@overload fun(self: VehicleWheeled, event_name: "TireFlat", callback: fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean)): fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean) @Triggered when a Tire goes flat or is restored<br/><br/>Fires when the flat state of a tire actually changes, by damage or by <code>SetTireFlat</code>. Note that "Respawn" event restores all tires
 ---@overload fun(self: VehicleWheeled, event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)): fun(self: VehicleWheeled, key: string, value: any) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled:Subscribe(event_name, callback) end
 
@@ -10326,6 +10328,7 @@ function VehicleWheeled:Subscribe(event_name, callback) end
 ---@overload fun(self: VehicleWheeled, event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(self: VehicleWheeled, event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
 ---@overload fun(self: VehicleWheeled, event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
+---@overload fun(self: VehicleWheeled, event_name: "TireFlat", callback: fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean)) @Triggered when a Tire goes flat or is restored<br/><br/>Fires when the flat state of a tire actually changes, by damage or by <code>SetTireFlat</code>. Note that "Respawn" event restores all tires
 ---@overload fun(self: VehicleWheeled, event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled:Unsubscribe(event_name, callback) end
 
@@ -10352,6 +10355,7 @@ function VehicleWheeled:Unsubscribe(event_name, callback) end
 ---@overload fun(event_name: "Respawn", callback: fun(self: VehicleWheeled)) @When Entity Respawns
 ---@overload fun(event_name: "Spawn", callback: fun(self: VehicleWheeled)) @Triggered when an Entity is spawned/created
 ---@overload fun(event_name: "TakeDamage", callback: fun(self: VehicleWheeled, damage: integer, bone: string, type: DamageType, from_direction: Vector, instigator: Player, causer: any): number?) @Triggered when this Entity takes damage
+---@overload fun(event_name: "TireFlat", callback: fun(self: VehicleWheeled, wheel_index: integer, is_flat: boolean)) @Triggered when a Tire goes flat or is restored<br/><br/>Fires when the flat state of a tire actually changes, by damage or by <code>SetTireFlat</code>. Note that "Respawn" event restores all tires
 ---@overload fun(event_name: "ValueChange", callback: fun(self: VehicleWheeled, key: string, value: any)) @Triggered when an Entity has a value changed with <code>:SetValue()</code>
 function VehicleWheeled.Unsubscribe(event_name, callback) end
 
@@ -12107,18 +12111,22 @@ LightType = {
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#logtype">docs</a>
 ---@enum LogType
 LogType = {
-    Chat = 8, -- Chat messages
+    Chat = 9, -- Chat messages
     Debug = 3,
     Display = 0,
     Error = 2,
-    Fatal = 11,
+    Fatal = 12,
+    Profiling = 14, -- Profiling output
+    ProfilingWarning = 15, -- Profiling warnings
     Scripting = 5, -- Messages printed by scripts
+    ScriptingDebug = 8, -- Debug messages printed by scripts
     ScriptingError = 7, -- Errors raised by scripts
     ScriptingWarn = 6, -- Warnings printed by scripts
-    Success = 10,
+    Success = 11,
     Verbose = 4,
     Warning = 1,
-    WebUI = 9, -- Messages logged from WebUI JavaScrip
+    WarningRed = 13, -- Warnings highlighted in red
+    WebUI = 10, -- Messages logged from WebUI JavaScrip
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#nativewidget">docs</a>
