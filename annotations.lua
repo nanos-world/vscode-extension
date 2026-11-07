@@ -11538,7 +11538,7 @@ function Widget:SetContentForSlot(slot_name, widget) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/widget#function-setfocus">docs</a>
 ---
----Enables the focus on this Widget.<br/><br/>Enables the focus on this Widget (i.e. can receive Keyboard input and will trigger input events<br/>Note: Only one Widget can have focus per time.
+---Enables the focus on this Widget.<br/><br/>Enables the focus on this Widget (i.e. can receive Keyboard input and will trigger input events)<br/>Note: Only one Widget can have focus per time.
 function Widget:SetFocus() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
