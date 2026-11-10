@@ -631,6 +631,24 @@ function Assets.GetSounds(asset_pack_path) end
 ---@return { key: string, ...: any }[] @array of tables containing all assets and its metadata
 function Assets.GetStaticMeshes(asset_pack_path) end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/assets#static-function-isloaded">docs</a>
+---
+---Returns if an Asset is already loaded and cached.<br/><br/>An Asset counts as loaded once an entity, an attached mesh or <code>Assets.LoadAsync</code> loaded it during this session, as the type it was loaded as.
+---@param asset_path string @The asset reference in the format <code>asset-pack::AssetKey</code>
+---@param asset_type AssetType @The Asset Type
+---@return boolean @If the asset is loaded
+function Assets.IsLoaded(asset_path, asset_type) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/assets#static-function-loadasync">docs</a>
+---
+---Loads an Asset in the background, so spawning or attaching it later does not freeze the game.<br/><br/>Entities and attached meshes load their assets right away when created, which can freeze the game for a moment when the asset is big or many are created at once (e.g. dressing several Characters with AddSkeletalMeshAttached).<br/><br/>The asset stays loaded and cached afterwards. Loading the same asset again while it is still loading waits for the same request. The callback always runs on a later tick, never inside this call, even when the asset was already loaded.
+---@param asset_path string @The asset reference in the format <code>asset-pack::AssetKey</code>
+---@param asset_type AssetType @The Asset Type
+---@param callback? function @Called when the asset finished loading (Default: nil)
+function Assets.LoadAsync(asset_path, asset_type, callback) end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/assets#static-function-precache">docs</a>
 ---
@@ -3147,10 +3165,10 @@ function Database:Select(query, ...) end
 ---@param ...? any @Sequence of parameters to escape into the Query (Default: nil)
 function Database:SelectAsync(query, callback, ...) end
 
----<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug">docs</a>
 ---
----Draws Debug shapes in the world.
+---Debugging tools: profiling for scripts, and drawing Debug shapes in the world.
 ---@class Debug
 Debug = {}
 
@@ -3271,6 +3289,36 @@ function Debug.DrawSphere(start_location, radius, segments, color, life_time, th
 ---@param draw_shadow? boolean @Whether to draw a shadow behind the text (Default: false)
 ---@param font_scale? number @Scale of the text (Default: 1)
 function Debug.DrawString(location, text, color, life_time, draw_shadow, font_scale) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-isprofilerconnected">docs</a>
+---
+---Returns if a Tracy profiler is connected right now. Useful for skipping debugging logic
+---@return boolean @If Tracy is connected
+function Debug.IsProfilerConnected() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-profilemessage">docs</a>
+---
+---Marks an event with a text in the Tracy timeline.<br/><br/>The text is prefixed with '[package]'. Does nothing while Tracy is not connected.
+---@param text string @Text of the event
+function Debug.ProfileMessage(text) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-profileplot">docs</a>
+---
+---Records a value in a graph in Tracy.<br/><br/>The graph is named '[package] name'. Use fixed names: each different name stays stored until the game or server closes, up to 256 names in total. Does nothing while Tracy is not connected.
+---@param name string @Name of the graph
+---@param value number @Value to record
+function Debug.ProfilePlot(name, value) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/debug#static-function-profilezone">docs</a>
+---
+---Runs a function and measures it as a zone in Tracy and in the native profiling.<br/><br/>The zone is named '[package] name' and always closes when the function returns.<br/><br/>Use fixed names: each different name stays stored until the game or server closes, up to 256 names in total.
+---@param name string @Name of the zone
+---@param callback function @Function to run and measure
+function Debug.ProfileZone(name, callback) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/decal">docs</a>
