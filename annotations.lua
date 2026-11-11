@@ -6516,11 +6516,11 @@ function Pickable:SetBuoyancyPontoons(pontoons) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/pickable#function-setbuoyancysettings">docs</a>
 ---
----Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>The automatically calculated Pontoons are sized for the default buoyancy_coefficient, so a higher one makes the entity float higher.
 ---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
 ---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
----@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
----@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing. When nil (or negative) it is calculated from the mass and Pontoons (Default: nil)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 1000000000)
 function Pickable:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -7315,11 +7315,11 @@ function Prop:SetBuoyancyPontoons(pontoons) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/prop#function-setbuoyancysettings">docs</a>
 ---
----Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>The automatically calculated Pontoons are sized for the default buoyancy_coefficient, so a higher one makes the entity float higher.
 ---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
 ---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
----@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
----@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing. When nil (or negative) it is calculated from the mass and Pontoons (Default: nil)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 1000000000)
 function Prop:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
@@ -9811,11 +9811,11 @@ function Vehicle:SetBuoyancyPontoons(pontoons) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/base-classes/vehicle#function-setbuoyancysettings">docs</a>
 ---
----Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>While the Pontoons are being automatically calculated, changing buoyancy_coefficient also recalculates them, as their radius derives from it.
+---Sets how this entity behaves on Water.<br/><br/>Any value passed as nil restores that setting's default.<br/><br/>The automatically calculated Pontoons are sized for the default buoyancy_coefficient, so a higher one makes the entity float higher.
 ---@param enabled? boolean @Whether Buoyancy forces are applied at all (Default: true)
 ---@param buoyancy_coefficient? number @How much it floats, the higher the more (Default: 0.1)
----@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing (Default: 1000)
----@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 5000000)
+---@param buoyancy_damp? number @First order damping on the vertical velocity, reduces bobbing. When nil (or negative) it is calculated from the mass and Pontoons (Default: nil)
+---@param max_buoyant_force? number @Clamp on the upwards force, stops light objects being launched out of the water (Default: 1000000000)
 function Vehicle:SetBuoyancySettings(enabled, buoyancy_coefficient, buoyancy_damp, max_buoyant_force) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/authority-only.png" height="21"> <b>[Authority Side]</b>
