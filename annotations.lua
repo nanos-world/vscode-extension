@@ -2664,8 +2664,8 @@ function Client.SetDebugEnabled(enable_debug) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/client#static-function-setescapemenutext">docs</a>
 ---
----Sets the Escape Menu text
----@param text string @Supports using <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> and <code>&lt;strong&gt;</code> tags in the text.
+---Sets the Escape Menu text as Markdown.
+---@param text string @The text to display, supports Markdown formatting
 function Client.SetEscapeMenuText(text) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -10826,7 +10826,8 @@ function Weapon:PlayAnimation(animation_path, slot_name, loop_indefinitely, blen
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/weapon#function-reload">docs</a>
 ---
----Forces this Weapon to reload.<br/><br/>It only works while a Character is handling the Weapon
+---Forces this Weapon to reload.<br/><br/>It only works while a Character is handling the Weapon, the Ammo Bag is not empty and the Clip is not full. Returning true means the reload was requested, it can still be cancelled by the Character's AttemptReload event or interrupted. Use the Reload event to know how many bullets were actually reloaded
+---@return boolean @Whether the reload was requested
 function Weapon:Reload() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
