@@ -6787,6 +6787,13 @@ function Player:GetPing() end
 ---@return string @The Steam ID (SteamID64)
 function Player:GetSteamID() end
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoipamplitude">docs</a>
+---
+---Returns how loud this player is talking right now.<br/><br/>It is the RMS of the last voice data received from this player, before distance attenuation, occlusion and filters. Normal speech stays low in the scale, usually between 0.05 and 0.3. It only works for players the local player is receiving voice from, and for the local player while the voice is being transmitted. The local player's voice is only measured while this method keeps being called, so the first call returns 0.
+---@return number @The voice amplitude from 0 to 1, or 0 if the player is not talking
+function Player:GetVOIPAmplitude() end
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplisteningchannels">docs</a>
 ---
@@ -6966,11 +6973,42 @@ function Player:SetVOIPGlobalLowPassFilter(threshold) end
 function Player:SetVOIPGlobalVolume(volume) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalattenuation">docs</a>
+---
+---Sets how the local/proximity VOIP fades with distance.<br/><br/>The voice plays at full volume inside the inner radius, then fades to silence at the max distance set with SetVOIPLocalMaxDistance.
+---@param inner_radius integer @Distance where the voice plays at full volume. Default is 800. It is clamped to half of the max distance
+---@param falloff_function? AttenuationFunction @How the volume fades between the inner radius and the max distance (Default: AttenuationFunction.Logarithmic)
+function Player:SetVOIPLocalAttenuation(inner_radius, falloff_function) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalhighpassfilter">docs</a>
+---
+---Sets the local/proximity VOIP high-pass filter threshold frequency.<br/><br/>Set it to 0 to disable it. On server side, it applies to everyone hearing this player. On client side, it only applies to the local listener.
+---@param threshold integer @The new local/proximity VOIP high-pass filter threshold frequency, in Hz
+function Player:SetVOIPLocalHighPassFilter(threshold) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocallowpassfilter">docs</a>
+---
+---Sets the local/proximity VOIP low-pass filter threshold frequency.<br/><br/>Set it to 0 to disable it. Useful to muffle a voice, like a player behind a wall, inside a vehicle or wearing a mask. On server side, it applies to everyone hearing this player. On client side, it only applies to the local listener.
+---@param threshold integer @The new local/proximity VOIP low-pass filter threshold frequency, in Hz
+function Player:SetVOIPLocalLowPassFilter(threshold) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalmaxdistance">docs</a>
 ---
 ---Sets the local/proximity VOIP max distance. This also affects networking usage
 ---@param max_distance integer @Falloff Distance. Default is 3600
 function Player:SetVOIPLocalMaxDistance(max_distance) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalocclusion">docs</a>
+---
+---Configures the automatic occlusion of the local/proximity VOIP.<br/><br/>When something blocks the line between the listener and this player, the voice gets a low-pass filter and a volume multiplier. It is enabled by default. Disable it to control the muffling from a script, with SetVOIPLocalLowPassFilter and SetVOIPLocalVolume.
+---@param enabled boolean @If the voice is automatically occluded
+---@param low_pass_frequency? integer @The low-pass filter threshold frequency applied when occluded, in Hz (Default: 3500)
+---@param volume_multiplier? number @The volume multiplier applied when occluded (Default: 0.85)
+function Player:SetVOIPLocalOcclusion(enabled, low_pass_frequency, volume_multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalsetting">docs</a>
@@ -8594,6 +8632,15 @@ function Sound:IsPlaying() end
 function Sound:Play(start_time) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setattenuationshape">docs</a>
+---
+---If a 3D Sound, sets the shape of the volume within which the volume is 100%.<br/><br/>Outside the shape, the volume fades over the falloff distance. The meaning of the extents depends on the shape: Sphere uses X as the radius, Capsule uses X as the half height and Y as the radius, Box uses X, Y and Z as its extents, and Cone uses X as the radius, Y as the angle and Z as the falloff angle (both in degrees). The Capsule, Box and Cone follow the Sound's rotation. For a Sphere, this is the same as SetInnerRadius.
+---@param shape AttenuationShape @The new attenuation shape
+---@param extents Vector @The dimensions of the shape, read differently by each shape
+---@param cone_offset? number @Cone only: the distance back from the Sound's location at which the cone begins (Default: 0)
+function Sound:SetAttenuationShape(shape, extents, cone_offset) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setfalloffdistance">docs</a>
 ---
 ---If a 3D Sound, sets the distance which the sound is inaudible
@@ -8613,6 +8660,15 @@ function Sound:SetInnerRadius(inner_radius) end
 ---Sets low-pass filter frequency. Sets 0 to disable it.
 ---@param frequency number @The new low-pass filter frequency. Sets 0 to disable it
 function Sound:SetLowPassFilter(frequency) end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setocclusion">docs</a>
+---
+---If a 3D Sound, configures its automatic occlusion.<br/><br/>When something blocks the line between the listener and the Sound, like a wall or a floor, the Sound gets a low-pass filter and a volume multiplier. It is disabled by default.
+---@param enabled boolean @If the Sound is automatically occluded
+---@param low_pass_frequency? number @The low-pass filter threshold frequency applied when occluded, in Hz (Default: 3500)
+---@param volume_multiplier? number @The volume multiplier applied when occluded (Default: 0.85)
+function Sound:SetOcclusion(enabled, low_pass_frequency, volume_multiplier) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/sound#function-setpaused">docs</a>
@@ -11857,6 +11913,15 @@ AttenuationFunction = {
     Logarithmic = 1, -- Fades quickly when close and slowly when far
     LogReverse = 3, -- Fades slowly when close and quickly when far
     NaturalSound = 4, -- Physically based falloff, the most realisti
+}
+
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#attenuationshape">docs</a>
+---@enum AttenuationShape
+AttenuationShape = {
+    Box = 2, -- A box aligned with the Sound's rotation
+    Capsule = 1, -- A capsule along the Sound's up (Z) axis
+    Cone = 3, -- A cone pointing to the Sound's forward (X) axis
+    Sphere = 0, -- A sphere around the Soun
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#blendmode">docs</a>
