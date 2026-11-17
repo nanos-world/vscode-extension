@@ -12455,7 +12455,7 @@ TextRenderRenderingType = {
     Lit = 0, -- Affected by the scene lighting
     Unlit = 1, -- Ignores lighting, always fully bright
     UnlitCameraAligned = 2, -- Unlit and always facing the camera
-    UnlitCameraAlignedDepth = 3, -- Unlit, facing the camera and occluded by the scen
+    UnlitCameraAlignedDepth = 3, -- Unlit, facing the camera and always visible through the scene (ignores depth
 }
 
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/glossary/enums#textrenderverticalalignment">docs</a>
