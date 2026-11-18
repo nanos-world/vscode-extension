@@ -2706,7 +2706,7 @@ function Client.SetSettingGammaOverride(override, new_gamma) end
 ---
 ---Sets a global value in the Client, which can be accessed from anywhere (client side).<br/><br/>Please refer to <a href="/docs/core-concepts/scripting/entity-values">Entity Values</a> for more information
 ---@param key string @Key
----@param value any @Value
+---@param value any @The value, can be any serializable type (not functions)
 function Client.SetValue(key, value) end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/client-only.png" height="21"> <b>[Client Side]</b>
@@ -4784,7 +4784,7 @@ function JSON.parse(value) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/json#static-function-stringify">docs</a>
 ---
----Returns a string representing value encoded in JSON
+---Returns a string representing value encoded in JSON.<br/><br/>Functions and a table that references itself or one of its parent tables (cyclic table) cannot be encoded, they become <code>null</code>. Metatables are not encoded, only the table's own fields.
 ---@param value table @the table that will become JSON
 ---@return string @the table in JSON
 function JSON.stringify(value) end
@@ -6795,11 +6795,77 @@ function Player:GetSteamID() end
 function Player:GetVOIPAmplitude() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoipglobalhighpassfilter">docs</a>
+---
+---Returns the global VOIP high-pass filter threshold frequency
+---@return integer @The threshold frequency in Hz, 0 if disabled
+function Player:GetVOIPGlobalHighPassFilter() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoipgloballowpassfilter">docs</a>
+---
+---Returns the global VOIP low-pass filter threshold frequency
+---@return integer @The threshold frequency in Hz, 0 if disabled
+function Player:GetVOIPGlobalLowPassFilter() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoipglobalvolume">docs</a>
+---
+---Returns the global VOIP volume
+---@return number @The global VOIP volume
+function Player:GetVOIPGlobalVolume() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplisteningchannels">docs</a>
 ---
 ---Returns a list of VOIP channels this player is listening to
 ---@return integer[] @list of channel indexes
 function Player:GetVOIPListeningChannels() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocalattenuation">docs</a>
+---
+---Returns how the local/proximity VOIP fades with distance
+---@return integer @The inner radius, where the voice plays at full volume
+---@return AttenuationFunction @How the volume fades between the inner radius and the max distance
+function Player:GetVOIPLocalAttenuation() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocalhighpassfilter">docs</a>
+---
+---Returns the local/proximity VOIP high-pass filter threshold frequency
+---@return integer @The threshold frequency in Hz, 0 if disabled
+function Player:GetVOIPLocalHighPassFilter() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocallowpassfilter">docs</a>
+---
+---Returns the local/proximity VOIP low-pass filter threshold frequency
+---@return integer @The threshold frequency in Hz, 0 if disabled
+function Player:GetVOIPLocalLowPassFilter() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocalmaxdistance">docs</a>
+---
+---Returns the local/proximity VOIP max distance
+---@return integer @The local/proximity VOIP max distance
+function Player:GetVOIPLocalMaxDistance() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocalocclusion">docs</a>
+---
+---Returns the automatic occlusion settings of the local/proximity VOIP
+---@return boolean @If the voice is automatically occluded
+---@return integer @The low-pass filter threshold frequency applied when occluded, in Hz
+---@return number @The volume multiplier applied when occluded
+function Player:GetVOIPLocalOcclusion() end
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoiplocalvolume">docs</a>
+---
+---Returns the local/proximity VOIP volume
+---@return number @The local/proximity VOIP volume
+function Player:GetVOIPLocalVolume() end
 
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-getvoipspeakingchannels">docs</a>
@@ -6976,7 +7042,7 @@ function Player:SetVOIPGlobalVolume(volume) end
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/player#function-setvoiplocalattenuation">docs</a>
 ---
 ---Sets how the local/proximity VOIP fades with distance.<br/><br/>The voice plays at full volume inside the inner radius, then fades to silence at the max distance set with SetVOIPLocalMaxDistance.
----@param inner_radius integer @Distance where the voice plays at full volume. Default is 800. It is clamped to half of the max distance
+---@param inner_radius integer @Distance where the voice plays at full volume. Default is 800. It is clamped to the max distance
 ---@param falloff_function? AttenuationFunction @How the volume fades between the inner radius and the max distance (Default: AttenuationFunction.Logarithmic)
 function Player:SetVOIPLocalAttenuation(inner_radius, falloff_function) end
 
@@ -8198,9 +8264,9 @@ function Server.SetPassword(password, persist_to_config_file) end
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/server#static-function-setvalue">docs</a>
 ---
----Sets a global value in the Server, which can be accessed from anywhere (server side)
+---Sets a global value in the Server, which can be accessed from anywhere (server side).<br/><br/>Please refer to <a href="/docs/core-concepts/scripting/entity-values">Entity Values</a> for more information
 ---@param key string @Key
----@param value any @Value
+---@param value any @The value, can be any serializable type (not functions)
 ---@param sync_on_client? boolean @If enabled will sync this value through all clients, accessible through <code>Client.GetValue()</code> static class (Default: false)
 function Server.SetValue(key, value, sync_on_client) end
 
@@ -9165,7 +9231,7 @@ TOML = {}
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/utility-libraries/toml#static-function-dump">docs</a>
 ---
----Returns a string representing value encoded in TOML
+---Returns a string representing value encoded in TOML.<br/><br/>TOML has no <code>null</code>, so <code>nil</code> values, functions and a table that references itself or one of its parent tables (cyclic table) are left out. Metatables are not encoded, only the table's own fields.
 ---@param value table @the table that will become TOML
 ---@return string @the table in TOML
 function TOML.Dump(value) end
