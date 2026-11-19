@@ -8897,6 +8897,40 @@ function Steam.Unsubscribe(event_name, callback) end
 
 
 
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/tebex">docs</a>
+---
+---Sell packages from your Tebex store in game and deliver them to your players.
+---@class Tebex
+Tebex = {}
+
+---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/server-only.png" height="21"> <b>[Server Side]</b>
+---<a href="https://docs.nanos-world.com/docs/scripting-reference/static-classes/tebex#static-function-opencheckoutoverlay">docs</a>
+---
+---Opens the Tebex checkout of a package for a player, over the in-game menu.<br/><br/>The server creates a basket with the package for the player's Steam ID, so the purchase is linked to that player without any login. Once Tebex answers, the player's in-game menu opens with the checkout popup, the same one the in-game store shows, and the player decides whether to pay.
+---@param player Player @The player who will buy the package
+---@param package_id integer @The ID of the package in your Tebex store
+function Tebex.OpenCheckoutOverlay(player, package_id) end
+
+
+
+---Subscribe to an event
+---@param event_name string @Name of the event to subscribe to
+---@param callback function @Function to call when the event is triggered
+---@return function @The callback function passed
+---@overload fun(event_name: "OfflineCommand", callback: fun(command_id: integer, package_id: integer, payment_id: integer, command: string, tebex_player_id: string, player_name: string, player_steam_id: string): boolean?): fun(command_id: integer, package_id: integer, payment_id: integer, command: string, tebex_player_id: string, player_name: string, player_steam_id: string): boolean? @Called when an offline command of a purchase is about to run.<br/><br/>Offline commands run whether or not their player is on the server, so the player is given by their Steam ID and name. The <code>{id}</code>, <code>{steamid}</code>, <code>{username}</code> and <code>{name}</code> placeholders are already replaced in <code>command</code>.<br/><br/>Return <code>false</code> to handle the purchase in your script instead of running <code>command</code> in the server console. A handled command is removed from the Tebex queue. If you don't return <code>false</code> and no Package handles <code>command</code> in the console, it stays in the queue and this event is called again on the next fetch.
+---@overload fun(event_name: "OnlineCommand", callback: fun(command_id: integer, package_id: integer, payment_id: integer, command: string, player: Player): boolean?): fun(command_id: integer, package_id: integer, payment_id: integer, command: string, player: Player): boolean? @Called when an online command of a purchase is about to run for a connected player.<br/><br/>Online commands only run while their player is on the server. The <code>{id}</code>, <code>{steamid}</code>, <code>{username}</code> and <code>{name}</code> placeholders are already replaced in <code>command</code>.<br/><br/>Return <code>false</code> to handle the purchase in your script instead of running <code>command</code> in the server console. A handled command is removed from the Tebex queue. If you don't return <code>false</code> and no Package handles <code>command</code> in the console, it stays in the queue and this event is called again on the next fetch.
+function Tebex.Subscribe(event_name, callback) end
+
+---Unsubscribe from an event
+---@param event_name string @Name of the event to unsubscribe from
+---@param callback? function @Optional callback to unsubscribe (if no callback is passed then all callbacks in this Package will be unsubscribed from this event)
+---@overload fun(event_name: "OfflineCommand", callback: fun(command_id: integer, package_id: integer, payment_id: integer, command: string, tebex_player_id: string, player_name: string, player_steam_id: string): boolean?) @Called when an offline command of a purchase is about to run.<br/><br/>Offline commands run whether or not their player is on the server, so the player is given by their Steam ID and name. The <code>{id}</code>, <code>{steamid}</code>, <code>{username}</code> and <code>{name}</code> placeholders are already replaced in <code>command</code>.<br/><br/>Return <code>false</code> to handle the purchase in your script instead of running <code>command</code> in the server console. A handled command is removed from the Tebex queue. If you don't return <code>false</code> and no Package handles <code>command</code> in the console, it stays in the queue and this event is called again on the next fetch.
+---@overload fun(event_name: "OnlineCommand", callback: fun(command_id: integer, package_id: integer, payment_id: integer, command: string, player: Player): boolean?) @Called when an online command of a purchase is about to run for a connected player.<br/><br/>Online commands only run while their player is on the server. The <code>{id}</code>, <code>{steamid}</code>, <code>{username}</code> and <code>{name}</code> placeholders are already replaced in <code>command</code>.<br/><br/>Return <code>false</code> to handle the purchase in your script instead of running <code>command</code> in the server console. A handled command is removed from the Tebex queue. If you don't return <code>false</code> and no Package handles <code>command</code> in the console, it stays in the queue and this event is called again on the next fetch.
+function Tebex.Unsubscribe(event_name, callback) end
+
+
+
 ---<img src="https://raw.github.com/nanos-world/vscode-extension/master/assets/both.png" height="21"> <b>[Client/Server Side]</b>
 ---<a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d">docs</a>
 ---<b>Constructors:</b> <a href="https://docs.nanos-world.com/docs/scripting-reference/classes/text3d#constructor-default-constructor">Default Constructor</a>
