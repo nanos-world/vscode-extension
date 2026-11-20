@@ -8,7 +8,7 @@ export type Authority =
 
 export interface DocDescriptive {
 	description?: string;
-	description_long?: string;
+	description_details?: string;
 }
 
 export interface DocAuthority {

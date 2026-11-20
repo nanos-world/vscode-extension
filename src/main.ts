@@ -152,7 +152,7 @@ const OPERATORS = {
 };
 
 function generateDocstring(obj: DocDescriptive, jsonFileName?: string): string {
-	const docstring = [obj.description, obj.description_long].filter(Boolean).join("<br/><br/>");
+	const docstring = [obj.description, obj.description_details].filter(Boolean).join("<br/><br/>");
 	return docstring.replaceAll("\r\n", "\n").replaceAll("\n", "<br>");
 }
 
